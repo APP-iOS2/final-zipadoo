@@ -5,6 +5,10 @@ line_length:
   warning: 120
   error: 160
 
-# 들여쓰기 설정 (탭 대신 스페이스 사용, 스페이스 개수: 4)
+# 들여쓰기 설정
 indentation:
-  spaces: 4
+  tabs: true
+
+# 무시할 설정
+disabled_rules:
+  - trailing_whitespace
