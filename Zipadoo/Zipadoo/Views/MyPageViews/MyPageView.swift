@@ -98,6 +98,7 @@ struct MyPageView: View {
                 Text("받은 매너 평가")
                     .font(.title2)
                     .padding(.top)
+                    .padding(.bottom)
                 
                 Group {
                     
