@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
+		C04607142ABC2A08006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607132ABC2A08006836B7 /* empty */; };
+		C04607172ABC2A1A006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607162ABC2A1A006836B7 /* empty */; };
+		C046071A2ABC2A28006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607192ABC2A28006836B7 /* empty */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
 		FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */; };
 		FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */; };
@@ -21,6 +24,9 @@
 
 /* Begin PBXFileReference section */
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		C04607132ABC2A08006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
+		C04607162ABC2A1A006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
+		C04607192ABC2A28006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
 		FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -44,25 +50,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		FA7588902ABC28130050446D /* HomeViews */ = {
+		C04607122ABC29F6006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				C04607132ABC2A08006836B7 /* empty */,
 			);
-			path = HomeViews;
+			path = Home;
 			sourceTree = "<group>";
 		};
-		FA7588912ABC281E0050446D /* HomeModels */ = {
+		C04607152ABC2A11006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				C04607162ABC2A1A006836B7 /* empty */,
 			);
-			path = HomeModels;
+			path = Home;
 			sourceTree = "<group>";
 		};
-		FA7588922ABC28290050446D /* HomeViewModels */ = {
+		C04607182ABC2A1F006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				C04607192ABC2A28006836B7 /* empty */,
 			);
-			path = HomeViewModels;
+			path = Home;
 			sourceTree = "<group>";
 		};
 		FAD5FE302ABBD3E700E05E6E = {
@@ -109,7 +118,7 @@
 		FAD5FE4A2ABBD3F900E05E6E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				FA7588902ABC28130050446D /* HomeViews */,
+				C04607122ABC29F6006836B7 /* Home */,
 				FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */,
 			);
 			path = Views;
@@ -118,7 +127,7 @@
 		FAD5FE4B2ABBD40500E05E6E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				FA7588912ABC281E0050446D /* HomeModels */,
+				C04607152ABC2A11006836B7 /* Home */,
 				FAD5FE542ABBD63500E05E6E /* test3.swift */,
 			);
 			path = Models;
@@ -127,7 +136,7 @@
 		FAD5FE4C2ABBD41600E05E6E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				FA7588922ABC28290050446D /* HomeViewModels */,
+				C04607182ABC2A1F006836B7 /* Home */,
 				FAD5FE562ABBD63C00E05E6E /* test4.swift */,
 			);
 			path = ViewModels;
@@ -216,7 +225,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C046071A2ABC2A28006836B7 /* empty in Resources */,
+				C04607142ABC2A08006836B7 /* empty in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
+				C04607172ABC2A1A006836B7 /* empty in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 			);
