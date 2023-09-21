@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
-		C04607142ABC2A08006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607132ABC2A08006836B7 /* empty */; };
-		C04607172ABC2A1A006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607162ABC2A1A006836B7 /* empty */; };
-		C046071A2ABC2A28006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607192ABC2A28006836B7 /* empty */; };
+		8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */; };
+		8BAAEACD2ABC44C300477574 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAAEACC2ABC44C300477574 /* FriendsRegistrationView.swift */; };
+		C04607142ABC2A08006836B7 /* empty1 in Resources */ = {isa = PBXBuildFile; fileRef = C04607132ABC2A08006836B7 /* empty1 */; };
+		C04607172ABC2A1A006836B7 /* empty2 in Resources */ = {isa = PBXBuildFile; fileRef = C04607162ABC2A1A006836B7 /* empty2 */; };
+		C046071A2ABC2A28006836B7 /* empty3 in Resources */ = {isa = PBXBuildFile; fileRef = C04607192ABC2A28006836B7 /* empty3 */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
 		FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */; };
 		FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */; };
@@ -26,9 +28,11 @@
 /* Begin PBXFileReference section */
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		C04607132ABC2A08006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
-		C04607162ABC2A1A006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
-		C04607192ABC2A28006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
+		8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyle.swift; sourceTree = "<group>"; };
+		8BAAEACC2ABC44C300477574 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendsRegistrationView.swift; path = "../../../../../../../../.Trash/final-zipadoo 오후 5.21.33/Zipadoo/Zipadoo/Views/Friends/FriendsRegistrationView.swift"; sourceTree = "<group>"; };
+		C04607132ABC2A08006836B7 /* empty1 */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty1; sourceTree = "<group>"; };
+		C04607162ABC2A1A006836B7 /* empty2 */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty2; sourceTree = "<group>"; };
+		C04607192ABC2A28006836B7 /* empty3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty3; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
 		FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -52,10 +56,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8BAAEAC92ABC444800477574 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */,
+				8BAAEACC2ABC44C300477574 /* FriendsRegistrationView.swift */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		8BAAEACA2ABC445300477574 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
+		8BAAEACB2ABC445B00477574 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
 		C04607122ABC29F6006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C04607132ABC2A08006836B7 /* empty */,
+				C04607132ABC2A08006836B7 /* empty1 */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -63,7 +90,7 @@
 		C04607152ABC2A11006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C04607162ABC2A1A006836B7 /* empty */,
+				C04607162ABC2A1A006836B7 /* empty2 */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -71,7 +98,7 @@
 		C04607182ABC2A1F006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C04607192ABC2A28006836B7 /* empty */,
+				C04607192ABC2A28006836B7 /* empty3 */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -121,8 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				C04607122ABC29F6006836B7 /* Home */,
+				8BAAEAC92ABC444800477574 /* Friends */,
 				FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */,
-				3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -131,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				C04607152ABC2A11006836B7 /* Home */,
+				8BAAEACA2ABC445300477574 /* Friends */,
 				FAD5FE542ABBD63500E05E6E /* test3.swift */,
 			);
 			path = Models;
@@ -140,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				C04607182ABC2A1F006836B7 /* Home */,
+				8BAAEACB2ABC445B00477574 /* Friends */,
 				FAD5FE562ABBD63C00E05E6E /* test4.swift */,
 			);
 			path = ViewModels;
@@ -165,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				FAD5FE502ABBD62600E05E6E /* test1.swift */,
+				8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */,
 			);
 			path = Modifier;
 			sourceTree = "<group>";
@@ -228,10 +258,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C046071A2ABC2A28006836B7 /* empty in Resources */,
-				C04607142ABC2A08006836B7 /* empty in Resources */,
+				C046071A2ABC2A28006836B7 /* empty3 in Resources */,
+				C04607142ABC2A08006836B7 /* empty1 in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
-				C04607172ABC2A1A006836B7 /* empty in Resources */,
+				C04607172ABC2A1A006836B7 /* empty2 in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 			);
@@ -265,8 +295,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BAAEACD2ABC44C300477574 /* FriendsRegistrationView.swift in Sources */,
 				FAD5FE592ABBD64200E05E6E /* test5.swift in Sources */,
 				FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */,
+				8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */,
 				3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */,
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
