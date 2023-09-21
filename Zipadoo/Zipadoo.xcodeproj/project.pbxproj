@@ -8,9 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
-		C04607142ABC2A08006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607132ABC2A08006836B7 /* empty */; };
-		C04607172ABC2A1A006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607162ABC2A1A006836B7 /* empty */; };
-		C046071A2ABC2A28006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607192ABC2A28006836B7 /* empty */; };
+		9B6268352ABC2C4C00B309E8 /* FriendsLocationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6268342ABC2C4C00B309E8 /* FriendsLocationMapView.swift */; };
+		9B6268392ABC2D6800B309E8 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6268382ABC2D6800B309E8 /* Location.swift */; };
+		9B62683B2ABC81BD00B309E8 /* PlaceDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B62683A2ABC81BD00B309E8 /* PlaceDestinationView.swift */; };
+		9B62683D2ABC973D00B309E8 /* FriendsLocationMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B62683C2ABC973D00B309E8 /* FriendsLocationMapViewModel.swift */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
 		FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */; };
 		FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */; };
@@ -24,9 +25,10 @@
 
 /* Begin PBXFileReference section */
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		C04607132ABC2A08006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
-		C04607162ABC2A1A006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
-		C04607192ABC2A28006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
+		9B6268342ABC2C4C00B309E8 /* FriendsLocationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationMapView.swift; sourceTree = "<group>"; };
+		9B6268382ABC2D6800B309E8 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		9B62683A2ABC81BD00B309E8 /* PlaceDestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDestinationView.swift; sourceTree = "<group>"; };
+		9B62683C2ABC973D00B309E8 /* FriendsLocationMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationMapViewModel.swift; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
 		FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,7 +55,8 @@
 		C04607122ABC29F6006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C04607132ABC2A08006836B7 /* empty */,
+				9B6268342ABC2C4C00B309E8 /* FriendsLocationMapView.swift */,
+				9B62683A2ABC81BD00B309E8 /* PlaceDestinationView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -61,7 +64,7 @@
 		C04607152ABC2A11006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C04607162ABC2A1A006836B7 /* empty */,
+				9B6268382ABC2D6800B309E8 /* Location.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -69,7 +72,7 @@
 		C04607182ABC2A1F006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C04607192ABC2A28006836B7 /* empty */,
+				9B62683C2ABC973D00B309E8 /* FriendsLocationMapViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -225,10 +228,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C046071A2ABC2A28006836B7 /* empty in Resources */,
-				C04607142ABC2A08006836B7 /* empty in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
-				C04607172ABC2A1A006836B7 /* empty in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 			);
@@ -266,7 +266,11 @@
 				FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */,
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
+				9B6268392ABC2D6800B309E8 /* Location.swift in Sources */,
+				9B6268352ABC2C4C00B309E8 /* FriendsLocationMapView.swift in Sources */,
+				9B62683D2ABC973D00B309E8 /* FriendsLocationMapViewModel.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
+				9B62683B2ABC81BD00B309E8 /* PlaceDestinationView.swift in Sources */,
 				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
 				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,
 			);

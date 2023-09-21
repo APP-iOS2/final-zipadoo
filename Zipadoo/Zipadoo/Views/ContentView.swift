@@ -15,7 +15,7 @@ struct ContentView: View {
         .padding()
     }
 }
-g
+
 #Preview {
     ContentView()
 }
