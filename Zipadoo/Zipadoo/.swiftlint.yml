@@ -1,0 +1,10 @@
+# .swiftlint.yml
+
+# 코드 줄 길이 제한 설정 (120자까지는 경고, 160자 이상은 오류)
+line_length:
+  warning: 120
+  error: 160
+
+# 들여쓰기 설정 (탭 대신 스페이스 사용, 스페이스 개수: 4)
+indentation:
+  spaces: 4
