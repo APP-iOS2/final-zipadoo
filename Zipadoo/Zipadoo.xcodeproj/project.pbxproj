@@ -44,6 +44,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA7588902ABC28130050446D /* HomeViews */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeViews;
+			sourceTree = "<group>";
+		};
+		FA7588912ABC281E0050446D /* HomeModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeModels;
+			sourceTree = "<group>";
+		};
+		FA7588922ABC28290050446D /* HomeViewModels */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = HomeViewModels;
+			sourceTree = "<group>";
+		};
 		FAD5FE302ABBD3E700E05E6E = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +109,7 @@
 		FAD5FE4A2ABBD3F900E05E6E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FA7588902ABC28130050446D /* HomeViews */,
 				FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */,
 			);
 			path = Views;
@@ -96,6 +118,7 @@
 		FAD5FE4B2ABBD40500E05E6E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FA7588912ABC281E0050446D /* HomeModels */,
 				FAD5FE542ABBD63500E05E6E /* test3.swift */,
 			);
 			path = Models;
@@ -104,6 +127,7 @@
 		FAD5FE4C2ABBD41600E05E6E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				FA7588922ABC28290050446D /* HomeViewModels */,
 				FAD5FE562ABBD63C00E05E6E /* test4.swift */,
 			);
 			path = ViewModels;
