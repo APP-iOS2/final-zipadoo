@@ -6,8 +6,8 @@ line_length:
   error: 160
 
 # 들여쓰기 설정
-indentation:
-  tabs: true
+#indentation:
+#  tabs: true
 
 # 무시할 설정
 disabled_rules:
