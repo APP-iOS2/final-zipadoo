@@ -11,6 +11,11 @@
 		FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */; };
 		FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */; };
 		FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */; };
+		FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE502ABBD62600E05E6E /* test1.swift */; };
+		FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE522ABBD62D00E05E6E /* test2.swift */; };
+		FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE542ABBD63500E05E6E /* test3.swift */; };
+		FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE562ABBD63C00E05E6E /* test4.swift */; };
+		FAD5FE592ABBD64200E05E6E /* test5.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE582ABBD64200E05E6E /* test5.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +24,11 @@
 		FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		FAD5FE502ABBD62600E05E6E /* test1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test1.swift; sourceTree = "<group>"; };
+		FAD5FE522ABBD62D00E05E6E /* test2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test2.swift; sourceTree = "<group>"; };
+		FAD5FE542ABBD63500E05E6E /* test3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test3.swift; sourceTree = "<group>"; };
+		FAD5FE562ABBD63C00E05E6E /* test4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test4.swift; sourceTree = "<group>"; };
+		FAD5FE582ABBD64200E05E6E /* test5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test5.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +93,7 @@
 		FAD5FE4B2ABBD40500E05E6E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FAD5FE542ABBD63500E05E6E /* test3.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -90,6 +101,7 @@
 		FAD5FE4C2ABBD41600E05E6E /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				FAD5FE562ABBD63C00E05E6E /* test4.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -97,6 +109,7 @@
 		FAD5FE4D2ABBD43600E05E6E /* Extention */ = {
 			isa = PBXGroup;
 			children = (
+				FAD5FE522ABBD62D00E05E6E /* test2.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -104,6 +117,7 @@
 		FAD5FE4E2ABBD46400E05E6E /* TestData */ = {
 			isa = PBXGroup;
 			children = (
+				FAD5FE582ABBD64200E05E6E /* test5.swift */,
 			);
 			path = TestData;
 			sourceTree = "<group>";
@@ -111,6 +125,7 @@
 		FAD5FE4F2ABBD47A00E05E6E /* Modifier */ = {
 			isa = PBXGroup;
 			children = (
+				FAD5FE502ABBD62600E05E6E /* test1.swift */,
 			);
 			path = Modifier;
 			sourceTree = "<group>";
@@ -185,8 +200,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAD5FE592ABBD64200E05E6E /* test5.swift in Sources */,
+				FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */,
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
+				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
+				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
+				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
