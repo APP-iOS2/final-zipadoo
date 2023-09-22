@@ -7,10 +7,19 @@
 
 import SwiftUI
 import FirebaseCore
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-  func application(_ application: UIApplication,
+    // 앱 실행 허용목록에서 카카오를 등록하고, 우리 앱으로 돌아올 수 있게하는 커스텀 URL 스킴을 설정함.
+  func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:],
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+      
+      if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                  return AuthController.handleOpenUrl(url: url)
+              }
+
     FirebaseApp.configure()
 
     return true
@@ -19,6 +28,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct ZipadooApp: App {
+    @StateObject var urlHandler = URLHandler()
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
