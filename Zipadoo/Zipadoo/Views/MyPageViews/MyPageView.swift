@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MyPageView: View {
-    let dummyImageString: String = "https://cdn.discordapp.com/attachments/1154228426660642846/1154313075453866044/abde4177d5e5093a.png"
+    let dummyImageString: String = "https://cdn.discordapp.com/attachments/1153285599625748531/1154611582748336148/9b860155ad6b6c37.png"
     
     let dummyKm: Int = 1000
     
@@ -16,19 +16,20 @@ struct MyPageView: View {
         NavigationStack {
             VStack(alignment: .leading) {
                 HStack(alignment: .top) {
-                    //프로필 이미지
+                    // 프로필 이미지
                     AsyncImage(url: URL(string: dummyImageString)) { image in
                         image.resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 200)
+                            .cornerRadius(30)
                     } placeholder: {
                         ProgressView()
                     }
                     Spacer()
-                    //프로필 기능모음
+                    // 프로필 기능모음
                     VStack(alignment: .trailing) {
                         NavigationLink {
-                            MyPotatoView()
+                            SettingView()
                         } label: {
                             Image(systemName: "gearshape")
                                 .foregroundColor(.black)
@@ -36,11 +37,16 @@ struct MyPageView: View {
                         .padding(.bottom)
                         Text("이재승 님")
                             .padding(.bottom)
-                        HStack {
-                            Image(systemName: "bitcoinsign.circle.fill")
-                            Text("10,000")
-                                .font(.title2)
-                                .bold()
+                        NavigationLink {
+                            MyPotatoView()
+                        } label: {
+                            HStack {
+                                Image(systemName: "bitcoinsign.circle.fill")
+                                Text("10,000")
+                            }
+                            .font(.title2)
+                            .bold()
+                            .foregroundColor(.black)
                         }
                         NavigationLink {
                             PayingView()
