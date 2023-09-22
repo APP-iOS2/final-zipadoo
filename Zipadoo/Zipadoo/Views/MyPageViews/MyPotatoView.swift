@@ -1,5 +1,5 @@
 //
-//  PayingView.swift
+//  MyPotatoView.swift
 //  Zipadoo
 //
 //  Created by 이재승 on 2023/09/21.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct PayingView: View {
+struct MyPotatoView: View {
     var body: some View {
-        Text("Hello, PayingView!")
+        Text("Hello, PotatoView!")
     }
 }
 
 #Preview {
-    PayingView()
+    MyPotatoView()
 }
