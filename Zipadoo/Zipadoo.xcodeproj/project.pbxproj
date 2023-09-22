@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F8D1B182ABD1C1C004C1B21 /* FriendsLocationStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		C04607142ABC2A08006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607132ABC2A08006836B7 /* empty */; };
 		C04607172ABC2A1A006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607162ABC2A1A006836B7 /* empty */; };
@@ -23,6 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationStatusView.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C04607132ABC2A08006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
 		C04607162ABC2A1A006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				C04607132ABC2A08006836B7 /* empty */,
+				3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
+				3F8D1B182ABD1C1C004C1B21 /* FriendsLocationStatusView.swift in Sources */,
 				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
