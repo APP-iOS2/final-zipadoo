@@ -13,10 +13,12 @@ enum SharingStatus: String {
 }
 
 struct PromiseDetailView: View {
-    // MARK: - Property WrapperS
+    // MARK: - Property Wrappers
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
+    @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
+    @State private var isShowingEditView: Bool = false
     
     // MARK: - Properties
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
@@ -58,6 +60,9 @@ struct PromiseDetailView: View {
             currentDate = Date().timeIntervalSince1970
             calculateRemainingTime()
         })
+        .navigationDestination(isPresented: $isShowingEditView) {
+            // TODO: 수정뷰
+        }
     }
     
     // MARK: - some Views
@@ -71,12 +76,13 @@ struct PromiseDetailView: View {
             
             Menu {
                 Button {
-                    print("수정")
+                    isShowingEditView = true
                 } label: {
                    Text("수정")
                 }
                 Button {
-                    print("삭제")
+                    // TODO: 파베에서 해당 약속 delete
+                    dismiss()
                 } label: {
                    Text("삭제")
                 }
