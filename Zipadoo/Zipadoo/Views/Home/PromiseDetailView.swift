@@ -68,10 +68,20 @@ struct PromiseDetailView: View {
             } label: {
                 Image(systemName: "square.and.arrow.up")
             }
-            Button {
-                
+            
+            Menu {
+                Button {
+                    print("수정")
+                } label: {
+                   Text("수정")
+                }
+                Button {
+                    print("삭제")
+                } label: {
+                   Text("삭제")
+                }
             } label: {
-                Image(systemName: "ellipsis")
+                Label("More", systemImage: "ellipsis")
             }
         }
         .foregroundColor(.secondary)
