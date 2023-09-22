@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F8D1B182ABD1C1C004C1B21 /* FriendsLocationStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		8B7D70262ABD730D00497C1E /* ArriveResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7D70252ABD730D00497C1E /* ArriveResultView.swift */; };
 		8B7D70282ABD732900497C1E /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7D70272ABD732900497C1E /* ProfileImageView.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationStatusView.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8B7D70252ABD730D00497C1E /* ArriveResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
 		8B7D70272ABD732900497C1E /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
@@ -69,6 +71,16 @@
 		C04607122ABC29F6006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				C04607132ABC2A08006836B7 /* empty */,
+				3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		C04607152ABC2A11006836B7 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				C04607162ABC2A1A006836B7 /* empty */,
 				C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */,
 				FA7588932ABC33A10050446D /* HomeMainView.swift */,
 				FA75889A2ABC63F80050446D /* TestView.swift */,
@@ -288,6 +300,9 @@
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
 				C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
+				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
+				3F8D1B182ABD1C1C004C1B21 /* FriendsLocationStatusView.swift in Sources */,
+				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,
 				FAD5FE552ABBD63500E05E6E /* PromiseModel.swift in Sources */,
 				C046071E2ABC2C37006836B7 /* PromiseDetailView.swift in Sources */,
 				FA7588992ABC36F50050446D /* PromiseTestData.swift in Sources */,
