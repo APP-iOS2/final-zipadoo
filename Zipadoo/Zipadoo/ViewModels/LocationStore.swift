@@ -44,4 +44,8 @@ class LocationStore: ObservableObject {
             print("location 등록 실패")
         }
     }
+    
+    func deleteLocationData(locationId: String) {
+        dbRef.collection("Location").document(locationId).delete()
+    }
 }
