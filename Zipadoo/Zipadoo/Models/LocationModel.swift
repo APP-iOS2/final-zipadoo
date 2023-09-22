@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct Location {
+struct Location: Codable {
     /// id
-    let id: String
+    var id = UUID().uuidString
     /// 사용자 id
     let participantId: String
     /// 출발지점
-    let departure: String
+    var departure: String?
     /// 현재 위치
-    var currentLocation: String
+    var currentLocation: String?
     /// 도착했을 때 저장 -> '_분 일찍 도착'에 사용될 것 같음.
-    let arriveTime: Double
+    var arriveTime: Double?
 }
