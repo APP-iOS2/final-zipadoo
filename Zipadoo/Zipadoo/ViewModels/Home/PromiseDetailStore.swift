@@ -15,7 +15,7 @@ class PromiseDetailStore: ObservableObject {
                               makingUserID: "3",
                               destination: "서울특별시 종로구 종로3길 17",
                               promiseTitle: "지파두 모각코^ㅡ^",
-                              participantsID: ["3", "4", "5"],
+                              participantIdArray: ["3", "4", "5"],
                               promiseDate: 1697094371.302136,
                               checkDoublePromise: false,
                               percentageIdArray: ["35", "34", "89"])
