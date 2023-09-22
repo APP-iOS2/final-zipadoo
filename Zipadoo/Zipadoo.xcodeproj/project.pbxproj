@@ -10,9 +10,9 @@
 		3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */; };
-		8BAAEACD2ABC44C300477574 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAAEACC2ABC44C300477574 /* FriendsRegistrationView.swift */; };
 		8BDF9CC82ABD1DCF00255857 /* empty22 in Resources */ = {isa = PBXBuildFile; fileRef = 8BDF9CC72ABD1DCF00255857 /* empty22 */; };
 		8BDF9CCC2ABD1DE800255857 /* empty33 in Resources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCB2ABD1DE800255857 /* empty33 */; };
+		8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */; };
 		C04607142ABC2A08006836B7 /* empty1 in Resources */ = {isa = PBXBuildFile; fileRef = C04607132ABC2A08006836B7 /* empty1 */; };
 		C04607172ABC2A1A006836B7 /* empty2 in Resources */ = {isa = PBXBuildFile; fileRef = C04607162ABC2A1A006836B7 /* empty2 */; };
 		C046071A2ABC2A28006836B7 /* empty3 in Resources */ = {isa = PBXBuildFile; fileRef = C04607192ABC2A28006836B7 /* empty3 */; };
@@ -31,9 +31,9 @@
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyle.swift; sourceTree = "<group>"; };
-		8BAAEACC2ABC44C300477574 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FriendsRegistrationView.swift; path = "../../../../../../../../.Trash/final-zipadoo 오후 5.21.33/Zipadoo/Zipadoo/Views/Friends/FriendsRegistrationView.swift"; sourceTree = "<group>"; };
 		8BDF9CC72ABD1DCF00255857 /* empty22 */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty22; sourceTree = "<group>"; };
 		8BDF9CCB2ABD1DE800255857 /* empty33 */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty33; sourceTree = "<group>"; };
+		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
 		C04607132ABC2A08006836B7 /* empty1 */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty1; sourceTree = "<group>"; };
 		C04607162ABC2A1A006836B7 /* empty2 */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty2; sourceTree = "<group>"; };
 		C04607192ABC2A28006836B7 /* empty3 */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty3; sourceTree = "<group>"; };
@@ -64,7 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */,
-				8BAAEACC2ABC44C300477574 /* FriendsRegistrationView.swift */,
+				8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -303,7 +303,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BAAEACD2ABC44C300477574 /* FriendsRegistrationView.swift in Sources */,
 				FAD5FE592ABBD64200E05E6E /* test5.swift in Sources */,
 				FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */,
 				8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */,
@@ -311,6 +310,7 @@
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
+				8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */,
 				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
 				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,
 			);
