@@ -45,6 +45,21 @@ class LocationStore: ObservableObject {
         }
     }
     
+    func updateDeparture(locationId: String, newValue departure: String) {
+        let updateData: [String: Any] = ["departure": departure]
+        dbRef.collection("Location").document(locationId).updateData(updateData)
+    }
+    
+    func updateCurrentLocation(locationId: String, newValue currentLocation: String) {
+        let updateData: [String: Any] = ["currentLocation": currentLocation]
+        dbRef.collection("Location").document(locationId).updateData(updateData)
+    }
+    
+    func updateArriveTime(locationId: String, newValue arriveTime: Double) {
+        let updateData: [String: Any] = ["arriveTime": arriveTime]
+        dbRef.collection("Location").document(locationId).updateData(updateData)
+    }
+    
     func deleteLocationData(locationId: String) {
         dbRef.collection("Location").document(locationId).delete()
     }
