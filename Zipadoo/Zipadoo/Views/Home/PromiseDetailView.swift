@@ -7,19 +7,18 @@
 
 import SwiftUI
 
-enum DestinationStatus: String {
+enum SharingStatus: String {
     case preparing = "위치 공유 준비중"
     case sharing = "위치 공유중"
 }
 
 struct PromiseDetailView: View {
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
-    @State private var isDesabledDestinationStatus: Bool = true
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
     
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
-    var destinagionStatus: DestinationStatus {
+    var destinagionStatus: SharingStatus {
         remainingTime < 3600 ? .sharing : .preparing
     }
     var statusColor: Color {
@@ -29,35 +28,15 @@ struct PromiseDetailView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
-                Text(destinagionStatus.rawValue)
-                    .foregroundStyle(statusColor)
-                    .font(.caption).bold()
-                    .padding([.vertical, .horizontal], 12)
-                    .background(.yellow)
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .padding(.bottom, 5)
+                sharingStatusView
                 
-                Text(promiseDetailStore.promise.promiseTitle)
-                    .font(.largeTitle)
-                    .bold()
+                titleView
                 
-                Text(promiseDetailStore.calculateDate(date: promiseDetailStore.promise.promiseDate))
-                    .padding(.bottom, 1)
+                dateView
                 
-                Text(promiseDetailStore.promise.destination)
+                destinationView
                 
-                Button {
-                    print(remainingTime)
-                } label: {
-                    Text(formatRemainingTime(time: remainingTime))
-                        .bold()
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 12)
-                        .background(.yellow)
-                        .clipShape(RoundedRectangle(cornerRadius: 12))
-                }
-                .disabled(isDesabledDestinationStatus)
-                .padding(.vertical, 8)
+                remainingTimeView
                 
                 Spacer()
             }
@@ -92,6 +71,41 @@ struct PromiseDetailView: View {
             }
         }
         .foregroundColor(.secondary)
+    }
+    
+    private var sharingStatusView: some View {
+        Text(destinagionStatus.rawValue)
+            .foregroundStyle(statusColor)
+            .font(.caption).bold()
+            .padding([.vertical, .horizontal], 12)
+            .background(.yellow)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .padding(.bottom, 5)
+    }
+    
+    private var titleView: some View {
+        Text(promiseDetailStore.promise.promiseTitle)
+            .font(.largeTitle)
+            .bold()
+    }
+    
+    private var dateView: some View {
+        Text(promiseDetailStore.calculateDate(date: promiseDetailStore.promise.promiseDate))
+            .padding(.bottom, 1)
+    }
+    
+    private var destinationView: some View {
+        Text(promiseDetailStore.promise.destination)
+    }
+    
+    private var remainingTimeView: some View {
+        Text(formatRemainingTime(time: remainingTime))
+            .foregroundStyle(statusColor)
+            .bold()
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 12)
+            .background(.yellow)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
     }
     
     private func calculateRemainingTime() {
