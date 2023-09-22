@@ -11,6 +11,8 @@
 		08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */; };
 		08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BA2ABC1DA2005D231D /* SettingView.swift */; };
 		08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BC2ABC1E1C005D231D /* PayingView.swift */; };
+		1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BD72ABD16B800DE635D /* TossPayView.swift */; };
+		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
 		FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */; };
@@ -28,6 +30,7 @@
 		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
 		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
+		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
@@ -46,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				08C6F0B42ABC1BE0005D231D /* MyPageView.swift */,
+				1BF69BD72ABD16B800DE635D /* TossPayView.swift */,
 				08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */,
 				08C6F0BA2ABC1DA2005D231D /* SettingView.swift */,
 				08C6F0BC2ABC1E1C005D231D /* PayingView.swift */,
@@ -170,6 +175,9 @@
 			dependencies = (
 			);
 			name = Zipadoo;
+			packageProductDependencies = (
+				1BF69BDA2ABD16C500DE635D /* TossPayments */,
+			);
 			productName = Zipadoo;
 			productReference = FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */;
 			productType = "com.apple.product-type.application";
@@ -198,6 +206,9 @@
 				Base,
 			);
 			mainGroup = FAD5FE302ABBD3E700E05E6E;
+			packageReferences = (
+				1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */,
+			);
 			productRefGroup = FAD5FE3A2ABBD3E700E05E6E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -248,6 +259,7 @@
 			files = (
 				FAD5FE592ABBD64200E05E6E /* test5.swift in Sources */,
 				08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */,
+				1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */,
 				08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */,
 				08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */,
 				FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */,
@@ -462,6 +474,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tosspayments/payment-sdk-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.23;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1BF69BDA2ABD16C500DE635D /* TossPayments */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */;
+			productName = TossPayments;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = FAD5FE312ABBD3E700E05E6E /* Project object */;
 }
