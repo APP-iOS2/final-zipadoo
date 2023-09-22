@@ -17,9 +17,15 @@ class PromiseDetailStore: ObservableObject {
                               promiseTitle: "지파두 모각코^ㅡ^",
                               participantsID: ["3", "4", "5"],
                               promiseDate: 1696285371.302136,
-                              promiseTime: 0,
                               checkDoublePromise: false,
                               percentageIdArray: ["35", "34", "89"])
+    }
+    
+    func calculateDate(date: Double) -> String {
+        let date = Date(timeIntervalSince1970: date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일 | a hh:mm"
+        return dateFormatter.string(from: date)
     }
 }
 
@@ -36,10 +42,8 @@ struct Promise {
     var participantsID: [String]
     /// 약속 날짜
     var promiseDate: Double
-    /// 약속 시간
-    var promiseTime: Double // promiseDate에 시간 값도 있을거라 요건 없어도 될 것 같아여
     /// 약속 중복 값 확인
     var checkDoublePromise: Bool
     /// 밑에 Percentage모델 id 배열
-    var percentageIdArray : [String] //위에 participantsID대신에 이거는 어떠신가여
+    var percentageIdArray: [String] //위에 participantsID대신에 이거는 어떠신가여
 }
