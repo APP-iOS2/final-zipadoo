@@ -1,0 +1,39 @@
+//
+//  FriendSellView.swift
+//  Zipadoo
+//
+//  Created by 김상규 on 2023/09/22.
+//
+
+import SwiftUI
+
+struct FriendSellView: View {
+    var name: String
+    var body: some View {
+        VStack {
+            ZStack {
+                Circle().stroke(Color.gray)
+                //                    .frame(width: 75, height: 60)
+                Button {
+                    print("친구 삭제")
+                } label: {
+                    Image(systemName: "minus.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25)
+                }
+                .offset(x: 25, y: -24)
+            }
+            .shadow(radius: 1)
+            .tint(.red)
+            
+            Text("\(name)")
+                .font(.callout)
+        }
+        .frame(width: 85, height: 85)
+    }
+}
+
+#Preview {
+    FriendSellView(name: "해수")
+}

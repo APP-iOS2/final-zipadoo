@@ -7,9 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04BA00F22ABD14F4002EFBB9 /* FriendSellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00F12ABD14F4002EFBB9 /* FriendSellView.swift */; };
+		04BA00F42ABD160C002EFBB9 /* AddPromiseTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00F32ABD160C002EFBB9 /* AddPromiseTitleCell.swift */; };
+		04BA00F62ABD169C002EFBB9 /* AddDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */; };
+		04BA00F82ABD173F002EFBB9 /* AddPromisePlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00F72ABD173F002EFBB9 /* AddPromisePlaceCell.swift */; };
+		04BA00FC2ABD1AAE002EFBB9 /* AddPenaltyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */; };
+		04BA00FE2ABD22BC002EFBB9 /* AddPromiseUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */; };
+		04FDFE7A2ABC2E8100A464CA /* MakePromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */; };
+		04FDFE7C2ABC57E200A464CA /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE7B2ABC57E200A464CA /* TestView.swift */; };
+		04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
-		C04607142ABC2A08006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607132ABC2A08006836B7 /* empty */; };
-		C04607172ABC2A1A006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607162ABC2A1A006836B7 /* empty */; };
 		C046071A2ABC2A28006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607192ABC2A28006836B7 /* empty */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
 		FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */; };
@@ -23,9 +30,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04BA00F12ABD14F4002EFBB9 /* FriendSellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendSellView.swift; sourceTree = "<group>"; };
+		04BA00F32ABD160C002EFBB9 /* AddPromiseTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseTitleCell.swift; sourceTree = "<group>"; };
+		04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDateCell.swift; sourceTree = "<group>"; };
+		04BA00F72ABD173F002EFBB9 /* AddPromisePlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromisePlaceCell.swift; sourceTree = "<group>"; };
+		04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPenaltyCell.swift; sourceTree = "<group>"; };
+		04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseUserCell.swift; sourceTree = "<group>"; };
+		04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePromiseView.swift; sourceTree = "<group>"; };
+		04FDFE7B2ABC57E200A464CA /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendCellView.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		C04607132ABC2A08006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
-		C04607162ABC2A1A006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
 		C04607192ABC2A28006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
@@ -50,10 +64,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04BA00F92ABD1A00002EFBB9 /* MakePromiseViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */,
+				04BA00F32ABD160C002EFBB9 /* AddPromiseTitleCell.swift */,
+				04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */,
+				04BA00F72ABD173F002EFBB9 /* AddPromisePlaceCell.swift */,
+				04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */,
+				04BA00FA2ABD1A23002EFBB9 /* AddFriendSubViews */,
+			);
+			path = MakePromiseViewModel;
+			sourceTree = "<group>";
+		};
+		04BA00FA2ABD1A23002EFBB9 /* AddFriendSubViews */ = {
+			isa = PBXGroup;
+			children = (
+				04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */,
+				04BA00F12ABD14F4002EFBB9 /* FriendSellView.swift */,
+			);
+			path = AddFriendSubViews;
+			sourceTree = "<group>";
+		};
 		C04607122ABC29F6006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C04607132ABC2A08006836B7 /* empty */,
+				04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */,
+				04BA00F92ABD1A00002EFBB9 /* MakePromiseViewModel */,
+				04FDFE7B2ABC57E200A464CA /* TestView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -61,7 +99,6 @@
 		C04607152ABC2A11006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C04607162ABC2A1A006836B7 /* empty */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -226,9 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C046071A2ABC2A28006836B7 /* empty in Resources */,
-				C04607142ABC2A08006836B7 /* empty in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
-				C04607172ABC2A1A006836B7 /* empty in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 			);
@@ -262,11 +297,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04FDFE7A2ABC2E8100A464CA /* MakePromiseView.swift in Sources */,
 				FAD5FE592ABBD64200E05E6E /* test5.swift in Sources */,
 				FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */,
+				04BA00F62ABD169C002EFBB9 /* AddDateCell.swift in Sources */,
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
+				04BA00F42ABD160C002EFBB9 /* AddPromiseTitleCell.swift in Sources */,
+				04BA00F22ABD14F4002EFBB9 /* FriendSellView.swift in Sources */,
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
+				04BA00FC2ABD1AAE002EFBB9 /* AddPenaltyCell.swift in Sources */,
+				04BA00FE2ABD22BC002EFBB9 /* AddPromiseUserCell.swift in Sources */,
+				04BA00F82ABD173F002EFBB9 /* AddPromisePlaceCell.swift in Sources */,
+				04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */,
+				04FDFE7C2ABC57E200A464CA /* TestView.swift in Sources */,
 				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
 				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,
 			);
