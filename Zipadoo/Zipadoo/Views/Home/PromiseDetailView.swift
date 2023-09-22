@@ -13,10 +13,12 @@ enum SharingStatus: String {
 }
 
 struct PromiseDetailView: View {
+    // MARK: - Property WrapperS
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
     
+    // MARK: - Properties
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     var destinagionStatus: SharingStatus {
         remainingTime < 3600 ? .sharing : .preparing
@@ -25,6 +27,7 @@ struct PromiseDetailView: View {
         remainingTime < 3600 ? .primary : .secondary
     }
     
+    // MARK: - body
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
@@ -57,6 +60,7 @@ struct PromiseDetailView: View {
         })
     }
     
+    // MARK: - some Views
     private var zipadooToolbarView: some View {
         HStack {
             Button {
@@ -108,6 +112,7 @@ struct PromiseDetailView: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
     }
     
+    // MARK: Custom Methods
     private func calculateRemainingTime() {
         let promiseDate = promiseDetailStore.promise.promiseDate
         remainingTime = promiseDate - currentDate
