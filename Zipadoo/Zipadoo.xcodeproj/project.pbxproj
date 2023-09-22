@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
-		C04607172ABC2A1A006836B7 /* empty1 in Resources */ = {isa = PBXBuildFile; fileRef = C04607162ABC2A1A006836B7 /* empty1 */; };
 		C046071E2ABC2C37006836B7 /* PromiseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */; };
 		C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
@@ -17,14 +16,13 @@
 		FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */; };
 		FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE502ABBD62600E05E6E /* test1.swift */; };
 		FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE522ABBD62D00E05E6E /* test2.swift */; };
-		FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE542ABBD63500E05E6E /* test3.swift */; };
+		FAD5FE552ABBD63500E05E6E /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE542ABBD63500E05E6E /* PromiseModel.swift */; };
 		FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE562ABBD63C00E05E6E /* test4.swift */; };
 		FAD5FE592ABBD64200E05E6E /* test5.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE582ABBD64200E05E6E /* test5.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		C04607162ABC2A1A006836B7 /* empty1 */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty1; sourceTree = "<group>"; };
 		C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
 		C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailStore.swift; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,7 +32,7 @@
 		FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FAD5FE502ABBD62600E05E6E /* test1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test1.swift; sourceTree = "<group>"; };
 		FAD5FE522ABBD62D00E05E6E /* test2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test2.swift; sourceTree = "<group>"; };
-		FAD5FE542ABBD63500E05E6E /* test3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test3.swift; sourceTree = "<group>"; };
+		FAD5FE542ABBD63500E05E6E /* PromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseModel.swift; sourceTree = "<group>"; };
 		FAD5FE562ABBD63C00E05E6E /* test4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test4.swift; sourceTree = "<group>"; };
 		FAD5FE582ABBD64200E05E6E /* test5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test5.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -54,14 +52,6 @@
 			isa = PBXGroup;
 			children = (
 				C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */,
-			);
-			path = Home;
-			sourceTree = "<group>";
-		};
-		C04607152ABC2A11006836B7 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				C04607162ABC2A1A006836B7 /* empty1 */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -127,8 +117,7 @@
 		FAD5FE4B2ABBD40500E05E6E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C04607152ABC2A11006836B7 /* Home */,
-				FAD5FE542ABBD63500E05E6E /* test3.swift */,
+				FAD5FE542ABBD63500E05E6E /* PromiseModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -226,7 +215,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
-				C04607172ABC2A1A006836B7 /* empty1 in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 			);
@@ -267,7 +255,7 @@
 				C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
-				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,
+				FAD5FE552ABBD63500E05E6E /* PromiseModel.swift in Sources */,
 				C046071E2ABC2C37006836B7 /* PromiseDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
