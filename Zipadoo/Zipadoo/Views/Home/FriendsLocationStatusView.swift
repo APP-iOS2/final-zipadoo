@@ -8,16 +8,18 @@
 import SwiftUI
 
 struct FriendsLocationStatusView: View {
-    @State private var value: Double = 0.9
+    @State private var value: Double = 0.4
+    let friends = ["홍길동", "둘리", "도우너", "도우너", "도우너", "도우너"]
     
     var body: some View {
         VStack {
-            ProgressWithImageView(value: value, label: { Text("Test") }, currentValueLabel: { Text("\(Int(value*100)) %") })
-                .progressViewStyle(BarProgressStyle(height: 50))
-                .transition(.opacity)
-                .animation(.easeInOut(duration: 0.5))
-                .shadow(radius: 5)
-            
+            ForEach(friends, id: \.self) { friend in
+                ProgressWithImageView(value: value, label: { Text(friend) }, currentValueLabel: { Text("\(Int(value*100))%") })
+                    .progressViewStyle(BarProgressStyle(height: 25))
+                    .transition(.opacity)
+                    .animation(.easeInOut(duration: 0.5))
+                    .shadow(radius: 5)
+            }
             HStack {
                 Button(action: {
                     if self.value >= 0.05 {
@@ -56,7 +58,7 @@ struct BarProgressStyle: ProgressViewStyle {
                 
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 10.0)
-                        .fill(Color(uiColor: .systemGray5))
+                        .fill(Color(uiColor: .systemGray3))
                         .frame(height: height)
                         .frame(width: geometry.size.width)
                     
