@@ -9,14 +9,14 @@ import SwiftUI
 
 struct MyPageView: View {
     let dummyImageString: String = "https://cdn.discordapp.com/attachments/1154228426660642846/1154313075453866044/abde4177d5e5093a.png"
-    
     let dummyKm: Int = 1000
+    @State var isShownFullScreenCover = false
     
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
                 HStack(alignment: .top) {
-                    //프로필 이미지
+                    // 프로필 이미지
                     AsyncImage(url: URL(string: dummyImageString)) { image in
                         image.resizable()
                             .aspectRatio(contentMode: .fit)
@@ -25,7 +25,7 @@ struct MyPageView: View {
                         ProgressView()
                     }
                     Spacer()
-                    //프로필 기능모음
+                    // 프로필 기능모음
                     VStack(alignment: .trailing) {
                         NavigationLink {
                             MyPotatoView()
@@ -42,12 +42,16 @@ struct MyPageView: View {
                                 .font(.title2)
                                 .bold()
                         }
-                        NavigationLink {
-                            PayingView()
+                        //                        NavigationLink {
+                        Button {
+                            isShownFullScreenCover.toggle()
                         } label: {
                             Text("충전하기")
                                 .font(.title2)
                         }
+                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+                            TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
+                        })
                     }
                 }
                 .padding(.leading)

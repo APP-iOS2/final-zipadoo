@@ -27,7 +27,7 @@ struct ContentView: View {
                 .tag(1)
             
             // 마이페이지
-            Text("마이페이지 뷰")
+            MyPageView()
                 .tabItem {
                     Image(systemName: "person.fill")
                     Text("마이")
