@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct MyPageView: View {
+
     let dummyImageString: String = "https://cdn.discordapp.com/attachments/1153285599625748531/1154611582748336148/9b860155ad6b6c37.png"
-    
+
     let dummyKm: Int = 1000
+    @State var isShownFullScreenCover = false
     
     var body: some View {
         NavigationStack {
@@ -48,12 +50,16 @@ struct MyPageView: View {
                             .bold()
                             .foregroundColor(.black)
                         }
-                        NavigationLink {
-                            PayingView()
+                        //                        NavigationLink {
+                        Button {
+                            isShownFullScreenCover.toggle()
                         } label: {
                             Text("충전하기")
                                 .font(.title2)
                         }
+                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+                            TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
+                        })
                     }
                 }
                 .padding(.leading)
