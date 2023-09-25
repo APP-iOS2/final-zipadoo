@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 enum SharingStatus: String {
     case preparing = "위치 공유 준비중"
@@ -13,18 +14,23 @@ enum SharingStatus: String {
 }
 
 struct PromiseDetailView: View {
-    // MARK: - Property WrapperS
+    // MARK: - Property Wrappers
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
+    @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
+    @State private var isShowingEditView: Bool = false
+    @State private var isShowingShareSheet: Bool = false
     
     // MARK: - Properties
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
+    
+    // 약속시간 30분 전 활성화
     var destinagionStatus: SharingStatus {
-        remainingTime < 3600 ? .sharing : .preparing
+        remainingTime < 60 * 30 ? .sharing : .preparing
     }
     var statusColor: Color {
-        remainingTime < 3600 ? .primary : .secondary
+        remainingTime < 60 * 30 ? .primary : .secondary
     }
     
     // MARK: - body
@@ -35,12 +41,13 @@ struct PromiseDetailView: View {
                 
                 titleView
                 
-                dateView
-                
                 destinationView
+                
+                dateView
                 
                 remainingTimeView
                 
+                // TODO: Spacer 대신에 참석현황2
                 Spacer()
             }
             .padding(.horizontal, 12)
@@ -58,20 +65,39 @@ struct PromiseDetailView: View {
             currentDate = Date().timeIntervalSince1970
             calculateRemainingTime()
         })
+        .navigationDestination(isPresented: $isShowingEditView) {
+            // TODO: 수정뷰
+        }
+        .sheet(
+            isPresented: $isShowingShareSheet,
+            onDismiss: { print("Dismiss") },
+            content: { ActivityViewController(activityItems: ["https://zipadoo.onelink.me/QgIh/51ibebbu"]) }
+        )
     }
     
     // MARK: - some Views
     private var zipadooToolbarView: some View {
         HStack {
             Button {
-                print(Date().timeIntervalSince1970)
+                isShowingShareSheet = true
             } label: {
                 Image(systemName: "square.and.arrow.up")
             }
-            Button {
-                
+            
+            Menu {
+                Button {
+                    isShowingEditView = true
+                } label: {
+                   Text("수정")
+                }
+                Button {
+                    // TODO: 파베에서 해당 약속 delete
+                    dismiss()
+                } label: {
+                   Text("삭제")
+                }
             } label: {
-                Image(systemName: "ellipsis")
+                Label("More", systemImage: "ellipsis")
             }
         }
         .foregroundColor(.secondary)
@@ -84,22 +110,23 @@ struct PromiseDetailView: View {
             .padding([.vertical, .horizontal], 12)
             .background(.yellow)
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            .padding(.bottom, 5)
+            .padding(.bottom, 12)
     }
     
     private var titleView: some View {
         Text(promiseDetailStore.promise.promiseTitle)
             .font(.largeTitle)
             .bold()
+            .padding(.vertical, 12)
     }
     
     private var dateView: some View {
-        Text(promiseDetailStore.calculateDate(date: promiseDetailStore.promise.promiseDate))
-            .padding(.bottom, 1)
+        Text(("일시 : \(promiseDetailStore.calculateDate(date: promiseDetailStore.promise.promiseDate))"))
+            .padding(.vertical, 3)
     }
     
     private var destinationView: some View {
-        Text(promiseDetailStore.promise.destination)
+        Text("장소 : \(promiseDetailStore.promise.destination)")
     }
     
     private var remainingTimeView: some View {
@@ -110,6 +137,7 @@ struct PromiseDetailView: View {
             .padding(.vertical, 12)
             .background(.yellow)
             .clipShape(RoundedRectangle(cornerRadius: 12))
+            .padding(.vertical, 12)
     }
     
     // MARK: Custom Methods
