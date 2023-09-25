@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
+		8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */; };
+		8BD44EC82AC13FE600A4694C /* ArriveResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC72AC13FE600A4694C /* ArriveResultView.swift */; };
+		8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC92AC1401E00A4694C /* UserModel.swift */; };
+		8BD44ECC2AC14B2700A4694C /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44ECB2AC14B2700A4694C /* UserViewModel.swift */; };
+		8BD44ECE2AC14B2D00A4694C /* ProfileImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44ECD2AC14B2D00A4694C /* ProfileImageUploader.swift */; };
 		C046071E2ABC2C37006836B7 /* PromiseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */; };
 		C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
@@ -21,7 +26,6 @@
 		FAB58B942ABD1879006B9E11 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B932ABD1879006B9E11 /* FirebaseFirestore */; };
 		FAB58B982ABD1879006B9E11 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B972ABD1879006B9E11 /* FirebaseFirestoreSwift */; };
 		FAB58BAE2ABD1879006B9E11 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58BAD2ABD1879006B9E11 /* FirebaseStorage */; };
-		FAB58BB22ABD192A006B9E11 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAB58BB12ABD192A006B9E11 /* GoogleService-Info.plist */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
 		FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */; };
 		FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */; };
@@ -34,6 +38,11 @@
 
 /* Begin PBXFileReference section */
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		8BD44EC72AC13FE600A4694C /* ArriveResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
+		8BD44EC92AC1401E00A4694C /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		8BD44ECB2AC14B2700A4694C /* UserViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		8BD44ECD2AC14B2D00A4694C /* ProfileImageUploader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageUploader.swift; sourceTree = "<group>"; };
 		C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
 		C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailStore.swift; sourceTree = "<group>"; };
 		C04BCDC22ABD545A0024B487 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
@@ -41,7 +50,6 @@
 		FA7588932ABC33A10050446D /* HomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
 		FA7588982ABC36F50050446D /* PromiseTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTestData.swift; sourceTree = "<group>"; };
 		FA75889A2ABC63F80050446D /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		FAB58BB12ABD192A006B9E11 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
 		FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -76,6 +84,7 @@
 				C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */,
 				FA7588932ABC33A10050446D /* HomeMainView.swift */,
 				FA75889A2ABC63F80050446D /* TestView.swift */,
+				8BD44EC72AC13FE600A4694C /* ArriveResultView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -99,7 +108,6 @@
 		FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */ = {
 			isa = PBXGroup;
 			children = (
-				FAB58BB12ABD192A006B9E11 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -127,6 +135,7 @@
 			children = (
 				C04607122ABC29F6006836B7 /* Home */,
 				FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */,
+				8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -134,6 +143,7 @@
 		FAD5FE4B2ABBD40500E05E6E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				8BD44EC92AC1401E00A4694C /* UserModel.swift */,
 				FAD7EE552ABD54690042A55A /* PromiseModel.swift */,
 				C04BCDC22ABD545A0024B487 /* LocationModel.swift */,
 			);
@@ -146,6 +156,8 @@
 				FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */,
 				C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */,
 				C04BCDC42ABD57E90024B487 /* LocationStore.swift */,
+				8BD44ECB2AC14B2700A4694C /* UserViewModel.swift */,
+				8BD44ECD2AC14B2D00A4694C /* ProfileImageUploader.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -245,7 +257,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
-				FAB58BB22ABD192A006B9E11 /* GoogleService-Info.plist in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 			);
@@ -286,9 +297,14 @@
 				C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */,
 				C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
+				8BD44ECE2AC14B2D00A4694C /* ProfileImageUploader.swift in Sources */,
+				8BD44EC82AC13FE600A4694C /* ArriveResultView.swift in Sources */,
 				FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */,
+				8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */,
+				8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */,
 				FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */,
 				C04BCDC52ABD57E90024B487 /* LocationStore.swift in Sources */,
+				8BD44ECC2AC14B2700A4694C /* UserViewModel.swift in Sources */,
 				C046071E2ABC2C37006836B7 /* PromiseDetailView.swift in Sources */,
 				FA7588992ABC36F50050446D /* PromiseTestData.swift in Sources */,
 				FA7588942ABC33A10050446D /* HomeMainView.swift in Sources */,
