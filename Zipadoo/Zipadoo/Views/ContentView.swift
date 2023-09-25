@@ -34,7 +34,6 @@ struct ContentView: View {
                 }
                 .tag(1)
         }
-        .navigationBarBackButtonHidden(true) // 로그인 하고 back버튼이 보여서 숨김 목적
     }
 }
 
