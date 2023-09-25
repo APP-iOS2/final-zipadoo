@@ -57,7 +57,7 @@ struct MyPotatoView: View {
         }
         .navigationTitle("나의 감자")
         .sheet(isPresented: $isShowingToss, content: {
-            TossPayView()
+            TossPayView(isShownFullScreenCover: $isShowingToss)
         })
     }
 }

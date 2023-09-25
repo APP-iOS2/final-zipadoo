@@ -13,8 +13,7 @@
 		08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BC2ABC1E1C005D231D /* PayingView.swift */; };
 		1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BD72ABD16B800DE635D /* TossPayView.swift */; };
 		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
-		1BF69BE32ABD523700DE635D /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BE22ABD523700DE635D /* TestView.swift */; };
-		1BF69BE52ABD559400DE635D /* PaymentContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BE42ABD559400DE635D /* PaymentContentModel.swift */; };
+		1BF69BE92AC10E4700DE635D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1BF69BE82AC10E4700DE635D /* GoogleService-Info.plist */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		FAB58B882ABD1879006B9E11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B872ABD1879006B9E11 /* FirebaseAuth */; };
 		FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8D2ABD1879006B9E11 /* FirebaseDatabase */; };
@@ -22,7 +21,6 @@
 		FAB58B942ABD1879006B9E11 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B932ABD1879006B9E11 /* FirebaseFirestore */; };
 		FAB58B982ABD1879006B9E11 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B972ABD1879006B9E11 /* FirebaseFirestoreSwift */; };
 		FAB58BAE2ABD1879006B9E11 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58BAD2ABD1879006B9E11 /* FirebaseStorage */; };
-		FAB58BB22ABD192A006B9E11 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAB58BB12ABD192A006B9E11 /* GoogleService-Info.plist */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
 		FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */; };
 		FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */; };
@@ -40,10 +38,8 @@
 		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
 		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
-		1BF69BE22ABD523700DE635D /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		1BF69BE42ABD559400DE635D /* PaymentContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentContentModel.swift; sourceTree = "<group>"; };
+		1BF69BE82AC10E4700DE635D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		FAB58BB12ABD192A006B9E11 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
 		FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -79,8 +75,6 @@
 			children = (
 				08C6F0B42ABC1BE0005D231D /* MyPageView.swift */,
 				1BF69BD72ABD16B800DE635D /* TossPayView.swift */,
-				1BF69BE22ABD523700DE635D /* TestView.swift */,
-				1BF69BE42ABD559400DE635D /* PaymentContentModel.swift */,
 				08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */,
 				08C6F0BA2ABC1DA2005D231D /* SettingView.swift */,
 				08C6F0BC2ABC1E1C005D231D /* PayingView.swift */,
@@ -91,6 +85,7 @@
 		FAD5FE302ABBD3E700E05E6E = {
 			isa = PBXGroup;
 			children = (
+				1BF69BE82AC10E4700DE635D /* GoogleService-Info.plist */,
 				FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */,
 				FAD5FE3A2ABBD3E700E05E6E /* Products */,
 			);
@@ -107,7 +102,6 @@
 		FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */ = {
 			isa = PBXGroup;
 			children = (
-				FAB58BB12ABD192A006B9E11 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -252,7 +246,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
-				FAB58BB22ABD192A006B9E11 /* GoogleService-Info.plist in Resources */,
+				1BF69BE92AC10E4700DE635D /* GoogleService-Info.plist in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 			);
@@ -286,7 +280,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1BF69BE52ABD559400DE635D /* PaymentContentModel.swift in Sources */,
 				FAD5FE592ABBD64200E05E6E /* test5.swift in Sources */,
 				08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */,
 				1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */,
@@ -298,7 +291,6 @@
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
 				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,
-				1BF69BE32ABD523700DE635D /* TestView.swift in Sources */,
 				08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -515,8 +507,8 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.1.23;
-                };
-        };
+			};
+		};
 		FAB58B7A2ABD1879006B9E11 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -532,7 +524,7 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */;
 			productName = TossPayments;
-        };
+		};
 		FAB58B872ABD1879006B9E11 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FAB58B7A2ABD1879006B9E11 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
