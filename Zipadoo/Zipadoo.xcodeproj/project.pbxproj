@@ -19,6 +19,7 @@
 		04FDFE7A2ABC2E8100A464CA /* MakePromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */; };
 		04FDFE7C2ABC57E200A464CA /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE7B2ABC57E200A464CA /* TestView.swift */; };
 		04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */; };
+		3FFF1CF42AC1696100A0C99E /* FriendsListVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		C046071A2ABC2A28006836B7 /* empty in Resources */ = {isa = PBXBuildFile; fileRef = C04607192ABC2A28006836B7 /* empty */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
@@ -45,6 +46,7 @@
 		04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePromiseView.swift; sourceTree = "<group>"; };
 		04FDFE7B2ABC57E200A464CA /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendCellView.swift; sourceTree = "<group>"; };
+		3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListVIew.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		C04607192ABC2A28006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +101,7 @@
 			children = (
 				04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */,
 				04BA00F12ABD14F4002EFBB9 /* FriendSellView.swift */,
+				3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */,
 			);
 			path = AddFriendSubViews;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				04FDFE7C2ABC57E200A464CA /* TestView.swift in Sources */,
 				04980D372AC10C200076D6A5 /* PlaceMarkerCell.swift in Sources */,
 				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
+				3FFF1CF42AC1696100A0C99E /* FriendsListVIew.swift in Sources */,
 				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

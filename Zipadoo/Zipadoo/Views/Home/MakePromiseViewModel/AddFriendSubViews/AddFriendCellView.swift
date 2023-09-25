@@ -10,17 +10,17 @@ import SwiftUI
 struct AddFriendCellView: View {
     @State private var addFriendsSheet: Bool = false
     
-    var friends: [String]
+    @State private var selectedFriends: [String] = []
     
     var body: some View {
         Rectangle().stroke(Color.gray, lineWidth: 0.5)
-            .frame(width: 350, height: 150)
+            .frame(width: 350, height: 130)
             .overlay {
                 HStack {
                     VStack {
                         HStack {
                             Text("친구 추가")
-                                .font(.title2)
+                                .font(.title3)
                             Spacer()
                         }
                         .padding(.leading, 15)
@@ -29,9 +29,9 @@ struct AddFriendCellView: View {
                         HStack {
                             ScrollView(.horizontal) {
                                 HStack {
-                                    ForEach(friends, id: \.self) { name in
+                                    ForEach(selectedFriends, id: \.self) { name in
                                         
-                                        FriendSellView(name: name).padding()
+                                        FriendSellView(name: name, selectedFriends: $selectedFriends).padding()
                                             .padding(.trailing, -50)
                                     }
                                 }
@@ -50,7 +50,7 @@ struct AddFriendCellView: View {
                     VStack {
                         ZStack {
                             Color.accentColor
-                                .frame(width: 100, height: 150)
+                                .frame(width: 70, height: 130)
                             Button {
                                 addFriendsSheet.toggle()
                                 print("친구 추가")
@@ -64,15 +64,14 @@ struct AddFriendCellView: View {
                         }
                     }
                     .padding(.leading, -10)
-                    
                 }
             }
-            .sheet(isPresented: $addFriendsSheet, content: {
-                Text("AddFirendsSheet")
-            })
+            .sheet(isPresented: $addFriendsSheet) {
+                FriendsListVIew(isShowingSheet: $addFriendsSheet, selectedFriends: $selectedFriends)
+            }
     }
 }
 
 #Preview {
-    AddFriendCellView(friends: ["병구", "상규", "예슬", "한구", "아라", "해수", "여훈"])
+    AddFriendCellView()
 }

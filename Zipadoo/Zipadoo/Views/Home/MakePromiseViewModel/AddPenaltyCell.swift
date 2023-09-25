@@ -14,7 +14,7 @@ struct AddPenaltyCell: View {
     
     var body: some View {
         Rectangle().stroke(Color.gray, lineWidth: 0.5)
-            .frame(width: 350, height: 90, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .frame(width: 350, height: 70, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             .overlay {
                 HStack {
                     
