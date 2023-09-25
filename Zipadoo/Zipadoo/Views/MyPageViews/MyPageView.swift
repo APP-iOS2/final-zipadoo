@@ -22,7 +22,7 @@ struct MyPageView: View {
                     AsyncImage(url: URL(string: dummyImageString)) { image in
                         image.resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 200)
+                            .frame(width: 170)
                             .cornerRadius(30)
                     } placeholder: {
                         ProgressView()
@@ -30,40 +30,36 @@ struct MyPageView: View {
                     Spacer()
                     // 프로필 기능모음
                     VStack(alignment: .trailing) {
-                        NavigationLink {
-                            SettingView()
-                        } label: {
-                            Image(systemName: "gearshape")
-                                .foregroundColor(.black)
-                        }
-                        .padding(.bottom)
                         Text("이재승 님")
+                            .font(.title2)
                             .padding(.bottom)
+                            .padding(.top, 25)
                         NavigationLink {
                             MyPotatoView()
                         } label: {
                             HStack {
                                 Image(systemName: "bitcoinsign.circle.fill")
-                                Text("10,000")
+                                Text("1,000")
+                                    .underline()
                             }
                             .font(.title2)
                             .bold()
                             .foregroundColor(.black)
                         }
-                        //                        NavigationLink {
                         Button {
                             isShownFullScreenCover.toggle()
                         } label: {
                             Text("충전하기")
-                                .font(.title2)
+                                .font(.title3)
+                                .padding(.top, 5)
                         }
                         .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
                             TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
                         })
                     }
+                    .padding(.horizontal, 12)
                 }
-                .padding(.leading)
-                .padding(.trailing)
+                .padding(.bottom)
                 
                 Divider()
                 
@@ -149,6 +145,17 @@ struct MyPageView: View {
                 Spacer()
             }
             .padding()
+            
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        SettingView()
+                    } label: {
+                        Image(systemName: "gearshape")
+                            .foregroundColor(.black)
+                    }
+                }
+            }
         }
     }
 }

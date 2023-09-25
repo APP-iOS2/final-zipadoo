@@ -27,8 +27,8 @@ struct TossPayView: View {
     @State private var paymentMethod: PaymentMethod = .카드
     @State private var paymentInfo: PaymentInfo = Constants.테스트결제정보
     
-    let potatoes: String = "현재 보유한 감자"
-    @State private var myPotato: Int = 10
+    let potatos: String = "현재 보유한 감자"
+    @State private var myPotato: Int = 1000
     
     struct PayButton {
         let payCount: String
@@ -57,7 +57,7 @@ struct TossPayView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text(potatoes)
+                        Text(potatos)
                             .bold()
                             .font(.title3)
                         Spacer()
