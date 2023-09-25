@@ -12,3 +12,4 @@ line_length:
 # 무시할 설정
 disabled_rules:
   - trailing_whitespace
+  - multiple_closures_with_trailing_closure
