@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
+		3F8D1B182ABD1C1C004C1B21 /* FriendsLocationStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */; };
+
 		08052D822ABF26E600BBB067 /* KakaoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08052D812ABF26E600BBB067 /* KakaoTest.swift */; };
 		08052D862ABF27F000BBB067 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08052D852ABF27F000BBB067 /* GoogleService-Info.plist */; };
 		082D54422AC122EB008CA928 /* KakaoStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 082D54412AC122EB008CA928 /* KakaoStore.swift */; };
@@ -23,14 +26,22 @@
 		08A6D4772ABD666D00ACAC6C /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = 08A6D4762ABD666D00ACAC6C /* KakaoSDKTalk */; };
 		08A6D4792ABD666D00ACAC6C /* KakaoSDKTemplate in Frameworks */ = {isa = PBXBuildFile; productRef = 08A6D4782ABD666D00ACAC6C /* KakaoSDKTemplate */; };
 		08A6D47B2ABD666D00ACAC6C /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 08A6D47A2ABD666D00ACAC6C /* KakaoSDKUser */; };
+
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
-		C046071E2ABC2C37006836B7 /* PromiseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */; };
+		8B7D70282ABD732900497C1E /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7D70272ABD732900497C1E /* ProfileImageView.swift */; };
+		9A3145A92AC0AB12008E344C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A3145A82AC0AB12008E344C /* GoogleService-Info.plist */; };
+		9A3145AC2AC0AB44008E344C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3145AB2AC0AB44008E344C /* LoginView.swift */; };
+		9A3145AE2AC0ABDA008E344C /* LoginByEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3145AD2AC0ABDA008E344C /* LoginByEmailView.swift */; };
+		9A3145B02AC0C51A008E344C /* LoginByEmailView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3145AF2AC0C51A008E344C /* LoginByEmailView2.swift */; };
+		9A995AEF2AC10FDB00DE3E18 /* FirebaseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A995AEE2AC10FDA00DE3E18 /* FirebaseUtil.swift */; };
+		9A995AF12AC1102600DE3E18 /* LoginByEmailView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A995AF02AC1102600DE3E18 /* LoginByEmailView3.swift */; };
+		9A995AF32AC1179A00DE3E18 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A995AF22AC1179A00DE3E18 /* ImagePickerView.swift */; };
+		9A995AF52AC143DB00DE3E18 /* EmailLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A995AF42AC143DB00DE3E18 /* EmailLoginStore.swift */; };
 		C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
 		C04BCDC52ABD57E90024B487 /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC42ABD57E90024B487 /* LocationStore.swift */; };
 		FA7588942ABC33A10050446D /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7588932ABC33A10050446D /* HomeMainView.swift */; };
 		FA7588992ABC36F50050446D /* PromiseTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7588982ABC36F50050446D /* PromiseTestData.swift */; };
-		FA75889B2ABC63F80050446D /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA75889A2ABC63F80050446D /* TestView.swift */; };
 		FAB58B882ABD1879006B9E11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B872ABD1879006B9E11 /* FirebaseAuth */; };
 		FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8D2ABD1879006B9E11 /* FirebaseDatabase */; };
 		FAB58B902ABD1879006B9E11 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8F2ABD1879006B9E11 /* FirebaseDatabaseSwift */; };
@@ -43,6 +54,14 @@
 		FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */; };
 		FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE502ABBD62600E05E6E /* test1.swift */; };
 		FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE522ABBD62D00E05E6E /* test2.swift */; };
+
+		FAD7EE662ABD86820042A55A /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE652ABD86820042A55A /* TestView.swift */; };
+		FAD7EE682ABD86920042A55A /* ArriveResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE672ABD86920042A55A /* ArriveResultView.swift */; };
+		FAD7EE6A2ABD869C0042A55A /* PromiseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE692ABD869C0042A55A /* PromiseDetailView.swift */; };
+		FAD7EE6C2ABD86A70042A55A /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE6B2ABD86A70042A55A /* HomeMainView.swift */; };
+
+		3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationStatusView.swift; sourceTree = "<group>"; };
+
 		FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE552ABD54690042A55A /* PromiseModel.swift */; };
 		FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */; };
 /* End PBXBuildFile section */
@@ -53,14 +72,22 @@
 		08052D872ABF2B8300BBB067 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		082D54412AC122EB008CA928 /* KakaoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoStore.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
+		8B7D70272ABD732900497C1E /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		9A3145A82AC0AB12008E344C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../지파고 피리스트/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9A3145AB2AC0AB44008E344C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginView.swift; path = "../../../../../../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/final-zipadoo 오전 2.34.14/Zipadoo/Zipadoo/Views/LoginView.swift"; sourceTree = "<group>"; };
+		9A3145AD2AC0ABDA008E344C /* LoginByEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginByEmailView.swift; path = ../../../../../../../../LoginByEmailView.swift; sourceTree = "<group>"; };
+		9A3145AF2AC0C51A008E344C /* LoginByEmailView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginByEmailView2.swift; path = ../../../../../../../../LoginByEmailView2.swift; sourceTree = "<group>"; };
+		9A995AEE2AC10FDA00DE3E18 /* FirebaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUtil.swift; sourceTree = "<group>"; };
+		9A995AF02AC1102600DE3E18 /* LoginByEmailView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginByEmailView3.swift; sourceTree = "<group>"; };
+		9A995AF22AC1179A00DE3E18 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		9A995AF42AC143DB00DE3E18 /* EmailLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginStore.swift; sourceTree = "<group>"; };
 		C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailStore.swift; sourceTree = "<group>"; };
+
 		C04BCDC22ABD545A0024B487 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		C04BCDC42ABD57E90024B487 /* LocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStore.swift; sourceTree = "<group>"; };
 		FA7588932ABC33A10050446D /* HomeMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
+
 		FA7588982ABC36F50050446D /* PromiseTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTestData.swift; sourceTree = "<group>"; };
-		FA75889A2ABC63F80050446D /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
-		FAB58BB12ABD192A006B9E11 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
 		FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -68,8 +95,15 @@
 		FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FAD5FE502ABBD62600E05E6E /* test1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test1.swift; sourceTree = "<group>"; };
 		FAD5FE522ABBD62D00E05E6E /* test2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test2.swift; sourceTree = "<group>"; };
+
+		FAD7EE652ABD86820042A55A /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		FAD7EE672ABD86920042A55A /* ArriveResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
+		FAD7EE692ABD869C0042A55A /* PromiseDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
+		FAD7EE6B2ABD86A70042A55A /* HomeMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
+
 		FAD7EE552ABD54690042A55A /* PromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseModel.swift; sourceTree = "<group>"; };
 		FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewModel.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,21 +136,49 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A3145AA2AC0AB27008E344C /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				9A3145AB2AC0AB44008E344C /* LoginView.swift */,
+				9A3145AD2AC0ABDA008E344C /* LoginByEmailView.swift */,
+				9A3145AF2AC0C51A008E344C /* LoginByEmailView2.swift */,
+				9A995AF02AC1102600DE3E18 /* LoginByEmailView3.swift */,
+				9A995AF22AC1179A00DE3E18 /* ImagePickerView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		C04607122ABC29F6006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */,
-				FA7588932ABC33A10050446D /* HomeMainView.swift */,
-				FA75889A2ABC63F80050446D /* TestView.swift */,
+				9A3145AA2AC0AB27008E344C /* Login */,
+				3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */,
+				FAD7EE652ABD86820042A55A /* TestView.swift */,
+				FAD7EE672ABD86920042A55A /* ArriveResultView.swift */,
+				FAD7EE692ABD869C0042A55A /* PromiseDetailView.swift */,
+				FAD7EE6B2ABD86A70042A55A /* HomeMainView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
 		};
+
+		C04607182ABC2A1F006836B7 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				9A995AF42AC143DB00DE3E18 /* EmailLoginStore.swift */,
+				C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+
 		FAD5FE302ABBD3E700E05E6E = {
 			isa = PBXGroup;
 			children = (
+				9A3145A82AC0AB12008E344C /* GoogleService-Info.plist */,
 				FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */,
 				FAD5FE3A2ABBD3E700E05E6E /* Products */,
+				FAD7EE642ABD86600042A55A /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -131,6 +193,7 @@
 		FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */ = {
 			isa = PBXGroup;
 			children = (
+
 				08052D872ABF2B8300BBB067 /* Info.plist */,
 				08052D852ABF27F000BBB067 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
@@ -160,7 +223,11 @@
 			children = (
 				C04607122ABC29F6006836B7 /* Home */,
 				FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */,
+
+				8B7D70272ABD732900497C1E /* ProfileImageView.swift */,
+
 				08052D812ABF26E600BBB067 /* KakaoTest.swift */,
+
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -168,6 +235,9 @@
 		FAD5FE4B2ABBD40500E05E6E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+
+				9A995AEE2AC10FDA00DE3E18 /* FirebaseUtil.swift */,
+
 				FAD7EE552ABD54690042A55A /* PromiseModel.swift */,
 				C04BCDC22ABD545A0024B487 /* LocationModel.swift */,
 			);
@@ -208,6 +278,13 @@
 				FAD5FE502ABBD62600E05E6E /* test1.swift */,
 			);
 			path = Modifier;
+			sourceTree = "<group>";
+		};
+		FAD7EE642ABD86600042A55A /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,7 +372,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
+
 				08052D862ABF27F000BBB067 /* GoogleService-Info.plist in Resources */,
+
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 			);
@@ -329,13 +408,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAD7EE6C2ABD86A70042A55A /* HomeMainView.swift in Sources */,
+				FAD7EE662ABD86820042A55A /* TestView.swift in Sources */,
+				9A3145AE2AC0ABDA008E344C /* LoginByEmailView.swift in Sources */,
+				9A3145B02AC0C51A008E344C /* LoginByEmailView2.swift in Sources */,
+				9A995AF32AC1179A00DE3E18 /* ImagePickerView.swift in Sources */,
+				FAD7EE6A2ABD869C0042A55A /* PromiseDetailView.swift in Sources */,
+				9A3145AC2AC0AB44008E344C /* LoginView.swift in Sources */,
+				8B7D70282ABD732900497C1E /* ProfileImageView.swift in Sources */,
 				FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */,
+
 				082D54422AC122EB008CA928 /* KakaoStore.swift in Sources */,
 				FA75889B2ABC63F80050446D /* TestView.swift in Sources */,
+
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
 				08052D822ABF26E600BBB067 /* KakaoTest.swift in Sources */,
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
+				9A995AEF2AC10FDB00DE3E18 /* FirebaseUtil.swift in Sources */,
 				C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */,
+
+				9A995AF12AC1102600DE3E18 /* LoginByEmailView3.swift in Sources */,
+				9A995AF52AC143DB00DE3E18 /* EmailLoginStore.swift in Sources */,
+				FAD7EE682ABD86920042A55A /* ArriveResultView.swift in Sources */,
+				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
+				3F8D1B182ABD1C1C004C1B21 /* FriendsLocationStatusView.swift in Sources */,
+
+
 				C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */,
@@ -343,7 +441,6 @@
 				C04BCDC52ABD57E90024B487 /* LocationStore.swift in Sources */,
 				C046071E2ABC2C37006836B7 /* PromiseDetailView.swift in Sources */,
 				FA7588992ABC36F50050446D /* PromiseTestData.swift in Sources */,
-				FA7588942ABC33A10050446D /* HomeMainView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

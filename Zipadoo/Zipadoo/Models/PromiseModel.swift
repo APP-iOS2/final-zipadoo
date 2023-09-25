@@ -23,5 +23,7 @@ struct Promise: Hashable {
     /// 약속 중복 값 확인
     var checkDoublePromise: Bool
     /// 밑에 Percentage모델 id 배열
+
     var locationIdArray : [String]
+
 }
