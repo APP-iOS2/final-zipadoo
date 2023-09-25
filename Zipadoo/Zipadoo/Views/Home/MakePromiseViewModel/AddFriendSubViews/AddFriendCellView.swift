@@ -14,13 +14,13 @@ struct AddFriendCellView: View {
     
     var body: some View {
         Rectangle().stroke(Color.gray, lineWidth: 0.5)
-            .frame(width: 350, height: 150)
+            .frame(width: 350, height: 130)
             .overlay {
                 HStack {
                     VStack {
                         HStack {
                             Text("친구 추가")
-                                .font(.title2)
+                                .font(.title3)
                             Spacer()
                         }
                         .padding(.leading, 15)
@@ -50,7 +50,7 @@ struct AddFriendCellView: View {
                     VStack {
                         ZStack {
                             Color.accentColor
-                                .frame(width: 100, height: 150)
+                                .frame(width: 70, height: 130)
                             Button {
                                 addFriendsSheet.toggle()
                                 print("친구 추가")

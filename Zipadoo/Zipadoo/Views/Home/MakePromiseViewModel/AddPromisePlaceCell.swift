@@ -15,7 +15,7 @@ struct AddPromisePlaceCell: View {
     
     var body: some View {
         Rectangle().stroke(Color.gray, lineWidth: 0.5)
-            .frame(width: 350, height: 90, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .frame(width: 350, height: 70, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             .overlay {
                 HStack {
                     HStack {
@@ -39,7 +39,7 @@ struct AddPromisePlaceCell: View {
                     } label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
-                                .frame(width: 80, height: 60)
+                                .frame(width: 80, height: 40)
                             
                             Text("검색하기")
                                 .foregroundStyle(Color.white)
