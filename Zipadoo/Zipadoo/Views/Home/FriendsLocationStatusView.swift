@@ -19,6 +19,7 @@ struct FriendsLocationStatusView: View {
                     .transition(.opacity)
                     .animation(.easeInOut(duration: 0.5))
                     .shadow(radius: 5)
+                    
             }
             HStack {
                 Button(action: {
