@@ -2,7 +2,7 @@
 //  TestView.swift
 //  Zipadoo
 //
-//  Created by 김상규 on 2023/09/21.
+//  Created by 윤해수 on 2023/09/21.
 //
 
 import SwiftUI
