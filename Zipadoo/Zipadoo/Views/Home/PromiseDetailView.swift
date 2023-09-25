@@ -24,11 +24,13 @@ struct PromiseDetailView: View {
     
     // MARK: - Properties
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
+    
+    // 약속시간 30분 전 활성화
     var destinagionStatus: SharingStatus {
-        remainingTime < 3600 ? .sharing : .preparing
+        remainingTime < 60 * 30 ? .sharing : .preparing
     }
     var statusColor: Color {
-        remainingTime < 3600 ? .primary : .secondary
+        remainingTime < 60 * 30 ? .primary : .secondary
     }
     
     // MARK: - body
@@ -39,12 +41,13 @@ struct PromiseDetailView: View {
                 
                 titleView
                 
-                dateView
-                
                 destinationView
+                
+                dateView
                 
                 remainingTimeView
                 
+                // TODO: Spacer 대신에 참석현황2
                 Spacer()
             }
             .padding(.horizontal, 12)
@@ -107,22 +110,23 @@ struct PromiseDetailView: View {
             .padding([.vertical, .horizontal], 12)
             .background(.yellow)
             .clipShape(RoundedRectangle(cornerRadius: 12))
-            .padding(.bottom, 5)
+            .padding(.bottom, 12)
     }
     
     private var titleView: some View {
         Text(promiseDetailStore.promise.promiseTitle)
             .font(.largeTitle)
             .bold()
+            .padding(.vertical, 12)
     }
     
     private var dateView: some View {
-        Text(promiseDetailStore.calculateDate(date: promiseDetailStore.promise.promiseDate))
-            .padding(.bottom, 1)
+        Text(("일시 : \(promiseDetailStore.calculateDate(date: promiseDetailStore.promise.promiseDate))"))
+            .padding(.vertical, 3)
     }
     
     private var destinationView: some View {
-        Text(promiseDetailStore.promise.destination)
+        Text("장소 : \(promiseDetailStore.promise.destination)")
     }
     
     private var remainingTimeView: some View {
@@ -133,6 +137,7 @@ struct PromiseDetailView: View {
             .padding(.vertical, 12)
             .background(.yellow)
             .clipShape(RoundedRectangle(cornerRadius: 12))
+            .padding(.vertical, 12)
     }
     
     // MARK: Custom Methods
