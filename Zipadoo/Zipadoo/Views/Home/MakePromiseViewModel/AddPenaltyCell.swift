@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddPenaltyCell: View {
-    @State var penelty: String = ""
+    @State var peneltyInt: String = ""
     @State var peneltyChoose: Bool = false
     @State var peneltyChooseSheet: Bool = false
     
@@ -19,51 +19,23 @@ struct AddPenaltyCell: View {
                 HStack {
                     
                     VStack(alignment: .leading) {
-                        Text("지각")
-                        Text("페널티")
+                        Text("벌금")
                     }
                     .font(.title2)
                     
                     Spacer()
                     
-                    HStack(alignment: .center) {
-                        Spacer()
-                        Text("\(penelty)")
-                        Spacer()
-                    }
-                    .font(.callout)
-                    
                     Spacer()
+                    TextField("5,000", text: $peneltyInt, axis: .horizontal)
+                        .frame(width: 220, height: 100)
+                        .textFieldStyle(.roundedBorder)
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.trailing)
                     
-                    Button {
-                        peneltyChooseSheet.toggle()
-                        peneltyChoose.toggle()
-                        showPeneltyText()
-                    } label: {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .frame(width: 80, height: 60)
-                            Text("선택하기")
-                                .foregroundStyle(.white)
-                        }
-                    }
-                    //                    .tint(.brown)
-                    
+                    Text("₩")
                 }.padding()
             }
-            .sheet(isPresented: $peneltyChooseSheet, content: {
-                Text("PeneltySheet")
-            })
     }
-    
-    func showPeneltyText() {
-        if peneltyChoose == true {
-            penelty = "스타벅스 아메리카노 T"
-        } else {
-            penelty = ""
-        }
-    }
-    
 }
 
 #Preview {
