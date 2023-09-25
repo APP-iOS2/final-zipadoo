@@ -13,7 +13,9 @@ var dummyPercentage = ["닉넴1", "닉넴2", "닉넴3", "닉넴4", "닉넴4", "�
 var lateCommer = ["지각자1", "지각자2", "지각자3"]
 
 struct ArriveResultView: View {
-    
+
+    @ObservedObject var viewModel = UserViewModel()
+
     var body: some View {
         
         VStack {
@@ -21,9 +23,9 @@ struct ArriveResultView: View {
                 .padding()
             
             ScrollView {
-                ForEach(dummyPercentage, id: \.self) { friend in
+                ForEach(viewModel.userFetchArray) { friend in
                     
-                    arriveDataCell(friend: friend)
+                    arrivedDataCell(friend: friend)
                         .padding(.bottom, 12)
                 }
             }
@@ -39,9 +41,9 @@ struct ArriveResultView: View {
                     .foregroundColor(.gray) // 임시 색
                     
                 ScrollView {
-                    ForEach(lateCommer, id: \.self) { lateFriend in
+                    ForEach(viewModel.userFetchArray) { lateFriend in
                         
-                        arriveDataCell(friend: lateFriend)
+                        arrivedDataCell(friend: lateFriend)
                             .padding(.bottom, 12)
                     }
                 }
@@ -51,17 +53,22 @@ struct ArriveResultView: View {
             .frame(height: UIScreen.main.bounds.size.height * 0.35)
 
         }
+        .onAppear {
+            Task {
+                viewModel.fetchAllUsers()
+            }
+        }
     }
     
     /// 약속 멤버 도착정보 행(row)
-    private func arriveDataCell(friend: String) -> some View {
+    private func arrivedDataCell(friend: User) -> some View {
         HStack {
-            /// 이미지
-            ProfileImageView(size: .xSmall)
+            // 이미지
+            ProfileImageView(imageUrl: friend.profileImageString, size: .xSmall)
             
-            VStack {
+            VStack(alignment: .leading) {
                 
-                Text(friend)
+                Text(friend.nickName)
                     .fontWeight(.semibold)
                 
                 Text("Comment")

@@ -29,13 +29,13 @@ let dummyImageString: String = "https://encrypted-tbn0.gstatic.com/images?q=tbn:
 struct ProfileImageView: View {
     
     /// 파베작업 후 받아올 유저의 프로필 이미지
-    //    let profileImageString: String
+    let imageUrl: String
     let size: ProfileImageSize
     
     var body: some View {
         
         // 일단 Async이미지로 작성
-        AsyncImage(url: URL(string: dummyImageString)) { image in
+        AsyncImage(url: URL(string: imageUrl)) { image in
             image
                 .resizable()
                 .aspectRatio(contentMode: .fill)
@@ -49,5 +49,5 @@ struct ProfileImageView: View {
 }
 
 #Preview {
-    ProfileImageView(size: .medium)
+    ProfileImageView(imageUrl: "", size: .medium)
 }
