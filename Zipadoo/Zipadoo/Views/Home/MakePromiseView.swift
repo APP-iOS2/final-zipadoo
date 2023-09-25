@@ -12,9 +12,8 @@ struct MakePromiseView: View {
     
     @State private var promiseTitle: String = ""
     @State private var date = Date()
-    //    var friends = ["병구", "상규", "예슬"]
-    @State private var friends = ["병구", "상규", "예슬", "한구", "아라", "해수", "여훈"]
     private let today = Calendar.current.startOfDay(for: Date())
+    
     var body: some View {
         NavigationStack {
             ScrollView(.vertical) {
@@ -34,7 +33,7 @@ struct MakePromiseView: View {
                     AddPenaltyCell()
                         .padding(.top)
                     
-                    AddFriendCellView(friends: friends)
+                    AddFriendCellView()
                         .padding(.top) // 친구 추가뷰
                     
                 }.padding(.top, 5) // 작성뷰
