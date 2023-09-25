@@ -29,6 +29,14 @@
 
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		8B7D70282ABD732900497C1E /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7D70272ABD732900497C1E /* ProfileImageView.swift */; };
+		9A3145A92AC0AB12008E344C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A3145A82AC0AB12008E344C /* GoogleService-Info.plist */; };
+		9A3145AC2AC0AB44008E344C /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3145AB2AC0AB44008E344C /* LoginView.swift */; };
+		9A3145AE2AC0ABDA008E344C /* LoginByEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3145AD2AC0ABDA008E344C /* LoginByEmailView.swift */; };
+		9A3145B02AC0C51A008E344C /* LoginByEmailView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3145AF2AC0C51A008E344C /* LoginByEmailView2.swift */; };
+		9A995AEF2AC10FDB00DE3E18 /* FirebaseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A995AEE2AC10FDA00DE3E18 /* FirebaseUtil.swift */; };
+		9A995AF12AC1102600DE3E18 /* LoginByEmailView3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A995AF02AC1102600DE3E18 /* LoginByEmailView3.swift */; };
+		9A995AF32AC1179A00DE3E18 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A995AF22AC1179A00DE3E18 /* ImagePickerView.swift */; };
+		9A995AF52AC143DB00DE3E18 /* EmailLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A995AF42AC143DB00DE3E18 /* EmailLoginStore.swift */; };
 		C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
 		C04BCDC52ABD57E90024B487 /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC42ABD57E90024B487 /* LocationStore.swift */; };
@@ -51,15 +59,11 @@
 		FAD7EE682ABD86920042A55A /* ArriveResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE672ABD86920042A55A /* ArriveResultView.swift */; };
 		FAD7EE6A2ABD869C0042A55A /* PromiseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE692ABD869C0042A55A /* PromiseDetailView.swift */; };
 		FAD7EE6C2ABD86A70042A55A /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE6B2ABD86A70042A55A /* HomeMainView.swift */; };
-<<<<<<< HEAD
 
 		3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationStatusView.swift; sourceTree = "<group>"; };
 
 		FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE552ABD54690042A55A /* PromiseModel.swift */; };
 		FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */; };
-=======
-		FAD7EE6E2ABD86D00042A55A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAD7EE6D2ABD86D00042A55A /* GoogleService-Info.plist */; };
->>>>>>> parent of ac91518 ([FEAT] 로그인 프로토타입 1차 #10)
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +73,14 @@
 		082D54412AC122EB008CA928 /* KakaoStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoStore.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8B7D70272ABD732900497C1E /* ProfileImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
+		9A3145A82AC0AB12008E344C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../지파고 피리스트/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9A3145AB2AC0AB44008E344C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginView.swift; path = "../../../../../../../../Library/Mobile Documents/com~apple~CloudDocs/.Trash/final-zipadoo 오전 2.34.14/Zipadoo/Zipadoo/Views/LoginView.swift"; sourceTree = "<group>"; };
+		9A3145AD2AC0ABDA008E344C /* LoginByEmailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginByEmailView.swift; path = ../../../../../../../../LoginByEmailView.swift; sourceTree = "<group>"; };
+		9A3145AF2AC0C51A008E344C /* LoginByEmailView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginByEmailView2.swift; path = ../../../../../../../../LoginByEmailView2.swift; sourceTree = "<group>"; };
+		9A995AEE2AC10FDA00DE3E18 /* FirebaseUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUtil.swift; sourceTree = "<group>"; };
+		9A995AF02AC1102600DE3E18 /* LoginByEmailView3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginByEmailView3.swift; sourceTree = "<group>"; };
+		9A995AF22AC1179A00DE3E18 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		9A995AF42AC143DB00DE3E18 /* EmailLoginStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginStore.swift; sourceTree = "<group>"; };
 		C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailStore.swift; sourceTree = "<group>"; };
 
 		C04BCDC22ABD545A0024B487 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
@@ -88,14 +100,10 @@
 		FAD7EE672ABD86920042A55A /* ArriveResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
 		FAD7EE692ABD869C0042A55A /* PromiseDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
 		FAD7EE6B2ABD86A70042A55A /* HomeMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
 
 		FAD7EE552ABD54690042A55A /* PromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseModel.swift; sourceTree = "<group>"; };
 		FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewModel.swift; sourceTree = "<group>"; };
 
-=======
-		FAD7EE6D2ABD86D00042A55A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
->>>>>>> parent of ac91518 ([FEAT] 로그인 프로토타입 1차 #10)
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,9 +136,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9A3145AA2AC0AB27008E344C /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				9A3145AB2AC0AB44008E344C /* LoginView.swift */,
+				9A3145AD2AC0ABDA008E344C /* LoginByEmailView.swift */,
+				9A3145AF2AC0C51A008E344C /* LoginByEmailView2.swift */,
+				9A995AF02AC1102600DE3E18 /* LoginByEmailView3.swift */,
+				9A995AF22AC1179A00DE3E18 /* ImagePickerView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		C04607122ABC29F6006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				9A3145AA2AC0AB27008E344C /* Login */,
 				3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */,
 				FAD7EE652ABD86820042A55A /* TestView.swift */,
 				FAD7EE672ABD86920042A55A /* ArriveResultView.swift */,
@@ -144,6 +165,7 @@
 		C04607182ABC2A1F006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				9A995AF42AC143DB00DE3E18 /* EmailLoginStore.swift */,
 				C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */,
 			);
 			path = Home;
@@ -153,6 +175,7 @@
 		FAD5FE302ABBD3E700E05E6E = {
 			isa = PBXGroup;
 			children = (
+				9A3145A82AC0AB12008E344C /* GoogleService-Info.plist */,
 				FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */,
 				FAD5FE3A2ABBD3E700E05E6E /* Products */,
 				FAD7EE642ABD86600042A55A /* Recovered References */,
@@ -170,13 +193,9 @@
 		FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 
 				08052D872ABF2B8300BBB067 /* Info.plist */,
 				08052D852ABF27F000BBB067 /* GoogleService-Info.plist */,
-=======
-				FAD7EE6D2ABD86D00042A55A /* GoogleService-Info.plist */,
->>>>>>> parent of ac91518 ([FEAT] 로그인 프로토타입 1차 #10)
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -216,15 +235,11 @@
 		FAD5FE4B2ABBD40500E05E6E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-<<<<<<< HEAD
 
 				9A995AEE2AC10FDA00DE3E18 /* FirebaseUtil.swift */,
 
 				FAD7EE552ABD54690042A55A /* PromiseModel.swift */,
 				C04BCDC22ABD545A0024B487 /* LocationModel.swift */,
-=======
-				FAD5FE542ABBD63500E05E6E /* PromiseModel.swift */,
->>>>>>> parent of ac91518 ([FEAT] 로그인 프로토타입 1차 #10)
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -357,13 +372,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
-<<<<<<< HEAD
 
 				08052D862ABF27F000BBB067 /* GoogleService-Info.plist in Resources */,
 
-=======
-				FAD7EE6E2ABD86D00042A55A /* GoogleService-Info.plist in Resources */,
->>>>>>> parent of ac91518 ([FEAT] 로그인 프로토타입 1차 #10)
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 			);
@@ -399,7 +410,11 @@
 			files = (
 				FAD7EE6C2ABD86A70042A55A /* HomeMainView.swift in Sources */,
 				FAD7EE662ABD86820042A55A /* TestView.swift in Sources */,
+				9A3145AE2AC0ABDA008E344C /* LoginByEmailView.swift in Sources */,
+				9A3145B02AC0C51A008E344C /* LoginByEmailView2.swift in Sources */,
+				9A995AF32AC1179A00DE3E18 /* ImagePickerView.swift in Sources */,
 				FAD7EE6A2ABD869C0042A55A /* PromiseDetailView.swift in Sources */,
+				9A3145AC2AC0AB44008E344C /* LoginView.swift in Sources */,
 				8B7D70282ABD732900497C1E /* ProfileImageView.swift in Sources */,
 				FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */,
 
@@ -409,13 +424,11 @@
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
 				08052D822ABF26E600BBB067 /* KakaoTest.swift in Sources */,
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
+				9A995AEF2AC10FDB00DE3E18 /* FirebaseUtil.swift in Sources */,
 				C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */,
-<<<<<<< HEAD
 
 				9A995AF12AC1102600DE3E18 /* LoginByEmailView3.swift in Sources */,
 				9A995AF52AC143DB00DE3E18 /* EmailLoginStore.swift in Sources */,
-=======
->>>>>>> parent of ac91518 ([FEAT] 로그인 프로토타입 1차 #10)
 				FAD7EE682ABD86920042A55A /* ArriveResultView.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				3F8D1B182ABD1C1C004C1B21 /* FriendsLocationStatusView.swift in Sources */,

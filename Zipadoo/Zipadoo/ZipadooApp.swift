@@ -38,7 +38,6 @@ struct ZipadooApp: App {
     
     var body: some Scene {
         WindowGroup {
-<<<<<<< HEAD
 
             // onOpenURL()을 사용해 커스텀 URL 스킴 처리
         LoginView()
@@ -48,9 +47,6 @@ struct ZipadooApp: App {
                 }
             })
 
-=======
-            ContentView()
->>>>>>> parent of ac91518 ([FEAT] 로그인 프로토타입 1차 #10)
         }
     }
 }
