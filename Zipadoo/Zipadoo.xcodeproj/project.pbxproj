@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04980D352AC109DE0076D6A5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D342AC109DE0076D6A5 /* MapView.swift */; };
+		04980D372AC10C200076D6A5 /* PlaceMarkerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */; };
+		04980D392AC1180B0076D6A5 /* LocationDatas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D382AC1180B0076D6A5 /* LocationDatas.swift */; };
 		04BA00F22ABD14F4002EFBB9 /* FriendSellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00F12ABD14F4002EFBB9 /* FriendSellView.swift */; };
 		04BA00F42ABD160C002EFBB9 /* AddPromiseTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00F32ABD160C002EFBB9 /* AddPromiseTitleCell.swift */; };
 		04BA00F62ABD169C002EFBB9 /* AddDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */; };
@@ -30,6 +33,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		04980D342AC109DE0076D6A5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMarkerCell.swift; sourceTree = "<group>"; };
+		04980D382AC1180B0076D6A5 /* LocationDatas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDatas.swift; sourceTree = "<group>"; };
 		04BA00F12ABD14F4002EFBB9 /* FriendSellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendSellView.swift; sourceTree = "<group>"; };
 		04BA00F32ABD160C002EFBB9 /* AddPromiseTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseTitleCell.swift; sourceTree = "<group>"; };
 		04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDateCell.swift; sourceTree = "<group>"; };
@@ -64,6 +70,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		04980D332AC109A40076D6A5 /* AddPomisePlaceSubViews */ = {
+			isa = PBXGroup;
+			children = (
+				04980D342AC109DE0076D6A5 /* MapView.swift */,
+				04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */,
+				04980D382AC1180B0076D6A5 /* LocationDatas.swift */,
+			);
+			path = AddPomisePlaceSubViews;
+			sourceTree = "<group>";
+		};
 		04BA00F92ABD1A00002EFBB9 /* MakePromiseViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +87,7 @@
 				04BA00F32ABD160C002EFBB9 /* AddPromiseTitleCell.swift */,
 				04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */,
 				04BA00F72ABD173F002EFBB9 /* AddPromisePlaceCell.swift */,
+				04980D332AC109A40076D6A5 /* AddPomisePlaceSubViews */,
 				04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */,
 				04BA00FA2ABD1A23002EFBB9 /* AddFriendSubViews */,
 			);
@@ -99,6 +116,7 @@
 		C04607152ABC2A11006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				FAD5FE542ABBD63500E05E6E /* test3.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -165,7 +183,6 @@
 			isa = PBXGroup;
 			children = (
 				C04607152ABC2A11006836B7 /* Home */,
-				FAD5FE542ABBD63500E05E6E /* test3.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -306,11 +323,14 @@
 				04BA00F22ABD14F4002EFBB9 /* FriendSellView.swift in Sources */,
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
+				04980D392AC1180B0076D6A5 /* LocationDatas.swift in Sources */,
+				04980D352AC109DE0076D6A5 /* MapView.swift in Sources */,
 				04BA00FC2ABD1AAE002EFBB9 /* AddPenaltyCell.swift in Sources */,
 				04BA00FE2ABD22BC002EFBB9 /* AddPromiseUserCell.swift in Sources */,
 				04BA00F82ABD173F002EFBB9 /* AddPromisePlaceCell.swift in Sources */,
 				04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */,
 				04FDFE7C2ABC57E200A464CA /* TestView.swift in Sources */,
+				04980D372AC10C200076D6A5 /* PlaceMarkerCell.swift in Sources */,
 				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
 				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,
 			);
@@ -449,6 +469,8 @@
 				DEVELOPMENT_TEAM = 6R3M7VGRP2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "정확한 위치 측정을 위해 위치 정보를 가져옵니다";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용을 위해 위치정보를 받아옵니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -478,6 +500,8 @@
 				DEVELOPMENT_TEAM = 6R3M7VGRP2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "정확한 위치 측정을 위해 위치 정보를 가져옵니다";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용을 위해 위치정보를 받아옵니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

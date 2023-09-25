@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TestView: View {
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             NavigationLink(destination: MakePromiseView()) {
                 Text("약속 만들기")
             }

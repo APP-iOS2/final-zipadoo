@@ -15,7 +15,6 @@ struct MakePromiseView: View {
     //    var friends = ["병구", "상규", "예슬"]
     @State private var friends = ["병구", "상규", "예슬", "한구", "아라", "해수", "여훈"]
     private let today = Calendar.current.startOfDay(for: Date())
-    
     var body: some View {
         NavigationStack {
             ScrollView(.vertical) {

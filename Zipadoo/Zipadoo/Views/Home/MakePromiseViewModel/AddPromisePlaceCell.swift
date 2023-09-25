@@ -9,25 +9,33 @@ import SwiftUI
 
 struct AddPromisePlaceCell: View {
     @State private var mapViewSheet: Bool = false
+    @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "")
+    @State var address = ""
+    var locationStore: LocationStore = LocationStore()
+    
     var body: some View {
         Rectangle().stroke(Color.gray, lineWidth: 0.5)
             .frame(width: 350, height: 90, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
             .overlay {
                 HStack {
-                    Spacer()
-                    VStack(alignment: .leading) {
+                    HStack {
                         Text("장소")
                             .font(.title2)
-                        Spacer()
-                        Text("서울특별시 마포구 양화로 지하160")
+                            .padding(.trailing, 10)
+                        
+                        Divider()
+                        
+                        Text(promiseLocation.address)
                             .font(.callout)
+                            .padding(.leading, 5)
                     }
-                    .padding(.leading, -15)
+                    .padding(.leading, 0)
                     
                     Spacer()
                     
-                    Button {
-                        mapViewSheet.toggle()
+                    NavigationLink {
+//                        mapViewSheet.toggle()
+                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
                     } label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
@@ -41,7 +49,8 @@ struct AddPromisePlaceCell: View {
                 }.padding()
             }
             .sheet(isPresented: $mapViewSheet, content: {
-                Text("MapView")
+                MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
+                    .presentationDetents([.height(900)])
             })
     }
 }

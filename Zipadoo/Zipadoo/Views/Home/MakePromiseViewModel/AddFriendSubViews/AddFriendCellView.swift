@@ -50,7 +50,7 @@ struct AddFriendCellView: View {
                     VStack {
                         ZStack {
                             Color.accentColor
-                                .frame(width: 100, height: .infinity)
+                                .frame(width: 100, height: 150)
                             Button {
                                 addFriendsSheet.toggle()
                                 print("친구 추가")
