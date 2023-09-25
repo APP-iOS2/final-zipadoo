@@ -1,8 +1,8 @@
 //
-//  TossPayView.swift
-//  Zipadoo
+//  ContentView.swift
+//  SwiftUIExample
 //
-//  Created by 나예슬 on 2023/09/22.
+//  Created by 김진규 on 2022/09/27.
 //
 
 #if !os(macOS) && canImport(SwiftUI)
@@ -26,16 +26,26 @@ struct TossPayView: View {
     
     @State private var paymentMethod: PaymentMethod = .카드
     @State private var paymentInfo: PaymentInfo = Constants.테스트결제정보
+    
+    let potatoes: String = "현재 보유한 감자"
     @State private var myPotato: Int = 10
-    @State private var payMethod: String = "카드"
+    
+    struct PayButton {
+        let payCount: String
+        let payButtonValue: String
+    }
+    
+    let payButtonArray: [PayButton] = [
+        PayButton(payCount: "감자 100개", payButtonValue: "₩1,000"),
+        PayButton(payCount: "감자 500개", payButtonValue: "₩5,000"),
+        PayButton(payCount: "감자 1000개", payButtonValue: "₩10,000"),
+        PayButton(payCount: "감자 5000개", payButtonValue: "₩50,000"),
+        PayButton(payCount: "감자 10000개", payButtonValue: "₩100,000")
+    ]
     
     @Binding var isShownFullScreenCover: Bool
     
-    private let payButtonValues: [String] = ["₩1,000", "₩5,000", "₩10,000", "₩50,000", "₩100,000"]
-    let potatoes: String = "현재 보유한 감자"
-    private let payCount: [Int] = [100, 500, 1000, 5000, 10000]
-    
-    var paymentInfoLabelText: String {
+    var labeltext: String {
         """
         주문정보:
         \(paymentInfo.orderedInfo)
@@ -75,13 +85,70 @@ struct TossPayView: View {
                     .padding(.top, 10)
                     .padding(.bottom, 30)
                     
-                    ForEach(Array(zip(payButtonValues, payCount)), id: \.0) { value, count in
-                        selectPotatoCount(value: value, count: count)
+                    ForEach(payButtonArray, id: \.payCount) { payButton in
+                        HStack {
+                            Text("\(payButton.payCount)")
+                            
+                            Spacer()
+                            
+                            Button(action: {
+                                showingTossPayments.toggle()
+                            }, label: {
+                                Text("\(payButton.payButtonValue)")
+                                    .bold()
+                                    .foregroundColor(.white)
+                                    .frame(width: 100, height: 40)
+                                    .background(.blue)
+                                    .cornerRadius(5)
+                            })
+                        }
                         Divider()
                     }
                     .padding(.top, 3)
                     .padding(.bottom, 3)
                     
+                    Button(action: {
+                        showingTossPayments.toggle()
+                    }, label: {
+                        Text("")
+                            .foregroundColor(.white)
+                    })
+                    .popover(isPresented: $showingTossPayments, content: {
+                        TossPaymentsView(
+                            clientKey: Constants.clientKey,
+                            paymentMethod: paymentMethod,
+                            paymentInfo: paymentInfo,
+                            isPresented: $showingTossPayments
+                        )
+                        .onSuccess { (paymentKey: String, orderId: String, amount: Int64) in
+                            print("onSuccess paymentKey \(paymentKey)")
+                            print("onSuccess orderId \(orderId)")
+                            print("onSuccess amount \(amount)")
+                            let title = "TossPayments 요청에 성공하였습니다."
+                            let message = """
+                                              onSuccess
+                                              paymentKey: \(paymentKey)
+                                              orderId: \(orderId)
+                                              amount: \(amount)
+                                              """
+                            resultInfo = (title, message)
+                            showingResultAlert = true
+                        }
+                        .onFail { (errorCode: String, errorMessage: String, orderId: String) in
+                            print("onFail errorCode \(errorCode)")
+                            print("onFail errorMessage \(errorMessage)")
+                            print("onFail orderId \(orderId)")
+                            let title = "TossPayments 요청에 실패하였습니다."
+                            let message = """
+                                          onFail
+                                          errorCode: \(errorCode)
+                                          errorMessage: \(errorMessage)
+                                          orderId: \(orderId)
+                                          """
+                            resultInfo = (title, message)
+                            showingResultAlert = true
+                        }
+                    })
                 }
                 .padding(.horizontal, 12)
             }
@@ -100,60 +167,6 @@ struct TossPayView: View {
                     }
                 }
             }
-        }
-    }
-    
-    func selectPotatoCount(value: String, count: Int) -> some View {
-        return
-        HStack {
-            Text("감자 \(count)개")
-            Spacer()
-            Button(action: {
-                showingTossPayments.toggle()
-            }, label: {
-                Text("\(value)")
-                    .bold()
-                    .foregroundColor(.white)
-                    .frame(width: 100, height: 40)
-                    .background(.blue)
-                    .cornerRadius(5)
-            })
-            .popover(isPresented: $showingTossPayments, content: {
-                TossPaymentsView(
-                    clientKey: Constants.clientKey,
-                    paymentMethod: paymentMethod,
-                    paymentInfo: paymentInfo,
-                    isPresented: $showingTossPayments
-                )
-                .onSuccess { (paymentKey: String, orderId: String, amount: Int64) in
-                    print("onSuccess paymentKey \(paymentKey)")
-                    print("onSuccess orderId \(orderId)")
-                    print("onSuccess amount \(amount)")
-                    let title = "TossPayments 요청에 성공하였습니다."
-                    let message = """
-                    onSuccess
-                    paymentKey: \(paymentKey)
-                    orderId: \(orderId)
-                    amount: \(amount)
-                    """
-                    resultInfo = (title, message)
-                    showingResultAlert = true
-                }
-                .onFail { (errorCode: String, errorMessage: String, orderId: String) in
-                    print("onFail errorCode \(errorCode)")
-                    print("onFail errorMessage \(errorMessage)")
-                    print("onFail orderId \(orderId)")
-                    let title = "TossPayments 요청에 실패하였습니다."
-                    let message = """
-                onFail
-                errorCode: \(errorCode)
-                errorMessage: \(errorMessage)
-                orderId: \(orderId)
-                """
-                    resultInfo = (title, message)
-                    showingResultAlert = true
-                }
-            })
         }
     }
 }

@@ -29,7 +29,7 @@ struct PayingView: View {
         }
         .navigationTitle("충전하기")
         .sheet(isPresented: $isShowingToss, content: {
-            TossPayView()
+            TossPayView(isShownFullScreenCover: $isShowingToss)
         })
     }
 }
