@@ -14,14 +14,21 @@ class PromiseViewModel: ObservableObject {
     private let dbRef = Firestore.firestore().collection("Promise")
     
     init() {
-        
+        Task {
+            try await fetchPromise()
+        }
     }
     
     // MARK: - 약속 패치 함수
     /// 약속 패치 함수
     func fetchPromise() async throws {
         self.promiseViewModel.removeAll()
-        
+                
+        /*
+         participantIdArray에 ID 값과 같은 사람들만 가져온다.
+         guard let userID =
+         */
+
         do {
             let snapshot = try await dbRef.getDocuments()
             
@@ -106,8 +113,3 @@ class PromiseViewModel: ObservableObject {
         }
     }
 }
-
-/*
- participantIdArray에 ID 값과 같은 사람들만 가져온다.
- guard let userID =
- */

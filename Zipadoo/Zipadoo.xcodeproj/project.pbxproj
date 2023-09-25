@@ -26,7 +26,6 @@
 		FAD5FE592ABBD64200E05E6E /* test5.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE582ABBD64200E05E6E /* test5.swift */; };
 		FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE552ABD54690042A55A /* PromiseModel.swift */; };
 		FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */; };
-		FAD7EE5A2ABD82B10042A55A /* ModelTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE592ABD82B10042A55A /* ModelTestView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,7 +43,6 @@
 		FAD5FE582ABBD64200E05E6E /* test5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test5.swift; sourceTree = "<group>"; };
 		FAD7EE552ABD54690042A55A /* PromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseModel.swift; sourceTree = "<group>"; };
 		FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewModel.swift; sourceTree = "<group>"; };
-		FAD7EE592ABD82B10042A55A /* ModelTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTestView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,7 +108,6 @@
 			isa = PBXGroup;
 			children = (
 				FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */,
-				FAD7EE592ABD82B10042A55A /* ModelTestView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -268,7 +265,6 @@
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */,
-				FAD7EE5A2ABD82B10042A55A /* ModelTestView.swift in Sources */,
 				FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */,
 				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
 				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,

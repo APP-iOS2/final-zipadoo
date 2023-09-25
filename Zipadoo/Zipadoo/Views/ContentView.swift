@@ -9,8 +9,6 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        ModelTestView()
-        
         TabView {
             // 홈
             Text("홈 뷰")
