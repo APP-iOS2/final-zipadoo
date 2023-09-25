@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 enum SharingStatus: String {
     case preparing = "위치 공유 준비중"
@@ -19,6 +20,7 @@ struct PromiseDetailView: View {
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
     @State private var isShowingEditView: Bool = false
+    @State private var isShowingShareSheet: Bool = false
     
     // MARK: - Properties
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
@@ -63,13 +65,18 @@ struct PromiseDetailView: View {
         .navigationDestination(isPresented: $isShowingEditView) {
             // TODO: 수정뷰
         }
+        .sheet(
+            isPresented: $isShowingShareSheet,
+            onDismiss: { print("Dismiss") },
+            content: { ActivityViewController(activityItems: []) }
+        )
     }
     
     // MARK: - some Views
     private var zipadooToolbarView: some View {
         HStack {
             Button {
-                print(Date().timeIntervalSince1970)
+                isShowingShareSheet = true
             } label: {
                 Image(systemName: "square.and.arrow.up")
             }
