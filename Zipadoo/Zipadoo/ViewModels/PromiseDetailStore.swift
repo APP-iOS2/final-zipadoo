@@ -11,14 +11,14 @@ class PromiseDetailStore: ObservableObject {
     @Published var promise: Promise
     
     init() {
-        self.promise = Promise(id: "1",
+        self.promise = Promise(
                               makingUserID: "3",
-                              destination: "서울특별시 종로구 종로3길 17",
                               promiseTitle: "지파두 모각코^ㅡ^",
-                              participantIdArray: ["3", "4", "5"],
                               promiseDate: 1697094371.302136,
+                              destination: "서울특별시 종로구 종로3길 17",
+                              participantIdArray: ["3", "4", "5"],
                               checkDoublePromise: false,
-                              percentageIdArray: ["35", "34", "89"])
+                              locationIdArray: ["35", "34", "89"])
     }
     
     func calculateDate(date: Double) -> String {
