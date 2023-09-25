@@ -12,29 +12,39 @@ import KakaoSDKAuth
 import KakaoSDKUser
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    // 앱 실행 허용목록에서 카카오를 등록하고, 우리 앱으로 돌아올 수 있게하는 커스텀 URL 스킴을 설정함.
-  func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:],
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-      
-      if (AuthApi.isKakaoTalkLoginUrl(url)) {
-                  return AuthController.handleOpenUrl(url: url)
-              }
-
-    FirebaseApp.configure()
-
-    return true
-  }
+    func application(_ application: UIApplication, open url: URL,
+                     options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        
+        FirebaseApp.configure()
+        
+        if AuthApi.isKakaoTalkLoginUrl(url) {
+            return AuthController.handleOpenUrl(url: url)
+        } else {
+            return false
+        }
+    }
 }
 
 @main
 struct ZipadooApp: App {
-    @StateObject var urlHandler = URLHandler()
+    @State private var openURL: URL?
+    
+    init() {
+        // Kakao SDK 초기화
+        KakaoSDK.initSDK(appKey: "2feefdcbe9f4e8d9b38b5599080f86f0")
+    }
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            // onOpenURL()을 사용해 커스텀 URL 스킴 처리
+            KakaoTest()
+                .onOpenURL(perform: { url in
+                if AuthApi.isKakaoTalkLoginUrl(url) {
+                    AuthController.handleOpenUrl(url: url)
+                }
+            })
         }
     }
 }

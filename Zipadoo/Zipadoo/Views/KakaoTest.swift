@@ -1,18 +1,51 @@
 //
-//  kakaoTest.swift
+//  KakaoTest.swift
 //  Zipadoo
 //
 //  Created by 이재승 on 2023/09/23.
 //
 
 import SwiftUI
+import KakaoSDKCommon
+import KakaoSDKAuth
+import KakaoSDKUser
 
-struct kakaoTest: View {
+struct KakaoTest: View {
+    private let kakaoStore: KakaoStore = KakaoStore()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: {
+            kakaoStore.kakaoLogin()
+        }, label: {
+            Text("Login Button")
+        })
+        
+        Button(action: {
+            kakaoStore.kakaoDataConsent()
+        }, label: {
+            Text("Consent Button")
+        })
+        
+        Button(action: {
+            kakaoStore.bringkakaoUserData()
+        }, label: {
+            Text("Bring Data Button")
+        })
+        
+        Button(action: {
+            kakaoStore.kakaoLogout()
+        }, label: {
+            Text("Logout Button")
+        })
+        
+        Button(action: {
+            kakaoStore.cutKakaoConnection()
+        }, label: {
+            Text("Cut Connection Button")
+        })
     }
 }
 
 #Preview {
-    kakaoTest()
+    KakaoTest()
 }
