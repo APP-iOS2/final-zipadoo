@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import AppsFlyerLib
 
 struct ActivityViewController: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode

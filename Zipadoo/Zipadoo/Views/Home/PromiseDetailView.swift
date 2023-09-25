@@ -68,7 +68,7 @@ struct PromiseDetailView: View {
         .sheet(
             isPresented: $isShowingShareSheet,
             onDismiss: { print("Dismiss") },
-            content: { ActivityViewController(activityItems: []) }
+            content: { ActivityViewController(activityItems: ["https://zipadoo.onelink.me/QgIh/51ibebbu"]) }
         )
     }
     
