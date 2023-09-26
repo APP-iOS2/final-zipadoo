@@ -11,35 +11,66 @@ struct SettingView: View {
     @State private var isOnAlarm: Bool = true
     @State private var isOnGPS: Bool = true
     
+    @State private var isLogoutAlert: Bool = false
+    
     var body: some View {
-        List {
-            Toggle("알림 설정", isOn: $isOnAlarm)
-            Toggle("위치 공개", isOn: $isOnGPS)
-            NavigationLink {
-                VStack {
-                    Text("현재 로그인 아이디: 이재승짱짱맨")
-                    Text("계정 생성 날짜: 1875년 1월 28일")
-                    Spacer()
-                }
-                .navigationTitle("계정 정보 관리")
-            } label: {
-                Text("계정 정보 관리")
+        
+        Form {
+            Section {
+                Toggle("알림 설정", isOn: $isOnAlarm)
+                Toggle("위치 공개", isOn: $isOnGPS)
             }
-            NavigationLink {
-                List {
-                    Button(action: {}, label: {
-                        Text("오픈카톡으로 연락하기")
-                    })
-                    Button(action: {}, label: {
-                        Text("이메일로 연락하기")
-                    })
+            
+            Section {
+                NavigationLink {
+                    AccountView()
+                    
+                } label: {
+                    Text("회원정보 수정")
+                    
                 }
-                .navigationTitle("개발자에게 연락하기")
-            } label: {
-                Text("건의 사항")
+                
+                NavigationLink {
+                    List {
+                        Button(action: {}, label: {
+                            Text("오픈카톡으로 연락하기")
+                        })
+                        Button(action: {}, label: {
+                            Text("이메일로 연락하기")
+                        })
+                    }
+                    .navigationTitle("개발자에게 연락하기")
+                    
+                } label: {
+                    Text("건의 사항")
+                }
+            }
+            
+            // 로그아웃
+            Section {
+                Button {
+                    isLogoutAlert.toggle()
+                } label: {
+                    Text("로그아웃")
+                        .foregroundStyle(.red)
+                }
+                .alert(isPresented: $isLogoutAlert) {
+                    Alert(
+                        title: Text(""),
+                        message: Text("로그아웃 됩니다"),
+                        primaryButton: .default(Text("취소"), action: {
+                            isLogoutAlert = false
+                        }),
+                        secondaryButton: .destructive(Text("로그아웃"), action: {
+                            isLogoutAlert = false
+                            // 로그아웃 구현
+                        })
+                        
+                    )
+                }
             }
         }
-        .listStyle(.plain)
+//        .listStyle(.plain)
         .navigationTitle("설정")
     }
 }
