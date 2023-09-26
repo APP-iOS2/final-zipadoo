@@ -13,12 +13,12 @@ struct MapView: View {
     @Namespace var mapScope
     @Environment(\.dismiss) private var dismiss
     
-    var locationStore: LocationStore = LocationStore()
+    var addLocationStore: AddLocationStore = AddLocationStore()
     
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780),
         span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009))
-    @State private var location = Location(coordinate: CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780))
+    @State private var location = AddLocation(coordinate: CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780))
     @State var address = ""
     @State private var selectedPlace: Bool = false
     
@@ -87,7 +87,7 @@ struct MapView: View {
                                     
                                     Button {
                                         //                                        mapViewSheet.toggle()
-                                        promiseLocation = locationStore.setLocation(
+                                        promiseLocation = addLocationStore.setLocation(
                                             latitude: location.coordinate.latitude,
                                             longitude: location.coordinate.longitude,
                                             address: address)
@@ -127,7 +127,7 @@ struct MapView: View {
     }
     func makingKorAddress() {
         let touchPoint = region.center
-        location = Location(coordinate: touchPoint)
+        location = AddLocation(coordinate: touchPoint)
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(CLLocation(
             latitude: touchPoint.latitude,

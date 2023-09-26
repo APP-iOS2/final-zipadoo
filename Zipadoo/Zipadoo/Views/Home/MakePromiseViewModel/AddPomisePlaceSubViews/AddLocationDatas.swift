@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreLocation
 
-struct Location: Identifiable {
+struct AddLocation: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
 }
@@ -37,7 +37,7 @@ struct PromiseLocation: Identifiable, Codable {
     let address: String // 주소
 }
 
-class LocationStore {
+class AddLocationStore {
     func setLocation(latitude: Double, longitude: Double, address: String) -> PromiseLocation {
         let location = PromiseLocation(latitude: latitude, longitude: longitude, address: address)
         return location
