@@ -1,6 +1,7 @@
 //
 //  HomeMainView.swift
 //  Zipadoo
+//  약속 리스트 뷰
 //
 //  Created by 윤해수 on 2023/09/21.
 //
@@ -63,7 +64,7 @@ struct HomeMainView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink {
-                            TestView()
+                            AddPromiseView()
                         } label: {
                             Text("약속 추가")
                         }

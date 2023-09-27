@@ -8,6 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */; };
+		04980D352AC109DE0076D6A5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D342AC109DE0076D6A5 /* MapView.swift */; };
+		04980D372AC10C200076D6A5 /* PlaceMarkerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */; };
+		04980D392AC1180B0076D6A5 /* AddLocationDatas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D382AC1180B0076D6A5 /* AddLocationDatas.swift */; };
+		04BA00F22ABD14F4002EFBB9 /* FriendSellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00F12ABD14F4002EFBB9 /* FriendSellView.swift */; };
+		04BA00F42ABD160C002EFBB9 /* AddPromiseTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00F32ABD160C002EFBB9 /* AddPromiseTitleCell.swift */; };
+		04BA00F62ABD169C002EFBB9 /* AddDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */; };
+		04BA00FC2ABD1AAE002EFBB9 /* AddPenaltyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */; };
+		04BA00FE2ABD22BC002EFBB9 /* AddPromiseUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */; };
+		04FDFE7A2ABC2E8100A464CA /* MakePromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */; };
+		04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */; };
+		08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B42ABC1BE0005D231D /* MyPageView.swift */; };
+		08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */; };
+		08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BA2ABC1DA2005D231D /* SettingView.swift */; };
+		08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BC2ABC1E1C005D231D /* PayingView.swift */; };
+		1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BD72ABD16B800DE635D /* TossPayView.swift */; };
+		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
+		3FFF1CF42AC1696100A0C99E /* FriendsListVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */; };
+		8B006D862AC1D3D100C35519 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */; };
 		8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */; };
@@ -28,6 +46,14 @@
 		FA59EE352AC1645C00689EE3 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA59EE302AC1645C00689EE3 /* HomeMainView.swift */; };
 		FA59EE362AC1645C00689EE3 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA59EE312AC1645C00689EE3 /* TestView.swift */; };
 		FA59EE3A2AC1681900689EE3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA59EE392AC1681800689EE3 /* GoogleService-Info.plist */; };
+		8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */; };
+		C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */; };
+		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
+		C04BCDC52ABD57E90024B487 /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC42ABD57E90024B487 /* LocationStore.swift */; };
+		C04BCDC92ABD89C10024B487 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC82ABD89C10024B487 /* ShareView.swift */; };
+		C069D2BC2AC145D100A62E04 /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = C069D2BB2AC145D100A62E04 /* AppsFlyerLib */; };
+		FA294A792AC3E59C00485E09 /* AddPromisePlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA294A782AC3E59C00485E09 /* AddPromisePlaceCell.swift */; };
+		FA294A7D2AC3E6BD00485E09 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA294A7C2AC3E6BD00485E09 /* GoogleService-Info.plist */; };
 		FA7588992ABC36F50050446D /* PromiseTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7588982ABC36F50050446D /* PromiseTestData.swift */; };
 		FAB58B882ABD1879006B9E11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B872ABD1879006B9E11 /* FirebaseAuth */; };
 		FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8D2ABD1879006B9E11 /* FirebaseDatabase */; };
@@ -35,18 +61,41 @@
 		FAB58B942ABD1879006B9E11 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B932ABD1879006B9E11 /* FirebaseFirestore */; };
 		FAB58B982ABD1879006B9E11 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B972ABD1879006B9E11 /* FirebaseFirestoreSwift */; };
 		FAB58BAE2ABD1879006B9E11 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58BAD2ABD1879006B9E11 /* FirebaseStorage */; };
+		FAD3BD1C2AC2D19900117938 /* PromiseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD1B2AC2D19900117938 /* PromiseDetailView.swift */; };
+		FAD3BD222AC2D1A400117938 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD1E2AC2D1A300117938 /* HomeMainView.swift */; };
+		FAD3BD232AC2D1A400117938 /* FriendsLocationStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD1F2AC2D1A300117938 /* FriendsLocationStatusView.swift */; };
+		FAD3BD242AC2D1A400117938 /* ArriveResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD202AC2D1A300117938 /* ArriveResultView.swift */; };
+		FAD3BD2C2AC3BA9D00117938 /* Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD2B2AC3BA9D00117938 /* Extention.swift */; };
+		FAD3BD2E2AC3BABF00117938 /* AddPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD2D2AC3BABF00117938 /* AddPromiseView.swift */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
 		FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */; };
 		FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */; };
 		FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */; };
 		FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE502ABBD62600E05E6E /* test1.swift */; };
-		FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE522ABBD62D00E05E6E /* test2.swift */; };
 		FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE552ABD54690042A55A /* PromiseModel.swift */; };
 		FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
+		04980D342AC109DE0076D6A5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMarkerCell.swift; sourceTree = "<group>"; };
+		04980D382AC1180B0076D6A5 /* AddLocationDatas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationDatas.swift; sourceTree = "<group>"; };
+		04BA00F12ABD14F4002EFBB9 /* FriendSellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendSellView.swift; sourceTree = "<group>"; };
+		04BA00F32ABD160C002EFBB9 /* AddPromiseTitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseTitleCell.swift; sourceTree = "<group>"; };
+		04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDateCell.swift; sourceTree = "<group>"; };
+		04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPenaltyCell.swift; sourceTree = "<group>"; };
+		04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseUserCell.swift; sourceTree = "<group>"; };
+		04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePromiseView.swift; sourceTree = "<group>"; };
+		04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendCellView.swift; sourceTree = "<group>"; };
+		08C6F0B42ABC1BE0005D231D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
+		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
+		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
+		3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationStatusView.swift; sourceTree = "<group>"; };
+		3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListVIew.swift; sourceTree = "<group>"; };
+		8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyle.swift; sourceTree = "<group>"; };
 		8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
@@ -68,15 +117,38 @@
 		FA59EE312AC1645C00689EE3 /* TestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		FA59EE392AC1681800689EE3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA7588982ABC36F50050446D /* PromiseTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTestData.swift; sourceTree = "<group>"; };
+
+		8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilView.swift; sourceTree = "<group>"; };
+		C04607192ABC2A28006836B7 /* empty */ = {isa = PBXFileReference; lastKnownFileType = text; path = empty; sourceTree = "<group>"; };
+		C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
+		C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailStore.swift; sourceTree = "<group>"; };
+		C04BCDC22ABD545A0024B487 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		C04BCDC42ABD57E90024B487 /* LocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStore.swift; sourceTree = "<group>"; };
+		C04BCDC82ABD89C10024B487 /* ShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
+		C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zipadoo.entitlements; sourceTree = "<group>"; };
+		C069D2B92AC141AC00A62E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		FA294A782AC3E59C00485E09 /* AddPromisePlaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPromisePlaceCell.swift; sourceTree = "<group>"; };
+		FA294A7C2AC3E6BD00485E09 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FA7588982ABC36F50050446D /* PromiseTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTestData.swift; sourceTree = "<group>"; };
+		FAD3BD1B2AC2D19900117938 /* PromiseDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
+		FAD3BD1E2AC2D1A300117938 /* HomeMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
+		FAD3BD1F2AC2D1A300117938 /* FriendsLocationStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationStatusView.swift; sourceTree = "<group>"; };
+		FAD3BD202AC2D1A300117938 /* ArriveResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
+		FAD3BD2B2AC3BA9D00117938 /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
+		FAD3BD2D2AC3BABF00117938 /* AddPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPromiseView.swift; path = Zipadoo/Views/AddPromiseView.swift; sourceTree = SOURCE_ROOT; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
 		FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FAD5FE502ABBD62600E05E6E /* test1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test1.swift; sourceTree = "<group>"; };
-		FAD5FE522ABBD62D00E05E6E /* test2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test2.swift; sourceTree = "<group>"; };
+		FAD5FE542ABBD63500E05E6E /* PromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseModel.swift; sourceTree = "<group>"; };
 		FAD7EE552ABD54690042A55A /* PromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseModel.swift; sourceTree = "<group>"; };
 		FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewModel.swift; sourceTree = "<group>"; };
+		FAD7EE652ABD86820042A55A /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		FAD7EE672ABD86920042A55A /* ArriveResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
+		FAD7EE692ABD869C0042A55A /* PromiseDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
+		FAD7EE6B2ABD86A70042A55A /* HomeMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +156,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */,
+				C069D2BC2AC145D100A62E04 /* AppsFlyerLib in Frameworks */,
 				FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */,
 				FAB58B942ABD1879006B9E11 /* FirebaseFirestore in Frameworks */,
 				FAB58B982ABD1879006B9E11 /* FirebaseFirestoreSwift in Frameworks */,
@@ -119,6 +193,59 @@
 				8BDF9CCB2ABD1DE800255857 /* empty33 */,
 			);
 			path = Friends;
+		04980D332AC109A40076D6A5 /* AddPomisePlaceSubViews */ = {
+			isa = PBXGroup;
+			children = (
+				04980D342AC109DE0076D6A5 /* MapView.swift */,
+				04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */,
+				04980D382AC1180B0076D6A5 /* AddLocationDatas.swift */,
+			);
+			path = AddPomisePlaceSubViews;
+			sourceTree = "<group>";
+		};
+		04BA00F92ABD1A00002EFBB9 /* MakePromiseViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */,
+				04BA00F32ABD160C002EFBB9 /* AddPromiseTitleCell.swift */,
+				FA294A782AC3E59C00485E09 /* AddPromisePlaceCell.swift */,
+				04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */,
+				04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */,
+				04980D332AC109A40076D6A5 /* AddPomisePlaceSubViews */,
+				04BA00FA2ABD1A23002EFBB9 /* AddFriendSubViews */,
+			);
+			path = MakePromiseViewModel;
+			sourceTree = "<group>";
+		};
+		04BA00FA2ABD1A23002EFBB9 /* AddFriendSubViews */ = {
+			isa = PBXGroup;
+			children = (
+				04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */,
+				04BA00F12ABD14F4002EFBB9 /* FriendSellView.swift */,
+				3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */,
+			);
+			path = AddFriendSubViews;
+			sourceTree = "<group>";
+		};
+		08C6F0BE2ABC1E22005D231D /* MyPageViews */ = {
+			isa = PBXGroup;
+			children = (
+				08C6F0B42ABC1BE0005D231D /* MyPageView.swift */,
+				1BF69BD72ABD16B800DE635D /* TossPayView.swift */,
+				08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */,
+				08C6F0BA2ABC1DA2005D231D /* SettingView.swift */,
+				08C6F0BC2ABC1E1C005D231D /* PayingView.swift */,
+				8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */,
+			);
+			path = MyPageViews;
+			sourceTree = "<group>";
+		};
+		8B006D842AC1D3A600C35519 /* MyPageViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */,
+			);
+			path = MyPageViewModel;
 			sourceTree = "<group>";
 		};
 		C04607122ABC29F6006836B7 /* Home */ = {
@@ -129,6 +256,20 @@
 				FA59EE2F2AC1645C00689EE3 /* PromiseDetailView.swift */,
 				FA59EE312AC1645C00689EE3 /* TestView.swift */,
 				C04607132ABC2A08006836B7 /* empty1 */,
+				FAD3BD1E2AC2D1A300117938 /* HomeMainView.swift */,
+				FAD3BD2D2AC3BABF00117938 /* AddPromiseView.swift */,
+				FAD3BD202AC2D1A300117938 /* ArriveResultView.swift */,
+				FAD3BD1F2AC2D1A300117938 /* FriendsLocationStatusView.swift */,
+				FAD3BD1B2AC2D19900117938 /* PromiseDetailView.swift */,
+				04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */,
+				04BA00F92ABD1A00002EFBB9 /* MakePromiseViewModel */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		C04607152ABC2A11006836B7 /* Home */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -162,6 +303,7 @@
 				FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */,
 				FAD5FE3A2ABBD3E700E05E6E /* Products */,
 				FA59EE2C2AC1642600689EE3 /* Recovered References */,
+				FAD7EE642ABD86600042A55A /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -177,6 +319,9 @@
 			isa = PBXGroup;
 			children = (
 				FA59EE392AC1681800689EE3 /* GoogleService-Info.plist */,
+				C069D2B92AC141AC00A62E04 /* Info.plist */,
+				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
+				FA294A7C2AC3E6BD00485E09 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -205,6 +350,9 @@
 				C04607122ABC29F6006836B7 /* Home */,
 				8BAAEAC92ABC444800477574 /* Friends */,
 				FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */,
+				C04607122ABC29F6006836B7 /* Home */,
+				08C6F0BE2ABC1E22005D231D /* MyPageViews */,
+				C04BCDC82ABD89C10024B487 /* ShareView.swift */,
 				8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */,
 			);
 			path = Views;
@@ -227,6 +375,7 @@
 			children = (
 				C04607182ABC2A1F006836B7 /* Home */,
 				8BAAEACB2ABC445B00477574 /* Friends */,
+				8B006D842AC1D3A600C35519 /* MyPageViewModel */,
 				FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */,
 				C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */,
 				C04BCDC42ABD57E90024B487 /* LocationStore.swift */,
@@ -239,7 +388,7 @@
 		FAD5FE4D2ABBD43600E05E6E /* Extention */ = {
 			isa = PBXGroup;
 			children = (
-				FAD5FE522ABBD62D00E05E6E /* test2.swift */,
+				FAD3BD2B2AC3BA9D00117938 /* Extention.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -261,6 +410,22 @@
 			path = Modifier;
 			sourceTree = "<group>";
 		};
+		FAD7EE642ABD86600042A55A /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				FAD5FE542ABBD63500E05E6E /* PromiseModel.swift */,
+				8BD44EC72AC13FE600A4694C /* ArriveResultView.swift */,
+				C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */,
+				FAD7EE6B2ABD86A70042A55A /* HomeMainView.swift */,
+				FAD7EE652ABD86820042A55A /* TestView.swift */,
+				FAD7EE692ABD869C0042A55A /* PromiseDetailView.swift */,
+				FAD7EE672ABD86920042A55A /* ArriveResultView.swift */,
+				3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */,
+				C04607192ABC2A28006836B7 /* empty */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -279,12 +444,14 @@
 			);
 			name = Zipadoo;
 			packageProductDependencies = (
+				1BF69BDA2ABD16C500DE635D /* TossPayments */,
 				FAB58B872ABD1879006B9E11 /* FirebaseAuth */,
 				FAB58B8D2ABD1879006B9E11 /* FirebaseDatabase */,
 				FAB58B8F2ABD1879006B9E11 /* FirebaseDatabaseSwift */,
 				FAB58B932ABD1879006B9E11 /* FirebaseFirestore */,
 				FAB58B972ABD1879006B9E11 /* FirebaseFirestoreSwift */,
 				FAB58BAD2ABD1879006B9E11 /* FirebaseStorage */,
+				C069D2BB2AC145D100A62E04 /* AppsFlyerLib */,
 			);
 			productName = Zipadoo;
 			productReference = FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */;
@@ -315,7 +482,9 @@
 			);
 			mainGroup = FAD5FE302ABBD3E700E05E6E;
 			packageReferences = (
+				1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */,
 				FAB58B7A2ABD1879006B9E11 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C069D2BA2AC145D100A62E04 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
 			);
 			productRefGroup = FAD5FE3A2ABBD3E700E05E6E /* Products */;
 			projectDirPath = "";
@@ -337,6 +506,8 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				C04607172ABC2A1A006836B7 /* empty2 in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
+				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
+				FA294A7D2AC3E6BD00485E09 /* GoogleService-Info.plist in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FA59EE3A2AC1681900689EE3 /* GoogleService-Info.plist in Resources */,
 				8BDF9CC82ABD1DCF00255857 /* empty22 in Resources */,
@@ -376,22 +547,50 @@
 				FA59EE362AC1645C00689EE3 /* TestView.swift in Sources */,
 				8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */,
 				3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */,
+				08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */,
+				1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */,
+				08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */,
+				08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */,
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
+				8B006D862AC1D3D100C35519 /* EditProfileViewModel.swift in Sources */,
+				04FDFE7A2ABC2E8100A464CA /* MakePromiseView.swift in Sources */,
+				FAD3BD1C2AC2D19900117938 /* PromiseDetailView.swift in Sources */,
+				04BA00F62ABD169C002EFBB9 /* AddDateCell.swift in Sources */,
+				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
+				04BA00F42ABD160C002EFBB9 /* AddPromiseTitleCell.swift in Sources */,
+				04BA00F22ABD14F4002EFBB9 /* FriendSellView.swift in Sources */,
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
 				FA59EE352AC1645C00689EE3 /* HomeMainView.swift in Sources */,
 				FA59EE342AC1645C00689EE3 /* PromiseDetailView.swift in Sources */,
 				C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */,
+				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
+				04980D392AC1180B0076D6A5 /* AddLocationDatas.swift in Sources */,
+				04980D352AC109DE0076D6A5 /* MapView.swift in Sources */,
+				04BA00FC2ABD1AAE002EFBB9 /* AddPenaltyCell.swift in Sources */,
+				FAD3BD2E2AC3BABF00117938 /* AddPromiseView.swift in Sources */,
+				04BA00FE2ABD22BC002EFBB9 /* AddPromiseUserCell.swift in Sources */,
+				FAD3BD222AC2D1A400117938 /* HomeMainView.swift in Sources */,
+				04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */,
+				04980D372AC10C200076D6A5 /* PlaceMarkerCell.swift in Sources */,
+				3FFF1CF42AC1696100A0C99E /* FriendsListVIew.swift in Sources */,
+				C04BCDC92ABD89C10024B487 /* ShareView.swift in Sources */,
 				C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */,
+				08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */,
 				8BD44ECE2AC14B2D00A4694C /* ProfileImageUploader.swift in Sources */,
 				FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */,
+				FA294A792AC3E59C00485E09 /* AddPromisePlaceCell.swift in Sources */,
+				FAD3BD242AC2D1A400117938 /* ArriveResultView.swift in Sources */,
 				8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */,
 				FA59EE322AC1645C00689EE3 /* ArriveResultView.swift in Sources */,
 				8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */,
+				FAD3BD2C2AC3BA9D00117938 /* Extention.swift in Sources */,
 				FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */,
 				C04BCDC52ABD57E90024B487 /* LocationStore.swift in Sources */,
+				FAD3BD232AC2D1A400117938 /* FriendsLocationStatusView.swift in Sources */,
 				8BD44ECC2AC14B2700A4694C /* UserViewModel.swift in Sources */,
+				8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */,
 				FA7588992ABC36F50050446D /* PromiseTestData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,13 +722,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Zipadoo/Zipadoo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Zipadoo/Preview Content\"";
 				DEVELOPMENT_TEAM = 6R3M7VGRP2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Zipadoo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Zipadoo;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "정확한 위치 측정을 위해 위치 정보를 가져옵니다";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용을 위해 위치정보를 받아옵니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -540,7 +743,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = education.techit.zipadoo.Zipadoo;
+				PRODUCT_BUNDLE_IDENTIFIER = education.techit.zipadoo.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -553,13 +756,17 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Zipadoo/Zipadoo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Zipadoo/Preview Content\"";
 				DEVELOPMENT_TEAM = 6R3M7VGRP2;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Zipadoo/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Zipadoo;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "정확한 위치 측정을 위해 위치 정보를 가져옵니다";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "앱 사용을 위해 위치정보를 받아옵니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -570,7 +777,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = education.techit.zipadoo.Zipadoo;
+				PRODUCT_BUNDLE_IDENTIFIER = education.techit.zipadoo.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -602,6 +809,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/tosspayments/payment-sdk-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.23;
+			};
+		};
+		C069D2BA2AC145D100A62E04 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 6.12.2;
+			};
+		};
 		FAB58B7A2ABD1879006B9E11 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -613,6 +836,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		1BF69BDA2ABD16C500DE635D /* TossPayments */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */;
+			productName = TossPayments;
+		};
+		C069D2BB2AC145D100A62E04 /* AppsFlyerLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C069D2BA2AC145D100A62E04 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
+			productName = AppsFlyerLib;
+		};
 		FAB58B872ABD1879006B9E11 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FAB58B7A2ABD1879006B9E11 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
