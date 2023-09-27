@@ -2,16 +2,194 @@
 //  TestView.swift
 //  Zipadoo
 //
-//  Created by 윤해수 on 2023/09/21.
+//  Created by 나예슬 on 2023/09/25.
 //
 
 import SwiftUI
 
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+
 struct TestView: View {
+    @Environment(\.dismiss) private var dismiss
+    
+    @State private var promiseTitle: String = ""
+    @State private var date = Date()
+    @State var penaltyInt: Int = 0
+    @State var penaltyString: String = ""
+    @State var penaltyChoose: Bool = false
+    @State var penaltyChooseSheet: Bool = false
+    
+    @State private var selectedValue = 100 // 초기 선택값 설정
+    let minValue = 100
+    let maxValue = 10000
+    let step = 100
+    
+    @State private var friends = ["병구", "상규", "예슬", "한두", "아라", "해수", "여훈"]
+    @State private var addFriendSheet: Bool = false
+    private let today = Calendar.current.startOfDay(for: Date())
+    @State private var mapViewSheet: Bool = false
+    @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "")
+    @State var address = ""
+    var locationStore: LocationStore = LocationStore()
+    @State private var showingAlert: Bool = false
+    
     var body: some View {
         NavigationStack {
-            NavigationLink(destination: MakePromiseView()) {
-                Text("약속 만들기")
+            ScrollView(showsIndicators: false) {
+                
+                VStack(alignment: .leading) {
+                    Text("약속 이름")
+                        .font(.title2)
+                        .bold()
+                    
+                    HStack {
+                        TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
+                            .onChange(of: promiseTitle) {
+                                if promiseTitle.count > 15 {
+                                    promiseTitle = String(promiseTitle.prefix(15))
+                                }
+                            }
+                        
+                        Text("\(promiseTitle.count)")
+                            .foregroundColor(.gray)
+                            .padding(.trailing, -7)
+                        Text("/15")
+                            .foregroundColor(.gray)
+                    }
+                    .padding(.top, 10)
+                    
+                    Divider()
+                        .frame(maxWidth: .infinity)
+                        .overlay {
+                            Color.gray
+                        }
+                    
+                    Text("약속 날짜/시간")
+                        .font(.title2)
+                        .bold()
+                        .padding(.top, 40)
+                    Text("약속시간 1시간 전부터 위치공유가 시작됩니다.")
+                        .foregroundColor(.gray)
+                    
+                    DatePicker("날짜/시간", selection: $date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
+                        .datePickerStyle(.compact)
+                        .labelsHidden()
+                        .padding(.top, 10)
+                    
+                    Text("약속 장소")
+                        .font(.title2)
+                        .bold()
+                        .padding(.top, 40)
+                    
+                    NavigationLink {
+                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
+                    } label: {
+                        Label("지역검색", systemImage: "mappin")
+                            .foregroundColor(.white)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .sheet(isPresented: $mapViewSheet, content: {
+                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
+                            .presentationDetents([.height(900)])
+                    })
+                    
+                    Text(promiseLocation.address)
+                        .font(.callout)
+                    
+//                    Text("지각비")
+//                        .font(.title2)
+//                        .bold()
+//                        .padding(.top, 40)
+//                    Text("100 단위로 입력 가능합니다.")
+//                        .foregroundColor(.gray)
+//
+//                    HStack {
+//                        TextField("지각 시 제출 할 감자수를 입력해주세요", text: $penaltyString, axis: .horizontal)
+//                            .frame(maxWidth: .infinity)
+//                            .textFieldStyle(.roundedBorder)
+//                            .keyboardType(.numberPad)
+//                            .multilineTextAlignment(.trailing)
+//                        Text("개")
+//                    }
+                    
+                    Text("지각비")
+                        .font(.title2)
+                        .bold()
+                        .padding(.top, 40)
+                    Text("100 단위로 선택 가능합니다.")
+                        .foregroundColor(.gray)
+                    
+                    Picker(selection: $selectedValue, label: Text("지각비")) {
+                        ForEach((minValue...maxValue).filter { $0 % step == 0 }, id: \.self, content: { value in
+                            Text("\(value) 개").tag(value)
+                        })
+                    }
+                    .pickerStyle(WheelPickerStyle())
+                    .frame(maxWidth: .infinity)
+                    
+                    Text("선택한 감자: \(selectedValue) 개")
+                        .font(.title3)
+                        .padding(.leading, 100)
+                    
+                    HStack {
+                        Text("친구추가")
+                            .font(.title2)
+                            .bold()
+                        
+                        Spacer()
+                        
+                        Button {
+                            addFriendSheet.toggle()
+                            print("친구 추가")
+                        } label: {
+                            Label("추가하기", systemImage: "plus")
+                                .foregroundColor(.black)
+                        }
+                        .buttonStyle(.bordered)
+                    }
+                    .padding(.top, 40)
+                    
+                    AddFriendCellView()
+                }
+                .padding(.horizontal, 15)
+            }
+            .scrollIndicators(.hidden)
+            .navigationTitle("약속 추가")
+            .navigationBarTitleDisplayMode(.inline)
+            .sheet(isPresented: $addFriendSheet, content: {
+                Text("AddFirendsSheet")
+            })
+            .onTapGesture {
+                hideKeyboard()
+            }
+            
+            Button {
+                showingAlert.toggle()
+            } label: {
+                Text("약속 등록하기")
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .bold()
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
+                    .background(.blue)
+                    .padding(.bottom, 1)
+            }
+            .padding(.horizontal, 12)
+            .alert(isPresented: $showingAlert) {
+                Alert(
+                    title: Text(""),
+                    message: Text("등록이 완료되었습니다."),
+                    dismissButton:
+                            .default(Text("확인"),
+                                     action: {
+                                         dismiss()
+                                     })
+                )
             }
         }
     }
