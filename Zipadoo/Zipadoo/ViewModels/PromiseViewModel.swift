@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 
+@MainActor
 class PromiseViewModel: ObservableObject {
     @Published var promiseViewModel: [Promise] = []
     
@@ -23,7 +24,7 @@ class PromiseViewModel: ObservableObject {
     /// 약속 패치 함수
     func fetchPromise() async throws {
         self.promiseViewModel.removeAll()
-                
+        
         /*
          participantIdArray에 ID 값과 같은 사람들만 가져온다.
          guard let userID =
@@ -57,6 +58,7 @@ class PromiseViewModel: ObservableObject {
                 
                 // promiseViewModel에 추가
                 self.promiseViewModel.append(promise)
+                
             }
         } catch {
             print("Error getting documents: \(error)")

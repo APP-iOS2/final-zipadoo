@@ -12,16 +12,26 @@ import SwiftUI
 struct HomeMainView: View {
     
     // 더미데이터
-    private let dataArray: [Promise] = [promise, promise1]
+    @State private var myPromise: [Promise] = []
+    @StateObject private var promise: PromiseViewModel = PromiseViewModel()
     
     var body: some View {
         NavigationStack {
             // 약속 배열 값 존재하는지 확인.
-            if dataArray.isEmpty {
+            if myPromise.isEmpty {
                 Text("현재 약속이 1도 없어요!")
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            NavigationLink {
+                                AddPromiseView()
+                            } label: {
+                                Text("약속 추가")
+                            }
+                        }
+                    }
             } else {
                 ScrollView {
-                    ForEach(dataArray, id: \.self) { promise in
+                    ForEach(myPromise, id: \.self) { promise in
                         NavigationLink {
                             // 각 약속 상세 뷰로 이동
                         } label: {

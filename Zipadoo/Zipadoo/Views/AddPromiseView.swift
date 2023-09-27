@@ -16,7 +16,6 @@ struct AddPromiseView: View {
     // 저장될 변수
     @State private var promiseTitle: String = ""
     @State private var date = Date()
-    @State private var address = ""
     
     // 지각비 변수 및 상수 값
     @State private var selectedValue = 100 // 초기 선택값 설정
@@ -31,6 +30,9 @@ struct AddPromiseView: View {
     @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "")
     @State var addLocationStore: AddLocationStore = AddLocationStore()
     @State private var showingAlert: Bool = false
+    
+    @State private var addPromise: Promise = Promise()
+    @StateObject private var promise: PromiseViewModel = PromiseViewModel()
     
     var body: some View {
         NavigationStack {
@@ -76,6 +78,10 @@ struct AddPromiseView: View {
                         .datePickerStyle(.compact)
                         .labelsHidden()
                         .padding(.top, 10)
+                    
+                    Button(action: {print(date)}, label: {
+                        Text("Button")
+                    })
                     
                     // MARK: - 약속 장소 구현
                     Text("약속 장소")
@@ -172,6 +178,10 @@ struct AddPromiseView: View {
             
             // MARK: - 약속 등록 버튼 구현
             Button {
+                addPromise.promiseTitle = promiseTitle
+                addPromise.promiseDate = date.timeIntervalSince1970
+                addPromise.destination = promiseLocation.address
+                promise.addPromise(addPromise)
                 showingAlert.toggle()
             } label: {
                 Text("약속 등록하기")
