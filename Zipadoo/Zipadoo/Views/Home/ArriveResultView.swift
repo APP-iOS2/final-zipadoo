@@ -13,9 +13,9 @@ var dummyPercentage = ["닉넴1", "닉넴2", "닉넴3", "닉넴4", "닉넴4", "�
 var lateCommer = ["지각자1", "지각자2", "지각자3"]
 
 struct ArriveResultView: View {
-    
+
     @ObservedObject var viewModel = UserViewModel()
-    
+
     var body: some View {
         
         VStack {
