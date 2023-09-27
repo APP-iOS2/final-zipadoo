@@ -13,7 +13,6 @@
 		08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BC2ABC1E1C005D231D /* PayingView.swift */; };
 		1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BD72ABD16B800DE635D /* TossPayView.swift */; };
 		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
-		8B006D812AC1B6C700C35519 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B006D802AC1B6C700C35519 /* GoogleService-Info.plist */; };
 		8B006D862AC1D3D100C35519 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */; };
@@ -51,7 +50,6 @@
 		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
 		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
-		8B006D802AC1B6C700C35519 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
@@ -131,7 +129,6 @@
 		FAD5FE302ABBD3E700E05E6E = {
 			isa = PBXGroup;
 			children = (
-				8B006D802AC1B6C700C35519 /* GoogleService-Info.plist */,
 				FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */,
 				FAD5FE3A2ABBD3E700E05E6E /* Products */,
 			);
@@ -301,7 +298,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
-				8B006D812AC1B6C700C35519 /* GoogleService-Info.plist in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 			);

@@ -14,30 +14,19 @@ struct AccountView: View {
     
     @Environment (\.dismiss) private var dismiss
     
+    /// 알람노출
     @State var isEditAlert: Bool = false
-    @State var isPromaryAlert: Bool = false
     
-    /// 비밀번호를 동일하게 썼다면 true
-    var isCorrectPassword: Bool {
-        viewModel.password == viewModel.passwordCheck
+    /// 비밀번호확인이 다르다면 true
+    var isPasswordDifferent: Bool {
+        viewModel.password != viewModel.passwordCheck
     }
     
-    // 알람 메세지
-    var alertMessage: String {
-        if viewModel.nickname.isEmpty || viewModel.phoneNumber.isEmpty ||
-            viewModel.password.isEmpty ||
-            viewModel.passwordCheck.isEmpty {
-            "정보를 채워주세요"
-            
-        } else {
-            viewModel.password == viewModel.passwordCheck ? "회원정보가 수정됩니다" : "비밀번호를 다시 확인해주세요"
-        }
+    /// 비어있는 TextField가 있을 때 true
+    var isFieldEmpty: Bool {
+        viewModel.nickname.isEmpty || viewModel.phoneNumber.isEmpty || viewModel.password.isEmpty || viewModel.passwordCheck.isEmpty
     }
-    
-    var secondaryButtonText: String {
-        viewModel.password == viewModel.passwordCheck ? "수정" : "확인"
-    }
-    
+
     var body: some View {
         
         ScrollView {
@@ -67,13 +56,15 @@ struct AccountView: View {
                     .padding(.bottom)
                 
                 secureTextFieldCell("비밀번호 확인", text: $viewModel.passwordCheck)
-                if isCorrectPassword {
-                    Text("비밀번호가 일치합니다")
-                        .foregroundStyle(.green)
-                        .font(.footnote)
-                } else {
+                
+                // 비밀번호 확인 밑 문구
+                if isPasswordDifferent && !viewModel.passwordCheck.isEmpty {
                     Text("비밀번호가 일치하지 않습니다")
                         .foregroundStyle(.red)
+                        .font(.footnote)
+                } else if !viewModel.passwordCheck.isEmpty {
+                    Text("비밀번호가 일치합니다")
+                        .foregroundStyle(.green)
                         .font(.footnote)
                 }
                 
@@ -90,17 +81,18 @@ struct AccountView: View {
                 Button(action: { isEditAlert.toggle() }, label: {
                     Text("수정")
                 })
+                .disabled(isPasswordDifferent || isFieldEmpty) // 비밀번호가 다르게 입력되거나 필드가 하나라도 비어있으면 비활성화
             }
         }
         .alert(isPresented: $isEditAlert) {
             Alert(
                 title: Text(""),
-                message: Text(alertMessage),
+                message: Text("회원정보가 수정됩니다"),
                 
                 primaryButton: .default(Text("취소"), action: {
                     isEditAlert = false
                 }),
-                secondaryButton: .destructive(Text(secondaryButtonText), action: {
+                secondaryButton: .destructive(Text("수정"), action: {
                     isEditAlert = false
                     dismiss()
                 
@@ -111,6 +103,7 @@ struct AccountView: View {
     
     private func textFieldCell(_ title: String, text: Binding<String>) -> some View {
         VStack(alignment: .leading) {
+            
             Text(title)
                 
             TextField("", text: text)
@@ -120,6 +113,7 @@ struct AccountView: View {
     
     private func secureTextFieldCell(_ title: String, text: Binding<String>) -> some View {
         VStack(alignment: .leading) {
+            
             Text(title)
             
             SecureField("", text: text)
