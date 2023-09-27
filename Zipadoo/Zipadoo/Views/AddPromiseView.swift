@@ -1,46 +1,42 @@
 //
-//  TestView.swift
+//  AddPromiseView.swift
 //  Zipadoo
+//  약속 추가 뷰
 //
 //  Created by 나예슬 on 2023/09/25.
 //
 
 import SwiftUI
 
-extension View {
-    func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-    }
-}
-
-struct TestView: View {
+struct AddPromiseView: View {
+    
+    // 환경변수
     @Environment(\.dismiss) private var dismiss
     
+    // 저장될 변수
     @State private var promiseTitle: String = ""
     @State private var date = Date()
-    @State var penaltyInt: Int = 0
-    @State var penaltyString: String = ""
-    @State var penaltyChoose: Bool = false
-    @State var penaltyChooseSheet: Bool = false
+    @State private var address = ""
     
+    // 지각비 변수 및 상수 값
     @State private var selectedValue = 100 // 초기 선택값 설정
     let minValue = 100
     let maxValue = 10000
     let step = 100
     
+    private let today = Calendar.current.startOfDay(for: Date())
     @State private var friends = ["병구", "상규", "예슬", "한두", "아라", "해수", "여훈"]
     @State private var addFriendSheet: Bool = false
-    private let today = Calendar.current.startOfDay(for: Date())
     @State private var mapViewSheet: Bool = false
     @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "")
-    @State var address = ""
-    var locationStore: LocationStore = LocationStore()
+    @State var addLocationStore: AddLocationStore = AddLocationStore()
     @State private var showingAlert: Bool = false
     
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
                 
+                // MARK: - 약속 이름 작성 구현
                 VStack(alignment: .leading) {
                     Text("약속 이름")
                         .font(.title2)
@@ -68,6 +64,7 @@ struct TestView: View {
                             Color.gray
                         }
                     
+                    // MARK: - 약속 날짜/시간 선택 구현
                     Text("약속 날짜/시간")
                         .font(.title2)
                         .bold()
@@ -80,13 +77,14 @@ struct TestView: View {
                         .labelsHidden()
                         .padding(.top, 10)
                     
+                    // MARK: - 약속 장소 구현
                     Text("약속 장소")
                         .font(.title2)
                         .bold()
                         .padding(.top, 40)
                     
-                    NavigationLink {
-                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
+                    Button {
+                        mapViewSheet = true
                     } label: {
                         Label("지역검색", systemImage: "mappin")
                             .foregroundColor(.white)
@@ -100,21 +98,25 @@ struct TestView: View {
                     Text(promiseLocation.address)
                         .font(.callout)
                     
-//                    Text("지각비")
-//                        .font(.title2)
-//                        .bold()
-//                        .padding(.top, 40)
-//                    Text("100 단위로 입력 가능합니다.")
-//                        .foregroundColor(.gray)
-//
-//                    HStack {
-//                        TextField("지각 시 제출 할 감자수를 입력해주세요", text: $penaltyString, axis: .horizontal)
-//                            .frame(maxWidth: .infinity)
-//                            .textFieldStyle(.roundedBorder)
-//                            .keyboardType(.numberPad)
-//                            .multilineTextAlignment(.trailing)
-//                        Text("개")
-//                    }
+                    // MARK: - 지각비 구현
+                    /*
+                     지각비 구현 초기안
+                     Text("지각비")
+                     .font(.title2)
+                     .bold()
+                     .padding(.top, 40)
+                     Text("100 단위로 입력 가능합니다.")
+                     .foregroundColor(.gray)
+                     
+                     HStack {
+                     TextField("지각 시 제출 할 감자수를 입력해주세요", text: $penaltyString, axis: .horizontal)
+                     .frame(maxWidth: .infinity)
+                     .textFieldStyle(.roundedBorder)
+                     .keyboardType(.numberPad)
+                     .multilineTextAlignment(.trailing)
+                     Text("개")
+                     }
+                     */
                     
                     Text("지각비")
                         .font(.title2)
@@ -135,6 +137,7 @@ struct TestView: View {
                         .font(.title3)
                         .padding(.leading, 100)
                     
+                    // MARK: - 약속 친구 추가 구현
                     HStack {
                         Text("친구추가")
                             .font(.title2)
@@ -167,6 +170,7 @@ struct TestView: View {
                 hideKeyboard()
             }
             
+            // MARK: - 약속 등록 버튼 구현
             Button {
                 showingAlert.toggle()
             } label: {
@@ -196,5 +200,5 @@ struct TestView: View {
 }
 
 #Preview {
-    TestView()
+    AddPromiseView()
 }
