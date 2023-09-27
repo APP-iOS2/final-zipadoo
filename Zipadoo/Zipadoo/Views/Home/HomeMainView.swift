@@ -22,7 +22,7 @@ struct HomeMainView: View {
                 ScrollView {
                     ForEach(dataArray, id: \.self) { promise in
                         NavigationLink {
-                            // 각 약속 상세 뷰로 이동
+                            PromiseDetailView()
                         } label: {
                             VStack(alignment: .leading) {
                                 HStack {
