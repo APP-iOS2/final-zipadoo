@@ -19,7 +19,7 @@ struct AddPromiseView: View {
     @State private var address = ""
     
     // 지각비 변수 및 상수 값
-    @State private var selectedValue = 100 // 초기 선택값 설정
+    @State private var selectedValue = 100
     let minValue = 100
     let maxValue = 10000
     let step = 100
@@ -32,6 +32,12 @@ struct AddPromiseView: View {
     @State var addLocationStore: AddLocationStore = AddLocationStore()
     @State private var showingAlert: Bool = false
     
+    enum Field: Hashable {
+        case promiseTitle, date
+    }
+    
+    @FocusState private var focusField: Field?
+    
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
@@ -41,9 +47,11 @@ struct AddPromiseView: View {
                     Text("약속 이름")
                         .font(.title2)
                         .bold()
+                        .padding(.top, 15)
                     
                     HStack {
                         TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
+                            .focused($focusField, equals: .promiseTitle)
                             .onChange(of: promiseTitle) {
                                 if promiseTitle.count > 15 {
                                     promiseTitle = String(promiseTitle.prefix(15))
@@ -75,6 +83,7 @@ struct AddPromiseView: View {
                     DatePicker("날짜/시간", selection: $date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
                         .datePickerStyle(.compact)
                         .labelsHidden()
+                        .focused($focusField, equals: .date)
                         .padding(.top, 10)
                     
                     // MARK: - 약속 장소 구현
@@ -157,43 +166,47 @@ struct AddPromiseView: View {
                     .padding(.top, 40)
                     
                     AddFriendCellView()
+                    Button("") {
+                        if promiseTitle.isEmpty {
+                            focusField = .promiseTitle
+                        } else if date == Date() {
+                            focusField = .date
+                        }
+                    }
                 }
                 .padding(.horizontal, 15)
+                .onAppear {
+                    focusField = .promiseTitle
+                }
             }
             .scrollIndicators(.hidden)
             .navigationTitle("약속 추가")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        showingAlert.toggle()
+                    } label: {
+                        Text("등록")
+                    }
+                    .alert(isPresented: $showingAlert) {
+                        Alert(
+                            title: Text(""),
+                            message: Text("등록이 완료되었습니다."),
+                            dismissButton:
+                                    .default(Text("확인"),
+                                             action: {
+                                                 dismiss()
+                                             })
+                        )
+                    }
+                }
+            }
             .sheet(isPresented: $addFriendSheet, content: {
                 Text("AddFirendsSheet")
             })
             .onTapGesture {
                 hideKeyboard()
-            }
-            
-            // MARK: - 약속 등록 버튼 구현
-            Button {
-                showingAlert.toggle()
-            } label: {
-                Text("약속 등록하기")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .bold()
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(.blue)
-                    .padding(.bottom, 1)
-            }
-            .padding(.horizontal, 12)
-            .alert(isPresented: $showingAlert) {
-                Alert(
-                    title: Text(""),
-                    message: Text("등록이 완료되었습니다."),
-                    dismissButton:
-                            .default(Text("확인"),
-                                     action: {
-                                         dismiss()
-                                     })
-                )
             }
         }
     }
