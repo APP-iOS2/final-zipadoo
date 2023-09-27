@@ -26,6 +26,7 @@ struct MapView: View {
     @Binding var promiseLocation: PromiseLocation
     
     let locationManager = CLLocationManager()
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -125,6 +126,7 @@ struct MapView: View {
             }
         }
     }
+    
     func makingKorAddress() {
         let touchPoint = region.center
         addLocation = AddLocation(coordinate: touchPoint)

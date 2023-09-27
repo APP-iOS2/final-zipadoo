@@ -15,7 +15,7 @@ struct AddPromisePlaceCell: View {
     
     var body: some View {
         Rectangle().stroke(Color.gray, lineWidth: 0.5)
-            .frame(width: 350, height: 70, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            .frame(width: 350, height: 70, alignment: .center)
             .overlay {
                 HStack {
                     HStack {
@@ -49,8 +49,7 @@ struct AddPromisePlaceCell: View {
                 }.padding()
             }
             .sheet(isPresented: $mapViewSheet, content: {
-                MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
-                    .presentationDetents([.height(900)])
+                MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)                    .presentationDetents([.height(900)])
             })
     }
 }
