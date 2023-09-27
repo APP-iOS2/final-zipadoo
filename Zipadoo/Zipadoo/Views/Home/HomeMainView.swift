@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// 약속 리스트 뷰
 struct HomeMainView: View {
     
     // 더미데이터
@@ -63,7 +64,7 @@ struct HomeMainView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink {
-                            TestView()
+                            MakePromiseView()
                         } label: {
                             Text("약속 추가")
                         }

@@ -10,6 +10,7 @@ import SwiftUI
 struct FriendsListVIew: View {
     @Binding var isShowingSheet: Bool
     @Binding var selectedFriends: [String]
+    // 더미데이터
     let friends = ["임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "이재승", "장여훈", "정한두"]
     
     var body: some View {

@@ -73,7 +73,6 @@ class PromiseViewModel: ObservableObject {
             "participantIdArray": "\(promise.participantIdArray)"
         ]
 
-        // 컬렉션에 새로운 문서를 추가합니다. 자동으로 고유한 문서 ID가 생성됩니다.
         dbRef.addDocument(data: newData) { error in
             if let error = error {
                 print("Error adding document: \(error)")

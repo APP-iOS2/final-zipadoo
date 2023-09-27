@@ -7,9 +7,13 @@
 
 import SwiftUI
 
+/// 약속 추가 뷰
 struct MakePromiseView: View {
+    
+    // 환경변수
     @Environment(\.dismiss) private var dismiss
     
+    // 약속 추가 시 저장 될 변수들
     @State private var promiseTitle: String = ""
     @State private var date = Date()
     private let today = Calendar.current.startOfDay(for: Date())
@@ -50,7 +54,6 @@ struct MakePromiseView: View {
                     } label: {
                         Text("등록")
                     }
-                    
                 }
             }
         }

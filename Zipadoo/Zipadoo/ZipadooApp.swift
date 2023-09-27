@@ -24,7 +24,7 @@ struct ZipadooApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MakePromiseView()
+            ContentView()
         }
     }
 }

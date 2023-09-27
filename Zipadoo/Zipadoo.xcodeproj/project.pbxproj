@@ -17,7 +17,6 @@
 		04BA00FC2ABD1AAE002EFBB9 /* AddPenaltyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */; };
 		04BA00FE2ABD22BC002EFBB9 /* AddPromiseUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */; };
 		04FDFE7A2ABC2E8100A464CA /* MakePromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */; };
-		04FDFE7C2ABC57E200A464CA /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE7B2ABC57E200A464CA /* TestView.swift */; };
 		04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */; };
 		3FFF1CF42AC1696100A0C99E /* FriendsListVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
@@ -63,7 +62,6 @@
 		04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPenaltyCell.swift; sourceTree = "<group>"; };
 		04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseUserCell.swift; sourceTree = "<group>"; };
 		04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePromiseView.swift; sourceTree = "<group>"; };
-		04FDFE7B2ABC57E200A464CA /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendCellView.swift; sourceTree = "<group>"; };
 		3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationStatusView.swift; sourceTree = "<group>"; };
 		3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListVIew.swift; sourceTree = "<group>"; };
@@ -158,13 +156,12 @@
 		C04607122ABC29F6006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				FAD3BD1E2AC2D1A300117938 /* HomeMainView.swift */,
 				FAD3BD202AC2D1A300117938 /* ArriveResultView.swift */,
 				FAD3BD1F2AC2D1A300117938 /* FriendsLocationStatusView.swift */,
-				FAD3BD1E2AC2D1A300117938 /* HomeMainView.swift */,
 				FAD3BD1B2AC2D19900117938 /* PromiseDetailView.swift */,
 				04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */,
 				04BA00F92ABD1A00002EFBB9 /* MakePromiseViewModel */,
-				04FDFE7B2ABC57E200A464CA /* TestView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -420,7 +417,6 @@
 				04BA00F82ABD173F002EFBB9 /* AddPromisePlaceCell.swift in Sources */,
 				FAD3BD222AC2D1A400117938 /* HomeMainView.swift in Sources */,
 				04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */,
-				04FDFE7C2ABC57E200A464CA /* TestView.swift in Sources */,
 				04980D372AC10C200076D6A5 /* PlaceMarkerCell.swift in Sources */,
 				3FFF1CF42AC1696100A0C99E /* FriendsListVIew.swift in Sources */,
 				C04BCDC92ABD89C10024B487 /* ShareView.swift in Sources */,
