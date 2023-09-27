@@ -19,7 +19,7 @@ struct ContentView: View {
                 .tag(0)
             
             // 친구리스트
-            Text("친구리스트 뷰")
+            FriendsView()
                 .tabItem {
                     Image(systemName: "person.2.fill")
                     Text("친구")
