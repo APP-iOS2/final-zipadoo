@@ -21,6 +21,7 @@
 		08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */; };
 		08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BA2ABC1DA2005D231D /* SettingView.swift */; };
 		08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BC2ABC1E1C005D231D /* PayingView.swift */; };
+		1B7B2B1A2AC41448009474B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B7B2B192AC41448009474B5 /* GoogleService-Info.plist */; };
 		1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BD72ABD16B800DE635D /* TossPayView.swift */; };
 		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
 		3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */; };
@@ -59,7 +60,6 @@
 		FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */; };
 		FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE552ABD54690042A55A /* PromiseModel.swift */; };
 		FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */; };
-		FAD965962AC4074700D4A65A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAD965952AC4074700D4A65A /* GoogleService-Info.plist */; };
 		FAD9659A2AC40E4A00D4A65A /* ArriveResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD965992AC40E4A00D4A65A /* ArriveResultView.swift */; };
 		FAD9659C2AC40FB800D4A65A /* AddPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD9659B2AC40FB800D4A65A /* AddPromiseView.swift */; };
 /* End PBXBuildFile section */
@@ -79,6 +79,7 @@
 		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
 		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
+		1B7B2B192AC41448009474B5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListVIew.swift; sourceTree = "<group>"; };
@@ -113,7 +114,6 @@
 		FAD5FE502ABBD62600E05E6E /* test1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test1.swift; sourceTree = "<group>"; };
 		FAD7EE552ABD54690042A55A /* PromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseModel.swift; sourceTree = "<group>"; };
 		FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewModel.swift; sourceTree = "<group>"; };
-		FAD965952AC4074700D4A65A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FAD965992AC40E4A00D4A65A /* ArriveResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
 		FAD9659B2AC40FB800D4A65A /* AddPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPromiseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -236,9 +236,9 @@
 		FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */ = {
 			isa = PBXGroup;
 			children = (
-				FAD965952AC4074700D4A65A /* GoogleService-Info.plist */,
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
+				1B7B2B192AC41448009474B5 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -401,7 +401,7 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-				FAD965962AC4074700D4A65A /* GoogleService-Info.plist in Resources */,
+				1B7B2B1A2AC41448009474B5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
