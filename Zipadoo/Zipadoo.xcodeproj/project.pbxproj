@@ -40,7 +40,6 @@
 		C04BCDC92ABD89C10024B487 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC82ABD89C10024B487 /* ShareView.swift */; };
 		C069D2BC2AC145D100A62E04 /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = C069D2BB2AC145D100A62E04 /* AppsFlyerLib */; };
 		FA294A792AC3E59C00485E09 /* AddPromisePlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA294A782AC3E59C00485E09 /* AddPromisePlaceCell.swift */; };
-		FA59EE322AC1645C00689EE3 /* ArriveResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA59EE2D2AC1645C00689EE3 /* ArriveResultView.swift */; };
 		FA59EE342AC1645C00689EE3 /* PromiseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA59EE2F2AC1645C00689EE3 /* PromiseDetailView.swift */; };
 		FA59EE352AC1645C00689EE3 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA59EE302AC1645C00689EE3 /* HomeMainView.swift */; };
 		FA7588992ABC36F50050446D /* PromiseTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7588982ABC36F50050446D /* PromiseTestData.swift */; };
@@ -53,18 +52,16 @@
 		FAD3BD1C2AC2D19900117938 /* PromiseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD1B2AC2D19900117938 /* PromiseDetailView.swift */; };
 		FAD3BD222AC2D1A400117938 /* HomeMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD1E2AC2D1A300117938 /* HomeMainView.swift */; };
 		FAD3BD232AC2D1A400117938 /* FriendsLocationStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD1F2AC2D1A300117938 /* FriendsLocationStatusView.swift */; };
-		FAD3BD242AC2D1A400117938 /* ArriveResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD202AC2D1A300117938 /* ArriveResultView.swift */; };
 		FAD3BD2C2AC3BA9D00117938 /* Extention.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD2B2AC3BA9D00117938 /* Extention.swift */; };
-		FAD3BD2E2AC3BABF00117938 /* AddPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD3BD2D2AC3BABF00117938 /* AddPromiseView.swift */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
 		FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */; };
 		FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */; };
 		FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */; };
-		FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE502ABBD62600E05E6E /* test1.swift */; };
 		FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE552ABD54690042A55A /* PromiseModel.swift */; };
 		FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */; };
-		FAD965942AC405D300D4A65A /* AddPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD965932AC405D300D4A65A /* AddPromiseView.swift */; };
 		FAD965962AC4074700D4A65A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAD965952AC4074700D4A65A /* GoogleService-Info.plist */; };
+		FAD9659A2AC40E4A00D4A65A /* ArriveResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD965992AC40E4A00D4A65A /* ArriveResultView.swift */; };
+		FAD9659C2AC40FB800D4A65A /* AddPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD9659B2AC40FB800D4A65A /* AddPromiseView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,16 +98,13 @@
 		C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zipadoo.entitlements; sourceTree = "<group>"; };
 		C069D2B92AC141AC00A62E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FA294A782AC3E59C00485E09 /* AddPromisePlaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPromisePlaceCell.swift; sourceTree = "<group>"; };
-		FA59EE2D2AC1645C00689EE3 /* ArriveResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
 		FA59EE2F2AC1645C00689EE3 /* PromiseDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
 		FA59EE302AC1645C00689EE3 /* HomeMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
 		FA7588982ABC36F50050446D /* PromiseTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTestData.swift; sourceTree = "<group>"; };
 		FAD3BD1B2AC2D19900117938 /* PromiseDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
 		FAD3BD1E2AC2D1A300117938 /* HomeMainView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeMainView.swift; sourceTree = "<group>"; };
 		FAD3BD1F2AC2D1A300117938 /* FriendsLocationStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationStatusView.swift; sourceTree = "<group>"; };
-		FAD3BD202AC2D1A300117938 /* ArriveResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
 		FAD3BD2B2AC3BA9D00117938 /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
-		FAD3BD2D2AC3BABF00117938 /* AddPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPromiseView.swift; path = Zipadoo/Views/AddPromiseView.swift; sourceTree = SOURCE_ROOT; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
 		FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -119,8 +113,9 @@
 		FAD5FE502ABBD62600E05E6E /* test1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test1.swift; sourceTree = "<group>"; };
 		FAD7EE552ABD54690042A55A /* PromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseModel.swift; sourceTree = "<group>"; };
 		FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewModel.swift; sourceTree = "<group>"; };
-		FAD965932AC405D300D4A65A /* AddPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddPromiseView.swift; path = Zipadoo/Views/AddPromiseView.swift; sourceTree = SOURCE_ROOT; };
 		FAD965952AC4074700D4A65A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FAD965992AC40E4A00D4A65A /* ArriveResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
+		FAD9659B2AC40FB800D4A65A /* AddPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPromiseView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,12 +205,10 @@
 			isa = PBXGroup;
 			children = (
 				FA59EE302AC1645C00689EE3 /* HomeMainView.swift */,
-				FAD965932AC405D300D4A65A /* AddPromiseView.swift */,
-				FA59EE2D2AC1645C00689EE3 /* ArriveResultView.swift */,
+				FAD9659B2AC40FB800D4A65A /* AddPromiseView.swift */,
+				FAD965992AC40E4A00D4A65A /* ArriveResultView.swift */,
 				FA59EE2F2AC1645C00689EE3 /* PromiseDetailView.swift */,
 				FAD3BD1E2AC2D1A300117938 /* HomeMainView.swift */,
-				FAD3BD2D2AC3BABF00117938 /* AddPromiseView.swift */,
-				FAD3BD202AC2D1A300117938 /* ArriveResultView.swift */,
 				FAD3BD1F2AC2D1A300117938 /* FriendsLocationStatusView.swift */,
 				FAD3BD1B2AC2D19900117938 /* PromiseDetailView.swift */,
 				04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */,
@@ -454,7 +447,6 @@
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
 				04BA00F42ABD160C002EFBB9 /* AddPromiseTitleCell.swift in Sources */,
 				04BA00F22ABD14F4002EFBB9 /* FriendSellView.swift in Sources */,
-				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
 				FA59EE352AC1645C00689EE3 /* HomeMainView.swift in Sources */,
 				FA59EE342AC1645C00689EE3 /* PromiseDetailView.swift in Sources */,
 				C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */,
@@ -462,8 +454,8 @@
 				04980D392AC1180B0076D6A5 /* AddLocationDatas.swift in Sources */,
 				04980D352AC109DE0076D6A5 /* MapView.swift in Sources */,
 				04BA00FC2ABD1AAE002EFBB9 /* AddPenaltyCell.swift in Sources */,
-				FAD3BD2E2AC3BABF00117938 /* AddPromiseView.swift in Sources */,
 				04BA00FE2ABD22BC002EFBB9 /* AddPromiseUserCell.swift in Sources */,
+				FAD9659A2AC40E4A00D4A65A /* ArriveResultView.swift in Sources */,
 				FAD3BD222AC2D1A400117938 /* HomeMainView.swift in Sources */,
 				04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */,
 				04980D372AC10C200076D6A5 /* PlaceMarkerCell.swift in Sources */,
@@ -474,12 +466,9 @@
 				8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */,
 				08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */,
 				8BD44ECE2AC14B2D00A4694C /* ProfileImageUploader.swift in Sources */,
-				FAD965942AC405D300D4A65A /* AddPromiseView.swift in Sources */,
 				FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */,
 				FA294A792AC3E59C00485E09 /* AddPromisePlaceCell.swift in Sources */,
-				FAD3BD242AC2D1A400117938 /* ArriveResultView.swift in Sources */,
 				8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */,
-				FA59EE322AC1645C00689EE3 /* ArriveResultView.swift in Sources */,
 				8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */,
 				FAD3BD2C2AC3BA9D00117938 /* Extention.swift in Sources */,
 				FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */,
@@ -487,6 +476,7 @@
 				FAD3BD232AC2D1A400117938 /* FriendsLocationStatusView.swift in Sources */,
 				8BD44ECC2AC14B2700A4694C /* UserViewModel.swift in Sources */,
 				8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */,
+				FAD9659C2AC40FB800D4A65A /* AddPromiseView.swift in Sources */,
 				FA7588992ABC36F50050446D /* PromiseTestData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
