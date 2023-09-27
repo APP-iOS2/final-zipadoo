@@ -7,13 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B42ABC1BE0005D231D /* MyPageView.swift */; };
-		08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */; };
-		08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BA2ABC1DA2005D231D /* SettingView.swift */; };
-		08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BC2ABC1E1C005D231D /* PayingView.swift */; };
-		1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BD72ABD16B800DE635D /* TossPayView.swift */; };
-		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
-		8B006D862AC1D3D100C35519 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */; };
 		04980D352AC109DE0076D6A5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D342AC109DE0076D6A5 /* MapView.swift */; };
 		04980D372AC10C200076D6A5 /* PlaceMarkerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */; };
 		04980D392AC1180B0076D6A5 /* AddLocationDatas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D382AC1180B0076D6A5 /* AddLocationDatas.swift */; };
@@ -24,14 +17,20 @@
 		04BA00FE2ABD22BC002EFBB9 /* AddPromiseUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */; };
 		04FDFE7A2ABC2E8100A464CA /* MakePromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */; };
 		04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */; };
+		08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B42ABC1BE0005D231D /* MyPageView.swift */; };
+		08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */; };
+		08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BA2ABC1DA2005D231D /* SettingView.swift */; };
+		08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BC2ABC1E1C005D231D /* PayingView.swift */; };
+		1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BD72ABD16B800DE635D /* TossPayView.swift */; };
+		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
 		3FFF1CF42AC1696100A0C99E /* FriendsListVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */; };
+		8B006D862AC1D3D100C35519 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */; };
 		8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC92AC1401E00A4694C /* UserModel.swift */; };
 		8BD44ECC2AC14B2700A4694C /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44ECB2AC14B2700A4694C /* UserViewModel.swift */; };
 		8BD44ECE2AC14B2D00A4694C /* ProfileImageUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44ECD2AC14B2D00A4694C /* ProfileImageUploader.swift */; };
 		8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */; };
-		C046071E2ABC2C37006836B7 /* PromiseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071D2ABC2C37006836B7 /* PromiseDetailView.swift */; };
 		C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
 		C04BCDC52ABD57E90024B487 /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC42ABD57E90024B487 /* LocationStore.swift */; };
@@ -62,12 +61,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		08C6F0B42ABC1BE0005D231D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
-		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
-		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
-		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
-		8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		04980D342AC109DE0076D6A5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMarkerCell.swift; sourceTree = "<group>"; };
 		04980D382AC1180B0076D6A5 /* AddLocationDatas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationDatas.swift; sourceTree = "<group>"; };
@@ -78,8 +71,14 @@
 		04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseUserCell.swift; sourceTree = "<group>"; };
 		04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePromiseView.swift; sourceTree = "<group>"; };
 		04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendCellView.swift; sourceTree = "<group>"; };
+		08C6F0B42ABC1BE0005D231D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
+		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
+		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
 		3F8D1B172ABD1C1C004C1B21 /* FriendsLocationStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationStatusView.swift; sourceTree = "<group>"; };
 		3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListVIew.swift; sourceTree = "<group>"; };
+		8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		8BD44EC72AC13FE600A4694C /* ArriveResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
@@ -138,25 +137,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		08C6F0BE2ABC1E22005D231D /* MyPageViews */ = {
-			isa = PBXGroup;
-			children = (
-				08C6F0B42ABC1BE0005D231D /* MyPageView.swift */,
-				1BF69BD72ABD16B800DE635D /* TossPayView.swift */,
-				08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */,
-				08C6F0BA2ABC1DA2005D231D /* SettingView.swift */,
-				08C6F0BC2ABC1E1C005D231D /* PayingView.swift */,
-				8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */,
-			);
-			path = MyPageViews;
-			sourceTree = "<group>";
-		};
-		8B006D842AC1D3A600C35519 /* MyPageViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */,
-			);
-			path = MyPageViewModel;
 		04980D332AC109A40076D6A5 /* AddPomisePlaceSubViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +169,27 @@
 				3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */,
 			);
 			path = AddFriendSubViews;
+			sourceTree = "<group>";
+		};
+		08C6F0BE2ABC1E22005D231D /* MyPageViews */ = {
+			isa = PBXGroup;
+			children = (
+				08C6F0B42ABC1BE0005D231D /* MyPageView.swift */,
+				1BF69BD72ABD16B800DE635D /* TossPayView.swift */,
+				08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */,
+				08C6F0BA2ABC1DA2005D231D /* SettingView.swift */,
+				08C6F0BC2ABC1E1C005D231D /* PayingView.swift */,
+				8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */,
+			);
+			path = MyPageViews;
+			sourceTree = "<group>";
+		};
+		8B006D842AC1D3A600C35519 /* MyPageViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */,
+			);
+			path = MyPageViewModel;
 			sourceTree = "<group>";
 		};
 		C04607122ABC29F6006836B7 /* Home */ = {
@@ -447,8 +448,6 @@
 				1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */,
 				08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */,
 				08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */,
-				FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */,
-				FA75889B2ABC63F80050446D /* TestView.swift in Sources */,
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
 				8B006D862AC1D3D100C35519 /* EditProfileViewModel.swift in Sources */,
 				04FDFE7A2ABC2E8100A464CA /* MakePromiseView.swift in Sources */,
@@ -485,7 +484,6 @@
 				FAD3BD232AC2D1A400117938 /* FriendsLocationStatusView.swift in Sources */,
 				8BD44ECC2AC14B2700A4694C /* UserViewModel.swift in Sources */,
 				8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */,
-				C046071E2ABC2C37006836B7 /* PromiseDetailView.swift in Sources */,
 				FA7588992ABC36F50050446D /* PromiseTestData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -710,6 +708,8 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.1.23;
+			};
+		};
 		C069D2BA2AC145D100A62E04 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework";
@@ -733,6 +733,7 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */;
 			productName = TossPayments;
+		};
 		C069D2BB2AC145D100A62E04 /* AppsFlyerLib */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C069D2BA2AC145D100A62E04 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */;
