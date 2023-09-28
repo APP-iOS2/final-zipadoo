@@ -15,15 +15,15 @@ struct AccountView: View {
     @Environment (\.dismiss) private var dismiss
     
     /// 알람노출
-    @State var isEditAlert: Bool = false
+    @State private var isEditAlert: Bool = false
     
     /// 비밀번호확인이 다르다면 true
-    var isPasswordDifferent: Bool {
+    private var isPasswordDifferent: Bool {
         viewModel.password != viewModel.passwordCheck
     }
     
     /// 비어있는 TextField가 있을 때 true
-    var isFieldEmpty: Bool {
+    private var isFieldEmpty: Bool {
         viewModel.nickname.isEmpty || viewModel.phoneNumber.isEmpty || viewModel.password.isEmpty || viewModel.passwordCheck.isEmpty
     }
 

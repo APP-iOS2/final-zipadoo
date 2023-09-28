@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct FriendsRegistrationView: View {
+    
     @Environment(\.dismiss) private var dismiss
     
     /// 친구 닉네임
-    @State var nickNameTextField: String = ""
+    @State private var nickNameTextField: String = ""
     /// 친구 연락처
-    @State var phoneTextField: String = ""
+    @State private var phoneTextField: String = ""
     
     var body: some View {
         VStack {
