@@ -52,11 +52,12 @@ struct LoginView: View {
                                 .cornerRadius(5)
                         }
                         
-                        /*
+                        
                          // 카카오톡 로그인 버튼
                         Button {
-                            kakaoStore.kakaoLogin()
                             /*
+                            kakaoStore.kakaoLogin()
+                            
                             Task {
                                 do {
                                     try await authStore.addUserData()
@@ -73,7 +74,7 @@ struct LoginView: View {
                                 .cornerRadius(5)
                         }
                         .disabled(true)
-                         */
+                         
                         
                         // 애플 로그인 버튼
                         Button {
