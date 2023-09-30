@@ -6,40 +6,41 @@
 //
 
 import SwiftUI
-import KakaoSDKCommon
-import KakaoSDKAuth
-import KakaoSDKUser
+//import KakaoSDKCommon
+//import KakaoSDKAuth
+//import KakaoSDKUser
 
+/*
 struct KakaoTest: View {
     private let kakaoStore: KakaoStore = KakaoStore()
     
     var body: some View {
         Button(action: {
-//            kakaoStore.kakaoLogin()
+            kakaoStore.kakaoLogin()
         }, label: {
             Text("Login Button")
         })
         
         Button(action: {
-//            kakaoStore.kakaoDataConsent()
+            kakaoStore.kakaoDataConsent()
         }, label: {
             Text("Consent Button")
         })
         
         Button(action: {
-//            kakaoStore.bringkakaoUserData()
+            kakaoStore.bringkakaoUserData()
         }, label: {
             Text("Bring Data Button")
         })
         
         Button(action: {
-//            kakaoStore.kakaoLogout()
+            kakaoStore.kakaoLogout()
         }, label: {
             Text("Logout Button")
         })
         
         Button(action: {
-//            kakaoStore.cutKakaoConnection()
+            kakaoStore.cutKakaoConnection()
         }, label: {
             Text("Cut Connection Button")
         })
@@ -49,3 +50,4 @@ struct KakaoTest: View {
 #Preview {
     KakaoTest()
 }
+*/

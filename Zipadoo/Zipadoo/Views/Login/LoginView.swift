@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
-import KakaoSDKCommon
-import KakaoSDKAuth
-import KakaoSDKUser
+//import KakaoSDKCommon
+//import KakaoSDKAuth
+//import KakaoSDKUser
 
 // 로그인 뷰 모델
 
 struct LoginView: View {
 
-    @StateObject var kakaoStore: KakaoStore = KakaoStore()
+//    @StateObject var kakaoStore: KakaoStore = KakaoStore()
   
     @State private var spaceHeight: CGFloat = 500 // 두더지 머리 위에 공간 높이
     
