@@ -32,9 +32,9 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
 struct PromiseLocation: Identifiable, Codable {
     var id: UUID = UUID()
-    let latitude: Double // 위도
-    let longitude: Double // 경도
-    let address: String // 주소
+    var latitude: Double // 위도
+    var longitude: Double // 경도
+    var address: String // 주소
 }
 
 class AddLocationStore {

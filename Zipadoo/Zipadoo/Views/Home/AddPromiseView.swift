@@ -30,6 +30,9 @@ struct AddPromiseView: View {
     @State private var mapViewSheet: Bool = false
     @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "")
     @State var addLocationStore: AddLocationStore = AddLocationStore()
+    @State var isClickedPlace: Bool = false
+    @State var addLocationButton: Bool = false
+
     @State private var showingAlert: Bool = false
     
     enum Field: Hashable {
@@ -92,17 +95,18 @@ struct AddPromiseView: View {
                         .bold()
                         .padding(.top, 40)
                     
-                    Button {
-                        mapViewSheet = true
+                    /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
+                    NavigationLink {
+                        AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
                     } label: {
                         Label("지역검색", systemImage: "mappin")
                             .foregroundColor(.white)
                     }
                     .buttonStyle(.borderedProminent)
-                    .sheet(isPresented: $mapViewSheet, content: {
-                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
-                            .presentationDetents([.height(900)])
-                    })
+//                    .sheet(isPresented: $mapViewSheet, content: {
+//                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
+//                            .presentationDetents([.height(900)])
+//                    })
                     
                     Text(promiseLocation.address)
                         .font(.callout)

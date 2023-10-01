@@ -9,6 +9,9 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
+// MARK: - 직접 장소 설정할 수 있는 옵션의 맵뷰
+/// 현재 MapView와 NewMapView 간의 버전이 서로 다르기 때문에 우선 두가지 옵션을 선택할 수 있도록 구현
+/// 두가지 기능을 합칠 수 있는 방법을 찾을 경우 도입 시도해볼 예정
 struct MapView: View {
     @Namespace var mapScope
     @Environment(\.dismiss) private var dismiss
@@ -21,8 +24,7 @@ struct MapView: View {
     @State private var addLocation = AddLocation(coordinate: CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780))
     @State var address = ""
     @State private var selectedPlace: Bool = false
-    
-    @Binding var mapViewSheet: Bool
+
     @Binding var promiseLocation: PromiseLocation
     
     let locationManager = CLLocationManager()
@@ -134,7 +136,7 @@ struct MapView: View {
         geocoder.reverseGeocodeLocation(CLLocation(
             latitude: touchPoint.latitude,
             longitude: touchPoint.longitude),
-                                        preferredLocale: Locale(identifier: "ko_KR")) { placemarks, error in
+            preferredLocale: Locale(identifier: "ko_KR")) { placemarks, error in
             if let placemark = placemarks?.first {
                 address = [ placemark.locality,
                             placemark.thoroughfare,
@@ -145,5 +147,5 @@ struct MapView: View {
 }
 
 #Preview {
-    MapView(mapViewSheet: .constant(true), promiseLocation: .constant(PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "서울시청")))
+    MapView(promiseLocation: .constant(PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "서울시청")))
 }
