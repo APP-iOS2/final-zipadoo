@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 사용 안함
 struct AddPromisePlaceCell: View {
 //    @State private var mapViewSheet: Bool = false
     @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "")

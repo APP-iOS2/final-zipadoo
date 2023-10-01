@@ -173,7 +173,6 @@
 				FA294A782AC3E59C00485E09 /* AddPromisePlaceCell.swift */,
 				04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */,
 				04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */,
-				04980D332AC109A40076D6A5 /* AddPomisePlaceSubViews */,
 				04BA00FA2ABD1A23002EFBB9 /* AddFriendSubViews */,
 			);
 			path = MakePromiseViewModel;
@@ -253,6 +252,7 @@
 			children = (
 				FA59EE302AC1645C00689EE3 /* HomeMainView.swift */,
 				FAD9659B2AC40FB800D4A65A /* AddPromiseView.swift */,
+				04980D332AC109A40076D6A5 /* AddPomisePlaceSubViews */,
 				FAD965992AC40E4A00D4A65A /* ArriveResultView.swift */,
 				FA59EE2F2AC1645C00689EE3 /* PromiseDetailView.swift */,
 				FAD3BD1E2AC2D1A300117938 /* HomeMainView.swift */,

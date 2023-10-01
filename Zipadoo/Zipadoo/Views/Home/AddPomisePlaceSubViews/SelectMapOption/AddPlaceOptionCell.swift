@@ -5,7 +5,8 @@
 //  Created by 김상규 on 10/1/23.
 //
 
-// MARK: - 상단탭바 참고 : https://velog.io/@high_sky8320/SwiftUI-상단탭바-구현하기
+// MARK: - 상단탭바 뷰모델
+/// 참고 : https://velog.io/@high_sky8320/SwiftUI-상단탭바-구현하기
 import SwiftUI
 
 enum MapOption: String, CaseIterable {
