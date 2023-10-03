@@ -17,12 +17,13 @@ struct MapView: View {
     @Environment(\.dismiss) private var dismiss
     
     var addLocationStore: AddLocationStore = AddLocationStore()
-    
+    /// 초기 위치 값
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780),
         span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009))
-    @State private var addLocation = AddLocation(coordinate: CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780))
+    /// 주소 값
     @State var address = ""
+    /// 화면 클릭 값(직접설정맵뷰)
     @State private var selectedPlace: Bool = false
 
     @Binding var promiseLocation: PromiseLocation
@@ -32,9 +33,10 @@ struct MapView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: [addLocation]) { location in
-                    MapAnnotation(coordinate: location.coordinate) {
+                Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: [promiseLocation]) { location in
+                    MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)) {
                         PlaceMarkerCell()
+                            .offset(x: 0, y: -50)
                     }
                 }
                 
@@ -78,7 +80,7 @@ struct MapView: View {
                                     Spacer()
                                     
                                     if selectedPlace == true {
-                                        Text(address)
+                                        Text(promiseLocation.address)
                                             .font(.title3)
                                     } else {
                                         Text("약속 장소를 선택해 주세요")
@@ -89,11 +91,10 @@ struct MapView: View {
                                     Spacer()
                                     
                                     Button {
-                                        //                                        mapViewSheet.toggle()
                                         promiseLocation = addLocationStore.setLocation(
-                                            latitude: addLocation.coordinate.latitude,
-                                            longitude: addLocation.coordinate.longitude,
-                                            address: address)
+                                            latitude: promiseLocation.latitude,
+                                            longitude: promiseLocation.longitude,
+                                            address: promiseLocation.address)
                                         dismiss()
                                     } label: {
                                         Text("장소 선택하기")
@@ -106,19 +107,9 @@ struct MapView: View {
                             }
                     }
                 }
-                .padding(.bottom, 70)
+                .padding(.bottom, 30)
             }
             .ignoresSafeArea(edges: .all)
-            //            .mapControls {
-            //                VStack {
-            //                    MapPitchToggle(scope: mapScope)
-            //                        .mapControlVisibility(.visible)
-            //                    MapCompass(scope: mapScope)
-            //                        .mapControlVisibility(.visible)
-            //                }
-            //                .padding(.trailing, 10)
-            //                .buttonBorderShape(.circle)
-            //            }
             .onAppear {
                 locationManager.requestWhenInUseAuthorization()
             }
@@ -131,14 +122,14 @@ struct MapView: View {
     
     func makingKorAddress() {
         let touchPoint = region.center
-        addLocation = AddLocation(coordinate: touchPoint)
+        promiseLocation = PromiseLocation(latitude: touchPoint.latitude, longitude: touchPoint.longitude, address: promiseLocation.address)
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(CLLocation(
             latitude: touchPoint.latitude,
             longitude: touchPoint.longitude),
             preferredLocale: Locale(identifier: "ko_KR")) { placemarks, error in
             if let placemark = placemarks?.first {
-                address = [ placemark.locality,
+                promiseLocation.address = [ placemark.locality,
                             placemark.thoroughfare,
                             placemark.subThoroughfare].compactMap { $0 }.joined(separator: " ")
             }

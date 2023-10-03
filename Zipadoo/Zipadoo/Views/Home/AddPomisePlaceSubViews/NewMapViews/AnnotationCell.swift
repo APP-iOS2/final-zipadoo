@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+//MARK: - 검색 설정 맵뷰 장소 마커 UI
+/// 검색 설정 맵뷰에서 쓰이는 장소 마커 UI
 struct AnnotationCell: View {
     var body: some View {
         ZStack {

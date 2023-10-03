@@ -14,9 +14,12 @@ enum MapOption: String, CaseIterable {
     case search = "검색하기"
 }
 
-// MARK: - 직접 마커를 이동시켜 자세히 위치를 설정하는 옵션 / 검색기능을 활용한 옵션으로 장소설정 기능 제공
+// MARK: - 상단탭바 뷰모델
+/// 상단탭바 뷰모델
+/// 1) 직접 마커를 이동시켜 자세히 위치를 설정하는 옵션
+/// 2) 검색기능을 활용한 옵션으로 장소설정 기능 옵션
 struct AddPlaceOptionCell: View {
-    @State private var selectMapOption: MapOption = .click
+    @State private var selectMapOption: MapOption = .click /// 상단 탭바 초기설정값
     @Namespace private var animation
     
     @Binding var isClickedPlace: Bool
@@ -38,12 +41,12 @@ struct AddPlaceOptionCell: View {
                 VStack {
                     Text(item.rawValue)
                         .font(.title3)
-                        .frame(maxWidth: .infinity/4, minHeight: 50)
-                        .foregroundColor(selectMapOption == item ? .black : .gray)
+                        .frame(maxWidth: .infinity/4, minHeight: 40)
+                        .foregroundColor(selectMapOption == item ? .cyan : .gray)
 
                     if selectMapOption == item {
                         Capsule()
-                            .foregroundColor(.black)
+                            .foregroundColor(.gray)
                             .frame(height: 3)
                             .matchedGeometryEffect(id: "info", in: animation)
                     }

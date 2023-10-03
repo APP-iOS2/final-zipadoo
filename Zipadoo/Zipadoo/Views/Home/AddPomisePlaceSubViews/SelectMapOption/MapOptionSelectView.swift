@@ -8,6 +8,7 @@
 import SwiftUI
 
 // MARK: - 상단탭바 뷰 모델
+/// 상단탭바 뷰 모델
 struct MapOptionSelectView: View {
     var mapOptions: MapOption
     @Binding var isClickedPlace: Bool
