@@ -11,14 +11,12 @@ import SwiftUI
 /// 약속 리스트 뷰
 struct HomeMainView: View {
     
-    // 더미데이터
-    @State private var myPromise: [Promise] = []
     @StateObject private var promise: PromiseViewModel = PromiseViewModel()
     
     var body: some View {
         NavigationStack {
             // 약속 배열 값 존재하는지 확인.
-            if myPromise.isEmpty {
+            if promise.promiseViewModel.isEmpty {
                 Text("현재 약속이 1도 없어요!")
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
@@ -31,7 +29,7 @@ struct HomeMainView: View {
                     }
             } else {
                 ScrollView {
-                    ForEach(myPromise, id: \.self) { promise in
+                    ForEach(promise.promiseViewModel, id: \.self) { promise in
                         NavigationLink {
                             // 각 약속 상세 뷰로 이동
                         } label: {
