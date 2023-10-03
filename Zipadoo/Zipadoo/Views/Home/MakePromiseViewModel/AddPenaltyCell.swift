@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// MARK: - 사용 안함
 struct AddPenaltyCell: View {
     @State var peneltyInt: String = ""
     @State var peneltyChoose: Bool = false
