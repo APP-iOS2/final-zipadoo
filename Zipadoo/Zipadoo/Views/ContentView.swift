@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         
         // 로그인이 되어있지 않은 상태면 로그인 뷰로,
-        if viewModel.userSession == nil {
+        if $viewModel.userSession == nil {
             LoginView()
         } else {
             TabView {
@@ -40,7 +40,7 @@ struct ContentView: View {
                         Image(systemName: "person.fill")
                         Text("마이")
                     }
-                    .tag(1)
+                    .tag(2)
                 
             }
         }
