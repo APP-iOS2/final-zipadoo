@@ -211,7 +211,7 @@ struct AddPromiseView: View {
                         )
                     }
                 }
-
+                
             }
             .sheet(isPresented: $showingPenalty, content: {
                 Picker(selection: $selectedValue, label: Text("지각비")) {
