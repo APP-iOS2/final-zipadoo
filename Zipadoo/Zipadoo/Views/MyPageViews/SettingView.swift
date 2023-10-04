@@ -32,6 +32,12 @@ struct SettingView: View {
                 }
                 
                 NavigationLink {
+                    EditPasswordView()
+                } label: {
+                    Text("비밀번호 변경")
+                }
+                
+                NavigationLink {
                     List {
                         Button(action: {}, label: {
                             Text("오픈카톡으로 연락하기")

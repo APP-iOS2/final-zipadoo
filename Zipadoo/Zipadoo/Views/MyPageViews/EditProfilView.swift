@@ -19,14 +19,9 @@ struct EditProfileView: View {
     /// 이미지피커 노출
     @State private var isShowingImagePicker = false
     
-    /// 비밀번호확인이 다르다면 true
-    private var isPasswordDifferent: Bool {
-        viewModel.newpassword != viewModel.newpasswordCheck
-    }
-    
     /// 비어있는 TextField가 있을 때 true
     private var isFieldEmpty: Bool {
-        viewModel.nickname.isEmpty || viewModel.phoneNumber.isEmpty || viewModel.newpassword.isEmpty || viewModel.newpasswordCheck.isEmpty
+        viewModel.nickname.isEmpty || viewModel.phoneNumber.isEmpty
     }
     
     var body: some View {
@@ -66,22 +61,6 @@ struct EditProfileView: View {
                     textFieldCell("새로운 연락처", text: $viewModel.phoneNumber)
                         .padding(.bottom)
                     
-                    secureTextFieldCell("새로운 비밀번호", text: $viewModel.newpassword)
-                        .padding(.bottom)
-                    
-                    secureTextFieldCell("비밀번호 확인", text: $viewModel.newpasswordCheck)
-                    
-                    // 비밀번호 확인 밑 문구
-                    if isPasswordDifferent && !viewModel.newpasswordCheck.isEmpty {
-                        Text("비밀번호가 일치하지 않습니다")
-                            .foregroundStyle(.red)
-                            .font(.footnote)
-                    } else if !viewModel.newpasswordCheck.isEmpty {
-                        Text("비밀번호가 일치합니다")
-                            .foregroundStyle(.green)
-                            .font(.footnote)
-                    }
-                    
                 }
                 .padding()
                 
@@ -95,7 +74,7 @@ struct EditProfileView: View {
                     Button(action: { isEditAlert.toggle() }, label: {
                         Text("수정")
                     })
-                    .disabled(isPasswordDifferent || isFieldEmpty) // 비밀번호가 다르게 입력되거나 필드가 하나라도 비어있으면 비활성화
+                    .disabled(isFieldEmpty) // 필드가 하나라도 비어있으면 비활성화
                 }
             }
             .alert(isPresented: $isEditAlert) {
@@ -111,7 +90,6 @@ struct EditProfileView: View {
                         dismiss()
                         Task {
                             try await viewModel.updateUserData()
-                            _ = AuthStore.init()
                         }
                     })
                 )
@@ -125,16 +103,6 @@ struct EditProfileView: View {
             Text(title)
             
             TextField("", text: text)
-                .textFieldStyle(.roundedBorder)
-        }
-    }
-    
-    private func secureTextFieldCell(_ title: String, text: Binding<String>) -> some View {
-        VStack(alignment: .leading) {
-            
-            Text(title)
-            
-            SecureField("", text: text)
                 .textFieldStyle(.roundedBorder)
         }
     }

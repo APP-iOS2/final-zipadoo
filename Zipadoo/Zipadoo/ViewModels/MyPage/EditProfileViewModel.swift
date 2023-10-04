@@ -30,36 +30,47 @@ final class EditProfileViewModel: ObservableObject {
         phoneNumber = currentUser?.phoneNumber ?? "정보가 없습니다"
     }
     
-    /// 유저정보 파이어베이스
+    /// 유저정보 파이어베이스에 업데이트
     @MainActor
     func updateUserData() async throws {
         var data = [String: Any]()
         
         // 선택한 사진이 있다면
         if let uiImage = selectedImage {
-//            storage.reference().child("profileImages/\(profileImageString)")
-            let imageUrl = try? await ProfileImageUploader.uploadImage(image: uiImage)
-            data["profileImageString"] = imageUrl
+            let imageString = try? await ProfileImageUploader.uploadImage(image: uiImage)
+            data["profileImageString"] = imageString ?? defaultImageString
+            // 현재 사용자의 정보 변경
+            AuthStore.shared.currentUser?.profileImageString = imageString ?? defaultImageString
         }
         
         if currentUser?.nickName != nickname {
             data["nickName"] = nickname
-            // 현재 사용자의 정보 변경
+            AuthStore.shared.currentUser?.nickName = nickname
         }
         
         if currentUser?.phoneNumber != phoneNumber {
             data["phoneNumber"] = phoneNumber
+            AuthStore.shared.currentUser?.phoneNumber = phoneNumber
         }
         
         // 바뀐 사항이 하나라도 있다면 파이어베이스에 업데이트
         if !data.isEmpty {
             do {
                 try await Firestore.firestore().collection("Users").document(currentUser?.id ?? "").updateData(data)
-                // 비밀번호 업데이트
-                try await Auth.auth().currentUser?.updatePassword(to: newpassword)
+                
             } catch {
                 print("파이어베이스 업데이트 실패")
             }
+        }
+    }
+
+    /// 비밀번호 업데이트
+    @MainActor
+    func updatePassword() async throws {
+        do {
+            try await Auth.auth().currentUser?.updatePassword(to: newpassword)
+        } catch {
+            print("비밀번호 변경 실패")
         }
     }
 }
