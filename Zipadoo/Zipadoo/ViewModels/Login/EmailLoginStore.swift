@@ -28,9 +28,8 @@ class EmailLoginStore: ObservableObject {
     }
     
     /// 유저 로그인
-    func login() async throws {
+    func login() async throws -> Bool {
         try await AuthStore.shared.login(email: email, password: password)
-        
     }
     
     // 이메일 중복 체크 (기존 회원 여부)

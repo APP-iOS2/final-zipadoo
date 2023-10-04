@@ -104,7 +104,7 @@ class AuthStore: ObservableObject {
     
     /// 로그인
     @MainActor
-    func login(email: String, password: String) async throws {
+    func login(email: String, password: String) async throws -> Bool {
 
         // 로그인한 유저 userSession에 저장
         self.userSession = try await Auth.auth().signIn(withEmail: email, password: password).user
@@ -112,6 +112,8 @@ class AuthStore: ObservableObject {
         try await loadUserData()
         print("로그인 성공!")
   
+        // 로그인 성공 여부 반환 필요
+        return true
     }
     
     /// 로그아웃

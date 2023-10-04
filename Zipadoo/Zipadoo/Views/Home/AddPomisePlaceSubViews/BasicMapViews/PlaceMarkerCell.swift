@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-
+// MARK: - 직접설정 맵뷰 장소 마커 UI
+/// 직접설정 맵뷰에서 사용되는 UI
 struct PlaceMarkerCell: View {
     
     var body: some View {

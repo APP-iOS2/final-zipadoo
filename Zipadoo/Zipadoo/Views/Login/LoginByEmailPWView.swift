@@ -17,6 +17,9 @@ struct LoginByEmailPWView: View {
     /// 비밀번호 확인 안내문구
     @State private var adminMessage: String = ""
     
+    /// 로그인 성공 시 풀스크린 판별한 Bool 값
+    @State private var loginResult: Bool = false
+    
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea(.all) // 배경색
@@ -99,14 +102,16 @@ struct LoginByEmailPWView: View {
                 
                 Task {
                     do {
-                        try await emailLoginStore.login()
+                        let emailLoginResult: Bool = try await emailLoginStore.login()
                         
+                        print(loginResult)
+                        loginResult = emailLoginResult
+                        print(loginResult)
                     } catch {
                         print("로그인 실패")
                         adminMessage = "비밀번호를 다시 입력해주세요"
                     }
                 }
-                
             }, label: {
                 Text("로그인")
                     .fontWeight(.semibold)
@@ -115,6 +120,9 @@ struct LoginByEmailPWView: View {
             }
                                           )
             )
+            .fullScreenCover(isPresented: $loginResult, content: {
+                ContentView()
+            })
         }
     }
 }
