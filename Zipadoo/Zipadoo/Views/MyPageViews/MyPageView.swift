@@ -25,7 +25,7 @@ struct MyPageView: View {
 
     let dummyKm: Int = 1000
     @State var isShownFullScreenCover = false
-    @State private var progressBarValue: Double = 0.8
+    @State private var progressBarValue: Double = 0
     
     var body: some View {
         NavigationStack {
@@ -56,7 +56,7 @@ struct MyPageView: View {
 //                                .foregroundColor(.black)
 //                        }
 //                        .padding(.bottom)
-                        Text("이재승 님")
+                        Text("\(currentUser?.nickName ?? "안나옴") 님")
                             .font(.title2)
                             .bold()
                             .padding(.bottom)
@@ -65,7 +65,7 @@ struct MyPageView: View {
                         } label: {
                             HStack {
                                 Image(systemName: "bitcoinsign.circle.fill")
-                                Text("1,000")
+                                Text("\(currentUser?.potato ?? 0)")
                                     .underline()
                             }
                             .font(.title3)
@@ -94,7 +94,7 @@ struct MyPageView: View {
                     Text("지각 깊이")
                         .font(.headline)
                     Spacer()
-                    Text("지하 \(dummyKm)km")
+                    Text("지하 \(currentUser?.crustDepth ?? 100)km")
                 }
                 .padding(.top)
                 
@@ -106,11 +106,12 @@ struct MyPageView: View {
 //                    }
                 
                 HStack {
-                    Text("이대로 가다간,, 친구들한테 파묻히겠어요 ㅠ")
+                    Text("약속을 잘 지켜보아요~")
                         .font(.footnote)
                         .lineLimit(1)
                     Spacer()
-                    Text("지각률 80%")
+                    // 계산 필요
+                    Text("지각률 0%")
                         .foregroundColor(.red)
                 }
                 
@@ -212,7 +213,7 @@ struct MyPageProgressBar: View {
                         .cornerRadius(5)
                         .foregroundColor(.brown)
                     
-                    Text("지각횟수 10회")
+                    Text("지각횟수 0회")
                         .foregroundStyle(.white)
                 }
             }
