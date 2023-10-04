@@ -9,8 +9,20 @@ import SwiftUI
 
 struct MyPageView: View {
     
-    let dummyImageString: String = "https://cdn.discordapp.com/attachments/1154228426660642846/1158960405557821541/602901855214e3f8.png?ex=651e257d&is=651cd3fd&hm=1df0c4a9d0d9e2b010402b662690e5606b7a3f5830af8bc431235ad0f4523f9e&"
+    /// 현재 로그인된 유저(옵셔널)
+    let currentUser: User? = AuthStore.shared.currentUser
+    /// 유저가 있으면 유저프로필 String저장
+    var userImageString: String {
+        if let user = currentUser {
+            user.profileImageString
+        } else {
+            // 스토리지에 저장된 기본 이미지
+            "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
+        }
+    }
     
+    let dummyImageString: String = "https://cdn.discordapp.com/attachments/1153285599625748531/1154611582748336148/9b860155ad6b6c37.png"
+
     let dummyKm: Int = 1000
     @State var isShownFullScreenCover = false
     @State private var progressBarValue: Double = 0.8
@@ -18,8 +30,12 @@ struct MyPageView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
+                
                 HStack {
                     // 프로필 이미지
+                    ProfileImageView(imageString: userImageString, size: .medium)
+ 
+                    /*
                     AsyncImage(url: URL(string: dummyImageString)) { image in
                         image.resizable()
                             .aspectRatio(contentMode: .fit)
@@ -28,6 +44,8 @@ struct MyPageView: View {
                     } placeholder: {
                         ProgressView()
                     }
+                     */
+                    
                     Spacer()
                     // 프로필 기능모음
                     VStack(alignment: .trailing) {
