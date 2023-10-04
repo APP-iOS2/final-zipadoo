@@ -69,7 +69,7 @@ struct SearchBarCell: View {
                             placeName = result.place_name
                             
                             /// 장소에 대한 주소가 없을 시, 장소이름으로 장소에 대한 주소값 대체
-                            if promiseLocation.address.isEmpty {
+                            if result.road_address_name.isEmpty {
                                 promiseLocation.address = placeName
                             } else {
                                 promiseLocation.address = result.road_address_name
