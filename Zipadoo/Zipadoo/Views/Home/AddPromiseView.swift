@@ -32,7 +32,8 @@ struct AddPromiseView: View {
     @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "") /// 장소에 대한 정보 값
     @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
     @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
-    @State private var showingAlert: Bool = false
+    @State private var showingConfirmAlert: Bool = false
+    @State private var showingCancelAlert: Bool = false
     @State private var showingPenalty: Bool = false
     
     var isAllWrite: Bool {
@@ -153,24 +154,6 @@ struct AddPromiseView: View {
                     .padding(.top, 10)
                     
                     // MARK: - 약속 친구 추가 구현
-                    HStack {
-                        Text("친구추가")
-                            .font(.title2)
-                            .bold()
-                        
-                        Spacer()
-                        
-                        Button {
-                            addFriendSheet.toggle()
-                            print("친구 추가")
-                        } label: {
-                            Label("추가하기", systemImage: "plus")
-                                .foregroundColor(.black)
-                        }
-                        .buttonStyle(.bordered)
-                    }
-                    .padding(.top, 40)
-                    
                     AddFriendCellView()
                 }
                 .padding(.horizontal, 15)
@@ -178,16 +161,17 @@ struct AddPromiseView: View {
             .scrollIndicators(.hidden)
             .navigationTitle("약속 추가")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
-                        showingAlert.toggle()
+                        showingConfirmAlert.toggle()
                     } label: {
                         Text("등록")
                             .foregroundColor(isAllWrite ? .blue : .gray)
                     }
                     .disabled(!isAllWrite)
-                    .alert(isPresented: $showingAlert) {
+                    .alert(isPresented: $showingConfirmAlert) {
                         Alert(
                             title: Text(""),
                             message: Text("등록이 완료되었습니다."),
@@ -199,6 +183,28 @@ struct AddPromiseView: View {
                         )
                     }
                 }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        showingCancelAlert.toggle()
+                    } label: {
+                        Text("취소")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    .alert(isPresented: $showingCancelAlert) {
+                        Alert(
+                            title: Text("약속 등록을 취소합니다."),
+                            message: Text("작성 중인 내용은 저장되지 않습니다."),
+                            primaryButton: .default(Text("확인"), action: {
+                                dismiss()
+                            }),
+                            secondaryButton: .cancel(Text("취소").foregroundColor(.red), action: {
+                                
+                            })
+                        )
+                    }
+                }
+
             }
             .sheet(isPresented: $showingPenalty, content: {
                 Picker(selection: $selectedValue, label: Text("지각비")) {
@@ -208,7 +214,7 @@ struct AddPromiseView: View {
                 }
                 .pickerStyle(WheelPickerStyle())
                 .frame(maxWidth: .infinity)
-                .presentationDetents([.height(200)])
+                .presentationDetents([.height(300)])
             })
             .sheet(isPresented: $addFriendSheet) {
                 FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)

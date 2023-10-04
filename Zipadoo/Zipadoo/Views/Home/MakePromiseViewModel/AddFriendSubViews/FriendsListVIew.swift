@@ -26,6 +26,7 @@ struct FriendsListVIew: View {
                         }
                 }
             }
+            .listStyle(.plain)
             .navigationTitle("친구 목록")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
