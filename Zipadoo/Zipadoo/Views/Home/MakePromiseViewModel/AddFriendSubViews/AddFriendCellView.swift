@@ -19,14 +19,6 @@ struct AddFriendCellView: View {
                 HStack {
                     VStack {
                         HStack {
-                            Text("친구 추가")
-                                .font(.title3)
-                            Spacer()
-                        }
-                        .padding(.leading, 15)
-                        .padding(.top)
-                        
-                        HStack {
                             ScrollView(.horizontal) {
                                 HStack {
                                     ForEach(selectedFriends, id: \.self) { name in

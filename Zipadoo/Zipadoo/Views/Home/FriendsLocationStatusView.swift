@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FriendsLocationStatusView: View {
     @State private var value: Double = 0.4
-    let friends = ["홍길동", "둘리", "도우너", "도우너", "도우너", "도우너"]
+    let friends = ["홍길동", "둘리", "도우너", "또치"]
     
     var body: some View {
         VStack {
@@ -17,7 +17,6 @@ struct FriendsLocationStatusView: View {
                 ProgressWithImageView(value: value, label: { Text(friend) }, currentValueLabel: { Text("\(Int(value*100))%") })
                     .progressViewStyle(BarProgressStyle(height: 25))
                     .transition(.opacity)
-                    .animation(.easeInOut(duration: 0.5))
                     .shadow(radius: 5)
             }
             HStack {
@@ -53,7 +52,7 @@ struct BarProgressStyle: ProgressViewStyle {
         let progress = configuration.fractionCompleted ?? 0.0
         
         return GeometryReader { geometry in
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: -5) {
                 configuration.label.font(labelFontStyle)
                 
                 ZStack(alignment: .leading) {
