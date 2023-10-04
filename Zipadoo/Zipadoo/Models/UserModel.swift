@@ -9,7 +9,7 @@ import Foundation
 
 struct User: Codable, Identifiable {
     /// 사용자 ID
-    var id: String = UUID().uuidString
+    var id: String
     /// 사용자 이름
     let name: String
     /// 사용자 닉네임
@@ -24,6 +24,9 @@ struct User: Codable, Identifiable {
     var crustDepth: Int = 0
     /// 유저의 지각 약속 수
     var tardyCount: Int = 0
+    
+    /*
     /// 유저의 약속 수
-//  let promiseCount: Int?
+    let promiseCount: Int?
+     */
 }

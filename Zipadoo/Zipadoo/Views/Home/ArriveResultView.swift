@@ -14,7 +14,7 @@ var lateCommer = ["지각자1", "지각자2", "지각자3"]
 
 struct ArriveResultView: View {
 
-    @ObservedObject var viewModel = UserViewModel()
+    @ObservedObject var userStore = UserStore() // 임시로 넣은 viewModel
 
     var body: some View {
         
@@ -23,7 +23,7 @@ struct ArriveResultView: View {
                 .padding()
             
             ScrollView {
-                ForEach(viewModel.userFetchArray) { friend in
+                ForEach(userStore.userFetchArray) { friend in
                     
                     arrivedDataCell(friend: friend)
                         .padding(.bottom, 12)
@@ -41,7 +41,7 @@ struct ArriveResultView: View {
                     .foregroundColor(.gray) // 임시 색
                     
                 ScrollView {
-                    ForEach(viewModel.userFetchArray) { lateFriend in
+                    ForEach(userStore.userFetchArray) { lateFriend in
                         
                         arrivedDataCell(friend: lateFriend)
                             .padding(.bottom, 12)
@@ -55,7 +55,7 @@ struct ArriveResultView: View {
         }
         .onAppear {
             Task {
-                viewModel.fetchAllUsers()
+                userStore.fetchAllUsers()
             }
         }
     }
@@ -64,7 +64,7 @@ struct ArriveResultView: View {
     private func arrivedDataCell(friend: User) -> some View {
         HStack {
             // 이미지
-            ProfileImageView(imageUrl: friend.profileImageString, size: .xSmall)
+            ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
             
             VStack(alignment: .leading) {
                 
