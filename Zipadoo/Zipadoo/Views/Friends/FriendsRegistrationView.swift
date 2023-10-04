@@ -18,20 +18,20 @@ struct FriendsRegistrationView: View {
     
     var body: some View {
         VStack {
-            TextField("친구의 닉네임을 작성해주세요.", text: $nickNameTextField)
+            TextField("친구의 닉네임을 입력해주세요.", text: $nickNameTextField)
                 .padding(10)
                 .overlay(
-                      RoundedRectangle(cornerRadius: 10)
+                    RoundedRectangle(cornerRadius: 10)
                         .stroke(.gray)
-                  )
+                )
                 .padding(.bottom, 5)
-                
-            TextField("친구의 연락처를 작성해주세요.", text: $phoneTextField)
+            
+            TextField("친구의 연락처를 입력해주세요.", text: $phoneTextField)
                 .padding(10)
                 .overlay(
-                      RoundedRectangle(cornerRadius: 10)
+                    RoundedRectangle(cornerRadius: 10)
                         .stroke(.gray)
-                  )
+                )
             
             Spacer()
         }
@@ -44,7 +44,7 @@ struct FriendsRegistrationView: View {
                 } label: {
                     Text("취소")
                 }
-            
+                
             }
             
             ToolbarItem(placement: .topBarTrailing) {
