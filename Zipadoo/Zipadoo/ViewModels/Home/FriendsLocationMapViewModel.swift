@@ -20,33 +20,33 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
 
     private let mapView = MKMapView()
 
-    let destinationLocation: Location = Location(
+    let destinationLocation: LocationAndInfo = LocationAndInfo(
         coordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323),
         title: "약속장소",
         imgString: "flag",
         isMe: false
     )
 
-    let friendsLocation: [Location] = [
-        Location(
+    let friendsLocation: [LocationAndInfo] = [
+        LocationAndInfo(
             coordinate: CLLocationCoordinate2D(latitude: 37.437453, longitude: 127.002293),
             title: "정한두",
             imgString: "dragon",
             isMe: true
         ),
-        Location(
+        LocationAndInfo(
             coordinate: CLLocationCoordinate2D(latitude: 37.547551, longitude: 127.080315),
             title: "임병구",
             imgString: "bear",
             isMe: false
         ),
-        Location(
+        LocationAndInfo(
             coordinate: CLLocationCoordinate2D(latitude: 37.536981, longitude: 126.999426),
             title: "윤해수",
             imgString: "rabbit",
             isMe: false
         ),
-        Location(
+        LocationAndInfo(
             coordinate: CLLocationCoordinate2D(latitude: 37.492266, longitude: 127.030677),
             title: "선아라",
             imgString: "owl",

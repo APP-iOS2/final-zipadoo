@@ -33,7 +33,7 @@ struct FriendsLocationMapView: View {
     }
     
     // 중앙 좌표를 계산하는 함수
-    private func calculateCenterCoordinate(for locations: [Location]) -> CLLocationCoordinate2D? {
+    private func calculateCenterCoordinate(for locations: [LocationAndInfo]) -> CLLocationCoordinate2D? {
         guard !locations.isEmpty else { return nil }
         
         var totalLatitude: CLLocationDegrees = 0.0
@@ -50,7 +50,6 @@ struct FriendsLocationMapView: View {
         return CLLocationCoordinate2D(latitude: averageLatitude, longitude: averageLongitude)
     }
 }
-
 
 #Preview {
     FriendsLocationMapView()
