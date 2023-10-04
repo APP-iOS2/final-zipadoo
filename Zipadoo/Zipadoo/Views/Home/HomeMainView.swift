@@ -13,6 +13,8 @@ struct HomeMainView: View {
     
     @StateObject private var promise: PromiseViewModel = PromiseViewModel()
     
+    @State private var isShownFullScreenCover: Bool = false
+    
     var body: some View {
         NavigationStack {
             // 약속 배열 값 존재하는지 확인.
@@ -72,11 +74,14 @@ struct HomeMainView: View {
                 .padding()
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                        NavigationLink {
-                            AddPromiseView()
+                        Button {
+                            isShownFullScreenCover.toggle()
                         } label: {
                             Text("약속 추가")
                         }
+                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+                            AddPromiseView()
+                        })
                     }
                 }
             }
