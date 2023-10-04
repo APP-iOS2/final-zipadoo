@@ -19,7 +19,7 @@ struct AddPromiseView: View {
     @State private var address = ""
     
     // 지각비 변수 및 상수 값
-    @State private var selectedValue = 100 // 초기 선택값 설정
+    @State private var selectedValue = 100
     let minValue = 100
     let maxValue = 10000
     let step = 100
@@ -27,10 +27,18 @@ struct AddPromiseView: View {
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var friends = ["병구", "상규", "예슬", "한두", "아라", "해수", "여훈"]
     @State private var addFriendSheet: Bool = false
-    @State private var mapViewSheet: Bool = false
-    @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "")
-    @State var addLocationStore: AddLocationStore = AddLocationStore()
+//    @State private var mapViewSheet: Bool = false
+    @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "") /// 장소에 대한 정보 값
+    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
+    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
+
     @State private var showingAlert: Bool = false
+    
+    enum Field: Hashable {
+        case promiseTitle, date
+    }
+    
+    @FocusState private var focusField: Field?
     
     var body: some View {
         NavigationStack {
@@ -41,9 +49,11 @@ struct AddPromiseView: View {
                     Text("약속 이름")
                         .font(.title2)
                         .bold()
+                        .padding(.top, 15)
                     
                     HStack {
                         TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
+                            .focused($focusField, equals: .promiseTitle)
                             .onChange(of: promiseTitle) {
                                 if promiseTitle.count > 15 {
                                     promiseTitle = String(promiseTitle.prefix(15))
@@ -75,6 +85,7 @@ struct AddPromiseView: View {
                     DatePicker("날짜/시간", selection: $date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
                         .datePickerStyle(.compact)
                         .labelsHidden()
+                        .focused($focusField, equals: .date)
                         .padding(.top, 10)
                     
                     // MARK: - 약속 장소 구현
@@ -83,17 +94,18 @@ struct AddPromiseView: View {
                         .bold()
                         .padding(.top, 40)
                     
-                    Button {
-                        mapViewSheet = true
+                    /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
+                    NavigationLink {
+                        AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
                     } label: {
                         Label("지역검색", systemImage: "mappin")
                             .foregroundColor(.white)
                     }
                     .buttonStyle(.borderedProminent)
-                    .sheet(isPresented: $mapViewSheet, content: {
-                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
-                            .presentationDetents([.height(900)])
-                    })
+//                    .sheet(isPresented: $mapViewSheet, content: {
+//                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
+//                            .presentationDetents([.height(900)])
+//                    })
                     
                     Text(promiseLocation.address)
                         .font(.callout)
@@ -157,43 +169,47 @@ struct AddPromiseView: View {
                     .padding(.top, 40)
                     
                     AddFriendCellView()
+                    Button("") {
+                        if promiseTitle.isEmpty {
+                            focusField = .promiseTitle
+                        } else if date == Date() {
+                            focusField = .date
+                        }
+                    }
                 }
                 .padding(.horizontal, 15)
+                .onAppear {
+                    focusField = .promiseTitle
+                }
             }
             .scrollIndicators(.hidden)
             .navigationTitle("약속 추가")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        showingAlert.toggle()
+                    } label: {
+                        Text("등록")
+                    }
+                    .alert(isPresented: $showingAlert) {
+                        Alert(
+                            title: Text(""),
+                            message: Text("등록이 완료되었습니다."),
+                            dismissButton:
+                                    .default(Text("확인"),
+                                             action: {
+                                                 dismiss()
+                                             })
+                        )
+                    }
+                }
+            }
             .sheet(isPresented: $addFriendSheet, content: {
                 Text("AddFirendsSheet")
             })
             .onTapGesture {
                 hideKeyboard()
-            }
-            
-            // MARK: - 약속 등록 버튼 구현
-            Button {
-                showingAlert.toggle()
-            } label: {
-                Text("약속 등록하기")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .bold()
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(.blue)
-                    .padding(.bottom, 1)
-            }
-            .padding(.horizontal, 12)
-            .alert(isPresented: $showingAlert) {
-                Alert(
-                    title: Text(""),
-                    message: Text("등록이 완료되었습니다."),
-                    dismissButton:
-                            .default(Text("확인"),
-                                     action: {
-                                         dismiss()
-                                     })
-                )
             }
         }
     }

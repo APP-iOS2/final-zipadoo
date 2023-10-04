@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		043E689D2ACC0E33007B7395 /* PlaceInfoWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043E689C2ACC0E33007B7395 /* PlaceInfoWebView.swift */; };
 		04980D352AC109DE0076D6A5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D342AC109DE0076D6A5 /* MapView.swift */; };
 		04980D372AC10C200076D6A5 /* PlaceMarkerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */; };
 		04980D392AC1180B0076D6A5 /* AddLocationDatas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04980D382AC1180B0076D6A5 /* AddLocationDatas.swift */; };
@@ -15,12 +16,21 @@
 		04BA00F62ABD169C002EFBB9 /* AddDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */; };
 		04BA00FC2ABD1AAE002EFBB9 /* AddPenaltyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */; };
 		04BA00FE2ABD22BC002EFBB9 /* AddPromiseUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */; };
+		04C7A8492AC93D88001B2AF8 /* MapOptionSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A8482AC93D88001B2AF8 /* MapOptionSelectView.swift */; };
+		04C7A84B2AC93F32001B2AF8 /* AddPlaceOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A84A2AC93F32001B2AF8 /* AddPlaceOptionCell.swift */; };
+		04C7A84D2AC9405B001B2AF8 /* NewMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A84C2AC9405B001B2AF8 /* NewMapView.swift */; };
+		04C7A8512AC9471B001B2AF8 /* SearchInKakaoLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A8502AC9471B001B2AF8 /* SearchInKakaoLocal.swift */; };
+		04C7A8532AC94752001B2AF8 /* SearchbarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A8522AC94752001B2AF8 /* SearchbarCell.swift */; };
+		04C7A8552AC94776001B2AF8 /* AnnotationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A8542AC94776001B2AF8 /* AnnotationCell.swift */; };
+		04C7A8572AC9479A001B2AF8 /* AddPlaceButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C7A8562AC9479A001B2AF8 /* AddPlaceButtonCell.swift */; };
+		04C7A85A2AC94889001B2AF8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04C7A8592AC94889001B2AF8 /* Alamofire */; };
 		04FDFE7A2ABC2E8100A464CA /* MakePromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */; };
 		04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */; };
 		08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B42ABC1BE0005D231D /* MyPageView.swift */; };
 		08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */; };
 		08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BA2ABC1DA2005D231D /* SettingView.swift */; };
 		08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BC2ABC1E1C005D231D /* PayingView.swift */; };
+		1B7B2B1A2AC41448009474B5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B7B2B192AC41448009474B5 /* GoogleService-Info.plist */; };
 		1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BD72ABD16B800DE635D /* TossPayView.swift */; };
 		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
 		3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */; };
@@ -75,6 +85,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		043E689C2ACC0E33007B7395 /* PlaceInfoWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoWebView.swift; sourceTree = "<group>"; };
 		04980D342AC109DE0076D6A5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMarkerCell.swift; sourceTree = "<group>"; };
 		04980D382AC1180B0076D6A5 /* AddLocationDatas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLocationDatas.swift; sourceTree = "<group>"; };
@@ -83,12 +94,20 @@
 		04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddDateCell.swift; sourceTree = "<group>"; };
 		04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPenaltyCell.swift; sourceTree = "<group>"; };
 		04BA00FD2ABD22BC002EFBB9 /* AddPromiseUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseUserCell.swift; sourceTree = "<group>"; };
+		04C7A8482AC93D88001B2AF8 /* MapOptionSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapOptionSelectView.swift; sourceTree = "<group>"; };
+		04C7A84A2AC93F32001B2AF8 /* AddPlaceOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceOptionCell.swift; sourceTree = "<group>"; };
+		04C7A84C2AC9405B001B2AF8 /* NewMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMapView.swift; sourceTree = "<group>"; };
+		04C7A8502AC9471B001B2AF8 /* SearchInKakaoLocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchInKakaoLocal.swift; sourceTree = "<group>"; };
+		04C7A8522AC94752001B2AF8 /* SearchbarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchbarCell.swift; sourceTree = "<group>"; };
+		04C7A8542AC94776001B2AF8 /* AnnotationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCell.swift; sourceTree = "<group>"; };
+		04C7A8562AC9479A001B2AF8 /* AddPlaceButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceButtonCell.swift; sourceTree = "<group>"; };
 		04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePromiseView.swift; sourceTree = "<group>"; };
 		04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendCellView.swift; sourceTree = "<group>"; };
 		08C6F0B42ABC1BE0005D231D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
 		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
+		1B7B2B192AC41448009474B5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListVIew.swift; sourceTree = "<group>"; };
@@ -143,6 +162,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04C7A85A2AC94889001B2AF8 /* Alamofire in Frameworks */,
 				1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */,
 				C069D2BC2AC145D100A62E04 /* AppsFlyerLib in Frameworks */,
 				FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */,
@@ -160,9 +180,11 @@
 		04980D332AC109A40076D6A5 /* AddPomisePlaceSubViews */ = {
 			isa = PBXGroup;
 			children = (
-				04980D342AC109DE0076D6A5 /* MapView.swift */,
-				04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */,
+				04C7A85B2AC9495F001B2AF8 /* SelectMapOption */,
+				04C7A84F2AC946E3001B2AF8 /* BasicMapViews */,
+				04C7A84E2AC946D2001B2AF8 /* NewMapViews */,
 				04980D382AC1180B0076D6A5 /* AddLocationDatas.swift */,
+				04C7A8502AC9471B001B2AF8 /* SearchInKakaoLocal.swift */,
 			);
 			path = AddPomisePlaceSubViews;
 			sourceTree = "<group>";
@@ -175,7 +197,6 @@
 				FA294A782AC3E59C00485E09 /* AddPromisePlaceCell.swift */,
 				04BA00F52ABD169C002EFBB9 /* AddDateCell.swift */,
 				04BA00FB2ABD1AAE002EFBB9 /* AddPenaltyCell.swift */,
-				04980D332AC109A40076D6A5 /* AddPomisePlaceSubViews */,
 				04BA00FA2ABD1A23002EFBB9 /* AddFriendSubViews */,
 			);
 			path = MakePromiseViewModel;
@@ -189,6 +210,36 @@
 				3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */,
 			);
 			path = AddFriendSubViews;
+			sourceTree = "<group>";
+		};
+		04C7A84E2AC946D2001B2AF8 /* NewMapViews */ = {
+			isa = PBXGroup;
+			children = (
+				04C7A84C2AC9405B001B2AF8 /* NewMapView.swift */,
+				04C7A8522AC94752001B2AF8 /* SearchbarCell.swift */,
+				04C7A8542AC94776001B2AF8 /* AnnotationCell.swift */,
+				04C7A8562AC9479A001B2AF8 /* AddPlaceButtonCell.swift */,
+				043E689C2ACC0E33007B7395 /* PlaceInfoWebView.swift */,
+			);
+			path = NewMapViews;
+			sourceTree = "<group>";
+		};
+		04C7A84F2AC946E3001B2AF8 /* BasicMapViews */ = {
+			isa = PBXGroup;
+			children = (
+				04980D342AC109DE0076D6A5 /* MapView.swift */,
+				04980D362AC10C200076D6A5 /* PlaceMarkerCell.swift */,
+			);
+			path = BasicMapViews;
+			sourceTree = "<group>";
+		};
+		04C7A85B2AC9495F001B2AF8 /* SelectMapOption */ = {
+			isa = PBXGroup;
+			children = (
+				04C7A84A2AC93F32001B2AF8 /* AddPlaceOptionCell.swift */,
+				04C7A8482AC93D88001B2AF8 /* MapOptionSelectView.swift */,
+			);
+			path = SelectMapOption;
 			sourceTree = "<group>";
 		};
 		08C6F0BE2ABC1E22005D231D /* MyPageViews */ = {
@@ -250,6 +301,7 @@
 			children = (
 				FA59EE302AC1645C00689EE3 /* HomeMainView.swift */,
 				FAD9659B2AC40FB800D4A65A /* AddPromiseView.swift */,
+				04980D332AC109A40076D6A5 /* AddPomisePlaceSubViews */,
 				FAD965992AC40E4A00D4A65A /* ArriveResultView.swift */,
 				FA59EE2F2AC1645C00689EE3 /* PromiseDetailView.swift */,
 				FAD3BD1E2AC2D1A300117938 /* HomeMainView.swift */,
@@ -282,6 +334,7 @@
 			children = (
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
+				1B7B2B192AC41448009474B5 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -394,6 +447,7 @@
 				FAB58B972ABD1879006B9E11 /* FirebaseFirestoreSwift */,
 				FAB58BAD2ABD1879006B9E11 /* FirebaseStorage */,
 				C069D2BB2AC145D100A62E04 /* AppsFlyerLib */,
+				04C7A8592AC94889001B2AF8 /* Alamofire */,
 			);
 			productName = Zipadoo;
 			productReference = FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */;
@@ -427,6 +481,7 @@
 				1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */,
 				FAB58B7A2ABD1879006B9E11 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C069D2BA2AC145D100A62E04 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
+				04C7A8582AC94889001B2AF8 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = FAD5FE3A2ABBD3E700E05E6E /* Products */;
 			projectDirPath = "";
@@ -447,6 +502,7 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
+				1B7B2B1A2AC41448009474B5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +551,9 @@
 				8B973A422AC5942C00C67B5F /* EmailLoginStore.swift in Sources */,
 				8B973A412AC5942C00C67B5F /* AuthStore.swift in Sources */,
 				04BA00F22ABD14F4002EFBB9 /* FriendSellView.swift in Sources */,
+				04C7A84D2AC9405B001B2AF8 /* NewMapView.swift in Sources */,
+				04C7A84B2AC93F32001B2AF8 /* AddPlaceOptionCell.swift in Sources */,
+				04C7A8492AC93D88001B2AF8 /* MapOptionSelectView.swift in Sources */,
 				FA59EE352AC1645C00689EE3 /* HomeMainView.swift in Sources */,
 				FA59EE342AC1645C00689EE3 /* PromiseDetailView.swift in Sources */,
 				C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */,
@@ -505,12 +564,17 @@
 				8B973A452AC5946300C67B5F /* ContentViewModel.swift in Sources */,
 				04BA00FC2ABD1AAE002EFBB9 /* AddPenaltyCell.swift in Sources */,
 				04BA00FE2ABD22BC002EFBB9 /* AddPromiseUserCell.swift in Sources */,
+				04C7A8572AC9479A001B2AF8 /* AddPlaceButtonCell.swift in Sources */,
+				04C7A8532AC94752001B2AF8 /* SearchbarCell.swift in Sources */,
+				04C7A8552AC94776001B2AF8 /* AnnotationCell.swift in Sources */,
 				8B973A352AC5930D00C67B5F /* LoginEmailCheckView.swift in Sources */,
 				FAD9659A2AC40E4A00D4A65A /* ArriveResultView.swift in Sources */,
 				FAD3BD222AC2D1A400117938 /* HomeMainView.swift in Sources */,
 				04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */,
 				8B973A342AC5930D00C67B5F /* LoginByEmailPWView.swift in Sources */,
 				04980D372AC10C200076D6A5 /* PlaceMarkerCell.swift in Sources */,
+				04C7A8512AC9471B001B2AF8 /* SearchInKakaoLocal.swift in Sources */,
+				043E689D2ACC0E33007B7395 /* PlaceInfoWebView.swift in Sources */,
 				3FFF1CF42AC1696100A0C99E /* FriendsListVIew.swift in Sources */,
 				C04BCDC92ABD89C10024B487 /* ShareView.swift in Sources */,
 				8B973A432AC5942C00C67B5F /* KakaoStore.swift in Sources */,
@@ -751,6 +815,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		04C7A8582AC94889001B2AF8 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.0;
+			};
+		};
 		1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tosspayments/payment-sdk-ios.git";
@@ -778,6 +850,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		04C7A8592AC94889001B2AF8 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 04C7A8582AC94889001B2AF8 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		1BF69BDA2ABD16C500DE635D /* TossPayments */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */;
