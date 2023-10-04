@@ -37,7 +37,7 @@ struct ProfileImageView: View {
     
     var body: some View {
         
-        // 일단 Async이미지로 작성
+        // 일단 Async이미지로 작성 -> 스토리지에 사진 삭제됐을때도 대비해서 코드작성
         AsyncImage(url: URL(string: imageString)) { image in
             image
                 .resizable()
