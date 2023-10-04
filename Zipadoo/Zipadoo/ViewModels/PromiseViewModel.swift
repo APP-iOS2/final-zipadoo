@@ -8,6 +8,7 @@
 import Foundation
 import Firebase
 
+@MainActor
 class PromiseViewModel: ObservableObject {
     @Published var promiseViewModel: [Promise] = []
     
@@ -23,7 +24,7 @@ class PromiseViewModel: ObservableObject {
     /// 약속 패치 함수
     func fetchPromise() async throws {
         self.promiseViewModel.removeAll()
-                
+        
         /*
          participantIdArray에 ID 값과 같은 사람들만 가져온다.
          guard let userID =
@@ -57,6 +58,7 @@ class PromiseViewModel: ObservableObject {
                 
                 // promiseViewModel에 추가
                 self.promiseViewModel.append(promise)
+                
             }
         } catch {
             print("Error getting documents: \(error)")
@@ -73,7 +75,6 @@ class PromiseViewModel: ObservableObject {
             "participantIdArray": "\(promise.participantIdArray)"
         ]
 
-        // 컬렉션에 새로운 문서를 추가합니다. 자동으로 고유한 문서 ID가 생성됩니다.
         dbRef.addDocument(data: newData) { error in
             if let error = error {
                 print("Error adding document: \(error)")

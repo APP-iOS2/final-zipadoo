@@ -16,7 +16,6 @@ struct AddPromiseView: View {
     // 저장될 변수
     @State private var promiseTitle: String = ""
     @State private var date = Date()
-    @State private var address = ""
     
     // 지각비 변수 및 상수 값
     @State private var selectedValue: Int = 0
@@ -41,6 +40,9 @@ struct AddPromiseView: View {
         Calendar.current.startOfDay(for: date) != today &&
         !promiseLocation.address.isEmpty
     }
+    
+    @State private var addPromise: Promise = Promise()
+    @StateObject private var promise: PromiseViewModel = PromiseViewModel()
     
     var body: some View {
         NavigationStack {
@@ -164,7 +166,12 @@ struct AddPromiseView: View {
             .navigationBarBackButtonHidden()
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
+                    // MARK: - 약속 등록 버튼 구현
                     Button {
+                        addPromise.promiseTitle = promiseTitle
+                        addPromise.promiseDate = date.timeIntervalSince1970
+                        addPromise.destination = promiseLocation.address
+                        promise.addPromise(addPromise)
                         showingConfirmAlert.toggle()
                     } label: {
                         Text("등록")
