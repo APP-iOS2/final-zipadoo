@@ -47,8 +47,7 @@ struct PromiseDetailView: View {
                 
                 remainingTimeView
                 
-                // TODO: Spacer 대신에 참석현황2
-                Spacer()
+                FriendsLocationStatusView()
             }
             .padding(.horizontal, 12)
             .toolbar {

@@ -18,18 +18,27 @@ struct AddPromiseView: View {
     @State private var date = Date()
     
     // 지각비 변수 및 상수 값
-    @State private var selectedValue = 100 // 초기 선택값 설정
-    let minValue = 100
-    let maxValue = 10000
-    let step = 100
+    @State private var selectedValue: Int = 0
+    let minValue: Int = 0
+    let maxValue: Int = 5000
+    let step: Int = 100
     
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var friends = ["병구", "상규", "예슬", "한두", "아라", "해수", "여훈"]
     @State private var addFriendSheet: Bool = false
-    @State private var mapViewSheet: Bool = false
-    @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "")
-    @State var addLocationStore: AddLocationStore = AddLocationStore()
+    @State private var selectedFriends: [String] = ["김상규", "나예슬", "윤해수", "임병구"]
+    //    @State private var mapViewSheet: Bool = false
+    @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "") /// 장소에 대한 정보 값
+    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
+    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
     @State private var showingAlert: Bool = false
+    @State private var showingPenalty: Bool = false
+    
+    var isAllWrite: Bool {
+        return !promiseTitle.isEmpty &&
+        Calendar.current.startOfDay(for: date) != today &&
+        !promiseLocation.address.isEmpty
+    }
     
     @State private var addPromise: Promise = Promise()
     @StateObject private var promise: PromiseViewModel = PromiseViewModel()
@@ -43,6 +52,7 @@ struct AddPromiseView: View {
                     Text("약속 이름")
                         .font(.title2)
                         .bold()
+                        .padding(.top, 15)
                     
                     HStack {
                         TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
@@ -79,27 +89,24 @@ struct AddPromiseView: View {
                         .labelsHidden()
                         .padding(.top, 10)
                     
-                    Button(action: {print(date)}, label: {
-                        Text("Button")
-                    })
-                    
                     // MARK: - 약속 장소 구현
                     Text("약속 장소")
                         .font(.title2)
                         .bold()
                         .padding(.top, 40)
                     
-                    Button {
-                        mapViewSheet = true
+                    /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
+                    NavigationLink {
+                        AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
                     } label: {
                         Label("지역검색", systemImage: "mappin")
                             .foregroundColor(.white)
                     }
                     .buttonStyle(.borderedProminent)
-                    .sheet(isPresented: $mapViewSheet, content: {
-                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
-                            .presentationDetents([.height(900)])
-                    })
+                    //                    .sheet(isPresented: $mapViewSheet, content: {
+                    //                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
+                    //                            .presentationDetents([.height(900)])
+                    //                    })
                     
                     Text(promiseLocation.address)
                         .font(.callout)
@@ -131,17 +138,21 @@ struct AddPromiseView: View {
                     Text("100 단위로 선택 가능합니다.")
                         .foregroundColor(.gray)
                     
-                    Picker(selection: $selectedValue, label: Text("지각비")) {
-                        ForEach((minValue...maxValue).filter { $0 % step == 0 }, id: \.self, content: { value in
-                            Text("\(value) 개").tag(value)
-                        })
+                    HStack {
+                        Button {
+                            showingPenalty.toggle()
+                        } label: {
+                            Text("지각비를 선택해주세요.")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        
+                        Spacer()
+                        
+                        Text("\(selectedValue)개")
+                            .font(.title3)
+                            .padding(.leading, 100)
                     }
-                    .pickerStyle(WheelPickerStyle())
-                    .frame(maxWidth: .infinity)
-                    
-                    Text("선택한 감자: \(selectedValue) 개")
-                        .font(.title3)
-                        .padding(.leading, 100)
+                    .padding(.top, 10)
                     
                     // MARK: - 약속 친구 추가 구현
                     HStack {
@@ -169,41 +180,48 @@ struct AddPromiseView: View {
             .scrollIndicators(.hidden)
             .navigationTitle("약속 추가")
             .navigationBarTitleDisplayMode(.inline)
-            .sheet(isPresented: $addFriendSheet, content: {
-                Text("AddFirendsSheet")
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    // MARK: - 약속 등록 버튼 구현
+                    Button {
+                        addPromise.promiseTitle = promiseTitle
+                        addPromise.promiseDate = date.timeIntervalSince1970
+                        addPromise.destination = promiseLocation.address
+                        promise.addPromise(addPromise)
+                        showingAlert.toggle()
+                    } label: {
+                        Text("등록")
+                            .foregroundColor(isAllWrite ? .blue : .gray)
+                    }
+                    .disabled(!isAllWrite)
+                    .alert(isPresented: $showingAlert) {
+                        Alert(
+                            title: Text(""),
+                            message: Text("등록이 완료되었습니다."),
+                            dismissButton:
+                                    .default(Text("확인"),
+                                             action: {
+                                                 dismiss()
+                                             })
+                        )
+                    }
+                }
+            }
+            .sheet(isPresented: $showingPenalty, content: {
+                Picker(selection: $selectedValue, label: Text("지각비")) {
+                    ForEach((minValue...maxValue).filter { $0 % step == 0 }, id: \.self, content: { value in
+                        Text("\(value)").tag(value)
+                    })
+                }
+                .pickerStyle(WheelPickerStyle())
+                .frame(maxWidth: .infinity)
+                .presentationDetents([.height(200)])
             })
+            .sheet(isPresented: $addFriendSheet) {
+                FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)
+            }
             .onTapGesture {
                 hideKeyboard()
-            }
-            
-            // MARK: - 약속 등록 버튼 구현
-            Button {
-                addPromise.promiseTitle = promiseTitle
-                addPromise.promiseDate = date.timeIntervalSince1970
-                addPromise.destination = promiseLocation.address
-                promise.addPromise(addPromise)
-                showingAlert.toggle()
-            } label: {
-                Text("약속 등록하기")
-                    .font(.title2)
-                    .foregroundColor(.white)
-                    .bold()
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 10)
-                    .background(.blue)
-                    .padding(.bottom, 1)
-            }
-            .padding(.horizontal, 12)
-            .alert(isPresented: $showingAlert) {
-                Alert(
-                    title: Text(""),
-                    message: Text("등록이 완료되었습니다."),
-                    dismissButton:
-                            .default(Text("확인"),
-                                     action: {
-                                         dismiss()
-                                     })
-                )
             }
         }
     }

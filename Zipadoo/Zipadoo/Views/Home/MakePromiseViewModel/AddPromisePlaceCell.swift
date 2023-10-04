@@ -7,12 +7,15 @@
 
 import SwiftUI
 
+// MARK: - 사용 안함
 struct AddPromisePlaceCell: View {
-    @State private var mapViewSheet: Bool = false
+//    @State private var mapViewSheet: Bool = false
     @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "")
     @State var address = ""
+    @State var isClickedPlace: Bool = false
+    @State var addLocationButton: Bool = false
     var addLocationStore: AddLocationStore = AddLocationStore()
-    
+        
     var body: some View {
         Rectangle().stroke(Color.gray, lineWidth: 0.5)
             .frame(width: 350, height: 70, alignment: .center)
@@ -34,8 +37,7 @@ struct AddPromisePlaceCell: View {
                     Spacer()
                     
                     NavigationLink {
-//                        mapViewSheet.toggle()
-                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
+                        AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
                     } label: {
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
@@ -48,12 +50,14 @@ struct AddPromisePlaceCell: View {
                     
                 }.padding()
             }
-            .sheet(isPresented: $mapViewSheet, content: {
-                MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)                    .presentationDetents([.height(900)])
-            })
+//            .sheet(isPresented: $mapViewSheet, content: {
+//                MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)                    .presentationDetents([.height(900)])
+//            })
     }
 }
 
 #Preview {
-    AddPromisePlaceCell()
+    NavigationStack {
+        AddPromisePlaceCell()
+    }
 }
