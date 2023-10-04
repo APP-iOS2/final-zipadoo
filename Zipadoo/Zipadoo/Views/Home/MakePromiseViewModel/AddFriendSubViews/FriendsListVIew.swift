@@ -27,12 +27,12 @@ struct FriendsListVIew: View {
                                 if !selectedFriends.contains(friend) {
                                     selectedFriends.append(friend)
                                 }
-                                print(selectedFriends)
                                 isShowingSheet = false
                             } else {
                                 showAlert = true
                                 alertMessage = "\(friend)님은 이미 존재합니다."
                             }
+                            print(selectedFriends)
                         }
                 }
                 .alert(isPresented: $showAlert) {
