@@ -19,23 +19,23 @@ case medium
         case .small:
             return 60
         case .medium:
-            return 80
+            return 200
         }
     }
 }
-
+/*
 let dummyImageString: String = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW47UEfYkQQFKwJfi2sD9SjB4uMYS6zC_RAw&usqp=CAU"
-
+*/
 struct ProfileImageView: View {
     
     /// 파베작업 후 받아올 유저의 프로필 이미지
-    let imageUrl: String
+    let imageString: String
     let size: ProfileImageSize
     
     var body: some View {
         
         // 일단 Async이미지로 작성
-        AsyncImage(url: URL(string: imageUrl)) { image in
+        AsyncImage(url: URL(string: imageString)) { image in
             image
                 .resizable()
                 .aspectRatio(contentMode: .fill)
@@ -49,5 +49,5 @@ struct ProfileImageView: View {
 }
 
 #Preview {
-    ProfileImageView(imageUrl: "", size: .medium)
+    ProfileImageView(imageString: "", size: .medium)
 }

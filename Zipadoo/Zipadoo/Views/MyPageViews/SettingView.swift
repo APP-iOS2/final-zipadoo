@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct SettingView: View {
+    
     @State private var isOnAlarm: Bool = true
     @State private var isOnGPS: Bool = true
     
@@ -57,13 +58,15 @@ struct SettingView: View {
                 .alert(isPresented: $isLogoutAlert) {
                     Alert(
                         title: Text(""),
-                        message: Text("로그아웃 됩니다"),
+                        message: Text("로그아웃됩니다"),
                         primaryButton: .default(Text("취소"), action: {
                             isLogoutAlert = false
                         }),
                         secondaryButton: .destructive(Text("로그아웃"), action: {
                             isLogoutAlert = false
-                            // 로그아웃 구현
+                            Task {
+                                try await AuthStore.shared.logOut()
+                            }
                         })
                         
                     )
