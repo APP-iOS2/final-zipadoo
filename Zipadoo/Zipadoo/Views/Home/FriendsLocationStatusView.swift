@@ -34,16 +34,18 @@ func straightDistance(x1: Double, y1: Double, x2: Double, y2: Double) -> Double 
     return z
 }
 // %구하는 함수
-func convertPecentage(depature: Double, arrival: Double) -> String {
+func distanceRatio(depature: Double, arrival: Double) -> Double {
     let current: Double = arrival - depature
     let remainingDistance: Double = current/arrival
-    return "\(Int(remainingDistance * 100))%"
+    // 현재거리/총거리 비율
+    return remainingDistance
+    // return "\(Int(remainingDistance * 100))%"
 }
 
 import SwiftUI
 
 struct FriendsLocationStatusView: View {
-    @State private var value: Double = 0.4
+//    @State private var value: Double = 0.4
     
 //    let friends = ["홍길동", "둘리", "도우너", "도우너", "도우너", "도우너"]
     
@@ -53,21 +55,22 @@ struct FriendsLocationStatusView: View {
         DummyFriendsLocation(name: "피카츄", depatureLocationLatitude: 37.237585941025316, depatureLocationLongitude: 127.21314261910263, currentLocationLatitude: 37.48465817016523, currentLocationLongitude: 127.01588584214798),
         // 피카츄 출발 위치 : 경상북도청 근처, 현재 위치 : 서울남부터미널
         DummyFriendsLocation(name: "지우", depatureLocationLatitude: 36.57315945594544, depatureLocationLongitude: 128.50517666829037, currentLocationLatitude: 37.48465817016523, currentLocationLongitude: 127.01588584214798),
-        DummyFriendsLocation(name: "피카츄", depatureLocationLatitude: 37.237585941025316, depatureLocationLongitude: 127.21314261910263, currentLocationLatitude: 37.48465817016523, currentLocationLongitude: 127.01588584214798),
-        DummyFriendsLocation(name: "피카츄", depatureLocationLatitude: 37.237585941025316, depatureLocationLongitude: 127.21314261910263, currentLocationLatitude: 37.48465817016523, currentLocationLongitude: 127.01588584214798),
-        DummyFriendsLocation(name: "피카츄", depatureLocationLatitude: 37.237585941025316, depatureLocationLongitude: 127.21314261910263, currentLocationLatitude: 37.48465817016523, currentLocationLongitude: 127.01588584214798),
-        DummyFriendsLocation(name: "피카츄", depatureLocationLatitude: 37.237585941025316, depatureLocationLongitude: 127.21314261910263, currentLocationLatitude: 37.48465817016523, currentLocationLongitude: 127.01588584214798)
+        // 라이츄 출발 위치 : 용인터미널 근처, 현재 위치 : 종로역
+        DummyFriendsLocation(name: "라이츄", depatureLocationLatitude: 37.237585941025316, depatureLocationLongitude: 127.21314261910263, currentLocationLatitude: 37.57239836277199, currentLocationLongitude: 126.98995924830066),
+        // 라이츄 출발 위치 : 용인터미널 근처, 현재 위치 : 수원역
+        DummyFriendsLocation(name: "파이리", depatureLocationLatitude: 37.237585941025316, depatureLocationLongitude: 127.21314261910263, currentLocationLatitude: 37.26570110412163, currentLocationLongitude: 127.00041713174578),
+        // 라이츄 출발 위치 : 용인터미널 근처, 현재 위치 : 용인동백역
+        DummyFriendsLocation(name: "꼬부기", depatureLocationLatitude: 37.237585941025316, depatureLocationLongitude: 127.21314261910263, currentLocationLatitude: 37.2692161242139, currentLocationLongitude: 127.15245177994676),
+        // 라이츄 출발 위치 : 용인터미널 근처, 현재 위치 : 기흥역
+        DummyFriendsLocation(name: "버터풀", depatureLocationLatitude: 37.237585941025316, depatureLocationLongitude: 127.21314261910263, currentLocationLatitude: 37.2748982309358, currentLocationLongitude: 127.11572865543589)
     ]
-    
-    @State var totalDistance: Double = 0
-    @State var remainingDistance: Double = 0
 
     // 더미데이터 끝
     
     var body: some View {
         VStack {
             ForEach(dummyFriends) { friend in
-                ProgressWithImageView(value: value, label: { Text(friend.name) }, currentValueLabel: { Text(convertPecentage(depature: friend.remainingDistance, arrival: friend.totalDistance)) })
+                ProgressWithImageView(value: distanceRatio(depature: friend.remainingDistance, arrival: friend.totalDistance), label: { Text(friend.name) }, currentValueLabel: { Text("\(Int(distanceRatio(depature: friend.remainingDistance, arrival: friend.totalDistance) * 100))%") })
                     .progressViewStyle(BarProgressStyle(height: 25))
                     .transition(.opacity)
                     .animation(.easeInOut(duration: 0.5))
