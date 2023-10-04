@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Promise: Hashable {
+struct Promise: Hashable, Codable {
     /// 약속 ID 값
     let id: String = UUID().uuidString
     /// 약속 생성 사용자 ID 값

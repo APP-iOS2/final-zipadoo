@@ -64,6 +64,7 @@
 		C02790C72ACD297300BBDCCA /* ZipadooWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C02790B52ACD297100BBDCCA /* ZipadooWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C02790CE2ACD29DF00BBDCCA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */; };
 		C02790CF2ACD2A1A00BBDCCA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */; };
+		C02790D02ACD2A7C00BBDCCA /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE552ABD54690042A55A /* PromiseModel.swift */; };
 		C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
 		C04BCDC52ABD57E90024B487 /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC42ABD57E90024B487 /* LocationStore.swift */; };
@@ -645,6 +646,7 @@
 			files = (
 				C02790CF2ACD2A1A00BBDCCA /* UserDefaults.swift in Sources */,
 				C02790BD2ACD297100BBDCCA /* ZipadooWidgetBundle.swift in Sources */,
+				C02790D02ACD2A7C00BBDCCA /* PromiseModel.swift in Sources */,
 				C02790C12ACD297100BBDCCA /* ZipadooWidget.swift in Sources */,
 				C02790BF2ACD297100BBDCCA /* ZipadooWidgetLiveActivity.swift in Sources */,
 			);
