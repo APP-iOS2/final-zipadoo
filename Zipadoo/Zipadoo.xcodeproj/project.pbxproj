@@ -28,7 +28,6 @@
 		8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */; };
 		8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */; };
 		9B6268392ABC2D6800B309E8 /* LocationAndInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */; };
-		9B8FE8212ACD55D300C1EEFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B8FE8202ACD55D200C1EEFC /* GoogleService-Info.plist */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
 		C069D2BC2AC145D100A62E04 /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = C069D2BB2AC145D100A62E04 /* AppsFlyerLib */; };
 		FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */; };
@@ -64,7 +63,6 @@
 		FA2474272ACD4BDB00D4C821 /* AddPromiseUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474072ACD4BDB00D4C821 /* AddPromiseUserCell.swift */; };
 		FA2474282ACD4BDB00D4C821 /* AddPromisePlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474082ACD4BDB00D4C821 /* AddPromisePlaceCell.swift */; };
 		FA24742D2ACD4C0B00D4C821 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474292ACD4C0B00D4C821 /* ShareView.swift */; };
-		FA24742E2ACD4C0B00D4C821 /* ModelTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24742A2ACD4C0B00D4C821 /* ModelTestView.swift */; };
 		FA2474302ACD4C0B00D4C821 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24742C2ACD4C0B00D4C821 /* ContentView.swift */; };
 		FA2474452ACD4D6E00D4C821 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474322ACD4D6E00D4C821 /* UserStore.swift */; };
 		FA2474462ACD4D6E00D4C821 /* FriendsLocationMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474342ACD4D6E00D4C821 /* FriendsLocationMapViewModel.swift */; };
@@ -80,7 +78,7 @@
 		FA2474522ACD4D6E00D4C821 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474422ACD4D6E00D4C821 /* ContentViewModel.swift */; };
 		FA2474532ACD4D6E00D4C821 /* EmailLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474432ACD4D6E00D4C821 /* EmailLoginStore.swift */; };
 		FA2474542ACD4D6E00D4C821 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474442ACD4D6E00D4C821 /* AuthStore.swift */; };
-		FA7588992ABC36F50050446D /* PromiseTestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7588982ABC36F50050446D /* PromiseTestData.swift */; };
+		FA2474562ACD584100D4C821 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA2474552ACD584100D4C821 /* GoogleService-Info.plist */; };
 		FAB58B882ABD1879006B9E11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B872ABD1879006B9E11 /* FirebaseAuth */; };
 		FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8D2ABD1879006B9E11 /* FirebaseDatabase */; };
 		FAB58B902ABD1879006B9E11 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8F2ABD1879006B9E11 /* FirebaseDatabaseSwift */; };
@@ -114,7 +112,6 @@
 		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
 		8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilView.swift; sourceTree = "<group>"; };
 		9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAndInfo.swift; sourceTree = "<group>"; };
-		9B8FE8202ACD55D200C1EEFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C04BCDC22ABD545A0024B487 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zipadoo.entitlements; sourceTree = "<group>"; };
 		C069D2B92AC141AC00A62E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -151,7 +148,6 @@
 		FA2474072ACD4BDB00D4C821 /* AddPromiseUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPromiseUserCell.swift; sourceTree = "<group>"; };
 		FA2474082ACD4BDB00D4C821 /* AddPromisePlaceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPromisePlaceCell.swift; sourceTree = "<group>"; };
 		FA2474292ACD4C0B00D4C821 /* ShareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
-		FA24742A2ACD4C0B00D4C821 /* ModelTestView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelTestView.swift; sourceTree = "<group>"; };
 		FA24742C2ACD4C0B00D4C821 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FA2474322ACD4D6E00D4C821 /* UserStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
 		FA2474342ACD4D6E00D4C821 /* FriendsLocationMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationMapViewModel.swift; sourceTree = "<group>"; };
@@ -167,7 +163,7 @@
 		FA2474422ACD4D6E00D4C821 /* ContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		FA2474432ACD4D6E00D4C821 /* EmailLoginStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginStore.swift; sourceTree = "<group>"; };
 		FA2474442ACD4D6E00D4C821 /* AuthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
-		FA7588982ABC36F50050446D /* PromiseTestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTestData.swift; sourceTree = "<group>"; };
+		FA2474552ACD584100D4C821 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FAD3BD2B2AC3BA9D00117938 /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
@@ -392,7 +388,7 @@
 			children = (
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
-				9B8FE8202ACD55D200C1EEFC /* GoogleService-Info.plist */,
+				FA2474552ACD584100D4C821 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -419,7 +415,6 @@
 			isa = PBXGroup;
 			children = (
 				FA24742C2ACD4C0B00D4C821 /* ContentView.swift */,
-				FA24742A2ACD4C0B00D4C821 /* ModelTestView.swift */,
 				8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */,
 				FA2474292ACD4C0B00D4C821 /* ShareView.swift */,
 				8B973A2E2AC592FA00C67B5F /* Login */,
@@ -452,7 +447,6 @@
 		FAD5FE4E2ABBD46400E05E6E /* TestData */ = {
 			isa = PBXGroup;
 			children = (
-				FA7588982ABC36F50050446D /* PromiseTestData.swift */,
 			);
 			path = TestData;
 			sourceTree = "<group>";
@@ -546,7 +540,7 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-				9B8FE8212ACD55D300C1EEFC /* GoogleService-Info.plist in Resources */,
+				FA2474562ACD584100D4C821 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,7 +580,6 @@
 				FA2474162ACD4BDB00D4C821 /* MapView.swift in Sources */,
 				FA24742D2ACD4C0B00D4C821 /* ShareView.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
-				FA24742E2ACD4C0B00D4C821 /* ModelTestView.swift in Sources */,
 				FA2474112ACD4BDB00D4C821 /* NewMapView.swift in Sources */,
 				FA2474172ACD4BDB00D4C821 /* AddLocationDatas.swift in Sources */,
 				FA2474232ACD4BDB00D4C821 /* AddFriendCellView.swift in Sources */,
@@ -649,7 +642,6 @@
 				FA2474502ACD4D6E00D4C821 /* PromiseDetailStore.swift in Sources */,
 				FA2474102ACD4BDB00D4C821 /* PlaceInfoWebView.swift in Sources */,
 				8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */,
-				FA7588992ABC36F50050446D /* PromiseTestData.swift in Sources */,
 				FA2474132ACD4BDB00D4C821 /* AnnotationCell.swift in Sources */,
 				FA24744B2ACD4D6E00D4C821 /* ImagePicker.swift in Sources */,
 			);
