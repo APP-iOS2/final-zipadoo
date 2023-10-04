@@ -24,7 +24,7 @@ struct SettingView: View {
             
             Section {
                 NavigationLink {
-                    AccountView()
+                    EditProfileView()
                     
                 } label: {
                     Text("회원정보 수정")
