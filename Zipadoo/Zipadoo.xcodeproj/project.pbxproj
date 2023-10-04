@@ -65,8 +65,7 @@
 		C02790CE2ACD29DF00BBDCCA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */; };
 		C02790CF2ACD2A1A00BBDCCA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */; };
 		C02790D02ACD2A7C00BBDCCA /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE552ABD54690042A55A /* PromiseModel.swift */; };
-		C02790D22ACD361100BBDCCA /* InfoEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790D12ACD361100BBDCCA /* InfoEntry.swift */; };
-		C02790D42ACD36A600BBDCCA /* ArrivalStatusEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790D32ACD36A600BBDCCA /* ArrivalStatusEntry.swift */; };
+		C02790D52ACD408000BBDCCA /* ZipadooEntrys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790D12ACD361100BBDCCA /* ZipadooEntrys.swift */; };
 		C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
 		C04BCDC52ABD57E90024B487 /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC42ABD57E90024B487 /* LocationStore.swift */; };
@@ -177,8 +176,7 @@
 		C02790C42ACD297300BBDCCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C02790CC2ACD299600BBDCCA /* ZipadooWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZipadooWidgetExtension.entitlements; sourceTree = "<group>"; };
 		C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		C02790D12ACD361100BBDCCA /* InfoEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoEntry.swift; sourceTree = "<group>"; };
-		C02790D32ACD36A600BBDCCA /* ArrivalStatusEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalStatusEntry.swift; sourceTree = "<group>"; };
+		C02790D12ACD361100BBDCCA /* ZipadooEntrys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooEntrys.swift; sourceTree = "<group>"; };
 		C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailStore.swift; sourceTree = "<group>"; };
 		C04BCDC22ABD545A0024B487 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		C04BCDC42ABD57E90024B487 /* LocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStore.swift; sourceTree = "<group>"; };
@@ -368,8 +366,7 @@
 				C02790BC2ACD297100BBDCCA /* ZipadooWidgetBundle.swift */,
 				C02790BE2ACD297100BBDCCA /* ZipadooWidgetLiveActivity.swift */,
 				C02790C02ACD297100BBDCCA /* ZipadooWidget.swift */,
-				C02790D32ACD36A600BBDCCA /* ArrivalStatusEntry.swift */,
-				C02790D12ACD361100BBDCCA /* InfoEntry.swift */,
+				C02790D12ACD361100BBDCCA /* ZipadooEntrys.swift */,
 				C02790C22ACD297300BBDCCA /* Assets.xcassets */,
 				C02790C42ACD297300BBDCCA /* Info.plist */,
 			);
@@ -654,6 +651,7 @@
 				C02790BD2ACD297100BBDCCA /* ZipadooWidgetBundle.swift in Sources */,
 				C02790D02ACD2A7C00BBDCCA /* PromiseModel.swift in Sources */,
 				C02790C12ACD297100BBDCCA /* ZipadooWidget.swift in Sources */,
+				C02790D52ACD408000BBDCCA /* ZipadooEntrys.swift in Sources */,
 				C02790BF2ACD297100BBDCCA /* ZipadooWidgetLiveActivity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -675,7 +673,6 @@
 				04BA00F62ABD169C002EFBB9 /* AddDateCell.swift in Sources */,
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
 				04BA00F42ABD160C002EFBB9 /* AddPromiseTitleCell.swift in Sources */,
-				C02790D42ACD36A600BBDCCA /* ArrivalStatusEntry.swift in Sources */,
 				8B973A3C2AC5940200C67B5F /* ImagePicker.swift in Sources */,
 				8B973A422AC5942C00C67B5F /* EmailLoginStore.swift in Sources */,
 				8B973A412AC5942C00C67B5F /* AuthStore.swift in Sources */,
@@ -715,7 +712,6 @@
 				8BD44ECE2AC14B2D00A4694C /* ProfileImageUploader.swift in Sources */,
 				8B973A382AC5930D00C67B5F /* SigninByEmailView.swift in Sources */,
 				FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */,
-				C02790D22ACD361100BBDCCA /* InfoEntry.swift in Sources */,
 				FA294A792AC3E59C00485E09 /* AddPromisePlaceCell.swift in Sources */,
 				8B973A372AC5930D00C67B5F /* SigninByEmail2View.swift in Sources */,
 				8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */,
