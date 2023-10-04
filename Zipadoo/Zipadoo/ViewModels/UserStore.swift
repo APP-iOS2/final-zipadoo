@@ -21,7 +21,7 @@ import SwiftUI
 
  */
 
-final class UserViewModel: ObservableObject {
+final class UserStore: ObservableObject {
     
     @Published var userFetchArray: [User] = []
         
@@ -54,19 +54,17 @@ final class UserViewModel: ObservableObject {
     }
     
     /// 특정 유저정보 가져오기 -> 성공
-    func fetchUser(nickname: String) async throws -> User? {
-        let snapshot = try await dbRef.whereField("nickName", isEqualTo: nickname).getDocuments()
+    static func fetchUser(userId: String) async throws -> User? {
         
-        if let jsonData = try? JSONSerialization.data(withJSONObject: snapshot.documents[0].data(), options: []) {
-            if let user = try? JSONDecoder().decode(User.self, from: jsonData) {
-                return user
-            }
-        }
-        return nil
+        let dbRef = Firestore.firestore().collection("Users")
+        
+        let snapshot = try await dbRef.document(userId).getDocument()
+        
+        return try snapshot.data(as: User.self)
     }
     
-    /// 유저데이터 파베에 추가 함수 -> 성공 (나중에 Auth쪽으로 보내기)
     /*
+     /// 유저데이터 파베에 추가 함수 ->  AuthStore에 있음
     func addUserData() async throws {
         do {
             // 스포리지에 저장한 사진 주소String
