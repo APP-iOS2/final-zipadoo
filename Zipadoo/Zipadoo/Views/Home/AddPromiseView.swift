@@ -19,26 +19,27 @@ struct AddPromiseView: View {
     @State private var address = ""
     
     // 지각비 변수 및 상수 값
-    @State private var selectedValue = 100
-    let minValue = 100
-    let maxValue = 10000
-    let step = 100
+    @State private var selectedValue: Int = 0
+    let minValue: Int = 0
+    let maxValue: Int = 5000
+    let step: Int = 100
     
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var friends = ["병구", "상규", "예슬", "한두", "아라", "해수", "여훈"]
     @State private var addFriendSheet: Bool = false
-//    @State private var mapViewSheet: Bool = false
+    @State private var selectedFriends: [String] = ["김상규", "나예슬", "윤해수", "임병구"]
+    //    @State private var mapViewSheet: Bool = false
     @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "") /// 장소에 대한 정보 값
     @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
     @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
-
     @State private var showingAlert: Bool = false
+    @State private var showingPenalty: Bool = false
     
-    enum Field: Hashable {
-        case promiseTitle, date
+    var isAllWrite: Bool {
+        return !promiseTitle.isEmpty &&
+        Calendar.current.startOfDay(for: date) != today &&
+        !promiseLocation.address.isEmpty
     }
-    
-    @FocusState private var focusField: Field?
     
     var body: some View {
         NavigationStack {
@@ -53,7 +54,6 @@ struct AddPromiseView: View {
                     
                     HStack {
                         TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
-                            .focused($focusField, equals: .promiseTitle)
                             .onChange(of: promiseTitle) {
                                 if promiseTitle.count > 15 {
                                     promiseTitle = String(promiseTitle.prefix(15))
@@ -85,7 +85,6 @@ struct AddPromiseView: View {
                     DatePicker("날짜/시간", selection: $date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
                         .datePickerStyle(.compact)
                         .labelsHidden()
-                        .focused($focusField, equals: .date)
                         .padding(.top, 10)
                     
                     // MARK: - 약속 장소 구현
@@ -102,10 +101,10 @@ struct AddPromiseView: View {
                             .foregroundColor(.white)
                     }
                     .buttonStyle(.borderedProminent)
-//                    .sheet(isPresented: $mapViewSheet, content: {
-//                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
-//                            .presentationDetents([.height(900)])
-//                    })
+                    //                    .sheet(isPresented: $mapViewSheet, content: {
+                    //                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
+                    //                            .presentationDetents([.height(900)])
+                    //                    })
                     
                     Text(promiseLocation.address)
                         .font(.callout)
@@ -137,17 +136,21 @@ struct AddPromiseView: View {
                     Text("100 단위로 선택 가능합니다.")
                         .foregroundColor(.gray)
                     
-                    Picker(selection: $selectedValue, label: Text("지각비")) {
-                        ForEach((minValue...maxValue).filter { $0 % step == 0 }, id: \.self, content: { value in
-                            Text("\(value) 개").tag(value)
-                        })
+                    HStack {
+                        Button {
+                            showingPenalty.toggle()
+                        } label: {
+                            Text("지각비를 선택해주세요.")
+                        }
+                        .buttonStyle(.borderedProminent)
+                        
+                        Spacer()
+                        
+                        Text("\(selectedValue)개")
+                            .font(.title3)
+                            .padding(.leading, 100)
                     }
-                    .pickerStyle(WheelPickerStyle())
-                    .frame(maxWidth: .infinity)
-                    
-                    Text("선택한 감자: \(selectedValue) 개")
-                        .font(.title3)
-                        .padding(.leading, 100)
+                    .padding(.top, 10)
                     
                     // MARK: - 약속 친구 추가 구현
                     HStack {
@@ -169,18 +172,8 @@ struct AddPromiseView: View {
                     .padding(.top, 40)
                     
                     AddFriendCellView()
-                    Button("") {
-                        if promiseTitle.isEmpty {
-                            focusField = .promiseTitle
-                        } else if date == Date() {
-                            focusField = .date
-                        }
-                    }
                 }
                 .padding(.horizontal, 15)
-                .onAppear {
-                    focusField = .promiseTitle
-                }
             }
             .scrollIndicators(.hidden)
             .navigationTitle("약속 추가")
@@ -191,7 +184,9 @@ struct AddPromiseView: View {
                         showingAlert.toggle()
                     } label: {
                         Text("등록")
+                            .foregroundColor(isAllWrite ? .blue : .gray)
                     }
+                    .disabled(!isAllWrite)
                     .alert(isPresented: $showingAlert) {
                         Alert(
                             title: Text(""),
@@ -205,9 +200,19 @@ struct AddPromiseView: View {
                     }
                 }
             }
-            .sheet(isPresented: $addFriendSheet, content: {
-                Text("AddFirendsSheet")
+            .sheet(isPresented: $showingPenalty, content: {
+                Picker(selection: $selectedValue, label: Text("지각비")) {
+                    ForEach((minValue...maxValue).filter { $0 % step == 0 }, id: \.self, content: { value in
+                        Text("\(value)").tag(value)
+                    })
+                }
+                .pickerStyle(WheelPickerStyle())
+                .frame(maxWidth: .infinity)
+                .presentationDetents([.height(200)])
             })
+            .sheet(isPresented: $addFriendSheet) {
+                FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)
+            }
             .onTapGesture {
                 hideKeyboard()
             }
