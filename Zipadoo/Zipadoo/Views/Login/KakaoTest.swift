@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-//import KakaoSDKCommon
-//import KakaoSDKAuth
-//import KakaoSDKUser
+// import KakaoSDKCommon
+// import KakaoSDKAuth
+// import KakaoSDKUser
 
 /*
 struct KakaoTest: View {

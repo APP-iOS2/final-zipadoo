@@ -7,9 +7,9 @@
 
 import FirebaseCore
 import SwiftUI
-//import KakaoSDKAuth
-//import KakaoSDKCommon
-//import KakaoSDKUser
+// import KakaoSDKAuth
+// import KakaoSDKCommon
+// import KakaoSDKUser
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     // 파이어베이스 초기화

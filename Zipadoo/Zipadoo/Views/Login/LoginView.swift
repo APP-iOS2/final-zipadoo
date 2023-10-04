@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-//import KakaoSDKCommon
-//import KakaoSDKAuth
-//import KakaoSDKUser
+// import KakaoSDKCommon
+// import KakaoSDKAuth
+// import KakaoSDKUser
 
 // 로그인 뷰 모델
 
@@ -51,8 +51,7 @@ struct LoginView: View {
                                 .frame(width: UIScreen.main.bounds.width * 0.9)
                                 .cornerRadius(5)
                         }
-                        
-                        
+                             
                          // 카카오톡 로그인 버튼
                         Button {
                             /*
@@ -74,8 +73,7 @@ struct LoginView: View {
                                 .cornerRadius(5)
                         }
                         .disabled(true)
-                         
-                        
+                             
                         // 애플 로그인 버튼
                         Button {
                             print("apple login")
