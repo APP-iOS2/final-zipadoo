@@ -11,7 +11,9 @@ import SwiftUI
 struct ZipadooApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FriendsLocationView(
+                friendsLocationMapViewModel: FriendsLocationMapViewModel(), isShowingFriendSheet: false
+            )
         }
     }
 }

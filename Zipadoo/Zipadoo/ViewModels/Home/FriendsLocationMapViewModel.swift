@@ -1,71 +1,166 @@
 //
-//  FriendsLocationMapViewModel.swift
+//  FriendsLocationMapViewModelExpectedTravelTime.swift
 //  Zipadoo
 //
-//  Created by Handoo Jeong on 2023/09/22.
+//  Created by Handoo Jeong on 2023/10/04.
 //
 
 import Foundation
+import SwiftUI
 import MapKit
 
-class FriendsLocationMapViewModel: ObservableObject {
-    
-    // map의 위치 및 크기
-    @Published var region = MKCoordinateRegion(
+class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate {
+    @Published var travelTimesText: [String: (String, String)] = [:]
+    @State var travelTimes: [String: TimeInterval] = [:]
+
+    var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(),
-        span: MKCoordinateSpan())
-    var minLatitude: Double = 0.0
-    var maxLatitude: Double = 0.0
-    var minLongitude: Double = 0.0
-    var maxLongitude: Double = 0.0
-    
-    // 약속장소가 두 군데 이거나 경유가 필요할 경우를 대비해 배열로 추후엔 데이터 받아오기
-    let destination: [Location] = [
-        Location(coordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323), title: "약속장소")
-    ]
-    
-    // 친구 데이터도 추후엔 받아오기
+        span: MKCoordinateSpan()
+    )
+
+    private let mapView = MKMapView()
+
+    let destinationLocation: Location = Location(
+        coordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323),
+        title: "약속장소",
+        imgString: "flag",
+        isMe: false
+    )
+
     let friendsLocation: [Location] = [
-        Location(coordinate: CLLocationCoordinate2D(latitude: 37.574544, longitude: 127.186884), title: "정한두"),
-        Location(coordinate: CLLocationCoordinate2D(latitude: 37.609547, longitude: 127.097594), title: "임병구"),
-        Location(coordinate: CLLocationCoordinate2D(latitude: 37.555798, longitude: 126.924019), title: "윤해수")
+        Location(
+            coordinate: CLLocationCoordinate2D(latitude: 37.437453, longitude: 127.002293),
+            title: "정한두",
+            imgString: "dragon",
+            isMe: true
+        ),
+        Location(
+            coordinate: CLLocationCoordinate2D(latitude: 37.547551, longitude: 127.080315),
+            title: "임병구",
+            imgString: "bear",
+            isMe: false
+        ),
+        Location(
+            coordinate: CLLocationCoordinate2D(latitude: 37.536981, longitude: 126.999426),
+            title: "윤해수",
+            imgString: "rabbit",
+            isMe: false
+        ),
+        Location(
+            coordinate: CLLocationCoordinate2D(latitude: 37.492266, longitude: 127.030677),
+            title: "선아라",
+            imgString: "owl",
+            isMe: false
+        )
     ]
-    
-    func calculateRegion() {
-        let destinationLatitude = destination[0].coordinate.latitude
-        let destinationLongitude = destination[0].coordinate.longitude
-                
-        // 친구들의 좌표 중 위도가 가장 작은 값 불러오기
-        if let minLatitudeLocation = friendsLocation.min(by: {
-            $0.coordinate.latitude < $1.coordinate.latitude }) {
-            minLatitude = minLatitudeLocation.coordinate.latitude
-        }
-        
-        // 친구들의 좌표 중 위도가 가장 큰 값 불러오기
-        if let maxLatitudeLocation = friendsLocation.max(by: {
-            $0.coordinate.latitude < $1.coordinate.latitude }) {
-            maxLatitude = maxLatitudeLocation.coordinate.latitude
+
+    override init() {
+        super.init()
+        mapView.delegate = self
+    }
+
+    func makeMapView() -> MKMapView {
+        return mapView
+    }
+
+    func removeAnnotationsAndOverlays() {
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.removeOverlays(mapView.overlays)
+    }
+
+    func addDestinationPin() {
+        let destinationAnnotation = MKPointAnnotation()
+        destinationAnnotation.coordinate = destinationLocation.coordinate
+        destinationAnnotation.title = destinationLocation.title
+        mapView.addAnnotation(destinationAnnotation)
+    }
+
+    func addFriendPinsAndCalculateTravelTimes() {
+        let myLocation = friendsLocation.first(where: { $0.isMe })
+
+        for friendLocation in friendsLocation where friendLocation.isMe == false {
+            let requestAnnotation = MKPointAnnotation()
+            requestAnnotation.coordinate = friendLocation.coordinate
+            requestAnnotation.title = friendLocation.title
+            mapView.addAnnotation(requestAnnotation)
+
+            let destinationPlacemark = MKPlacemark(coordinate: destinationLocation.coordinate)
+            let friendPlacemark = MKPlacemark(coordinate: friendLocation.coordinate)
+
+            let directionRequest = MKDirections.Request()
+            directionRequest.source = MKMapItem(placemark: friendPlacemark)
+            directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
+            directionRequest.transportType = .automobile
+
+            let directions = MKDirections(request: directionRequest)
+            directions.calculate { [weak self] response, error in
+                guard let self = self, let response = response else { return }
+
+                let route = response.routes[0]
+                self.mapView.addOverlay(route.polyline, level: .aboveRoads)
+
+                let friendName = friendLocation.title
+                let remainingDistance = route.distance
+
+                self.travelTimes[friendName] = remainingDistance
+
+                let formattedDistance = self.formatDistance(remainingDistance)
+                self.travelTimesText[friendName] = (formattedDistance, friendLocation.imgString)
+            }
         }
 
-        // 친구들의 좌표 중 경도가 가장 작은 값 불러오기
-        if let minLongitudeLocation = friendsLocation.min(by: {
-            $0.coordinate.longitude < $1.coordinate.longitude }) {
-            minLongitude = minLongitudeLocation.coordinate.longitude
-        }
+        if let myLocation = myLocation {
+            let requestAnnotation = MKPointAnnotation()
+            requestAnnotation.coordinate = myLocation.coordinate
+            requestAnnotation.title = myLocation.title
+            mapView.addAnnotation(requestAnnotation)
 
-        // 친구들의 좌표 중 경도가 가장 큰 값 불러오기
-        if let maxLongitudeLocation = friendsLocation.max(by: {
-            $0.coordinate.longitude < $1.coordinate.longitude }) {
-            maxLongitude = maxLongitudeLocation.coordinate.longitude
+            let destinationPlacemark = MKPlacemark(coordinate: destinationLocation.coordinate)
+            let friendPlacemark = MKPlacemark(coordinate: myLocation.coordinate)
+
+            let directionRequest = MKDirections.Request()
+            directionRequest.source = MKMapItem(placemark: friendPlacemark)
+            directionRequest.destination = MKMapItem(placemark: destinationPlacemark)
+            directionRequest.transportType = .automobile
+
+            let directions = MKDirections(request: directionRequest)
+            directions.calculate { [weak self] response, error in
+                guard let self = self, let response = response else { return }
+
+                let route = response.routes[0]
+                self.mapView.addOverlay(route.polyline, level: .aboveRoads)
+
+                let friendName = myLocation.title
+                let remainingDistance = route.distance
+
+                self.travelTimes[friendName] = remainingDistance
+
+                let formattedDistance = self.formatDistance(remainingDistance)
+                self.travelTimesText[friendName] = (formattedDistance, myLocation.imgString)
+            }
         }
-                
-        let latitudeDelta = abs(maxLatitude - minLatitude)
-        let longitudeDelta = abs(maxLongitude - minLongitude)
-        region.center.latitude = destinationLatitude
-        region.center.longitude = destinationLongitude
-        
-        // 맵의 크기를 서로 가장 먼 친구들의 차이값을 불러왔으나 일부 부족하여 임의로 1.5값을 곱함.
-        region.span.latitudeDelta = latitudeDelta * 1.5
-        region.span.longitudeDelta = longitudeDelta * 1.5
+    }
+
+    private func formatDistance(_ distance: CLLocationDistance) -> String {
+        if distance < 1000 {
+            return String(format: "%.0f m", distance)
+        } else {
+            let distanceInKilometers = distance / 1000.0
+            return String(format: "%.2f km", distanceInKilometers)
+        }
+    }
+
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.strokeColor = getRandomColor()
+        renderer.lineWidth = 4.0
+        return renderer
+    }
+
+    private func getRandomColor() -> UIColor {
+        let randomRed = CGFloat.random(in: 0...1)
+        let randomGreen = CGFloat.random(in: 0...1)
+        let randomBlue = CGFloat.random(in: 0...1)
+        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
     }
 }

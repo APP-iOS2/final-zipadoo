@@ -8,36 +8,46 @@
 
 /* Begin PBXBuildFile section */
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
-		9B6268352ABC2C4C00B309E8 /* FriendsLocationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6268342ABC2C4C00B309E8 /* FriendsLocationMapView.swift */; };
+		9B1A20712ACB22D00083F631 /* ExpectedTravelTimeMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1A20702ACB22D00083F631 /* ExpectedTravelTimeMarkView.swift */; };
+		9B1A20732ACB24DF0083F631 /* FriendsLocationMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1A20722ACB24DF0083F631 /* FriendsLocationMapViewModel.swift */; };
 		9B6268392ABC2D6800B309E8 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6268382ABC2D6800B309E8 /* Location.swift */; };
-		9B62683B2ABC81BD00B309E8 /* PlaceDestinationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B62683A2ABC81BD00B309E8 /* PlaceDestinationView.swift */; };
-		9B62683D2ABC973D00B309E8 /* FriendsLocationMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B62683C2ABC973D00B309E8 /* FriendsLocationMapViewModel.swift */; };
+		9B62683B2ABC81BD00B309E8 /* PlaceMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B62683A2ABC81BD00B309E8 /* PlaceMarkView.swift */; };
+		9B8FE8152ACC691000C1EEFC /* MapViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE8142ACC691000C1EEFC /* MapViewContainer.swift */; };
+		9B8FE81B2ACCF34900C1EEFC /* FriendsLocationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE81A2ACCF34900C1EEFC /* FriendsLocationListView.swift */; };
+		9B8FE81D2ACCFB0E00C1EEFC /* FriendsLocationMapViewModelExpectedTravelTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE81C2ACCFB0E00C1EEFC /* FriendsLocationMapViewModelExpectedTravelTime.swift */; };
+		9B8FE81F2ACD01E100C1EEFC /* FriendInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE81E2ACD01E100C1EEFC /* FriendInfoView.swift */; };
+		9BADD21C2AC1811B00B547D3 /* FriendsLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BADD21B2AC1811B00B547D3 /* FriendsLocationView.swift */; };
+		9BE7D3F22AC1CBBF006F5980 /* FriendsLocationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE7D3F12AC1CBBF006F5980 /* FriendsLocationMapView.swift */; };
+		9BE7D3F42AC89319006F5980 /* FriendsImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE7D3F32AC89319006F5980 /* FriendsImageView.swift */; };
+		9BE7D3F62AC8967B006F5980 /* Friends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BE7D3F52AC8967B006F5980 /* Friends.swift */; };
 		FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */; };
-		FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */; };
 		FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */; };
 		FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */; };
 		FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE502ABBD62600E05E6E /* test1.swift */; };
 		FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE522ABBD62D00E05E6E /* test2.swift */; };
-		FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE542ABBD63500E05E6E /* test3.swift */; };
-		FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE562ABBD63C00E05E6E /* test4.swift */; };
 		FAD5FE592ABBD64200E05E6E /* test5.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD5FE582ABBD64200E05E6E /* test5.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
-		9B6268342ABC2C4C00B309E8 /* FriendsLocationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationMapView.swift; sourceTree = "<group>"; };
+		9B1A20702ACB22D00083F631 /* ExpectedTravelTimeMarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpectedTravelTimeMarkView.swift; sourceTree = "<group>"; };
+		9B1A20722ACB24DF0083F631 /* FriendsLocationMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationMapViewModel.swift; sourceTree = "<group>"; };
 		9B6268382ABC2D6800B309E8 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
-		9B62683A2ABC81BD00B309E8 /* PlaceDestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDestinationView.swift; sourceTree = "<group>"; };
-		9B62683C2ABC973D00B309E8 /* FriendsLocationMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationMapViewModel.swift; sourceTree = "<group>"; };
+		9B62683A2ABC81BD00B309E8 /* PlaceMarkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceMarkView.swift; sourceTree = "<group>"; };
+		9B8FE8142ACC691000C1EEFC /* MapViewContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewContainer.swift; sourceTree = "<group>"; };
+		9B8FE81A2ACCF34900C1EEFC /* FriendsLocationListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationListView.swift; sourceTree = "<group>"; };
+		9B8FE81C2ACCFB0E00C1EEFC /* FriendsLocationMapViewModelExpectedTravelTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationMapViewModelExpectedTravelTime.swift; sourceTree = "<group>"; };
+		9B8FE81E2ACD01E100C1EEFC /* FriendInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendInfoView.swift; sourceTree = "<group>"; };
+		9BADD21B2AC1811B00B547D3 /* FriendsLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationView.swift; sourceTree = "<group>"; };
+		9BE7D3F12AC1CBBF006F5980 /* FriendsLocationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsLocationMapView.swift; sourceTree = "<group>"; };
+		9BE7D3F32AC89319006F5980 /* FriendsImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsImageView.swift; sourceTree = "<group>"; };
+		9BE7D3F52AC8967B006F5980 /* Friends.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friends.swift; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
-		FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FAD5FE502ABBD62600E05E6E /* test1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test1.swift; sourceTree = "<group>"; };
 		FAD5FE522ABBD62D00E05E6E /* test2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test2.swift; sourceTree = "<group>"; };
-		FAD5FE542ABBD63500E05E6E /* test3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test3.swift; sourceTree = "<group>"; };
-		FAD5FE562ABBD63C00E05E6E /* test4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test4.swift; sourceTree = "<group>"; };
 		FAD5FE582ABBD64200E05E6E /* test5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test5.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -55,8 +65,13 @@
 		C04607122ABC29F6006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				9B6268342ABC2C4C00B309E8 /* FriendsLocationMapView.swift */,
-				9B62683A2ABC81BD00B309E8 /* PlaceDestinationView.swift */,
+				9BADD21B2AC1811B00B547D3 /* FriendsLocationView.swift */,
+				9BE7D3F12AC1CBBF006F5980 /* FriendsLocationMapView.swift */,
+				9BE7D3F32AC89319006F5980 /* FriendsImageView.swift */,
+				9B8FE81A2ACCF34900C1EEFC /* FriendsLocationListView.swift */,
+				9B8FE81E2ACD01E100C1EEFC /* FriendInfoView.swift */,
+				9B62683A2ABC81BD00B309E8 /* PlaceMarkView.swift */,
+				9B1A20702ACB22D00083F631 /* ExpectedTravelTimeMarkView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -65,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				9B6268382ABC2D6800B309E8 /* Location.swift */,
+				9BE7D3F52AC8967B006F5980 /* Friends.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -72,7 +88,9 @@
 		C04607182ABC2A1F006836B7 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				9B62683C2ABC973D00B309E8 /* FriendsLocationMapViewModel.swift */,
+				9B1A20722ACB24DF0083F631 /* FriendsLocationMapViewModel.swift */,
+				9B8FE81C2ACCFB0E00C1EEFC /* FriendsLocationMapViewModelExpectedTravelTime.swift */,
+				9B8FE8142ACC691000C1EEFC /* MapViewContainer.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -122,7 +140,6 @@
 			isa = PBXGroup;
 			children = (
 				C04607122ABC29F6006836B7 /* Home */,
-				FAD5FE3E2ABBD3E700E05E6E /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -131,7 +148,6 @@
 			isa = PBXGroup;
 			children = (
 				C04607152ABC2A11006836B7 /* Home */,
-				FAD5FE542ABBD63500E05E6E /* test3.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -140,7 +156,6 @@
 			isa = PBXGroup;
 			children = (
 				C04607182ABC2A1F006836B7 /* Home */,
-				FAD5FE562ABBD63C00E05E6E /* test4.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -263,16 +278,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAD5FE592ABBD64200E05E6E /* test5.swift in Sources */,
+				9B1A20712ACB22D00083F631 /* ExpectedTravelTimeMarkView.swift in Sources */,
 				FAD5FE532ABBD62D00E05E6E /* test2.swift in Sources */,
-				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
+				9BE7D3F62AC8967B006F5980 /* Friends.swift in Sources */,
+				9B8FE81B2ACCF34900C1EEFC /* FriendsLocationListView.swift in Sources */,
 				FAD5FE512ABBD62600E05E6E /* test1.swift in Sources */,
+				9B8FE81F2ACD01E100C1EEFC /* FriendInfoView.swift in Sources */,
 				9B6268392ABC2D6800B309E8 /* Location.swift in Sources */,
-				9B6268352ABC2C4C00B309E8 /* FriendsLocationMapView.swift in Sources */,
-				9B62683D2ABC973D00B309E8 /* FriendsLocationMapViewModel.swift in Sources */,
+				9BE7D3F22AC1CBBF006F5980 /* FriendsLocationMapView.swift in Sources */,
+				9BADD21C2AC1811B00B547D3 /* FriendsLocationView.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
-				9B62683B2ABC81BD00B309E8 /* PlaceDestinationView.swift in Sources */,
-				FAD5FE572ABBD63C00E05E6E /* test4.swift in Sources */,
-				FAD5FE552ABBD63500E05E6E /* test3.swift in Sources */,
+				9B62683B2ABC81BD00B309E8 /* PlaceMarkView.swift in Sources */,
+				9BE7D3F42AC89319006F5980 /* FriendsImageView.swift in Sources */,
+				9B8FE81D2ACCFB0E00C1EEFC /* FriendsLocationMapViewModelExpectedTravelTime.swift in Sources */,
+				9B8FE8152ACC691000C1EEFC /* MapViewContainer.swift in Sources */,
+				9B1A20732ACB24DF0083F631 /* FriendsLocationMapViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +439,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = education.techit.zipadoo.Zipadoo;
+				PRODUCT_BUNDLE_IDENTIFIER = education.techit.zipadoo.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -448,7 +468,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = education.techit.zipadoo.Zipadoo;
+				PRODUCT_BUNDLE_IDENTIFIER = education.techit.zipadoo.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

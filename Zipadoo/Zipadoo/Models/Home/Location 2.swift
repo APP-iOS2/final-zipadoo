@@ -12,6 +12,4 @@ struct Location: Identifiable {
     let id = UUID()
     let coordinate: CLLocationCoordinate2D
     let title: String
-    let imgString: String
-    let isMe: Bool
 }
