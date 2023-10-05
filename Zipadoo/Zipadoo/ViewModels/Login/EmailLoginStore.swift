@@ -10,7 +10,7 @@ import FirebaseFirestore
 import Foundation
 import SwiftUI
 
-class EmailLoginStore: ObservableObject {
+final class EmailLoginStore: ObservableObject {
     
     @Published var email: String = ""
     @Published var password: String = ""
