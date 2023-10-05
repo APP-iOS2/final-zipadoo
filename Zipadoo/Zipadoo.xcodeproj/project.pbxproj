@@ -26,7 +26,8 @@
 		8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */; };
 		8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC92AC1401E00A4694C /* UserModel.swift */; };
 		8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */; };
-		8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */; };
+		8BEDA03B2ACE45890056046B /* EditPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEDA03A2ACE45890056046B /* EditPasswordView.swift */; };
+		8BF831C92AC1FFDD00EC22A1 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfileView.swift */; };
 		9B6268392ABC2D6800B309E8 /* LocationAndInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
 		C069D2BC2AC145D100A62E04 /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = C069D2BB2AC145D100A62E04 /* AppsFlyerLib */; };
@@ -78,7 +79,6 @@
 		FA2474522ACD4D6E00D4C821 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474422ACD4D6E00D4C821 /* ContentViewModel.swift */; };
 		FA2474532ACD4D6E00D4C821 /* EmailLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474432ACD4D6E00D4C821 /* EmailLoginStore.swift */; };
 		FA2474542ACD4D6E00D4C821 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474442ACD4D6E00D4C821 /* AuthStore.swift */; };
-		FA24745A2ACE38E700D4C821 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA2474592ACE38E700D4C821 /* GoogleService-Info.plist */; };
 		FA24745C2ACE39AC00D4C821 /* DateChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745B2ACE39AC00D4C821 /* DateChanger.swift */; };
 		FA24745E2ACE3B8200D4C821 /* MyPagePromiseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */; };
 		FA2474602ACE3BC000D4C821 /* PastPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */; };
@@ -113,7 +113,8 @@
 		8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		8BD44EC92AC1401E00A4694C /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
-		8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilView.swift; sourceTree = "<group>"; };
+		8BEDA03A2ACE45890056046B /* EditPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPasswordView.swift; sourceTree = "<group>"; };
+		8BF831C82AC1FFDD00EC22A1 /* EditProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAndInfo.swift; sourceTree = "<group>"; };
 		C04BCDC22ABD545A0024B487 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zipadoo.entitlements; sourceTree = "<group>"; };
@@ -166,7 +167,6 @@
 		FA2474422ACD4D6E00D4C821 /* ContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		FA2474432ACD4D6E00D4C821 /* EmailLoginStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginStore.swift; sourceTree = "<group>"; };
 		FA2474442ACD4D6E00D4C821 /* AuthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
-		FA2474592ACE38E700D4C821 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA24745B2ACE39AC00D4C821 /* DateChanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateChanger.swift; sourceTree = "<group>"; };
 		FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPagePromiseStore.swift; sourceTree = "<group>"; };
 		FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastPromiseView.swift; sourceTree = "<group>"; };
@@ -207,7 +207,8 @@
 				08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */,
 				08C6F0BA2ABC1DA2005D231D /* SettingView.swift */,
 				08C6F0BC2ABC1E1C005D231D /* PayingView.swift */,
-				8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */,
+				8BF831C82AC1FFDD00EC22A1 /* EditProfileView.swift */,
+				8BEDA03A2ACE45890056046B /* EditPasswordView.swift */,
 			);
 			path = MyPageViews;
 			sourceTree = "<group>";
@@ -397,7 +398,6 @@
 			children = (
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
-				FA2474592ACE38E700D4C821 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -549,7 +549,6 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-				FA24745A2ACE38E700D4C821 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +604,7 @@
 				FA2474472ACD4D6E00D4C821 /* MapViewContainer.swift in Sources */,
 				FA2474122ACD4BDB00D4C821 /* SearchbarCell.swift in Sources */,
 				FA24740B2ACD4BDB00D4C821 /* FriendsLocationListView.swift in Sources */,
+				8BEDA03B2ACE45890056046B /* EditPasswordView.swift in Sources */,
 				FA24741A2ACD4BDB00D4C821 /* AddPromiseView.swift in Sources */,
 				FA2474152ACD4BDB00D4C821 /* PlaceMarkerCell.swift in Sources */,
 				FA2474452ACD4D6E00D4C821 /* UserStore.swift in Sources */,
@@ -654,7 +654,7 @@
 				FA24740C2ACD4BDB00D4C821 /* FriendsImageView.swift in Sources */,
 				FA2474502ACD4D6E00D4C821 /* PromiseDetailStore.swift in Sources */,
 				FA2474102ACD4BDB00D4C821 /* PlaceInfoWebView.swift in Sources */,
-				8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */,
+				8BF831C92AC1FFDD00EC22A1 /* EditProfileView.swift in Sources */,
 				FA2474132ACD4BDB00D4C821 /* AnnotationCell.swift in Sources */,
 				FA24744B2ACD4D6E00D4C821 /* ImagePicker.swift in Sources */,
 			);
