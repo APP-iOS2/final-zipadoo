@@ -39,7 +39,6 @@ struct LoginView: View {
                                 }
                             Spacer(minLength: 50)
                         }
-
                         VStack {
                             Spacer(minLength: 5)
                             
@@ -95,7 +94,6 @@ struct LoginView: View {
                                     .foregroundColor(Color(dothezColor))
                             }
                         }
-
                     } // ScrollView
                     .frame(maxWidth: UIScreen.main.bounds.width)
                     .background(Color.black, ignoresSafeAreaEdges: .all)

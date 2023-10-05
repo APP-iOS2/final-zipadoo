@@ -9,23 +9,23 @@ import SwiftUI
 
 // 이메일로 가입되어 있는 사람만 정보 수정 뷰 뜰 것
 struct EditProfileView: View {
-    
+
     @ObservedObject var viewModel = EditProfileViewModel()
-    
+
     @Environment (\.dismiss) private var dismiss
-    
+
     /// 알람노출
     @State private var isEditAlert: Bool = false
     /// 이미지피커 노출
     @State private var isShowingImagePicker = false
-    
+
     /// 비어있는 TextField가 있을 때 true
     private var isFieldEmpty: Bool {
         viewModel.nickname.isEmpty || viewModel.phoneNumber.isEmpty
     }
     
     var body: some View {
-        
+
         ScrollView {
             VStack {
                 // 이미지 피커
@@ -43,29 +43,29 @@ struct EditProfileView: View {
                     } else {
                         ProfileImageView(imageString: viewModel.profileImageString, size: .medium)
                     }
-                    
+
                 }
                 .sheet(isPresented: $isShowingImagePicker) {
                     ImagePicker(selectedImage: $viewModel.selectedImage)
                         .ignoresSafeArea(.all)
-                    
+
                 }
                 .frame(width: UIScreen.main.bounds.size.width, height: 200)
                 .background(.gray)
-                
+
                 // TextField
                 VStack(alignment: .leading) {
                     textFieldCell("새로운 닉네임", text: $viewModel.nickname)
                         .padding(.bottom)
-                    
+
                     textFieldCell("새로운 연락처", text: $viewModel.phoneNumber)
                         .padding(.bottom)
-                    
+
                 }
                 .padding()
-                
+
                 Spacer()
-                
+
             }
             .navigationTitle("회원정보 수정")
             .navigationBarTitleDisplayMode(.inline)
@@ -81,7 +81,7 @@ struct EditProfileView: View {
                 Alert(
                     title: Text(""),
                     message: Text("회원정보가 수정됩니다"),
-                    
+
                     primaryButton: .default(Text("취소"), action: {
                         isEditAlert = false
                     }),
@@ -96,18 +96,17 @@ struct EditProfileView: View {
             }
         }
     }
-    
+
     private func textFieldCell(_ title: String, text: Binding<String>) -> some View {
         VStack(alignment: .leading) {
-            
+
             Text(title)
-            
+
             TextField("", text: text)
                 .textFieldStyle(.roundedBorder)
         }
     }
 }
-    
 #Preview {
     NavigationStack {
         EditProfileView()

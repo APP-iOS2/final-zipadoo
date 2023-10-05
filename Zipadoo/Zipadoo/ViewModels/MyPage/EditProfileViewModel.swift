@@ -23,13 +23,13 @@ final class EditProfileViewModel: ObservableObject {
     @Published var selectedImage: UIImage?
 
     var defaultImageString = "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
-    
+
     init() {
         profileImageString = currentUser?.profileImageString ?? defaultImageString
         nickname = currentUser?.nickName ?? "정보가 없습니다"
         phoneNumber = currentUser?.phoneNumber ?? "정보가 없습니다"
     }
-    
+
     /// 유저정보 파이어베이스에 업데이트
     @MainActor
     func updateUserData() async throws {
@@ -57,7 +57,7 @@ final class EditProfileViewModel: ObservableObject {
         if !data.isEmpty {
             do {
                 try await Firestore.firestore().collection("Users").document(currentUser?.id ?? "").updateData(data)
-                
+
             } catch {
                 print("파이어베이스 업데이트 실패")
             }
