@@ -49,7 +49,8 @@ struct FriendsLocationStatusView: View {
     @State private var value: Double = 0.4
   
     let friends = ["홍길동", "둘리", "도우너", "또치"]
-    
+  
+    // 더미데이터
     let dummyFriends: [DummyFriendsLocation] = [
         // 피카츄 출발 위치 : 용인터미널 근처, 현재 위치 : 서울남부터미널
         DummyFriendsLocation(name: "피카츄", depatureLocationLatitude: 37.237585941025316, depatureLocationLongitude: 127.21314261910263, currentLocationLatitude: 37.48465817016523, currentLocationLongitude: 127.01588584214798),

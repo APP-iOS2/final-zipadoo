@@ -52,11 +52,8 @@ struct FriendsListVIew: View {
                     Text(friend)
                         .onTapGesture {
                             if !selectedFriends.contains(friend) {
-                                if !selectedFriends.contains(friend) {
-                                    selectedFriends.append(friend)
-                                }
-                                isShowingSheet = false
-                            } else {
+                                selectedFriends.append(friend)
+                            } else if selectedFriends.contains(friend) {
                                 showAlert = true
                                 alertMessage = "\(friend)님은 이미 존재합니다."
                             }
@@ -68,7 +65,6 @@ struct FriendsListVIew: View {
                         title: Text("알림"),
                         message: Text(alertMessage),
                         dismissButton: .default(Text("확인")) {
-                            isShowingSheet = false
                         }
                     )
                 }

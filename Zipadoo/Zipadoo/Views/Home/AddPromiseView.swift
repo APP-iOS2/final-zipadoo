@@ -214,6 +214,16 @@ struct AddPromiseView: View {
                 
             }
             .sheet(isPresented: $showingPenalty, content: {
+                HStack {
+                    Spacer()
+                    Button {
+                        showingPenalty.toggle()
+                    } label: {
+                        Text("결정")
+                    }
+                }
+                .padding(.horizontal, 15)
+                
                 Picker(selection: $selectedValue, label: Text("지각비")) {
                     ForEach((minValue...maxValue).filter { $0 % step == 0 }, id: \.self, content: { value in
                         Text("\(value)").tag(value)
