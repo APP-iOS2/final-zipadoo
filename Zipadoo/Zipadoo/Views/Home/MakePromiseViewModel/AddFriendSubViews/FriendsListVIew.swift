@@ -63,7 +63,6 @@ struct FriendsListVIew: View {
                         title: Text("알림"),
                         message: Text(alertMessage),
                         dismissButton: .default(Text("확인")) {
-                            
                         }
                     )
                 }
