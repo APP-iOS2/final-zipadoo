@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct FriendInfoView: View {
+struct MyLocationAndInfoView: View {
     let name: String
     let imageName: String
     let distance: String
@@ -17,8 +17,8 @@ struct FriendInfoView: View {
     
     var body: some View {
         VStack {
-            Text(name)
-//            Text(isMe ? "\(name) (나)" : name)
+            Text("\(name)(나)")
+                .bold()
             ZStack {
                 Circle()
                     .frame(width: 60)
@@ -35,5 +35,5 @@ struct FriendInfoView: View {
 }
 
 #Preview {
-    FriendInfoView(name: "정한두", imageName: "dragon", distance: "10 km")
+    MyLocationAndInfoView(name: "정한두", imageName: "dragon", distance: "10 km")
 }

@@ -10,7 +10,7 @@ import SwiftUI
 import MapKit
 
 class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate {
-    @Published var travelTimesText: [String: (String, String)] = [:]
+    @Published var travelTimesText: [String: (String, String, Bool)] = [:]
     @State var travelTimes: [String: TimeInterval] = [:]
 
     var region = MKCoordinateRegion(
@@ -105,7 +105,7 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
                 self.travelTimes[friendName] = remainingDistance
 
                 let formattedDistance = self.formatDistance(remainingDistance)
-                self.travelTimesText[friendName] = (formattedDistance, friendLocation.imgString)
+                self.travelTimesText[friendName] = (formattedDistance, friendLocation.imgString, false)
             }
         }
 
@@ -136,7 +136,7 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
                 self.travelTimes[friendName] = remainingDistance
 
                 let formattedDistance = self.formatDistance(remainingDistance)
-                self.travelTimesText[friendName] = (formattedDistance, myLocation.imgString)
+                self.travelTimesText[friendName] = (formattedDistance, myLocation.imgString, true)
             }
         }
     }
