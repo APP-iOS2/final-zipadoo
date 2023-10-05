@@ -26,7 +26,7 @@ struct AddPromiseView: View {
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var friends = ["병구", "상규", "예슬", "한두", "아라", "해수", "여훈"]
     @State private var addFriendSheet: Bool = false
-    @State private var selectedFriends: [String] = ["김상규", "나예슬", "윤해수", "임병구"]
+    @State private var selectedFriends: [String] = []
     //    @State private var mapViewSheet: Bool = false
     @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "") /// 장소에 대한 정보 값
     @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
@@ -211,7 +211,7 @@ struct AddPromiseView: View {
                         )
                     }
                 }
-
+                
             }
             .sheet(isPresented: $showingPenalty, content: {
                 Picker(selection: $selectedValue, label: Text("지각비")) {
@@ -223,9 +223,9 @@ struct AddPromiseView: View {
                 .frame(maxWidth: .infinity)
                 .presentationDetents([.height(300)])
             })
-            .sheet(isPresented: $addFriendSheet) {
-                FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)
-            }
+//            .sheet(isPresented: $addFriendSheet) {
+//                FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)
+//            }
             .onTapGesture {
                 hideKeyboard()
             }
