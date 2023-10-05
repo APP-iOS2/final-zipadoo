@@ -20,7 +20,7 @@ struct AddPlaceButtonCell: View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
                 .foregroundStyle(.white)
-                .frame(width: 340, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+                .frame(width: 350, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
                 .shadow(radius: 15)
                 .overlay {
                     ZStack {

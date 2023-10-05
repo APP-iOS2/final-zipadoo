@@ -41,10 +41,13 @@ struct NewMapView: View {
                         UserAnnotation()
                     }
                 }
+                .onTapGesture {
+                    hideKeyboard()
+                }
                 .mapStyle(.standard(pointsOfInterest: .all, showsTraffic: true))
                 if isClickedPlace == true {
                     AddPlaceButtonCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: promiseLocation)
-                        .padding(.bottom, 40)
+                        //.padding(.bottom, 10)
                 } else {
                     
                 }
