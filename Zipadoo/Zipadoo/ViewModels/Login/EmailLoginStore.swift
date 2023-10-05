@@ -54,6 +54,23 @@ class EmailLoginStore: ObservableObject {
                 completion(false) // 중복된 이메일이 있을 경우 false를 반환
             }
         }
+         
+        /*
+        print("\(email)")
+        Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethods, error) in
+            if let error = error {
+                print(error)
+                completion(false)
+                return
+            } else if let _ = signInMethods {
+                print("중복 이메일")
+                completion(false)
+            } else {
+                print("새로운 이메일")
+                completion(true)
+            }
+        }
+         */
     }
     
     /// 이메일 유효한 형식인지 확인
@@ -62,6 +79,14 @@ class EmailLoginStore: ObservableObject {
         let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
 
         return emailPredicate.evaluate(with: email)
+    }
+    
+    /// 닉네임 유효한 형식 확인
+    func isCorrectNickname() -> Bool {
+        let nicknameRegex = "[A-Za-z0-9]{2,6}"
+        let nicknamePredicate = NSPredicate(format: "SELF MATCHES %@", nicknameRegex)
+        
+        return nicknamePredicate.evaluate(with: nickName)
     }
     
     /// 전화번호 유효한 형식 확인

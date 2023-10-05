@@ -16,7 +16,7 @@ struct SigninByEmailView: View {
     @State private var validMessage = " "
     /// 다음 페이지로 넘어갈 수 있는 조건인지
     private var isGoNext: Bool {
-        emailLoginStore.isCorrectPhoneNumber() && emailLoginStore.isCorrectPassword() && !emailLoginStore.nickName.isEmpty
+        emailLoginStore.isCorrectNickname() && emailLoginStore.isCorrectPhoneNumber() && emailLoginStore.isCorrectPassword()
     }
     /// 조건에 맞으면 true, 다음페이지로 넘어가기
     @State private var readyToNavigate: Bool = false
