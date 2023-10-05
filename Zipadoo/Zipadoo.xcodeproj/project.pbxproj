@@ -26,6 +26,9 @@
 		04C7A85A2AC94889001B2AF8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04C7A8592AC94889001B2AF8 /* Alamofire */; };
 		04FDFE7A2ABC2E8100A464CA /* MakePromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */; };
 		04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */; };
+		080893322ACCEDB00032B648 /* PastPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080893312ACCEDB00032B648 /* PastPromiseView.swift */; };
+		080893342ACCF5920032B648 /* MyPagePromiseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080893332ACCF5920032B648 /* MyPagePromiseStore.swift */; };
+		080893362ACCFC2B0032B648 /* DateChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 080893352ACCFC2B0032B648 /* DateChanger.swift */; };
 		08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B42ABC1BE0005D231D /* MyPageView.swift */; };
 		08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */; };
 		08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BA2ABC1DA2005D231D /* SettingView.swift */; };
@@ -36,6 +39,7 @@
 		3FFF1CF42AC1696100A0C99E /* FriendsListVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */; };
 		8B006D862AC1D3D100C35519 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
+		8B7D46932ACD85ED00CF3B1C /* EditPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B7D46922ACD85ED00CF3B1C /* EditPasswordView.swift */; };
 		8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */; };
 		8B973A342AC5930D00C67B5F /* LoginByEmailPWView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B973A2F2AC5930C00C67B5F /* LoginByEmailPWView.swift */; };
 		8B973A352AC5930D00C67B5F /* LoginEmailCheckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B973A302AC5930C00C67B5F /* LoginEmailCheckView.swift */; };
@@ -81,7 +85,6 @@
 		FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */; };
 		FAD9659A2AC40E4A00D4A65A /* ArriveResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD965992AC40E4A00D4A65A /* ArriveResultView.swift */; };
 		FAD9659C2AC40FB800D4A65A /* AddPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD9659B2AC40FB800D4A65A /* AddPromiseView.swift */; };
-		FAD965A02ACCEB4600D4A65A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAD9659F2ACCEB4600D4A65A /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -103,6 +106,9 @@
 		04C7A8562AC9479A001B2AF8 /* AddPlaceButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceButtonCell.swift; sourceTree = "<group>"; };
 		04FDFE792ABC2E8000A464CA /* MakePromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakePromiseView.swift; sourceTree = "<group>"; };
 		04FDFE7D2ABC693A00A464CA /* AddFriendCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendCellView.swift; sourceTree = "<group>"; };
+		080893312ACCEDB00032B648 /* PastPromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastPromiseView.swift; sourceTree = "<group>"; };
+		080893332ACCF5920032B648 /* MyPagePromiseStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPagePromiseStore.swift; sourceTree = "<group>"; };
+		080893352ACCFC2B0032B648 /* DateChanger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateChanger.swift; sourceTree = "<group>"; };
 		08C6F0B42ABC1BE0005D231D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
 		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -112,6 +118,7 @@
 		3FFF1CF32AC1696100A0C99E /* FriendsListVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListVIew.swift; sourceTree = "<group>"; };
 		8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		8B7D46922ACD85ED00CF3B1C /* EditPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPasswordView.swift; sourceTree = "<group>"; };
 		8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyle.swift; sourceTree = "<group>"; };
 		8B973A2F2AC5930C00C67B5F /* LoginByEmailPWView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginByEmailPWView.swift; sourceTree = "<group>"; };
 		8B973A302AC5930C00C67B5F /* LoginEmailCheckView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginEmailCheckView.swift; sourceTree = "<group>"; };
@@ -154,7 +161,6 @@
 		FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewModel.swift; sourceTree = "<group>"; };
 		FAD965992AC40E4A00D4A65A /* ArriveResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArriveResultView.swift; sourceTree = "<group>"; };
 		FAD9659B2AC40FB800D4A65A /* AddPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPromiseView.swift; sourceTree = "<group>"; };
-		FAD9659F2ACCEB4600D4A65A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,9 +254,11 @@
 				08C6F0B42ABC1BE0005D231D /* MyPageView.swift */,
 				1BF69BD72ABD16B800DE635D /* TossPayView.swift */,
 				08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */,
+				080893312ACCEDB00032B648 /* PastPromiseView.swift */,
 				08C6F0BA2ABC1DA2005D231D /* SettingView.swift */,
 				08C6F0BC2ABC1E1C005D231D /* PayingView.swift */,
 				8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */,
+				8B7D46922ACD85ED00CF3B1C /* EditPasswordView.swift */,
 			);
 			path = MyPageViews;
 			sourceTree = "<group>";
@@ -259,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				8B006D852AC1D3D100C35519 /* EditProfileViewModel.swift */,
+				080893332ACCF5920032B648 /* MyPagePromiseStore.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -334,7 +343,6 @@
 			children = (
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
-				FAD9659F2ACCEB4600D4A65A /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -392,6 +400,7 @@
 				8BD44ECB2AC14B2700A4694C /* UserStore.swift */,
 				8B973A3B2AC5940200C67B5F /* ImagePicker.swift */,
 				8BD44ECD2AC14B2D00A4694C /* ProfileImageUploader.swift */,
+				080893352ACCFC2B0032B648 /* DateChanger.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -502,7 +511,6 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-				FAD965A02ACCEB4600D4A65A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,6 +554,7 @@
 				FAD3BD1C2AC2D19900117938 /* PromiseDetailView.swift in Sources */,
 				04BA00F62ABD169C002EFBB9 /* AddDateCell.swift in Sources */,
 				FAD5FE3F2ABBD3E700E05E6E /* ContentView.swift in Sources */,
+				080893322ACCEDB00032B648 /* PastPromiseView.swift in Sources */,
 				04BA00F42ABD160C002EFBB9 /* AddPromiseTitleCell.swift in Sources */,
 				8B973A3C2AC5940200C67B5F /* ImagePicker.swift in Sources */,
 				8B973A422AC5942C00C67B5F /* EmailLoginStore.swift in Sources */,
@@ -557,6 +566,7 @@
 				FA59EE352AC1645C00689EE3 /* HomeMainView.swift in Sources */,
 				FA59EE342AC1645C00689EE3 /* PromiseDetailView.swift in Sources */,
 				C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */,
+				080893362ACCFC2B0032B648 /* DateChanger.swift in Sources */,
 				8B973A3A2AC593DE00C67B5F /* KakaoTest.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				04980D392AC1180B0076D6A5 /* AddLocationDatas.swift in Sources */,
@@ -571,7 +581,9 @@
 				FAD9659A2AC40E4A00D4A65A /* ArriveResultView.swift in Sources */,
 				FAD3BD222AC2D1A400117938 /* HomeMainView.swift in Sources */,
 				04FDFE7E2ABC693A00A464CA /* AddFriendCellView.swift in Sources */,
+				080893342ACCF5920032B648 /* MyPagePromiseStore.swift in Sources */,
 				8B973A342AC5930D00C67B5F /* LoginByEmailPWView.swift in Sources */,
+				8B7D46932ACD85ED00CF3B1C /* EditPasswordView.swift in Sources */,
 				04980D372AC10C200076D6A5 /* PlaceMarkerCell.swift in Sources */,
 				04C7A8512AC9471B001B2AF8 /* SearchInKakaoLocal.swift in Sources */,
 				043E689D2ACC0E33007B7395 /* PlaceInfoWebView.swift in Sources */,
