@@ -10,6 +10,9 @@ import SwiftUI
 struct FriendsListVIew: View {
     @Binding var isShowingSheet: Bool
     @Binding var selectedFriends: [String]
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    
     // 더미데이터
     let friends = ["임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "이재승", "장여훈", "정한두"]
     
@@ -48,9 +51,26 @@ struct FriendsListVIew: View {
                         .font(.title3)
                     Text(friend)
                         .onTapGesture {
-                            selectedFriends.append(friend)
-                            print(friend)
+                            if !selectedFriends.contains(friend) {
+                                if !selectedFriends.contains(friend) {
+                                    selectedFriends.append(friend)
+                                }
+                                isShowingSheet = false
+                            } else {
+                                showAlert = true
+                                alertMessage = "\(friend)님은 이미 존재합니다."
+                            }
+                            print(selectedFriends)
                         }
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("알림"),
+                        message: Text(alertMessage),
+                        dismissButton: .default(Text("확인")) {
+                            isShowingSheet = false
+                        }
+                    )
                 }
             }
             .listStyle(.plain)
