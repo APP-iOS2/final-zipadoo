@@ -12,29 +12,34 @@ struct FriendSellView: View {
     @Binding var selectedFriends: [String]
     
     var body: some View {
-        ForEach(selectedFriends.indices, id: \.self) { index in
-            VStack {
-                ZStack {
-                    Circle().stroke(Color.gray)
-                    //                    .frame(width: 75, height: 60)
-                    Button {
-                        print("친구 삭제")
-                        selectedFriends.remove(at: index)
-                    } label: {
-                        Image(systemName: "minus.circle.fill")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 25)
-                    }
-                    .offset(x: 25, y: -24)
+        //        ForEach(selectedFriends.indices, id: \.self) { index in
+        VStack {
+            ZStack {
+                Circle().stroke(Color.gray)
+                //                    .frame(width: 75, height: 60)
+                Button {
+                    print("친구 삭제")
+                    deleteFriend(name)
+                } label: {
+                    Image(systemName: "minus.circle.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 25)
                 }
-                .shadow(radius: 1)
-                .tint(.red)
-                
-                Text("\(name)")
-                    .font(.callout)
+                .offset(x: 25, y: -24)
             }
-            .frame(width: 85, height: 85)
+            .shadow(radius: 1)
+            .tint(.red)
+            
+            Text("\(name)")
+                .font(.callout)
+        }
+        .frame(width: 85, height: 85)
+        //        }
+    }
+    func deleteFriend(_ item: String) {
+        if let index = selectedFriends.firstIndex(of: item) {
+            selectedFriends.remove(at: index)
         }
     }
 }
