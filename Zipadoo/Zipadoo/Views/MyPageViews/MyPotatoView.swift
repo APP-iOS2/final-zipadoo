@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MyPotatoView: View {
+    @StateObject var myPagePromiseStore = MyPagePromiseStore()
     @State private var isShownFullScreenCover: Bool = false
     
     var body: some View {
@@ -36,61 +37,34 @@ struct MyPotatoView: View {
                 Text("지각으로 낸 감자수")
                     .bold()
                 Spacer()
-                Text("총 3,000개")
+                Text("총 2,000개")
+                    .bold()
+                    .foregroundStyle(.red)
             }
             .padding(.leading)
             .padding(.trailing)
             
             Divider()
             
-            List {
+            List(myPagePromiseStore.testPromises) { promise in
+                // 약속 리스트
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("임병구님과의 약속")
-                            .font(.title2)
+                        Text(promise.promiseTitle)
+                            .font(.title3)
                             .bold()
-                        Text("2023.09.06")
+                            .padding(.bottom)
+                        Text(convertDoubleToDate(promise.promiseDate))
                     }
                     Spacer()
                     VStack(alignment: .listRowSeparatorTrailing) {
                         Text("지각")
-                            .font(.title2)
+                            .font(.title3)
                             .bold()
+                            .padding(.bottom)
                         Text("-500")
+                            .bold()
                             .foregroundColor(.red)
-                    }
-                }
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("스터디 모임")
-                            .font(.title2)
-                            .bold()
-                        Text("2023.09.03")
-                    }
-                    Spacer()
-                    VStack(alignment: .listRowSeparatorTrailing) {
-                        Text("정산")
-                            .font(.title2)
-                            .bold()
-                        Text("+500")
-                            .foregroundColor(.green)
-                    }
-                }
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("지파두")
-                            .font(.title2)
-                            .bold()
-                        Text("2023.09.01")
-                    }
-                    Spacer()
-                    VStack(alignment: .listRowSeparatorTrailing) {
-                        Text("충전")
-                            .font(.title2)
-                            .bold()
-                        Text("+1,000")
-                            .foregroundColor(.green)
-
                     }
                 }
             }

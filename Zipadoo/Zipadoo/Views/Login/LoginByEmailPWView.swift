@@ -34,7 +34,6 @@ struct LoginByEmailPWView: View {
                         .font(.title2)
                         .fontWeight(.semibold)
                         .padding(.bottom, 10)
-                        .padding(.leading, 15)
                     
                     Spacer()
                     
@@ -90,11 +89,10 @@ struct LoginByEmailPWView: View {
                         .foregroundStyle(.white.opacity(0.7))
                     
                 }
-                .padding(.leading, 15)
-                
+                      
                 Spacer()
             }
-            .padding(.trailing, 15)
+            .padding([.leading, .trailing])
             .background(Color.black)
             // 상단 네비게이션 바
             .navigationBarItems(trailing:

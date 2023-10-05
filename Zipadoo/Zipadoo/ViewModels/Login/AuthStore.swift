@@ -5,11 +5,11 @@
 //  Created by 이재승 on 2023/09/26.
 //
 
-import SwiftUI
 import Firebase
 import FirebaseFirestore
+import SwiftUI
 
-class AuthStore: ObservableObject {
+final class AuthStore: ObservableObject {
     
     /// 파베 토큰 저장
     @Published var userSession: FirebaseAuth.User?
@@ -82,7 +82,7 @@ class AuthStore: ObservableObject {
             try await dbRef.document(UUID().uuidString).setData(["userId": result.user.uid, "email": email])
             
             // 회원가입후 로그인으로 간주해야하니까 로그인도 호출 -> 파이어베이스는 회원가입시 자동으로 로그인된다고 함.
-            try await self.login(email: email, password: password)
+            _ = try await self.login(email: email, password: password)
             print("회원가입 후 로그인 성공~")
 
         } catch {

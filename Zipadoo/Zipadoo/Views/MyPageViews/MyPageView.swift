@@ -25,21 +25,22 @@ struct MyPageView: View {
 
     let dummyKm: Int = 1000
     @State var isShownFullScreenCover = false
+    @State private var progressBarValue: Double = 0
     
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
-                HStack(alignment: .top) {
-                    
+                
+                HStack {
                     // 프로필 이미지
-                    ProfileImageView(imageString: userImageString, size: .medium)
+                    ProfileImageView(imageString: userImageString, size: .large)
  
                     /*
                     AsyncImage(url: URL(string: dummyImageString)) { image in
                         image.resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 170)
-                            .cornerRadius(30)
+                            .frame(width: 200)
+                            .cornerRadius(10000)
                     } placeholder: {
                         ProgressView()
                     }
@@ -48,19 +49,26 @@ struct MyPageView: View {
                     Spacer()
                     // 프로필 기능모음
                     VStack(alignment: .trailing) {
-                        Text("이재승 님")
+//                        NavigationLink {
+//                            SettingView()
+//                        } label: {
+//                            Image(systemName: "gearshape")
+//                                .foregroundColor(.black)
+//                        }
+//                        .padding(.bottom)
+                        Text("\(currentUser?.nickName ?? "안나옴") 님")
                             .font(.title2)
+                            .bold()
                             .padding(.bottom)
-                            .padding(.top, 25)
                         NavigationLink {
                             MyPotatoView()
                         } label: {
                             HStack {
                                 Image(systemName: "bitcoinsign.circle.fill")
-                                Text("1,000")
+                                Text("\(currentUser?.potato ?? 0)")
                                     .underline()
                             }
-                            .font(.title2)
+                            .font(.title3)
                             .bold()
                             .foregroundColor(.black)
                         }
@@ -69,6 +77,7 @@ struct MyPageView: View {
                         } label: {
                             Text("충전하기")
                                 .font(.title3)
+                                .bold()
                                 .padding(.top, 5)
                         }
                         .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
@@ -83,37 +92,40 @@ struct MyPageView: View {
                 
                 HStack {
                     Text("지각 깊이")
-                        .font(.title2)
+                        .font(.headline)
                     Spacer()
-                    Text("지하 \(dummyKm)km")
+                    Text("지하 \(currentUser?.crustDepth ?? 100)km")
                 }
                 .padding(.top)
                 
-                Rectangle()
-                    .frame(width: .infinity, height: 30)
-                    .foregroundColor(.brown)
-                    .cornerRadius(20)
+                MyPageProgressBar(progress: $progressBarValue)
+//                    .onAppear {
+//                        withAnimation(.linear(duration: 3)) {
+//                            progressBarValue = 0.8
+//                        }
+//                    }
                 
                 HStack {
-                    Text("이대로 가다간,, 친구들한테 파묻히겠어요 ㅠ")
+                    Text("약속을 잘 지켜보아요~")
+                        .font(.footnote)
+                        .lineLimit(1)
                     Spacer()
-                    Text("지각률 80%")
+                    // 계산 필요
+                    Text("지각률 0%")
                         .foregroundColor(.red)
                 }
-                .padding(.top)
-                .padding(.bottom)
                 
                 Divider()
                 
                 NavigationLink {
-                    
+                    PastPromiseView()
                 } label: {
                     HStack {
-                        Text("나의 약속")
+                        Text("지난 약속")
                         Spacer()
                         Image(systemName: "chevron.right")
                     }
-                    .font(.title2)
+                    .font(.headline)
                     .foregroundColor(.black)
                     .padding(.top)
                     .padding(.bottom)
@@ -122,7 +134,7 @@ struct MyPageView: View {
                 Divider()
                 
                 Text("받은 매너 평가")
-                    .font(.title2)
+                    .font(.headline)
                     .padding(.top)
                     .padding(.bottom)
                 
@@ -159,7 +171,7 @@ struct MyPageView: View {
                     }
                     
                 }
-                
+                .font(.footnote)
                 Spacer()
             }
             .padding()
@@ -174,10 +186,37 @@ struct MyPageView: View {
                     }
                 }
             }
+            
         }
     }
 }
 
 #Preview {
     MyPageView()
+}
+
+struct MyPageProgressBar: View {
+    @Binding var progress: Double
+    
+    var body: some View {
+        VStack {
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .frame(height: 25)
+                    .cornerRadius(5)
+                    .foregroundColor(.gray)
+                    .opacity(0.5)
+                
+                ZStack {
+                    Rectangle()
+                        .frame(width: CGFloat(progress) * UIScreen.main.bounds.width, height: 25)
+                        .cornerRadius(5)
+                        .foregroundColor(.brown)
+                    
+                    Text("지각횟수 0회")
+                        .foregroundStyle(.white)
+                }
+            }
+        }
+    }
 }

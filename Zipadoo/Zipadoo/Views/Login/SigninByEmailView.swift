@@ -12,6 +12,15 @@ struct SigninByEmailView: View {
     
     @State private var isPasswordVisible = false // 비밀번호 보이기
     
+    /// 형식 유효메세지
+    @State private var validMessage = " "
+    /// 다음 페이지로 넘어갈 수 있는 조건인지
+    private var isGoNext: Bool {
+        emailLoginStore.isCorrectNickname() && emailLoginStore.isCorrectPhoneNumber() && emailLoginStore.isCorrectPassword()
+    }
+    /// 조건에 맞으면 true, 다음페이지로 넘어가기
+    @State private var readyToNavigate: Bool = false
+    
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea(.all) // 배경색
@@ -24,8 +33,10 @@ struct SigninByEmailView: View {
                     .foregroundColor(.white)
                     .font(.title2)
                     .fontWeight(.semibold)
-                    .padding(.bottom, 10)
-                    .padding(.leading, 15)
+                
+                Text("\(validMessage)")
+                    .font(.subheadline)
+                    .foregroundStyle(.red.opacity(0.7))
                 
                 Group {
                     // 이름 입력 칸
@@ -89,10 +100,10 @@ struct SigninByEmailView: View {
                             .padding(.bottom, 5)
                         
                         HStack {
-                            Text("본인인증 수단으로 사용됩니다.")
+                            Text("-를 제외하고 입력해주세요")
                                 .font(.subheadline)
                                 .foregroundStyle(.white.opacity(0.7))
-                            
+                
                             Spacer()
                         }
                     }
@@ -128,26 +139,43 @@ struct SigninByEmailView: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.white.opacity(0.7))
                             
-                            Spacer()
                         }
+                        
+                        Spacer()
+
                     }// Group 휴대폰번호 입력 창
                     Spacer()
                 } // Group
-                .padding(.leading, 15)
-                .padding(.trailing, 15)
                 .background(Color.black)
-                .navigationBarItems(trailing: NavigationLink(destination: {
-                    SigninByEmail2View(emailLoginStore: emailLoginStore)
-                }, label: {
-                    Text("다음")
-                        .fontWeight(.semibold)
-                        .padding(.trailing, 5)
-                        .font(.headline)
-                }))
+            }
+            .padding([.leading, .trailing])
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        if isGoNext { // 형식에 모두 알맞게 썼다면 다음으로 넘어가기
+                            readyToNavigate.toggle()
+                            validMessage = " "
+                            
+                        } else {
+                            validMessage = "형식에 맞게 다시 입력해주세요"
+                        }
+                        
+                    } label: {
+                        Text("다음")
+                            .fontWeight(.semibold)
+                            .padding(.trailing, 5)
+                            .font(.headline)
+                    }
+                }
+            }
+            .navigationDestination(isPresented: $readyToNavigate) {
+                SigninByEmail2View(emailLoginStore: emailLoginStore)
             }
         }
     }
 }
 #Preview {
-    SigninByEmailView(emailLoginStore: EmailLoginStore())
+    NavigationStack {
+        SigninByEmailView(emailLoginStore: EmailLoginStore())
+    }
 }
