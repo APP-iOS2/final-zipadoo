@@ -25,7 +25,7 @@ struct FriendsListVIew: View {
                     VStack {
                         HStack {
                             if selectedFriends.isEmpty {
-                                Text("목록에서 초대 할 친구를 선택해주세요")
+                                Text("목록에서 초대할 친구를 선택해주세요")
                             } else {
                                 ScrollView(.horizontal) {
                                     HStack {
@@ -43,7 +43,6 @@ struct FriendsListVIew: View {
                         }
                     }
                 }
-            
             List(friends, id: \.self) { friend in
                 HStack {
                     Image(systemName: "person.circle.fill")
@@ -53,11 +52,10 @@ struct FriendsListVIew: View {
                         .onTapGesture {
                             if !selectedFriends.contains(friend) {
                                 selectedFriends.append(friend)
-                            } else if selectedFriends.contains(friend) {
+                            } else {
                                 showAlert = true
                                 alertMessage = "\(friend)님은 이미 존재합니다."
                             }
-                            print(selectedFriends)
                         }
                 }
                 .alert(isPresented: $showAlert) {
@@ -73,13 +71,6 @@ struct FriendsListVIew: View {
             .navigationTitle("친구 목록")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                //                ToolbarItem(placement: .cancellationAction) {
-                //                    Button("취소") {
-                //                        isShowingSheet = false
-                //                    }
-                //                    .foregroundColor(.red)
-                //                    .bold()
-                //                }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         isShowingSheet.toggle()

@@ -99,7 +99,7 @@ struct FriendsLocationStatusView: View {
 }
 
 struct BarProgressStyle: ProgressViewStyle {
-    var color: UIColor = #colorLiteral(red: 0.4964652658, green: 0.2767619491, blue: 0.01609945111, alpha: 1)
+    var color: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
     var height: Double = 20.0
     var labelFontStyle: Font = .body
     
