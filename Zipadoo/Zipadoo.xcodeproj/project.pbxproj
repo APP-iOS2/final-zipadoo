@@ -27,6 +27,8 @@
 		8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC92AC1401E00A4694C /* UserModel.swift */; };
 		8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */; };
 		8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */; };
+		9A2247212ACE45D300DAC40E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A2247202ACE45D300DAC40E /* GoogleService-Info.plist */; };
+		9A2247252ACE4B9D00DAC40E /* EditPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2247242ACE4B9D00DAC40E /* EditPasswordView.swift */; };
 		9B6268392ABC2D6800B309E8 /* LocationAndInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */; };
 		9B8FE8252ACE36F600C1EEFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B8FE8242ACE36F600C1EEFC /* GoogleService-Info.plist */; };
 		9B8FE8272ACE377B00C1EEFC /* MyLocationAndInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */; };
@@ -80,7 +82,11 @@
 		FA2474522ACD4D6E00D4C821 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474422ACD4D6E00D4C821 /* ContentViewModel.swift */; };
 		FA2474532ACD4D6E00D4C821 /* EmailLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474432ACD4D6E00D4C821 /* EmailLoginStore.swift */; };
 		FA2474542ACD4D6E00D4C821 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474442ACD4D6E00D4C821 /* AuthStore.swift */; };
-		FA2474642ACE565700D4C821 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA2474632ACE565700D4C821 /* GoogleService-Info.plist */; };
+
+		FA24745C2ACE39AC00D4C821 /* DateChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745B2ACE39AC00D4C821 /* DateChanger.swift */; };
+		FA24745E2ACE3B8200D4C821 /* MyPagePromiseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */; };
+		FA2474602ACE3BC000D4C821 /* PastPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */; };
+
 		FAB58B882ABD1879006B9E11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B872ABD1879006B9E11 /* FirebaseAuth */; };
 		FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8D2ABD1879006B9E11 /* FirebaseDatabase */; };
 		FAB58B902ABD1879006B9E11 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8F2ABD1879006B9E11 /* FirebaseDatabaseSwift */; };
@@ -113,6 +119,8 @@
 		8BD44EC92AC1401E00A4694C /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
 		8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilView.swift; sourceTree = "<group>"; };
+		9A2247202ACE45D300DAC40E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9A2247242ACE4B9D00DAC40E /* EditPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPasswordView.swift; sourceTree = "<group>"; };
 		9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAndInfo.swift; sourceTree = "<group>"; };
 		9B8FE8242ACE36F600C1EEFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationAndInfoView.swift; sourceTree = "<group>"; };
@@ -167,7 +175,12 @@
 		FA2474422ACD4D6E00D4C821 /* ContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		FA2474432ACD4D6E00D4C821 /* EmailLoginStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginStore.swift; sourceTree = "<group>"; };
 		FA2474442ACD4D6E00D4C821 /* AuthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
-		FA2474632ACE565700D4C821 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
+
+		FA24745B2ACE39AC00D4C821 /* DateChanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateChanger.swift; sourceTree = "<group>"; };
+		FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPagePromiseStore.swift; sourceTree = "<group>"; };
+		FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastPromiseView.swift; sourceTree = "<group>"; };
+
+
 		FAD3BD2B2AC3BA9D00117938 /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
@@ -199,6 +212,8 @@
 		08C6F0BE2ABC1E22005D231D /* MyPageViews */ = {
 			isa = PBXGroup;
 			children = (
+				9A2247242ACE4B9D00DAC40E /* EditPasswordView.swift */,
+				FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */,
 				08C6F0B42ABC1BE0005D231D /* MyPageView.swift */,
 				1BF69BD72ABD16B800DE635D /* TossPayView.swift */,
 				08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */,
@@ -330,6 +345,7 @@
 		FA2474312ACD4D6E00D4C821 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				FA24745B2ACE39AC00D4C821 /* DateChanger.swift */,
 				FA2474322ACD4D6E00D4C821 /* UserStore.swift */,
 				FA2474402ACD4D6E00D4C821 /* Login */,
 				FA2474332ACD4D6E00D4C821 /* Home */,
@@ -357,6 +373,7 @@
 			isa = PBXGroup;
 			children = (
 				FA24743C2ACD4D6E00D4C821 /* EditProfileViewModel.swift */,
+				FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -393,9 +410,8 @@
 			children = (
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
-				9B8FE8242ACE36F600C1EEFC /* GoogleService-Info.plist */,
-				FA2474632ACE565700D4C821 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
+				9A2247202ACE45D300DAC40E /* GoogleService-Info.plist */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
 				FAD5FE4A2ABBD3F900E05E6E /* Views */,
@@ -546,8 +562,9 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-				9B8FE8252ACE36F600C1EEFC /* GoogleService-Info.plist in Resources */,
-				FA2474642ACE565700D4C821 /* GoogleService-Info.plist in Resources */,
+
+				9A2247212ACE45D300DAC40E /* GoogleService-Info.plist in Resources */,
+
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -585,9 +602,11 @@
 				9B6268392ABC2D6800B309E8 /* LocationAndInfo.swift in Sources */,
 				FA24741B2ACD4BDB00D4C821 /* FriendsLocationAndInfoView.swift in Sources */,
 				FA2474162ACD4BDB00D4C821 /* MapView.swift in Sources */,
+				FA24745E2ACE3B8200D4C821 /* MyPagePromiseStore.swift in Sources */,
 				FA24742D2ACD4C0B00D4C821 /* ShareView.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				FA2474112ACD4BDB00D4C821 /* NewMapView.swift in Sources */,
+				FA2474602ACE3BC000D4C821 /* PastPromiseView.swift in Sources */,
 				FA2474172ACD4BDB00D4C821 /* AddLocationDatas.swift in Sources */,
 				FA2474232ACD4BDB00D4C821 /* AddFriendCellView.swift in Sources */,
 				8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */,
@@ -601,6 +620,7 @@
 				FA2474472ACD4D6E00D4C821 /* MapViewContainer.swift in Sources */,
 				FA2474122ACD4BDB00D4C821 /* SearchbarCell.swift in Sources */,
 				FA24740B2ACD4BDB00D4C821 /* FriendsLocationListView.swift in Sources */,
+				9A2247252ACE4B9D00DAC40E /* EditPasswordView.swift in Sources */,
 				FA24741A2ACD4BDB00D4C821 /* AddPromiseView.swift in Sources */,
 				FA2474152ACD4BDB00D4C821 /* PlaceMarkerCell.swift in Sources */,
 				FA2474452ACD4D6E00D4C821 /* UserStore.swift in Sources */,
@@ -618,8 +638,10 @@
 				FA24741D2ACD4BDB00D4C821 /* HomeMainView.swift in Sources */,
 				FA2474182ACD4BDB00D4C821 /* FriendsLocationStatusView.swift in Sources */,
 				8B973A352AC5930D00C67B5F /* LoginEmailCheckView.swift in Sources */,
+				8B973A342AC5930D00C67B5F /* LoginByEmailPWView.swift in Sources */,
 				FA24740F2ACD4BDB00D4C821 /* MapOptionSelectView.swift in Sources */,
 				8B973A342AC5930D00C67B5F /* LoginByEmailPWView.swift in Sources */,
+				FA24745C2ACE39AC00D4C821 /* DateChanger.swift in Sources */,
 				FA2474212ACD4BDB00D4C821 /* AddDateCell.swift in Sources */,
 				FA2474142ACD4BDB00D4C821 /* AddPlaceButtonCell.swift in Sources */,
 				FA2474282ACD4BDB00D4C821 /* AddPromisePlaceCell.swift in Sources */,

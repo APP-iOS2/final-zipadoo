@@ -200,12 +200,12 @@ struct AddPromiseView: View {
                     }
                     .alert(isPresented: $showingCancelAlert) {
                         Alert(
-                            title: Text("약속 등록을 취소합니다."),
-                            message: Text("작성 중인 내용은 저장되지 않습니다."),
-                            primaryButton: .default(Text("확인"), action: {
-                                dismiss()
-                            }),
-                            secondaryButton: .cancel(Text("취소").foregroundColor(.red), action: {
+                        title: Text("약속 등록을 취소합니다."),
+                        message: Text("작성 중인 내용은 저장되지 않습니다."),
+                        primaryButton: .destructive(Text("등록 취소"), action: {
+                        dismiss()
+                        }),
+                        secondaryButton: .default(Text("계속 작성"), action: {
                                 
                             })
                         )
