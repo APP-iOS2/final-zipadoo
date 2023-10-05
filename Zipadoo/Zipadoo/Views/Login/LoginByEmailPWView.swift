@@ -44,7 +44,7 @@ struct LoginByEmailPWView: View {
                     } label: {
                         Image(systemName: isPasswordVisible ? "eye.slash.fill" : "eye.fill")
                             .fontWeight(.semibold)
-                            .foregroundColor(.white.opacity(0.5))
+                            .foregroundColor(Color.white.opacity(0.5))
                             .padding(.trailing, -2)
                     }
                 }
@@ -77,16 +77,16 @@ struct LoginByEmailPWView: View {
                         }
                         
                     }
-                    .foregroundColor(.white.opacity(0.4))
+                    .foregroundColor(Color.white.opacity(0.4))
                     
                     Rectangle().frame(height: 1)
-                        .foregroundStyle(.white.opacity(0.5))
+                        .foregroundStyle(Color.white.opacity(0.5))
                         .padding(.bottom, 5)
                     
                     // 비밀번호 확인 안내문구
                     Text(adminMessage)
                         .font(.subheadline)
-                        .foregroundStyle(.white.opacity(0.7))
+                        .foregroundStyle(Color.white.opacity(0.7))
                     
                 }
                       

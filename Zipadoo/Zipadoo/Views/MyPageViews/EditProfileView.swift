@@ -18,12 +18,10 @@ struct EditProfileView: View {
     @State private var isEditAlert: Bool = false
     /// 이미지피커 노출
     @State private var isShowingImagePicker = false
-
-    /// 비어있는 TextField가 있을 때 true
-    private var isFieldEmpty: Bool {
-        viewModel.nickname.isEmpty || viewModel.phoneNumber.isEmpty
+    // 닉네임과 전화번호 유효성 검사
+    private var isValid: Bool {
+        isCorrectNickname(nickname: viewModel.nickname) && isCorrectPhoneNumber(phonenumber: viewModel.phoneNumber)
     }
-    
     var body: some View {
 
         ScrollView {
@@ -55,10 +53,10 @@ struct EditProfileView: View {
 
                 // TextField
                 VStack(alignment: .leading) {
-                    textFieldCell("새로운 닉네임", text: $viewModel.nickname)
+                    textFieldCell("새로운 닉네임", validMessage: "2~6자로 작성해주세요", text: $viewModel.nickname)
                         .padding(.bottom)
 
-                    textFieldCell("새로운 연락처", text: $viewModel.phoneNumber)
+                    textFieldCell("새로운 연락처", validMessage: "- 를 제외하고 작성해주세요", text: $viewModel.phoneNumber)
                         .padding(.bottom)
 
                 }
@@ -74,7 +72,7 @@ struct EditProfileView: View {
                     Button(action: { isEditAlert.toggle() }, label: {
                         Text("수정")
                     })
-                    .disabled(isFieldEmpty) // 필드가 하나라도 비어있으면 비활성화
+                    .disabled(!isValid) // 필드가 하나라도 비어있거나 유효성검사 실패시 비활성화
                 }
             }
             .alert(isPresented: $isEditAlert) {
@@ -97,11 +95,14 @@ struct EditProfileView: View {
         }
     }
 
-    private func textFieldCell(_ title: String, text: Binding<String>) -> some View {
+    private func textFieldCell(_ title: String, validMessage: String, text: Binding<String>) -> some View {
         VStack(alignment: .leading) {
-
+          
             Text(title)
-
+            Text(validMessage)
+                .font(.footnote)
+                .foregroundColor(.gray)
+                
             TextField("", text: text)
                 .textFieldStyle(.roundedBorder)
         }

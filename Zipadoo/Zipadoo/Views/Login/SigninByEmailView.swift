@@ -16,7 +16,7 @@ struct SigninByEmailView: View {
     @State private var validMessage = " "
     /// 다음 페이지로 넘어갈 수 있는 조건인지
     private var isGoNext: Bool {
-        emailLoginStore.isCorrectNickname() && emailLoginStore.isCorrectPhoneNumber() && emailLoginStore.isCorrectPassword()
+        isCorrectNickname(nickname: emailLoginStore.nickName) && isCorrectPhoneNumber(phonenumber: emailLoginStore.phoneNumber) && isCorrectPassword(password: emailLoginStore.password)
     }
     /// 조건에 맞으면 true, 다음페이지로 넘어가기
     @State private var readyToNavigate: Bool = false
@@ -64,7 +64,7 @@ struct SigninByEmailView: View {
                     
                     // 하단 안내 문구
                     HStack {
-                        Text("프로필 수정에서 변경 가능합니다.")
+                        Text("2~6자로 입력해주세요. 프로필 수정에서 변경 가능합니다.")
                             .font(.subheadline)
                             .foregroundStyle(.white.opacity(0.7))
                         Spacer()
