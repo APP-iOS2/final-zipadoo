@@ -9,8 +9,8 @@ import SwiftUI
 import CoreLocation
 
 // MARK: - 사용 안함
-/// 사용 안함
-//struct AddLocation: Identifiable {
+// 사용 안함
+// struct AddLocation: Identifiable {
 //    let id = UUID()
 //    let coordinate: CLLocationCoordinate2D
 //}

@@ -24,4 +24,24 @@ struct Promise: Hashable, Identifiable {
     var checkDoublePromise: Bool
     /// 밑에 Percentage모델 id 배열
     var locationIdArray: [String]
+    
+    init(makingUserID: String, promiseTitle: String, promiseDate: Double, destination: String, participantIdArray: [String], checkDoublePromise: Bool, locationIdArray: [String]) {
+        self.makingUserID = makingUserID
+        self.promiseTitle = promiseTitle
+        self.promiseDate = promiseDate
+        self.destination = destination
+        self.participantIdArray = participantIdArray
+        self.checkDoublePromise = checkDoublePromise
+        self.locationIdArray = locationIdArray
+    }
+    
+    init() {
+        self.makingUserID = ""
+        self.promiseTitle = ""
+        self.promiseDate = 10.0
+        self.destination = ""
+        self.participantIdArray = ["1", "2"]
+        self.checkDoublePromise = false
+        self.locationIdArray = ["1", "2"]
+    }
 }
