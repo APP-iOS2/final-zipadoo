@@ -15,32 +15,44 @@ struct FriendsView: View {
             List {
                 ForEach(friends, id: \.self) { friend in
                     HStack {
-                        Image(systemName: "person.fill")
+                        Image(systemName: "person.circle.fill")
+                            .font(.title3)
+                            .foregroundColor(.gray)
                         Text(friend)
                     }
                 }
             }
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach(friends, id: \.self ) { fri in
-                        FriendsRequestCellView()
+            .listStyle(.plain)
+            
+            FriendsRequestCellView()
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(lineWidth: 2)
+                )
+                .padding(.bottom, 30)
+            
+            //            ScrollView(.horizontal, showsIndicators: false) {
+            //                HStack {
+            //                    ForEach(friends, id: \.self ) { fri in
+            //                        FriendsRequestCellView()
+            //                    }
+            //                    .overlay(
+            //                        RoundedRectangle(cornerRadius: 10)
+            //                            .stroke(lineWidth: 2)
+            //                    )
+            //                }
+            //            }
+                .navigationTitle("친구 목록")
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        NavigationLink {
+                            //                        FriendsRegistrationView()
+                        } label: {
+                            Label("Add", systemImage: "plus")
+                        }
                     }
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 2)
-                    )
                 }
-            }
-            .navigationTitle("친구 목록")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        //                        FriendsRegistrationView()
-                    } label: {
-                        Label("Add", systemImage: "plus")
-                    }
-                }
-            }
         }
     }
 }
@@ -50,11 +62,9 @@ struct FriendsRequestCellView: View {
     
     var body: some View {
         HStack {
-            
-            Image(systemName: "person.fill")
-            
             VStack {
                 Text("\(friends[0])님이 친구 요청을 보냈어요")
+                    .padding()
                 
                 HStack {
                     Button(action: {
@@ -66,8 +76,8 @@ struct FriendsRequestCellView: View {
                     .foregroundColor(.red)
                     .padding(7)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 1.5)
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(lineWidth: 1.0)
                     )
                     
                     Button(action: {
@@ -77,9 +87,10 @@ struct FriendsRequestCellView: View {
                     })
                     .padding(7)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(lineWidth: 1.5)
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(lineWidth: 1.0)
                     )
+                    .padding(.leading, 20)
                 }
             }
         }
