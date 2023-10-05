@@ -64,8 +64,9 @@
 		C02790C72ACD297300BBDCCA /* ZipadooWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C02790B52ACD297100BBDCCA /* ZipadooWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C02790CE2ACD29DF00BBDCCA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */; };
 		C02790CF2ACD2A1A00BBDCCA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */; };
-		C02790D02ACD2A7C00BBDCCA /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE552ABD54690042A55A /* PromiseModel.swift */; };
 		C02790D52ACD408000BBDCCA /* ZipadooEntrys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790D12ACD361100BBDCCA /* ZipadooEntrys.swift */; };
+		C02790F02ACE776500BBDCCA /* WidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790EF2ACE776500BBDCCA /* WidgetModel.swift */; };
+		C02790F12ACE794D00BBDCCA /* WidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790EF2ACE776500BBDCCA /* WidgetModel.swift */; };
 		C04607202ABC355F006836B7 /* PromiseDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
 		C04BCDC52ABD57E90024B487 /* LocationStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC42ABD57E90024B487 /* LocationStore.swift */; };
@@ -177,6 +178,7 @@
 		C02790CC2ACD299600BBDCCA /* ZipadooWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZipadooWidgetExtension.entitlements; sourceTree = "<group>"; };
 		C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		C02790D12ACD361100BBDCCA /* ZipadooEntrys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooEntrys.swift; sourceTree = "<group>"; };
+		C02790EF2ACE776500BBDCCA /* WidgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetModel.swift; sourceTree = "<group>"; };
 		C046071F2ABC355F006836B7 /* PromiseDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailStore.swift; sourceTree = "<group>"; };
 		C04BCDC22ABD545A0024B487 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		C04BCDC42ABD57E90024B487 /* LocationStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStore.swift; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 				8BD44EC92AC1401E00A4694C /* UserModel.swift */,
 				FAD7EE552ABD54690042A55A /* PromiseModel.swift */,
 				C04BCDC22ABD545A0024B487 /* LocationModel.swift */,
+				C02790EF2ACE776500BBDCCA /* WidgetModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -649,8 +652,8 @@
 			files = (
 				C02790CF2ACD2A1A00BBDCCA /* UserDefaults.swift in Sources */,
 				C02790BD2ACD297100BBDCCA /* ZipadooWidgetBundle.swift in Sources */,
-				C02790D02ACD2A7C00BBDCCA /* PromiseModel.swift in Sources */,
 				C02790C12ACD297100BBDCCA /* ZipadooWidget.swift in Sources */,
+				C02790F12ACE794D00BBDCCA /* WidgetModel.swift in Sources */,
 				C02790D52ACD408000BBDCCA /* ZipadooEntrys.swift in Sources */,
 				C02790BF2ACD297100BBDCCA /* ZipadooWidgetLiveActivity.swift in Sources */,
 			);
@@ -717,6 +720,7 @@
 				8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */,
 				8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */,
 				C02790CE2ACD29DF00BBDCCA /* UserDefaults.swift in Sources */,
+				C02790F02ACE776500BBDCCA /* WidgetModel.swift in Sources */,
 				FAD3BD2C2AC3BA9D00117938 /* Extention.swift in Sources */,
 				FAD7EE582ABD57C50042A55A /* PromiseViewModel.swift in Sources */,
 				C04BCDC52ABD57E90024B487 /* LocationStore.swift in Sources */,
