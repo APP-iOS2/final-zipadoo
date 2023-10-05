@@ -16,6 +16,9 @@ enum SharingStatus: String {
 struct PromiseDetailView: View {
     // MARK: - Property Wrappers
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
+    @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
+    
+    @Binding var postPromise: Promise
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
@@ -113,19 +116,19 @@ struct PromiseDetailView: View {
     }
     
     private var titleView: some View {
-        Text(promiseDetailStore.promise.promiseTitle)
+        Text(postPromise.promiseTitle)
             .font(.largeTitle)
             .bold()
             .padding(.vertical, 12)
     }
     
     private var dateView: some View {
-        Text(("일시 : \(promiseDetailStore.calculateDate(date: promiseDetailStore.promise.promiseDate))"))
+        Text(("일시 : \(promiseDetailStore.calculateDate(date: postPromise.promiseDate))"))
             .padding(.vertical, 3)
     }
     
     private var destinationView: some View {
-        Text("장소 : \(promiseDetailStore.promise.destination)")
+        Text("장소 : \(postPromise.destination)")
     }
     
     private var remainingTimeView: some View {
@@ -141,7 +144,7 @@ struct PromiseDetailView: View {
     
     // MARK: Custom Methods
     private func calculateRemainingTime() {
-        let promiseDate = promiseDetailStore.promise.promiseDate
+        let promiseDate = postPromise.promiseDate
         remainingTime = promiseDate - currentDate
     }
     
@@ -165,5 +168,5 @@ struct PromiseDetailView: View {
 }
 
 #Preview {
-    PromiseDetailView()
+    PromiseDetailView(postPromise: .constant(promise))
 }

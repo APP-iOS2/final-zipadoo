@@ -13,6 +13,9 @@ struct AddPromiseView: View {
     // 환경변수
     @Environment(\.dismiss) private var dismiss
     
+    var promiseViewModel: PromiseViewModel = PromiseViewModel()
+//    var user: User
+    
     // 저장될 변수
     @State private var promiseTitle: String = ""
     @State private var date = Date()
@@ -195,6 +198,14 @@ struct AddPromiseView: View {
                                     .default(Text("확인"),
                                              action: {
                                                  dismiss()
+                                                 promiseViewModel.addPromise(Promise(
+                                                    makingUserID: "유저ID" /*user.id*/, // 사용자 ID를 적절히 설정해야 합니다.
+                                                    promiseTitle: promiseTitle,
+                                                    promiseDate: date.timeIntervalSince1970, // 날짜 및 시간을 TimeInterval로 변환
+                                                    destination: promiseLocation.address,
+                                                    participantIdArray: selectedFriends,
+                                                    checkDoublePromise: false, // 원하는 값으로 설정
+                                                    locationIdArray: []))
                                              })
                         )
                     }
@@ -221,5 +232,5 @@ struct AddPromiseView: View {
 }
 
 #Preview {
-    AddPromiseView()
+    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
 }

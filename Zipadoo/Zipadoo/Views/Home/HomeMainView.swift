@@ -12,7 +12,7 @@ struct HomeMainView: View {
     
     // 더미데이터
     private let dataArray: [Promise] = [promise, promise1]
-    
+    @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
     var body: some View {
         NavigationStack {
             // 약속 배열 값 존재하는지 확인.
@@ -20,9 +20,9 @@ struct HomeMainView: View {
                 Text("현재 약속이 1도 없어요!")
             } else {
                 ScrollView {
-                    ForEach(dataArray, id: \.self) { promise in
+                    ForEach(promiseViewModel.promiseViewModel, id: \.self) { promise in
                         NavigationLink {
-                            PromiseDetailView()
+                            PromiseDetailView(postPromise: .constant(promise))
                         } label: {
                             VStack(alignment: .leading) {
                                 HStack {
@@ -64,10 +64,20 @@ struct HomeMainView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink {
-                            AddPromiseView()
+                            AddPromiseView(/*user: User*/)
                         } label: {
                             Text("약속 추가")
                         }
+                    }
+                }
+                .refreshable {
+                    Task {
+                        try await promiseViewModel.fetchPromise()
+                    }
+                }
+                .onAppear {
+                    Task {
+                        try await promiseViewModel.fetchPromise()
                     }
                 }
             }
