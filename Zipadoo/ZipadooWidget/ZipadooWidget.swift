@@ -2,7 +2,7 @@
 //  ZipadooWidget.swift
 //  ZipadooWidget
 //
-//  Created by 아라 on 10/4/23.
+//  Created by 아라 on 2023/09/25.
 //
 
 import WidgetKit

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct HomeMainView: View {
     
@@ -68,6 +69,37 @@ struct HomeMainView: View {
                         } label: {
                             Text("약속 추가")
                         }
+                    }
+                }
+                .onAppear {
+                    print(Date().timeIntervalSince1970)
+                    var calendar = Calendar.current
+                    calendar.timeZone = NSTimeZone.local
+                    let encoder = JSONEncoder()
+                    
+                    var todaysPromises: [Promise] = []
+                    
+                    for promise in dataArray {
+                        let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+                        let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
+                        let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+                        
+                        if promiseDateComponents == todayComponents {
+                            // Promise date is today
+                            todaysPromises.append(promise)
+                        }
+                    }
+                    
+                    do {
+                        let encodedData = try encoder.encode(todaysPromises)
+                        
+                        UserDefaults.shared.set(encodedData, forKey: "todaysPromises")
+                        
+                        print(UserDefaults.shared.value(forKey: "todaysPromises") ?? "No Value")
+                        
+                        WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
+                    } catch {
+                        print("Failed to encode Promise:", error)
                     }
                 }
             }
