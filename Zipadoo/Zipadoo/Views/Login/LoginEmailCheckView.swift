@@ -15,6 +15,7 @@ struct LoginEmailCheckView: View {
     
     @State private var isSigninLinkActive: Bool = false // uniqueEmail = false일 경우 회원가입뷰 버튼으로 활성화
     @State private var isLoginLinkActive: Bool = false // uniqueEmail = true일 경우 로그인뷰 버튼으로 활성화
+    @State private var validMessage: String = ""
     
     var body: some View {
         ZStack {
@@ -28,11 +29,14 @@ struct LoginEmailCheckView: View {
                         .foregroundColor(.white)
                         .font(.title2)
                         .fontWeight(.semibold)
-                        .padding(.bottom, 10)
-                        .padding(.leading, 15)
                     Spacer()
                 }
                 
+                Text("로그인과 비밀번호 찾기에 사용됩니다.")
+                    .font(.subheadline)
+                    .foregroundStyle(.white.opacity(0.7))
+                    .padding(.bottom, 7)
+      
                 // 이메일 중복 체크 하여 각 경우에 따라 뷰 버튼 활성화
                 HStack {
                     NavigationLink(destination: SigninByEmailView(emailLoginStore: emailLoginStore), isActive: $isSigninLinkActive) {
@@ -71,30 +75,39 @@ struct LoginEmailCheckView: View {
                         .foregroundStyle(.white.opacity(0.5))
                         .padding(.bottom, 5)
                     
-                    // TextFiled 아래 안내 문구
-                    Text("로그인과 비밀번호 찾기에 사용됩니다.")
-                        .font(.subheadline)
-                        .foregroundStyle(.white.opacity(0.7))
+                    HStack {
+                        // TextField가 비어있을때만이메일형식 유효 메세지
+                        if emailLoginStore.email.isEmpty {
+                            Text("\(validMessage)")
+                                .font(.subheadline)
+                                .foregroundStyle(.red.opacity(0.7))
+                        }
+                        
+                        Spacer()
+                    }
                     
                     Spacer()
                 } // Group
-                .padding(.leading, 15)
-                .padding(.trailing, 15)
                 .background(Color.black)
                 .navigationBarItems(trailing:
                                         Button("다음") {
-                    // 여기에 데이터를 파이어베이스로 보내고 중복 체크를 수행하는 코드를 추가합니다.
-                    emailLoginStore.emailCheck(email: emailLoginStore.email) { isUnique in
-                        uniqueEmail = isUnique // 중복 체크 결과를 업데이트합니다.
-                        if isUnique {
-                            // 중복이 없으면 회원가입 뷰로 이동
-                            self.uniqueEmail = true
-                            self.isSigninLinkActive = true
-                        } else {
-                            // 이메일이 중복이 있을 때 비밀번호 입력창으로 이동
-                            self.isLoginLinkActive = true
-                            
+                    if emailLoginStore.isCorrectEmail() {
+                        // 여기에 데이터를 파이어베이스로 보내고 중복 체크를 수행하는 코드를 추가합니다.
+                        emailLoginStore.emailCheck(email: emailLoginStore.email) { isUnique in
+                            uniqueEmail = isUnique // 중복 체크 결과를 업데이트합니다.
+                            if isUnique {
+                                // 중복이 없으면 회원가입 뷰로 이동
+                                self.uniqueEmail = true
+                                self.isSigninLinkActive = true
+                            } else {
+                                // 이메일이 중복이 있을 때 비밀번호 입력창으로 이동
+                                self.isLoginLinkActive = true
+                                
+                            }
                         }
+                    } else {
+                        validMessage = "이메일형식이 유효하지 않습니다"
+                        emailLoginStore.email = ""
                     }
                     
                     }
@@ -105,9 +118,12 @@ struct LoginEmailCheckView: View {
                 )
                     
             } // VStack
+            .padding([.leading, .trailing])
         } // ZStack
     }
 }
 #Preview {
-    LoginEmailCheckView()
+    NavigationStack {
+        LoginEmailCheckView()
+    }
 }

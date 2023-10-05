@@ -46,13 +46,38 @@ class EmailLoginStore: ObservableObject {
             }
             
             // 중복된 이메일이 없으면 querySnapshot은 비어 있을 것입니다.
-              if querySnapshot?.isEmpty == true {
-                  print("이메일 데이터 중복 없음, 회원 가입 뷰로 진행")
-                  completion(true) // 중복된 이메일이 없을 경우 true를 반환
-              } else {
-                  print("이메일 데이터 중복 있음, 로그인 뷰로 진행")
-                  completion(false) // 중복된 이메일이 있을 경우 false를 반환
-              }
-          }
-      }
+            if querySnapshot?.isEmpty == true {
+                print("이메일 데이터 중복 없음, 회원 가입 뷰로 진행")
+                completion(true) // 중복된 이메일이 없을 경우 true를 반환
+            } else {
+                print("이메일 데이터 중복 있음, 로그인 뷰로 진행")
+                completion(false) // 중복된 이메일이 있을 경우 false를 반환
+            }
+        }
+    }
+    
+    /// 이메일 유효한 형식인지 확인
+    func isCorrectEmail() -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+
+        return emailPredicate.evaluate(with: email)
+    }
+    
+    /// 전화번호 유효한 형식 확인
+    func isCorrectPhoneNumber() -> Bool {
+        let passwordRegex = "01([0-9])([0-9]{3,4})([0-9]{4})$"
+        let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
+
+        return passwordPredicate.evaluate(with: phoneNumber)
+    }
+    
+    /// 비밀번호 유효한 형식 확인
+    func isCorrectPassword() -> Bool {
+//        let passwordRegex = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{6,16}$"
+        let passwordRegex = ".{6,15}$" // 6 ~ 15 자리
+        let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
+
+        return passwordPredicate.evaluate(with: password)
+    }
 }
