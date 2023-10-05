@@ -9,6 +9,7 @@ import Combine // Set<AnyCancellable>()에 필요
 import Firebase
 import Foundation
 
+@MainActor
 class ContentViewModel: ObservableObject {
     
     private let auth = AuthStore.shared
@@ -31,6 +32,7 @@ class ContentViewModel: ObservableObject {
         .store(in: &cancellables)
         
         auth.$currentUser.sink { [weak self] currentUser in
+            print(currentUser ?? "")
             self?.currentUser = currentUser
         }
         .store(in: &cancellables)
