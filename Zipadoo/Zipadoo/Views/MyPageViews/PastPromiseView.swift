@@ -1,13 +1,13 @@
 //
-//  MyPotatoView.swift
+//  PastPromiseView.swift
 //  Zipadoo
 //
-//  Created by 이재승 on 2023/09/21.
+//  Created by 이재승 on 2023/10/04.
 //
 
 import SwiftUI
 
-struct MyPotatoView: View {
+struct PastPromiseView: View {
     @StateObject var myPagePromiseStore = MyPagePromiseStore()
     @State private var isShownFullScreenCover: Bool = false
     
@@ -51,18 +51,20 @@ struct MyPotatoView: View {
                 HStack {
                     VStack(alignment: .leading) {
                         Text(promise.promiseTitle)
-                            .font(.title3)
+                            .font(.headline)
                             .bold()
-                            .padding(.bottom)
+                            .padding(.bottom, 5)
                         Text(convertDoubleToDate(promise.promiseDate))
+                            .font(.subheadline)
                     }
                     Spacer()
                     VStack(alignment: .listRowSeparatorTrailing) {
                         Text("지각")
-                            .font(.title3)
+                            .font(.headline)
                             .bold()
-                            .padding(.bottom)
+                            .padding(.bottom, 5)
                         Text("-500")
+                            .font(.subheadline)
                             .bold()
                             .foregroundColor(.red)
                     }
@@ -70,13 +72,13 @@ struct MyPotatoView: View {
             }
             .listStyle(.plain)
         }
-        .navigationTitle("나의 감자")
+        .navigationTitle("지난 약속")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
 
 #Preview {
     NavigationStack {
-        MyPotatoView()
+        PastPromiseView()
     }
 }
