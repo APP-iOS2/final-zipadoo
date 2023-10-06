@@ -7,19 +7,16 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 /// 약속 리스트 뷰
 struct HomeMainView: View {
-    
     @StateObject private var promise: PromiseViewModel = PromiseViewModel()
-    
     @State private var isShownFullScreenCover: Bool = false
     
     var body: some View {
-     
         NavigationStack {
             ScrollView {
-                
                 // 약속 배열 값 존재하는지 확인.
                 if promise.promiseViewModel.isEmpty {
                     Text("현재 약속이 1도 없어요!")
@@ -125,11 +122,39 @@ struct HomeMainView: View {
                             })
                         }
                     }
+                    .onAppear {
+                        print(Date().timeIntervalSince1970)
+                        var calendar = Calendar.current
+                        calendar.timeZone = NSTimeZone.local
+                        let encoder = JSONEncoder()
+                        
+                        var widgetDatas: [WidgetData] = []
+                        
+                        for promise in promise.promiseViewModel {
+                            let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+                            let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
+                            let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+                            
+                            if promiseDateComponents == todayComponents {
+                                // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
+                                let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
+                                widgetDatas.append(data)
+                            }
+                        }
+                        
+                        do {
+                            let encodedData = try encoder.encode(widgetDatas)
+                            
+                            UserDefaults.shared.set(encodedData, forKey: "todayPromises")
+                            
+                            WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
+                        } catch {
+                            print("Failed to encode Promise:", error)
+                        }
+                    }
                 }
-                    
+                //            .ignoresSafeArea(.all)
             }
-//            .ignoresSafeArea(.all)
-            
         }
     }
 }

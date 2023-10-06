@@ -27,11 +27,23 @@
 		8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC92AC1401E00A4694C /* UserModel.swift */; };
 		8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */; };
 		8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */; };
-		9A2247212ACE45D300DAC40E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A2247202ACE45D300DAC40E /* GoogleService-Info.plist */; };
 		9A2247252ACE4B9D00DAC40E /* EditPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A2247242ACE4B9D00DAC40E /* EditPasswordView.swift */; };
-		9B6268392ABC2D6800B309E8 /* LocationAndInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */; };
-		9B8FE8252ACE36F600C1EEFC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9B8FE8242ACE36F600C1EEFC /* GoogleService-Info.plist */; };
 		9B8FE8272ACE377B00C1EEFC /* MyLocationAndInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */; };
+		C02790B82ACD297100BBDCCA /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02790B72ACD297100BBDCCA /* WidgetKit.framework */; };
+		C02790BA2ACD297100BBDCCA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02790B92ACD297100BBDCCA /* SwiftUI.framework */; };
+		C02790BD2ACD297100BBDCCA /* ZipadooWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790BC2ACD297100BBDCCA /* ZipadooWidgetBundle.swift */; };
+		C02790BF2ACD297100BBDCCA /* ZipadooWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790BE2ACD297100BBDCCA /* ZipadooWidgetLiveActivity.swift */; };
+		C02790C12ACD297100BBDCCA /* ZipadooWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790C02ACD297100BBDCCA /* ZipadooWidget.swift */; };
+		C02790C32ACD297300BBDCCA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C02790C22ACD297300BBDCCA /* Assets.xcassets */; };
+		C02790C72ACD297300BBDCCA /* ZipadooWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C02790B52ACD297100BBDCCA /* ZipadooWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C02790CE2ACD29DF00BBDCCA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */; };
+		C02790CF2ACD2A1A00BBDCCA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */; };
+		C02790D52ACD408000BBDCCA /* ZipadooEntrys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790D12ACD361100BBDCCA /* ZipadooEntrys.swift */; };
+		C02790F02ACE776500BBDCCA /* WidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790EF2ACE776500BBDCCA /* WidgetModel.swift */; };
+		C02790F12ACE794D00BBDCCA /* WidgetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790EF2ACE776500BBDCCA /* WidgetModel.swift */; };
+		C02790F52ACFCD0800BBDCCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C02790F42ACFCD0800BBDCCA /* GoogleService-Info.plist */; };
+		C02790F62ACFCD0800BBDCCA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C02790F42ACFCD0800BBDCCA /* GoogleService-Info.plist */; };
+		C02790FE2ACFCF8A00BBDCCA /* LocationAndInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02790FA2ACFCF8A00BBDCCA /* LocationAndInfo.swift */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
 		C069D2BC2AC145D100A62E04 /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = C069D2BB2AC145D100A62E04 /* AppsFlyerLib */; };
 		FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */; };
@@ -82,11 +94,9 @@
 		FA2474522ACD4D6E00D4C821 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474422ACD4D6E00D4C821 /* ContentViewModel.swift */; };
 		FA2474532ACD4D6E00D4C821 /* EmailLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474432ACD4D6E00D4C821 /* EmailLoginStore.swift */; };
 		FA2474542ACD4D6E00D4C821 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474442ACD4D6E00D4C821 /* AuthStore.swift */; };
-
 		FA24745C2ACE39AC00D4C821 /* DateChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745B2ACE39AC00D4C821 /* DateChanger.swift */; };
 		FA24745E2ACE3B8200D4C821 /* MyPagePromiseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */; };
 		FA2474602ACE3BC000D4C821 /* PastPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */; };
-
 		FAB58B882ABD1879006B9E11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B872ABD1879006B9E11 /* FirebaseAuth */; };
 		FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8D2ABD1879006B9E11 /* FirebaseDatabase */; };
 		FAB58B902ABD1879006B9E11 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8F2ABD1879006B9E11 /* FirebaseDatabaseSwift */; };
@@ -99,6 +109,30 @@
 		FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */; };
 		FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE552ABD54690042A55A /* PromiseModel.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C02790C52ACD297300BBDCCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FAD5FE312ABBD3E700E05E6E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C02790B42ACD297100BBDCCA;
+			remoteInfo = ZipadooWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C02790CB2ACD297300BBDCCA /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C02790C72ACD297300BBDCCA /* ZipadooWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		08C6F0B42ABC1BE0005D231D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
@@ -119,11 +153,23 @@
 		8BD44EC92AC1401E00A4694C /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
 		8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilView.swift; sourceTree = "<group>"; };
-		9A2247202ACE45D300DAC40E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9A2247242ACE4B9D00DAC40E /* EditPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPasswordView.swift; sourceTree = "<group>"; };
 		9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAndInfo.swift; sourceTree = "<group>"; };
-		9B8FE8242ACE36F600C1EEFC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationAndInfoView.swift; sourceTree = "<group>"; };
+		C02790B52ACD297100BBDCCA /* ZipadooWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ZipadooWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C02790B72ACD297100BBDCCA /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		C02790B92ACD297100BBDCCA /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		C02790BC2ACD297100BBDCCA /* ZipadooWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooWidgetBundle.swift; sourceTree = "<group>"; };
+		C02790BE2ACD297100BBDCCA /* ZipadooWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		C02790C02ACD297100BBDCCA /* ZipadooWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooWidget.swift; sourceTree = "<group>"; };
+		C02790C22ACD297300BBDCCA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C02790C42ACD297300BBDCCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C02790CC2ACD299600BBDCCA /* ZipadooWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZipadooWidgetExtension.entitlements; sourceTree = "<group>"; };
+		C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		C02790D12ACD361100BBDCCA /* ZipadooEntrys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooEntrys.swift; sourceTree = "<group>"; };
+		C02790EF2ACE776500BBDCCA /* WidgetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetModel.swift; sourceTree = "<group>"; };
+		C02790F42ACFCD0800BBDCCA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C02790FA2ACFCF8A00BBDCCA /* LocationAndInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationAndInfo.swift; sourceTree = "<group>"; };
 		C04BCDC22ABD545A0024B487 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zipadoo.entitlements; sourceTree = "<group>"; };
 		C069D2B92AC141AC00A62E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -175,12 +221,9 @@
 		FA2474422ACD4D6E00D4C821 /* ContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		FA2474432ACD4D6E00D4C821 /* EmailLoginStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginStore.swift; sourceTree = "<group>"; };
 		FA2474442ACD4D6E00D4C821 /* AuthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
-
 		FA24745B2ACE39AC00D4C821 /* DateChanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateChanger.swift; sourceTree = "<group>"; };
 		FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPagePromiseStore.swift; sourceTree = "<group>"; };
 		FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastPromiseView.swift; sourceTree = "<group>"; };
-
-
 		FAD3BD2B2AC3BA9D00117938 /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
@@ -190,6 +233,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C02790B22ACD297100BBDCCA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C02790BA2ACD297100BBDCCA /* SwiftUI.framework in Frameworks */,
+				C02790B82ACD297100BBDCCA /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAD5FE362ABBD3E700E05E6E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -246,10 +298,40 @@
 			path = Friends;
 			sourceTree = "<group>";
 		};
-		C04607152ABC2A11006836B7 /* Home */ = {
+		C02790B62ACD297100BBDCCA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C02790B72ACD297100BBDCCA /* WidgetKit.framework */,
+				C02790B92ACD297100BBDCCA /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C02790BB2ACD297100BBDCCA /* ZipadooWidget */ = {
+			isa = PBXGroup;
+			children = (
+				C02790BC2ACD297100BBDCCA /* ZipadooWidgetBundle.swift */,
+				C02790BE2ACD297100BBDCCA /* ZipadooWidgetLiveActivity.swift */,
+				C02790C02ACD297100BBDCCA /* ZipadooWidget.swift */,
+				C02790D12ACD361100BBDCCA /* ZipadooEntrys.swift */,
+				C02790C22ACD297300BBDCCA /* Assets.xcassets */,
+				C02790C42ACD297300BBDCCA /* Info.plist */,
+			);
+			path = ZipadooWidget;
+			sourceTree = "<group>";
+		};
+		C02790F32ACFC72100BBDCCA /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 				9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		C02790F72ACFCF8A00BBDCCA /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				C02790FA2ACFCF8A00BBDCCA /* LocationAndInfo.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -392,8 +474,13 @@
 		FAD5FE302ABBD3E700E05E6E = {
 			isa = PBXGroup;
 			children = (
+				C02790CC2ACD299600BBDCCA /* ZipadooWidgetExtension.entitlements */,
+				C02790F42ACFCD0800BBDCCA /* GoogleService-Info.plist */,
 				FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */,
+				C02790BB2ACD297100BBDCCA /* ZipadooWidget */,
+				C02790B62ACD297100BBDCCA /* Frameworks */,
 				FAD5FE3A2ABBD3E700E05E6E /* Products */,
+				C02790F32ACFC72100BBDCCA /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -401,6 +488,7 @@
 			isa = PBXGroup;
 			children = (
 				FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */,
+				C02790B52ACD297100BBDCCA /* ZipadooWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -411,7 +499,6 @@
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
-				9A2247202ACE45D300DAC40E /* GoogleService-Info.plist */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
 				FAD5FE4A2ABBD3F900E05E6E /* Views */,
@@ -450,10 +537,11 @@
 		FAD5FE4B2ABBD40500E05E6E /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				C04607152ABC2A11006836B7 /* Home */,
+				C02790F72ACFCF8A00BBDCCA /* Home */,
 				8BD44EC92AC1401E00A4694C /* UserModel.swift */,
 				FAD7EE552ABD54690042A55A /* PromiseModel.swift */,
 				C04BCDC22ABD545A0024B487 /* LocationModel.swift */,
+				C02790EF2ACE776500BBDCCA /* WidgetModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -462,6 +550,7 @@
 			isa = PBXGroup;
 			children = (
 				FAD3BD2B2AC3BA9D00117938 /* Extention.swift */,
+				C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -484,6 +573,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C02790B42ACD297100BBDCCA /* ZipadooWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C02790C82ACD297300BBDCCA /* Build configuration list for PBXNativeTarget "ZipadooWidgetExtension" */;
+			buildPhases = (
+				C02790B12ACD297100BBDCCA /* Sources */,
+				C02790B22ACD297100BBDCCA /* Frameworks */,
+				C02790B32ACD297100BBDCCA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ZipadooWidgetExtension;
+			productName = ZipadooWidgetExtension;
+			productReference = C02790B52ACD297100BBDCCA /* ZipadooWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		FAD5FE382ABBD3E700E05E6E /* Zipadoo */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FAD5FE472ABBD3E800E05E6E /* Build configuration list for PBXNativeTarget "Zipadoo" */;
@@ -492,10 +598,12 @@
 				FAD5FE362ABBD3E700E05E6E /* Frameworks */,
 				FAD5FE372ABBD3E700E05E6E /* Resources */,
 				8B56E9902ABBD820006CE010 /* ShellScript */,
+				C02790CB2ACD297300BBDCCA /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C02790C62ACD297300BBDCCA /* PBXTargetDependency */,
 			);
 			name = Zipadoo;
 			packageProductDependencies = (
@@ -523,6 +631,9 @@
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					C02790B42ACD297100BBDCCA = {
+						CreatedOnToolsVersion = 15.0;
+					};
 					FAD5FE382ABBD3E700E05E6E = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -548,11 +659,21 @@
 			projectRoot = "";
 			targets = (
 				FAD5FE382ABBD3E700E05E6E /* Zipadoo */,
+				C02790B42ACD297100BBDCCA /* ZipadooWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C02790B32ACD297100BBDCCA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C02790C32ACD297300BBDCCA /* Assets.xcassets in Resources */,
+				C02790F62ACFCD0800BBDCCA /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAD5FE372ABBD3E700E05E6E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -562,9 +683,7 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-
-				9A2247212ACE45D300DAC40E /* GoogleService-Info.plist in Resources */,
-
+				C02790F52ACFCD0800BBDCCA /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +711,19 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C02790B12ACD297100BBDCCA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C02790CF2ACD2A1A00BBDCCA /* UserDefaults.swift in Sources */,
+				C02790BD2ACD297100BBDCCA /* ZipadooWidgetBundle.swift in Sources */,
+				C02790C12ACD297100BBDCCA /* ZipadooWidget.swift in Sources */,
+				C02790F12ACE794D00BBDCCA /* WidgetModel.swift in Sources */,
+				C02790D52ACD408000BBDCCA /* ZipadooEntrys.swift in Sources */,
+				C02790BF2ACD297100BBDCCA /* ZipadooWidgetLiveActivity.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		FAD5FE352ABBD3E700E05E6E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -599,10 +731,10 @@
 				FA2474192ACD4BDB00D4C821 /* FriendsLocationMapView.swift in Sources */,
 				FA2474512ACD4D6E00D4C821 /* KakaoStore.swift in Sources */,
 				FA2474532ACD4D6E00D4C821 /* EmailLoginStore.swift in Sources */,
-				9B6268392ABC2D6800B309E8 /* LocationAndInfo.swift in Sources */,
 				FA24741B2ACD4BDB00D4C821 /* FriendsLocationAndInfoView.swift in Sources */,
 				FA2474162ACD4BDB00D4C821 /* MapView.swift in Sources */,
 				FA24745E2ACE3B8200D4C821 /* MyPagePromiseStore.swift in Sources */,
+				C02790FE2ACFCF8A00BBDCCA /* LocationAndInfo.swift in Sources */,
 				FA24742D2ACD4C0B00D4C821 /* ShareView.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				FA2474112ACD4BDB00D4C821 /* NewMapView.swift in Sources */,
@@ -666,6 +798,8 @@
 				8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */,
 				FA24744D2ACD4D6E00D4C821 /* EditProfileViewModel.swift in Sources */,
 				8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */,
+				C02790CE2ACD29DF00BBDCCA /* UserDefaults.swift in Sources */,
+				C02790F02ACE776500BBDCCA /* WidgetModel.swift in Sources */,
 				FAD3BD2C2AC3BA9D00117938 /* Extention.swift in Sources */,
 				FA24744A2ACD4D6E00D4C821 /* ProfileImageUploader.swift in Sources */,
 				FA24740C2ACD4BDB00D4C821 /* FriendsImageView.swift in Sources */,
@@ -679,7 +813,73 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		C02790C62ACD297300BBDCCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C02790B42ACD297100BBDCCA /* ZipadooWidgetExtension */;
+			targetProxy = C02790C52ACD297300BBDCCA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		C02790C92ACD297300BBDCCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ZipadooWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6R3M7VGRP2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ZipadooWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ZipadooWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = education.techit.zipadoo.dev.ZipadooWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C02790CA2ACD297300BBDCCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = ZipadooWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6R3M7VGRP2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = ZipadooWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ZipadooWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = education.techit.zipadoo.dev.ZipadooWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		FAD5FE452ABBD3E800E05E6E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -802,6 +1002,7 @@
 		FAD5FE482ABBD3E800E05E6E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Zipadoo/Zipadoo.entitlements;
@@ -809,6 +1010,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Zipadoo/Preview Content\"";
 				DEVELOPMENT_TEAM = 6R3M7VGRP2;
+				ENABLE_ON_DEMAND_RESOURCES = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Zipadoo/Info.plist;
@@ -836,6 +1038,7 @@
 		FAD5FE492ABBD3E800E05E6E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Zipadoo/Zipadoo.entitlements;
@@ -843,6 +1046,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Zipadoo/Preview Content\"";
 				DEVELOPMENT_TEAM = 6R3M7VGRP2;
+				ENABLE_ON_DEMAND_RESOURCES = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Zipadoo/Info.plist;
@@ -870,6 +1074,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C02790C82ACD297300BBDCCA /* Build configuration list for PBXNativeTarget "ZipadooWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C02790C92ACD297300BBDCCA /* Debug */,
+				C02790CA2ACD297300BBDCCA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		FAD5FE342ABBD3E700E05E6E /* Build configuration list for PBXProject "Zipadoo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
