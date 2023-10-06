@@ -27,11 +27,11 @@ struct FriendsLocationListView: View {
                 
                 // 그리드 레이아웃을 사용하여 친구 정보 표시
                 LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
-                    ForEach(viewModel.travelTimesText.sorted { $0.value.2 && !$1.value.2 }, id: \.key) { key, value in
-                        if value.2 { // isMe 값에 따라 다른 View 표시
-                            MyLocationAndInfoView(name: key, imageName: value.1, distance: value.0)
+                    ForEach(viewModel.travelInfoDictionary.sorted { $0.value.isMe && !$1.value.isMe }, id: \.key) { key, value in
+                        if value.isMe { // isMe 값에 따라 다른 View 표시
+                            MyLocationAndInfoView(name: key, imageName: value.imageName, distance: value.distanceText, lineColor: value.lineColor)
                         } else {
-                            FriendsLocationAndInfoView(name: key, imageName: value.1, distance: value.0)
+                            FriendsLocationAndInfoView(name: key, imageName: value.imageName, distance: value.distanceText, lineColor: value.lineColor)
                         }
                     }
                 }
