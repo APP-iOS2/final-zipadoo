@@ -71,6 +71,7 @@ final class UserStore: ObservableObject {
         return try snapshot.data(as: User.self)
     }
     
+    /// 로그인한 유저 정보 가져오기
     @MainActor
     func loginUser() async throws {
         guard let uid = Auth.auth().currentUser?.uid else { return }
