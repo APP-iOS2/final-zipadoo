@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct FriendsView: View {
-    let friends = ["임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "이재승", "장여훈", "정한두"]
+    
+    @ObservedObject var friendsStore: FriendsStore = FriendsStore()
     /// 친구 삭제 알람
     @State private var isDeleteAlert: Bool = false
     /// segmentedControl 인덱스
@@ -56,7 +57,7 @@ struct FriendsView: View {
                     secondaryButton: .destructive(Text("삭제"), action: {
                         isDeleteAlert = false
                         Task {
-                            // 삭제 로직
+                            friendsStore.addFriend(friendId:)
                         }
                     })
                 )
@@ -68,14 +69,14 @@ struct FriendsView: View {
     // MARK: - 친구 목록 뷰
     private var friendListView: some View {
         List {
-            ForEach(friends, id: \.self) { friend in
+            ForEach(friendsStore.friendsFetchArray) { friend in
                 ZStack {
-                    // 친구프로필 이동
+                    // 친구프로필 이동 (일단 MyPageView로
                     NavigationLink(destination: MyPageView(), label: {
                         HStack {
-                            ProfileImageView(imageString: "", size: .xSmall)
+                            ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
                             
-                            Text(friend)
+                            Text(friend.nickName)
                         }
                     })
                     
@@ -89,6 +90,8 @@ struct FriendsView: View {
                             .background(.white)
                             .onTapGesture {
                                 isDeleteAlert.toggle()
+                                // 파베연결
+ 
                             }
                     }
                      
@@ -102,15 +105,15 @@ struct FriendsView: View {
     // MARK: - 요청목록 뷰
     private var friendRequestView: some View {
         List {
-            ForEach(friends, id: \.self) { friend in
+            ForEach(friendsStore.requestFetchArray) { friend in
                 
                 ZStack {
                     // 친구프로필 이동
                     NavigationLink(destination: MyPageView(), label: {
                         HStack {
-                            ProfileImageView(imageString: "", size: .xSmall)
+                            ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
                                 
-                            Text(friend)
+                            Text(friend.nickName)
                         }
                     })
                                              
