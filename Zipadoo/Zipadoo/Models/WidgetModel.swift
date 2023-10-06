@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Widget: Identifiable, Codable {
+struct WidgetData: Identifiable, Codable {
     var id = UUID().uuidString
     let title: String
-    let time: String
+    let time: Double
     let place: String
-    var arrivalMember: String
+    var arrivalMember: Int
 }

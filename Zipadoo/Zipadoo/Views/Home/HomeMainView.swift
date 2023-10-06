@@ -77,7 +77,7 @@ struct HomeMainView: View {
                     calendar.timeZone = NSTimeZone.local
                     let encoder = JSONEncoder()
                     
-                    var todaysPromises: [Promise] = []
+                    var widgetDatas: [WidgetData] = []
                     
                     for promise in dataArray {
                         let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
@@ -85,17 +85,16 @@ struct HomeMainView: View {
                         let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
                         
                         if promiseDateComponents == todayComponents {
-                            // Promise date is today
-                            todaysPromises.append(promise)
+                            // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
+                            let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
+                            widgetDatas.append(data)
                         }
                     }
                     
                     do {
-                        let encodedData = try encoder.encode(todaysPromises)
+                        let encodedData = try encoder.encode(widgetDatas)
                         
-                        UserDefaults.shared.set(encodedData, forKey: "todaysPromises")
-                        
-                        print(UserDefaults.shared.value(forKey: "todaysPromises") ?? "No Value")
+                        UserDefaults.shared.set(encodedData, forKey: "todayPromises")
                         
                         WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
                     } catch {
