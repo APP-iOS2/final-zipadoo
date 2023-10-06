@@ -10,6 +10,9 @@ import SwiftUI
 struct FriendsListVIew: View {
     @Binding var isShowingSheet: Bool
     @Binding var selectedFriends: [String]
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+    
     // 더미데이터
     let friends = ["임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "이재승", "장여훈", "정한두"]
     
@@ -22,7 +25,7 @@ struct FriendsListVIew: View {
                     VStack {
                         HStack {
                             if selectedFriends.isEmpty {
-                                Text("목록에서 초대 할 친구를 선택해주세요")
+                                Text("목록에서 초대할 친구를 선택해주세요")
                             } else {
                                 ScrollView(.horizontal) {
                                     HStack {
@@ -40,7 +43,6 @@ struct FriendsListVIew: View {
                         }
                     }
                 }
-            
             List(friends, id: \.self) { friend in
                 HStack {
                     Image(systemName: "person.circle.fill")
@@ -48,22 +50,27 @@ struct FriendsListVIew: View {
                         .font(.title3)
                     Text(friend)
                         .onTapGesture {
-                            selectedFriends.append(friend)
-                            print(friend)
+                            if !selectedFriends.contains(friend) {
+                                selectedFriends.append(friend)
+                            } else {
+                                showAlert = true
+                                alertMessage = "\(friend)님은 이미 존재합니다."
+                            }
                         }
+                }
+                .alert(isPresented: $showAlert) {
+                    Alert(
+                        title: Text("알림"),
+                        message: Text(alertMessage),
+                        dismissButton: .default(Text("확인")) {
+                        }
+                    )
                 }
             }
             .listStyle(.plain)
             .navigationTitle("친구 목록")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                //                ToolbarItem(placement: .cancellationAction) {
-                //                    Button("취소") {
-                //                        isShowingSheet = false
-                //                    }
-                //                    .foregroundColor(.red)
-                //                    .bold()
-                //                }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         isShowingSheet.toggle()
