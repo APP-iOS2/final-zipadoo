@@ -63,6 +63,25 @@ struct HomeMainView: View {
                                                     )
                                             }
                                             .padding(.vertical, 10)
+                                    
+                                    Group {
+                                        HStack {
+                                            Image(systemName: "pin")
+                                            Text("장소 \(promise.destination)")
+                                        }
+                                        
+                                        /// 저장된 promiseDate값을 Date 타입으로 변환
+                                        let datePromise = Date(timeIntervalSince1970: promise.promiseDate)
+                                        
+                                        HStack {
+                                            Image(systemName: "clock")
+                                            Text("\(promise.promiseDate)")
+                                        }
+                                        .padding(.bottom, 20)
+                                        
+                                        HStack {
+                                            Text("6km")
+                                            Spacer()
                                             
                                             Group {
                                                 HStack {
