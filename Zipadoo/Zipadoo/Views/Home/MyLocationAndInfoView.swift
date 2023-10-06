@@ -11,9 +11,7 @@ struct MyLocationAndInfoView: View {
     let name: String
     let imageName: String
     let distance: String
-    var colorRed: CGFloat = 0.74
-    var colorGreen: CGFloat = 0.44
-    var colorBlue: CGFloat = 0.44
+    let lineColor: UIColor // lineColor 추가
     
     var body: some View {
         VStack {
@@ -22,7 +20,7 @@ struct MyLocationAndInfoView: View {
             ZStack {
                 Circle()
                     .frame(width: 60)
-                    .foregroundColor(Color(red: colorRed, green: colorGreen, blue: colorBlue))
+                    .foregroundColor(Color(lineColor))
                 Image(imageName)
                     .resizable()
                     .scaledToFit()
@@ -35,5 +33,5 @@ struct MyLocationAndInfoView: View {
 }
 
 #Preview {
-    MyLocationAndInfoView(name: "정한두", imageName: "dragon", distance: "10 km")
+    MyLocationAndInfoView(name: "정한두", imageName: "dragon", distance: "10 km", lineColor: .blue)
 }
