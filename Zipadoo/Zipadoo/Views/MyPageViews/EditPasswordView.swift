@@ -2,38 +2,35 @@
 //  EditPasswordView.swift
 //  Zipadoo
 //
-//  Created by 남현정 on 2023/10/05.
+//  Created by 남현정 on 2023/10/04.
 //
 
 import SwiftUI
 
 /// 비밀번호 변경 뷰
 struct EditPasswordView: View {
-
+    
     @ObservedObject var viewModel = EditProfileViewModel()
-
+    
     @Environment (\.dismiss) private var dismiss
-
+    
     /// 알람노출
     @State private var isEditAlert: Bool = false
-
     /// 비밀번호확인이 다르다면 true
     private var isPasswordDifferent: Bool {
         viewModel.newpassword != viewModel.newpasswordCheck
     }
-
     /// 비어있는 TextField가 있을 때 true
     private var isFieldEmpty: Bool {
         viewModel.newpassword.isEmpty || viewModel.newpasswordCheck.isEmpty
     }
-
     var body: some View {
         VStack {
             secureTextFieldCell("새로운 비밀번호", text: $viewModel.newpassword)
                 .padding(.bottom)
-
+            
             secureTextFieldCell("비밀번호 확인", text: $viewModel.newpasswordCheck)
-
+            
             // 비밀번호 확인 밑 문구
             if isPasswordDifferent && !viewModel.newpasswordCheck.isEmpty {
                 Text("비밀번호가 일치하지 않습니다")
@@ -44,7 +41,6 @@ struct EditPasswordView: View {
                     .foregroundStyle(.green)
                     .font(.footnote)
             }
-
             Spacer()
         }
         .padding()
@@ -62,7 +58,6 @@ struct EditPasswordView: View {
             Alert(
                 title: Text(""),
                 message: Text("회원정보가 수정됩니다"),
-
                 primaryButton: .default(Text("취소"), action: {
                     isEditAlert = false
                 }),
@@ -76,12 +71,12 @@ struct EditPasswordView: View {
             )
         }
     }
-
+    
     private func secureTextFieldCell(_ title: String, text: Binding<String>) -> some View {
         VStack(alignment: .leading) {
-
+            
             Text(title)
-
+            
             SecureField("", text: text)
                 .textFieldStyle(.roundedBorder)
         }

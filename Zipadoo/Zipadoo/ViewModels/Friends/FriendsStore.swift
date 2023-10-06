@@ -57,7 +57,7 @@ final class FriendsStore: ObservableObject {
     /// 친구 추가
     func addFriend(friendId: String) async throws {
         
-        var updateData = ["friendsIdArray" : friendsIdArray + [friendId]] // 현재 친구목록 + 추가친구 id 더하기
+        var updateData = ["friendsIdArray": friendsIdArray + [friendId]] // 현재 친구목록 + 추가친구 id 더하기
         
         do {
             try await Firestore.firestore().collection("Users").document(currentUser?.id ?? "").updateData(updateData)
