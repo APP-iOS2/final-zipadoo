@@ -33,7 +33,7 @@ struct MyPageView: View {
                 
                 HStack {
                     // 프로필 이미지
-                    ProfileImageView(imageString: userImageString, size: .small)
+                    ProfileImageView(imageString: userImageString, size: .large)
  
                     /*
                     AsyncImage(url: URL(string: dummyImageString)) { image in
