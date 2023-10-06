@@ -36,7 +36,7 @@ struct HomeMainView: View {
                     VStack {
                         ForEach(promise.promiseViewModel, id: \.self) { promise in
                             NavigationLink {
-                                PromiseDetailView()
+                                PromiseDetailView(promise: promise)
                             } label: {
                                 VStack(alignment: .leading) {
                                     HStack {
