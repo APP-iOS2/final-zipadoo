@@ -11,7 +11,7 @@ struct Promise: Hashable, Identifiable {
     /// 약속 ID 값
     let id: String = UUID().uuidString
     /// 약속 생성 사용자 ID 값
-    let makingUserID: String
+    var makingUserID: String
     /// 약속 제목
     var promiseTitle: String
     /// 약속 날짜
