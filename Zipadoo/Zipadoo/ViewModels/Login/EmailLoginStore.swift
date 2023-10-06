@@ -35,7 +35,6 @@ class EmailLoginStore: ObservableObject {
     // 이메일 중복 체크 (기존 회원 여부)
     func emailCheck(email: String, completion: @escaping (Bool) -> Void) {
         
-        /*
         let userDB = Firestore.firestore().collection("User email")
         
         // 입력한 이메일이 있는지 확인하는 쿼리
@@ -55,8 +54,9 @@ class EmailLoginStore: ObservableObject {
                 completion(false) // 중복된 이메일이 있을 경우 false를 반환
             }
         }
-         */
-
+        
+         /*
+        // signInMethods가 계속 nil로 받아와짐..
         Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethods, error) in
             if let error = error {
                 print("이메일중복 확인 중 오류")
@@ -65,12 +65,15 @@ class EmailLoginStore: ObservableObject {
             } else if let result = signInMethods {
                 if result.isEmpty {
                     print("이메일 데이터 중복 없음, 회원 가입 뷰로 진행")
-                    completion(false)
+                    completion(true)
                 } else {
                     print("이메일 데이터 중복 있음, 로그인 뷰로 진행")
-                    completion(true)
+                    completion(false)
                 }
             }
+            completion(true)
+            print("nil, nil반환")
         }
+         */
     }
 }
