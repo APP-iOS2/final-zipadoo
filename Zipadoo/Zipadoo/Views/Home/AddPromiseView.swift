@@ -24,7 +24,6 @@ struct AddPromiseView: View {
     let step: Int = 100
     
     private let today = Calendar.current.startOfDay(for: Date())
-    @State private var friends = ["병구", "상규", "예슬", "한두", "아라", "해수", "여훈"]
     @State private var addFriendSheet: Bool = false
     @State private var selectedFriends: [String] = []
     //    @State private var mapViewSheet: Bool = false
@@ -42,7 +41,9 @@ struct AddPromiseView: View {
     }
     
     @State private var addPromise: Promise = Promise()
+    
     @StateObject private var promise: PromiseViewModel = PromiseViewModel()
+    @StateObject private var authUser: AuthStore = AuthStore()
     
     var body: some View {
         NavigationStack {
@@ -168,6 +169,7 @@ struct AddPromiseView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     // MARK: - 약속 등록 버튼 구현
                     Button {
+                        addPromise.makingUserID = authUser.currentUser?.id ?? "not ID"
                         addPromise.promiseTitle = promiseTitle
                         addPromise.promiseDate = date.timeIntervalSince1970
                         addPromise.destination = promiseLocation.address
