@@ -11,15 +11,17 @@ import SwiftUI
 /// 약속 리스트 뷰
 struct HomeMainView: View {
     
+    @StateObject private var loginUser: UserStore = UserStore()
+//    @StateObject private var authUser: AuthStore = AuthStore()
     @StateObject private var promise: PromiseViewModel = PromiseViewModel()
+    
+    @State private var loginUserID: String = loginUser.currentUser?.id
     
     @State private var isShownFullScreenCover: Bool = false
     
     var body: some View {
-     
         NavigationStack {
             ScrollView {
-                
                 // 약속 배열 값 존재하는지 확인.
                 if promise.promiseViewModel.isEmpty {
                     Text("현재 약속이 1도 없어요!")
@@ -35,6 +37,9 @@ struct HomeMainView: View {
                 } else {
                     VStack {
                         ForEach(promise.promiseViewModel, id: \.self) { promise in
+                            if promise.makingUserID == loginUser.currentUser.id {
+                                
+                            }
                             NavigationLink {
                                 PromiseDetailView()
                             } label: {
@@ -72,7 +77,7 @@ struct HomeMainView: View {
                                         
                                         HStack {
                                             Image(systemName: "clock")
-                                            Text("\(promise.promiseDate)")
+                                            Text("\(datePromise)")
                                         }
                                         .padding(.bottom, 20)
                                         
@@ -99,16 +104,11 @@ struct HomeMainView: View {
                                             .shadow(color: .black, radius: 15, x: 10, y: 10)
                                             .opacity(0.1)
                                         //                                        .stroke(Color.black, lineWidth: 0.3)
-                                        
                                     }
-                                    
                                 )
                                 .foregroundStyle(Color.black)
-                                
                             }
-                            
                             .padding()
-                            
                         }
                     }
                     .padding()
@@ -126,9 +126,9 @@ struct HomeMainView: View {
                         }
                     }
                 }
-                    
+                
             }
-//            .ignoresSafeArea(.all)
+            //            .ignoresSafeArea(.all)
             
         }
     }

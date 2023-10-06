@@ -5,10 +5,11 @@
 //  Created by 남현정 on 2023/09/22.
 //
 
+import Foundation
+import Firebase
+import FirebaseFirestoreSwift
 import FirebaseCore
 import FirebaseFirestore
-import FirebaseFirestoreSwift
-import Foundation
 import SwiftUI
 
 /*
@@ -24,8 +25,15 @@ import SwiftUI
 final class UserStore: ObservableObject {
     
     @Published var userFetchArray: [User] = []
+    
+    @Published var currentUser: User?
         
     let dbRef = Firestore.firestore().collection("Users")
+    
+    init() {
+        Task { try await loginUser() }
+
+    }
     
     /// 모든 유저 정보 가져오기 -> 성공
     func fetchAllUsers() {
@@ -61,6 +69,18 @@ final class UserStore: ObservableObject {
         let snapshot = try await dbRef.document(userId).getDocument()
         
         return try snapshot.data(as: User.self)
+    }
+    
+    @MainActor
+    func loginUser() async throws {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let snapshot = try await dbRef.document(uid).getDocument()
+        
+        let user = try snapshot.data(as: User.self)
+        
+        self.currentUser = user
+        
+        print("Debug: User is \(self.currentUser)")
     }
     
     /*
