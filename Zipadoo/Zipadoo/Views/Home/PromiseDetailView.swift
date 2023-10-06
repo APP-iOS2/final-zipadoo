@@ -15,7 +15,8 @@ enum SharingStatus: String {
 
 struct PromiseDetailView: View {
     // MARK: - Property Wrappers
-    @ObservedObject private var promiseDetailStore = PromiseDetailStore()
+    //@ObservedObject private var promiseDetailStore = PromiseDetailStore()
+    let promise: Promise
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
@@ -114,19 +115,19 @@ struct PromiseDetailView: View {
     }
     
     private var titleView: some View {
-        Text(promiseDetailStore.promise.promiseTitle)
+        Text(promise.promiseTitle)
             .font(.largeTitle)
             .bold()
             .padding(.vertical, 12)
     }
     
     private var dateView: some View {
-        Text(("일시 : \(promiseDetailStore.calculateDate(date: promiseDetailStore.promise.promiseDate))"))
+        Text(("일시 : \(calculateDate(date: promise.promiseDate))"))
             .padding(.vertical, 3)
     }
     
     private var destinationView: some View {
-        Text("장소 : \(promiseDetailStore.promise.destination)")
+        Text("장소 : \(promise.destination)")
     }
     
     private var remainingTimeView: some View {
@@ -141,8 +142,15 @@ struct PromiseDetailView: View {
     }
     
     // MARK: Custom Methods
+    private func calculateDate(date: Double) -> String {
+        let date = Date(timeIntervalSince1970: date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일 | a hh:mm"
+        return dateFormatter.string(from: date)
+    }
+    
     private func calculateRemainingTime() {
-        let promiseDate = promiseDetailStore.promise.promiseDate
+        let promiseDate = promise.promiseDate
         remainingTime = promiseDate - currentDate
     }
     
@@ -166,5 +174,12 @@ struct PromiseDetailView: View {
 }
 
 #Preview {
-    PromiseDetailView()
+    PromiseDetailView(promise:
+                        Promise(makingUserID: "3",
+                                promiseTitle: "지파두 모각코^ㅡ^",
+                                promiseDate: 1697094371.302136,
+                                destination: "서울특별시 종로구 종로3길 17",
+                                participantIdArray: ["3", "4", "5"],
+                                checkDoublePromise: false,
+                                locationIdArray: ["35", "34", "89"]))
 }
