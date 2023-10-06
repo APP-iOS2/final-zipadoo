@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		04C7A85A2AC94889001B2AF8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04C7A8592AC94889001B2AF8 /* Alamofire */; };
+		08BC9AF22ACF973A0003AE32 /* EditPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC9AF12ACF973A0003AE32 /* EditPasswordView.swift */; };
 		08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B42ABC1BE0005D231D /* MyPageView.swift */; };
 		08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */; };
 		08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BA2ABC1DA2005D231D /* SettingView.swift */; };
@@ -135,6 +136,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		08BC9AF12ACF973A0003AE32 /* EditPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPasswordView.swift; sourceTree = "<group>"; };
 		08C6F0B42ABC1BE0005D231D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
 		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 		08C6F0BE2ABC1E22005D231D /* MyPageViews */ = {
 			isa = PBXGroup;
 			children = (
+				08BC9AF12ACF973A0003AE32 /* EditPasswordView.swift */,
 				9A2247242ACE4B9D00DAC40E /* EditPasswordView.swift */,
 				FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */,
 				08C6F0B42ABC1BE0005D231D /* MyPageView.swift */,
@@ -752,6 +755,7 @@
 				FA2474472ACD4D6E00D4C821 /* MapViewContainer.swift in Sources */,
 				FA2474122ACD4BDB00D4C821 /* SearchbarCell.swift in Sources */,
 				FA24740B2ACD4BDB00D4C821 /* FriendsLocationListView.swift in Sources */,
+				08BC9AF22ACF973A0003AE32 /* EditPasswordView.swift in Sources */,
 				9A2247252ACE4B9D00DAC40E /* EditPasswordView.swift in Sources */,
 				FA24741A2ACD4BDB00D4C821 /* AddPromiseView.swift in Sources */,
 				FA2474152ACD4BDB00D4C821 /* PlaceMarkerCell.swift in Sources */,
