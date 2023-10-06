@@ -15,13 +15,12 @@ enum SharingStatus: String {
 
 struct PromiseDetailView: View {
     // MARK: - Property Wrappers
-    //@ObservedObject private var promiseDetailStore = PromiseDetailStore()
-    let promise: Promise
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
     @State private var isShowingEditView: Bool = false
     @State private var isShowingShareSheet: Bool = false
+    let promise: Promise
     var color: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
     
     // MARK: - Properties
@@ -60,11 +59,11 @@ struct PromiseDetailView: View {
         }
         .onAppear {
             currentDate = Date().timeIntervalSince1970
-            calculateRemainingTime()
+            formatRemainingTime()
         }
         .onReceive(timer, perform: { _ in
             currentDate = Date().timeIntervalSince1970
-            calculateRemainingTime()
+            formatRemainingTime()
         })
         .navigationDestination(isPresented: $isShowingEditView) {
             // TODO: 수정뷰
@@ -131,7 +130,7 @@ struct PromiseDetailView: View {
     }
     
     private var remainingTimeView: some View {
-        Text(formatRemainingTime(time: remainingTime))
+        Text(formatRemainingTime())
             .foregroundStyle(.white)
             .bold()
             .frame(maxWidth: .infinity)
@@ -149,27 +148,42 @@ struct PromiseDetailView: View {
         return dateFormatter.string(from: date)
     }
     
-    private func calculateRemainingTime() {
+    private func formatRemainingTime() -> String {
         let promiseDate = promise.promiseDate
         remainingTime = promiseDate - currentDate
-    }
-    
-    private func formatRemainingTime(time: Double) -> String {
-        switch time {
-        case 1...60:
+        switch remainingTime {
+        case 1..<60:
             return "약속 시간이 거의 다 됐어요!"
-        case 61...3600:
-            let minute = time / 60
+        case 60..<3600:
+            let minute = remainingTime / 60
             return "약속 \(Int(minute))분 전"
-        case 3601...86400:
-            let hours = time / (60 * 60)
+        case 3600..<86400:
+            let hours = remainingTime / (60 * 60)
             return "약속 \(Int(hours))시간 전"
-        case 86401...:
-            let days = time / (24 * 60 * 60)
-            return "약속 \(Int(days))일 전"
+        case 86400...:
+            let days = calculateRemainingDate(current: currentDate, promise: promiseDate)
+            return "약속 \(days)일 전"
         default:
             return "약속 시간이 됐어요!"
         }
+    }
+    
+    private func calculateRemainingDate(current: Double, promise: Double) -> Int {
+        let calendar = Calendar.current
+        
+        let nowDate = Date(timeIntervalSince1970: current)
+        let promiseDate = Date(timeIntervalSince1970: promise)
+        
+        let startOfToday = calendar.startOfDay(for: nowDate)
+        let startOfPromiseDay = calendar.startOfDay(for: promiseDate)
+        
+        let components = calendar.dateComponents([.day], from: startOfToday, to: startOfPromiseDay)
+
+        if let days = components.day {
+            return days
+        }
+        
+        return -1
     }
 }
 
