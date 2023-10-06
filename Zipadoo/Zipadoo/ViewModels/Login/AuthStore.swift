@@ -123,6 +123,7 @@ class AuthStore: ObservableObject {
             try Auth.auth().signOut()
             self.userSession = nil
             self.currentUser = nil
+            print("로그아웃 성공")
         } catch {
             print("로그아웃실패")
         }

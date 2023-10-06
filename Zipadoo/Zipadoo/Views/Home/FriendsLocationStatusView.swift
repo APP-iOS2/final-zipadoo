@@ -45,10 +45,11 @@ func distanceRatio(depature: Double, arrival: Double) -> Double {
 import SwiftUI
 
 struct FriendsLocationStatusView: View {
-//    @State private var value: Double = 0.4
-    
-//    let friends = ["홍길동", "둘리", "도우너", "도우너", "도우너", "도우너"]
-    
+  
+    @State private var value: Double = 0.4
+  
+    let friends = ["홍길동", "둘리", "도우너", "또치"]
+  
     // 더미데이터
     let dummyFriends: [DummyFriendsLocation] = [
         // 피카츄 출발 위치 : 용인터미널 근처, 현재 위치 : 서울남부터미널
@@ -64,8 +65,6 @@ struct FriendsLocationStatusView: View {
         // 라이츄 출발 위치 : 용인터미널 근처, 현재 위치 : 기흥역
         DummyFriendsLocation(name: "버터풀", depatureLocationLatitude: 37.237585941025316, depatureLocationLongitude: 127.21314261910263, currentLocationLatitude: 37.2748982309358, currentLocationLongitude: 127.11572865543589)
     ]
-
-    // 더미데이터 끝
     
     var body: some View {
         VStack {
@@ -73,7 +72,6 @@ struct FriendsLocationStatusView: View {
                 ProgressWithImageView(value: distanceRatio(depature: friend.remainingDistance, arrival: friend.totalDistance), label: { Text(friend.name) }, currentValueLabel: { Text("\(Int(distanceRatio(depature: friend.remainingDistance, arrival: friend.totalDistance) * 100))%") })
                     .progressViewStyle(BarProgressStyle(height: 25))
                     .transition(.opacity)
-                    .animation(.easeInOut(duration: 0.5))
                     .shadow(radius: 5)
             }
             /* HStack {
@@ -101,7 +99,7 @@ struct FriendsLocationStatusView: View {
 }
 
 struct BarProgressStyle: ProgressViewStyle {
-    var color: UIColor = #colorLiteral(red: 0.4964652658, green: 0.2767619491, blue: 0.01609945111, alpha: 1)
+    var color: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
     var height: Double = 20.0
     var labelFontStyle: Font = .body
     
@@ -109,7 +107,7 @@ struct BarProgressStyle: ProgressViewStyle {
         let progress = configuration.fractionCompleted ?? 0.0
         
         return GeometryReader { geometry in
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: -5) {
                 configuration.label.font(labelFontStyle)
                 
                 ZStack(alignment: .leading) {
