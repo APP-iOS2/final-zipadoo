@@ -53,14 +53,14 @@ struct SigninByEmail2View: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8)
-                                        .foregroundColor(.white.opacity(0.5))
+                                        .foregroundColor(Color.white.opacity(0.5))
                                         .clipShape(Circle())
                                 } else {
                                     Image("defaultProfile")
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8)
-                                        .foregroundColor(.white.opacity(0.5))
+                                        .foregroundColor(Color.white.opacity(0.5))
                                         .background(Color.white)
                                         .clipShape(Circle())
                                 }

@@ -23,12 +23,13 @@ struct EditPasswordView: View {
     }
 
     /// 비어있는 TextField가 있을 때 true
-    private var isFieldEmpty: Bool {
-        viewModel.newpassword.isEmpty || viewModel.newpasswordCheck.isEmpty
+    private var isValid: Bool {
+        isCorrectPassword(password: viewModel.newpassword)
     }
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+
             secureTextFieldCell("새로운 비밀번호", text: $viewModel.newpassword)
                 .padding(.bottom)
 
@@ -55,7 +56,7 @@ struct EditPasswordView: View {
                 Button(action: { isEditAlert.toggle() }, label: {
                     Text("수정")
                 })
-                .disabled(isPasswordDifferent || isFieldEmpty) // 비밀번호가 다르게 입력되거나 필드가 하나라도 비어있으면 비활성화
+                .disabled(isPasswordDifferent || !isValid) // 비밀번호가 다르게 입력되거나 유효성검사 실패 시 비활성화
             }
         }
         .alert(isPresented: $isEditAlert) {
@@ -82,7 +83,7 @@ struct EditPasswordView: View {
 
             Text(title)
 
-            SecureField("", text: text)
+            SecureField("6~20자 사이로 입력해주세요", text: text)
                 .textFieldStyle(.roundedBorder)
         }
     }

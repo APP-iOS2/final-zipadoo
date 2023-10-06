@@ -5,9 +5,9 @@
 //  Created by 이재승 on 2023/09/26.
 //
 
-import SwiftUI
 import Firebase
 import FirebaseFirestore
+import SwiftUI
 
 class AuthStore: ObservableObject {
     
