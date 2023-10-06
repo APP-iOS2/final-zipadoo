@@ -13,57 +13,51 @@ struct AddFriendCellView: View {
     @State private var selectedFriends: [String] = []
     
     var body: some View {
-        Rectangle().stroke(Color.gray, lineWidth: 0.5)
-            .frame(width: 350, height: 130)
+        HStack {
+            Text("친구추가")
+                .font(.title2)
+                .bold()
+            
+            Spacer()
+            
+            Button {
+                addFriendsSheet.toggle()
+                print("친구 추가")
+            } label: {
+                Label("추가하기", systemImage: "plus")
+                    .foregroundColor(.black)
+            }
+            .buttonStyle(.bordered)
+        }
+        .padding(.top, 40)
+        
+        RoundedRectangle(cornerRadius: 5)
+            .stroke(lineWidth: 0.5)
+            .frame(width: 360, height: 120)
             .overlay {
                 HStack {
                     VStack {
                         HStack {
-                            Text("친구 추가")
-                                .font(.title3)
-                            Spacer()
-                        }
-                        .padding(.leading, 15)
-                        .padding(.top)
-                        
-                        HStack {
+/*
+                VStack {
+                    HStack {
+                        if selectedFriends.isEmpty {
+                            Text("초대 할 친구를 추가해주세요.")
+                        } else { */
                             ScrollView(.horizontal) {
                                 HStack {
                                     ForEach(selectedFriends, id: \.self) { name in
-                                        
                                         FriendSellView(name: name, selectedFriends: $selectedFriends).padding()
                                             .padding(.trailing, -50)
                                     }
                                 }
-                                .padding(.leading, -10)
+                                .padding(.leading, -20)
                                 .padding(.trailing, 50)
-                                .padding(.bottom, 10)
                             }
                             .frame(height: 90)
                             .scrollIndicators(.hidden)
                         }
-                        .padding(.leading, 0)
                     }
-                    
-                    Spacer()
-                    
-                    VStack {
-                        ZStack {
-                            Color.accentColor
-                                .frame(width: 70, height: 130)
-                            Button {
-                                addFriendsSheet.toggle()
-                                print("친구 추가")
-                            } label: {
-                                Image(systemName: "plus.circle")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 50, height: 50)
-                            }
-                            .tint(.white)
-                        }
-                    }
-                    .padding(.leading, -10)
                 }
             }
             .sheet(isPresented: $addFriendsSheet) {

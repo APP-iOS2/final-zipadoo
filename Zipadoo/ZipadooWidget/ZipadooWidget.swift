@@ -189,22 +189,22 @@ struct ZipadooWidget: Widget {
     }
 }
 
-//#Preview(as: .systemMedium) {
-//    ZipadooWidget()
-//} timeline: {
-//    ZipadooEntry(date: Date(),
-//                 title: "Zipadoo",
-//                 destination: "오늘의 일정은?",
-//                 time: "",
-//                 arrivalMember: -1)
-//}
-//
-//#Preview(as: .systemMedium) {
-//    ZipadooWidget()
-//} timeline: {
-//    ZipadooEntry(date: Date(),
-//                 title: "Zipadoo",
-//                 destination: "오늘 모든 일정이 끝났어요!",
-//                 time: "",
-//                 arrivalMember: -1)
-//}
+#Preview(as: .systemMedium) {
+    ZipadooWidget()
+} timeline: {
+    ZipadooEntry(date: Date(),
+                 title: "Zipadoo",
+                 destination: "오늘의 일정은?",
+                 time: "",
+                 arrivalMember: -1)
+}
+
+#Preview(as: .systemMedium) {
+    ZipadooWidget()
+} timeline: {
+    ZipadooEntry(date: Date(),
+                 title: "Zipadoo",
+                 destination: "오늘 모든 일정이 끝났어요!",
+                 time: "",
+                 arrivalMember: -1)
+}

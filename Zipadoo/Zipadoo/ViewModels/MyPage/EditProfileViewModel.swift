@@ -6,33 +6,71 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseFirestore
 
 final class EditProfileViewModel: ObservableObject {
+    /// 로그인된 유저정보
+    let currentUser: User? = AuthStore.shared.currentUser
 
-    var nickname: String = "유저의 닉네임"
-    var phoneNumber: String = "유저의 전화번호"
-    @Published var password: String = "유저의 비밀번호"
-    @Published var passwordCheck: String = "비밀번호 확인"
-    var profileImageString: UIImage = UIImage(imageLiteralResourceName: "images")
+    /// 파이어베이스에 저장된 사진경로 String
+    var profileImageString: String
+    @Published var nickname: String
+    @Published var phoneNumber: String
+    @Published var newpassword: String = ""
+    @Published var newpasswordCheck: String = ""
+    /// 이미지 피커에서 선택한 사진
+    @Published var selectedImage: UIImage?
+
+    var defaultImageString = "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
     
-    /*
+    init() {
+        profileImageString = currentUser?.profileImageString ?? defaultImageString
+        nickname = currentUser?.nickName ?? "정보가 없습니다"
+        phoneNumber = currentUser?.phoneNumber ?? "정보가 없습니다"
+    }
+    
+    /// 유저정보 파이어베이스에 업데이트
+    @MainActor
     func updateUserData() async throws {
         var data = [String: Any]()
         
-        let imageUrl = try? await ProfileImageUploader.uploadImage(image: profileImageString)
-        data["profileImageString"] = imageUrl
-        
-        if !nickname.isEmpty && user.nickName != nickname {
-            data["nickName"] = nickname
+        // 선택한 사진이 있다면
+        if let uiImage = selectedImage {
+            let imageString = try? await ProfileImageUploader.uploadImage(image: uiImage)
+            data["profileImageString"] = imageString ?? defaultImageString
             // 현재 사용자의 정보 변경
+            AuthStore.shared.currentUser?.profileImageString = imageString ?? defaultImageString
         }
         
-        if !phoneNumber.isEmpty && user.phoneNumber != phoneNumber {
+        if currentUser?.nickName != nickname {
+            data["nickName"] = nickname
+            AuthStore.shared.currentUser?.nickName = nickname
+        }
+        
+        if currentUser?.phoneNumber != phoneNumber {
             data["phoneNumber"] = phoneNumber
-            // ..
+            AuthStore.shared.currentUser?.phoneNumber = phoneNumber
         }
         
-        if !password.isEmpty && //비밀
+        // 바뀐 사항이 하나라도 있다면 파이어베이스에 업데이트
+        if !data.isEmpty {
+            do {
+                try await Firestore.firestore().collection("Users").document(currentUser?.id ?? "").updateData(data)
+                
+            } catch {
+                print("파이어베이스 업데이트 실패")
+            }
+        }
     }
-    */
+
+    /// 비밀번호 업데이트
+    @MainActor
+    func updatePassword() async throws {
+        do {
+            try await Auth.auth().currentUser?.updatePassword(to: newpassword)
+        } catch {
+            print("비밀번호 변경 실패")
+        }
+    }
 }
