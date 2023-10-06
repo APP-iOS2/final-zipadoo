@@ -80,6 +80,7 @@
 		FA2474522ACD4D6E00D4C821 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474422ACD4D6E00D4C821 /* ContentViewModel.swift */; };
 		FA2474532ACD4D6E00D4C821 /* EmailLoginStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474432ACD4D6E00D4C821 /* EmailLoginStore.swift */; };
 		FA2474542ACD4D6E00D4C821 /* AuthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474442ACD4D6E00D4C821 /* AuthStore.swift */; };
+		FA2474642ACE565700D4C821 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA2474632ACE565700D4C821 /* GoogleService-Info.plist */; };
 		FAB58B882ABD1879006B9E11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B872ABD1879006B9E11 /* FirebaseAuth */; };
 		FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8D2ABD1879006B9E11 /* FirebaseDatabase */; };
 		FAB58B902ABD1879006B9E11 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8F2ABD1879006B9E11 /* FirebaseDatabaseSwift */; };
@@ -166,6 +167,7 @@
 		FA2474422ACD4D6E00D4C821 /* ContentViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		FA2474432ACD4D6E00D4C821 /* EmailLoginStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailLoginStore.swift; sourceTree = "<group>"; };
 		FA2474442ACD4D6E00D4C821 /* AuthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthStore.swift; sourceTree = "<group>"; };
+		FA2474632ACE565700D4C821 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FAD3BD2B2AC3BA9D00117938 /* Extention.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extention.swift; sourceTree = "<group>"; };
 		FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Zipadoo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZipadooApp.swift; sourceTree = "<group>"; };
@@ -392,6 +394,7 @@
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				9B8FE8242ACE36F600C1EEFC /* GoogleService-Info.plist */,
+				FA2474632ACE565700D4C821 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -544,6 +547,7 @@
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 				9B8FE8252ACE36F600C1EEFC /* GoogleService-Info.plist in Resources */,
+				FA2474642ACE565700D4C821 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

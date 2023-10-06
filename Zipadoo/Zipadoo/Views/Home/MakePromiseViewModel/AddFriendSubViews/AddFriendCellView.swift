@@ -10,7 +10,7 @@ import SwiftUI
 struct AddFriendCellView: View {
     @State private var addFriendsSheet: Bool = false
     
-    @State private var selectedFriends: [String] = ["김상규", "나예슬", "윤해수", "임병구"]
+    @State private var selectedFriends: [String] = []
     
     var body: some View {
         HStack {
@@ -31,15 +31,22 @@ struct AddFriendCellView: View {
         }
         .padding(.top, 40)
         
-        Rectangle().stroke(Color.gray, lineWidth: 0.5)
-            .frame(width: 360, height: 130)
+        RoundedRectangle(cornerRadius: 5)
+            .stroke(lineWidth: 0.5)
+            .frame(width: 360, height: 120)
             .overlay {
+                HStack {
                     VStack {
                         HStack {
+/*
+                VStack {
+                    HStack {
+                        if selectedFriends.isEmpty {
+                            Text("초대 할 친구를 추가해주세요.")
+                        } else { */
                             ScrollView(.horizontal) {
                                 HStack {
                                     ForEach(selectedFriends, id: \.self) { name in
-                                        
                                         FriendSellView(name: name, selectedFriends: $selectedFriends).padding()
                                             .padding(.trailing, -50)
                                     }
@@ -51,6 +58,7 @@ struct AddFriendCellView: View {
                             .scrollIndicators(.hidden)
                         }
                     }
+                }
             }
             .sheet(isPresented: $addFriendsSheet) {
                 FriendsListVIew(isShowingSheet: $addFriendsSheet, selectedFriends: $selectedFriends)
