@@ -35,11 +35,15 @@ struct AddFriendCellView: View {
             .stroke(lineWidth: 0.5)
             .frame(width: 360, height: 120)
             .overlay {
+                HStack {
+                    VStack {
+                        HStack {
+/*
                 VStack {
                     HStack {
                         if selectedFriends.isEmpty {
                             Text("초대 할 친구를 추가해주세요.")
-                        } else {
+                        } else { */
                             ScrollView(.horizontal) {
                                 HStack {
                                     ForEach(selectedFriends, id: \.self) { name in

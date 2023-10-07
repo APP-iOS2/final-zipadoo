@@ -21,6 +21,7 @@ struct PromiseDetailView: View {
     @State private var remainingTime: Double = 0.0
     @State private var isShowingEditView: Bool = false
     @State private var isShowingShareSheet: Bool = false
+    var color: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
     
     // MARK: - Properties
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
@@ -104,10 +105,10 @@ struct PromiseDetailView: View {
     
     private var sharingStatusView: some View {
         Text(destinagionStatus.rawValue)
-            .foregroundStyle(statusColor)
+            .foregroundStyle(.white)
             .font(.caption).bold()
             .padding([.vertical, .horizontal], 12)
-            .background(.yellow)
+            .background(Color(color))
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.bottom, 12)
     }
@@ -130,11 +131,11 @@ struct PromiseDetailView: View {
     
     private var remainingTimeView: some View {
         Text(formatRemainingTime(time: remainingTime))
-            .foregroundStyle(statusColor)
+            .foregroundStyle(.white)
             .bold()
             .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
-            .background(.yellow)
+            .background(Color(color))
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.vertical, 12)
     }
