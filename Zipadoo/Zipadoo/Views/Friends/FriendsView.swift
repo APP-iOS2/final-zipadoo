@@ -15,6 +15,8 @@ struct FriendsView: View {
     /// segmentedControl 인덱스
     @State private var selectedSegmentIndex: Int = 0
     
+    @State private var selectedFriendId: String = ""
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -37,6 +39,18 @@ struct FriendsView: View {
             .pickerStyle(SegmentedPickerStyle())
             .navigationTitle("친구 관리")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                Task {
+                    try await friendsStore.fetchFriends()
+                    try await friendsStore.fetchFriendsRequest()
+                }
+            }
+            .refreshable {
+                Task {
+                    try await friendsStore.fetchFriends()
+                    try await friendsStore.fetchFriendsRequest()
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
@@ -57,7 +71,9 @@ struct FriendsView: View {
                     secondaryButton: .destructive(Text("삭제"), action: {
                         isDeleteAlert = false
                         Task {
-                            friendsStore.addFriend(friendId:)
+                            print("removeFriend")
+                            // 파베연결
+                            try await friendsStore.removeFriend(friendId: selectedFriendId)
                         }
                     })
                 )
@@ -89,9 +105,8 @@ struct FriendsView: View {
                             .foregroundColor(.gray)
                             .background(.white)
                             .onTapGesture {
+                                selectedFriendId = friend.id
                                 isDeleteAlert.toggle()
-                                // 파베연결
- 
                             }
                     }
                      
@@ -122,24 +137,31 @@ struct FriendsView: View {
                         
                         // 수락
                         Text("수락")
-                        .padding(5)
-                        .foregroundColor(.green)
-                        .background(.white)
-                        .onTapGesture {
-                            // 수락
-                        }
-                        .padding(.trailing, 4)
+                            .padding(5)
+                            .foregroundColor(.green)
+                            .background(.white)
+                            .onTapGesture {
+                                // 수락
+                                selectedFriendId = friend.id
+                                Task {
+                                    try await friendsStore.addFriend(friendId: selectedFriendId)
+                                    try await friendsStore.removeRequest(friendId: selectedFriendId)
+                                }
+                            }
+                            .padding(.trailing, 4)
                         
                         // 거절 버튼
-                        Button("거절") {
-                            isDeleteAlert.toggle()
-                        }
-                        .padding(5)
-                        .foregroundColor(.red)
-                        .background(.white)
-                        .onTapGesture {
-                            // 거절
-                        }
+                        Text("거절")
+                            .padding(5)
+                            .foregroundColor(.red)
+                            .background(.white)
+                            .onTapGesture {
+                                selectedFriendId = friend.id
+                                // 거절
+                                Task {
+                                    try await friendsStore.removeRequest(friendId: selectedFriendId)
+                                }
+                            }
                         
                     }
                 }
@@ -147,24 +169,7 @@ struct FriendsView: View {
             }
         }
         .listStyle(.plain)
-        .alert(isPresented: $isDeleteAlert) {
-            Alert(
-                title: Text(""),
-                message: Text("친구목록에서 삭제됩니다"),
-
-                primaryButton: .default(Text("취소"), action: {
-                    isDeleteAlert = false
-                }),
-                secondaryButton: .destructive(Text("삭제"), action: {
-                    isDeleteAlert = false
-                    Task {
-                        // 삭제 로직
-                    }
-                })
-            )
-        }
     }
-    
 }
 
 #Preview {

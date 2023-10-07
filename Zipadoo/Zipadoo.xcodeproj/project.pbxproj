@@ -16,7 +16,6 @@
 		1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BD72ABD16B800DE635D /* TossPayView.swift */; };
 		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
 		3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */; };
-		8B1350D72ACFC50400432E9C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B1350D62ACFC50400432E9C /* GoogleService-Info.plist */; };
 		8B1350DA2ACFC53A00432E9C /* FriendsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1350D92ACFC53A00432E9C /* FriendsStore.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */; };
@@ -29,7 +28,6 @@
 		8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */; };
 		8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC92AC1401E00A4694C /* UserModel.swift */; };
 		8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */; };
-		8BEDA03B2ACE45890056046B /* EditPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEDA03A2ACE45890056046B /* EditPasswordView.swift */; };
 		8BF831C92AC1FFDD00EC22A1 /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfileView.swift */; };
 		9B6268392ABC2D6800B309E8 /* LocationAndInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
@@ -106,7 +104,6 @@
 		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
 		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
-		8B1350D62ACFC50400432E9C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B1350D92ACFC53A00432E9C /* FriendsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsStore.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyle.swift; sourceTree = "<group>"; };
@@ -412,7 +409,6 @@
 		FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */ = {
 			isa = PBXGroup;
 			children = (
-				8B1350D62ACFC50400432E9C /* GoogleService-Info.plist */,
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
@@ -566,7 +562,6 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,7 +618,6 @@
 				FA2474122ACD4BDB00D4C821 /* SearchbarCell.swift in Sources */,
 				8B1350DA2ACFC53A00432E9C /* FriendsStore.swift in Sources */,
 				FA24740B2ACD4BDB00D4C821 /* FriendsLocationListView.swift in Sources */,
-
 				08BC9AF22ACF973A0003AE32 /* EditPasswordView.swift in Sources */,
 				FA24741A2ACD4BDB00D4C821 /* AddPromiseView.swift in Sources */,
 				FA2474152ACD4BDB00D4C821 /* PlaceMarkerCell.swift in Sources */,
