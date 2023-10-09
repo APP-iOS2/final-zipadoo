@@ -19,8 +19,14 @@ struct NewMapView: View {
     @State var placePosition: MapCameraPosition = .automatic /// 장소에 대한 카메라 좌표 값
     @State var camerBounds: MapCameraBounds = MapCameraBounds() /// 카메라의 확대값
     @State var selectedPlacePosition: CLLocationCoordinate2D? /// 장소에 대한 위치 값
-    @State var placeName: String = "" /// 장소 이름
-    
+    /// 장소명 값
+    @Binding var destination: String
+    /// 주소 값
+    @Binding var address: String
+    /// 약속장소 위도
+    @Binding var coordX: Double
+    /// 약속장소 경도
+    @Binding var coordY: Double
     @Binding var isClickedPlace: Bool
     @Binding var addLocationButton: Bool
     @Binding var promiseLocation: PromiseLocation
@@ -32,7 +38,7 @@ struct NewMapView: View {
                     UserAnnotation()
                     
                     if isClickedPlace == true {
-                        Annotation(placeName, coordinate: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780)) {
+                        Annotation(destination, coordinate: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780)) {
                             AnnotationCell()
                         }
                         UserAnnotation()
@@ -43,7 +49,7 @@ struct NewMapView: View {
                 }
                 .mapStyle(.standard(pointsOfInterest: .all, showsTraffic: true))
                 if isClickedPlace == true {
-                    AddPlaceButtonCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: promiseLocation)
+                    AddPlaceButtonCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, promiseLocation: $promiseLocation)
                         .padding(.bottom, 40)
                 } else {
                     
@@ -52,7 +58,7 @@ struct NewMapView: View {
             .safeAreaInset(edge: .bottom) {
                 HStack {
                     Spacer()
-                    SearchBarCell(isClickedPlace: $isClickedPlace, placeName: $placeName, selectedPlacePosition: $selectedPlacePosition, promiseLocation: $promiseLocation)
+                    SearchBarCell(isClickedPlace: $isClickedPlace, destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, selectedPlacePosition: $selectedPlacePosition, promiseLocation: $promiseLocation)
                     Spacer()
                 }
                 .background(.ultraThinMaterial)
@@ -75,18 +81,19 @@ struct NewMapView: View {
             // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
             if isClickedPlace == true {
                 selectedPlacePosition = CLLocationCoordinate2D(latitude: promiseLocation.latitude, longitude: promiseLocation.longitude)
-                placePosition = .region(.init(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: .infinity, longitudeDelta: .infinity)))
-                camerBounds = .init(centerCoordinateBounds: MKCoordinateRegion(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: .infinity, longitudeDelta: .infinity)))
+                placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), latitudinalMeters: 500, longitudinalMeters: 500))
+//                placePosition = .region(.init(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: .infinity, longitudeDelta: .infinity)))
+                camerBounds = .init(centerCoordinateBounds: (MKCoordinateRegion(center: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), latitudinalMeters: 500, longitudinalMeters: 500)))
                 print("이동된 카메라 위도: \(promiseLocation.latitude)")
                 print("이동된 카메라 경도: \(promiseLocation.longitude)")
                 print("이동 성공")
             } else {
-                placePosition = .region(.init(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: .infinity, longitudeDelta: .infinity)))
+                placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), latitudinalMeters: 500, longitudinalMeters: 500))
             }
         }
     }
 }
 
 #Preview {
-    NewMapView(isClickedPlace: .constant(false), addLocationButton: .constant(false), promiseLocation: .constant(PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "서울시청")))
+    NewMapView(destination: .constant(""), address: .constant(""), coordX: .constant(0.0), coordY: .constant(0.0), isClickedPlace: .constant(false), addLocationButton: .constant(false), promiseLocation: .constant(PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
 }

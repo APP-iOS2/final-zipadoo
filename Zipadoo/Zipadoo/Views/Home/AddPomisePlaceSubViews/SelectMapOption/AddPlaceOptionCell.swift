@@ -24,12 +24,16 @@ struct AddPlaceOptionCell: View {
     
     @Binding var isClickedPlace: Bool
     @Binding var addLocationButton: Bool
+    @Binding var destination: String
+    @Binding var address: String
+    @Binding var coordX: Double
+    @Binding var coordY: Double
     @Binding var promiseLocation: PromiseLocation
     
     var body: some View {
         VStack {
             animate()
-            MapOptionSelectView(mapOptions: selectMapOption, isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
+            MapOptionSelectView(mapOptions: selectMapOption, isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, promiseLocation: $promiseLocation)
             Spacer()
         }
     }
@@ -63,5 +67,5 @@ struct AddPlaceOptionCell: View {
 }
 
 #Preview {
-    AddPlaceOptionCell(isClickedPlace: .constant(false), addLocationButton: .constant(false), promiseLocation: .constant(PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "서울시청")))
+    AddPlaceOptionCell(isClickedPlace: .constant(false), addLocationButton: .constant(false), destination: .constant(""), address: .constant(""), coordX: .constant(0.0), coordY: .constant(0.0), promiseLocation: .constant(PromiseLocation(destination: "서울시청", address: "서울시청", latitude: 37.5665, longitude: 126.9780)))
 }

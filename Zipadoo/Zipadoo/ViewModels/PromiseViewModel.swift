@@ -41,6 +41,9 @@ class PromiseViewModel: ObservableObject {
                 let promiseTitle = data["promiseTitle"] as? String ?? ""
                 let promiseDate = data["promiseDate"] as? Double ?? 0.0
                 let destination = data["destination"] as? String ?? ""
+                let address = data["address"] as? String ?? ""
+                let latitude = data["latitude"] as? Double ?? 0.0
+                let longitude = data["longitude"] as? Double ?? 0.0
                 let participantIdArray = data["participantIdArray"] as? [String] ?? []
                 let checkDoublePromise = data["checkDoublePromise"] as? Bool ?? false
                 let locationIdArray = data["locationIdArray"] as? [String] ?? []
@@ -50,6 +53,9 @@ class PromiseViewModel: ObservableObject {
                     promiseTitle: promiseTitle,
                     promiseDate: promiseDate,
                     destination: destination,
+                    address: address,
+                    latitude: latitude,
+                    longitude: longitude,
                     participantIdArray: participantIdArray,
                     checkDoublePromise: checkDoublePromise,
                     locationIdArray: locationIdArray

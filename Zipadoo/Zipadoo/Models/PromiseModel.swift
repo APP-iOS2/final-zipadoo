@@ -18,6 +18,12 @@ struct Promise: Hashable {
     var promiseDate: Double
     /// 장소
     var destination: String
+    /// 주소
+    var address: String
+    /// 위도
+    var latitude: Double
+    /// 경도
+    var longitude: Double
     /// 참여자 ID 값
     var participantIdArray: [String]
     /// 약속 중복 값 확인

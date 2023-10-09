@@ -12,9 +12,15 @@ import MapKit
 /// 장소 검색 이후 장소 등록을 위한 뷰모델
 struct AddPlaceButtonCell: View {
     @Environment(\.dismiss) private var dismiss /// 이전 뷰(AddPromiseView)로 돌아가는 함수
+    
+    var addLocationStore: AddLocationStore = AddLocationStore()
     @Binding var isClickedPlace: Bool
     @Binding var addLocationButton: Bool
-    var promiseLocation: PromiseLocation
+    @Binding var destination: String
+    @Binding var address: String
+    @Binding var coordX: Double
+    @Binding var coordY: Double
+    @Binding var promiseLocation: PromiseLocation
     
     var body: some View {
         ZStack {
@@ -29,6 +35,8 @@ struct AddPlaceButtonCell: View {
                                 Spacer()
                                 Button {
                                     isClickedPlace = false
+                                    destination = ""
+                                    address = ""
                                 } label: {
                                     Image(systemName: "xmark.circle.fill")
                                         .foregroundStyle(.white, .red)
@@ -43,7 +51,7 @@ struct AddPlaceButtonCell: View {
                         VStack {
                             Spacer()
                             
-                            Text(promiseLocation.address)
+                            Text(destination)
                                 .font(.title3)
                                 .padding(.top)
                                 .padding(.horizontal)
@@ -51,10 +59,12 @@ struct AddPlaceButtonCell: View {
                             Spacer()
                             
                             Button {
+                                promiseLocation = addLocationStore.setLocation(destination: destination, address: address, latitude: coordX, longitude: coordY)
                                 addLocationButton = true
-                                print(promiseLocation.latitude)
-                                print(promiseLocation.longitude)
-                                print(promiseLocation.address)
+                                print("확정 장소: \(promiseLocation.destination)")
+                                print("확정 주소: \(promiseLocation.address)")
+                                print("확정 위도: \(promiseLocation.latitude)")
+                                print("확정 경도: \(promiseLocation.longitude)")
                                 dismiss()
                             } label: {
                                 Text("장소 선택하기")
@@ -71,7 +81,6 @@ struct AddPlaceButtonCell: View {
 }
 
 #Preview {
-    AddPlaceButtonCell(isClickedPlace: .constant(true), addLocationButton: .constant(false), promiseLocation: PromiseLocation(latitude: 0.0, longitude: 0.0, address: "서울시 강남구 압구정로 165"))
+    AddPlaceButtonCell(isClickedPlace: .constant(true), addLocationButton: .constant(false),
+                       destination: .constant("동서울종합터미널"), address: .constant("서울 광진구 강변역로 50"), coordX: .constant(0.0), coordY: .constant(0.0), promiseLocation: .constant(PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
 }
-
-
