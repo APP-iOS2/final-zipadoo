@@ -29,7 +29,6 @@
 		8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC92AC1401E00A4694C /* UserModel.swift */; };
 		8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */; };
 		8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */; };
-		9B6268392ABC2D6800B309E8 /* LocationAndInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */; };
 		9B8FE8272ACE377B00C1EEFC /* MyLocationAndInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */; };
 		C02790B82ACD297100BBDCCA /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02790B72ACD297100BBDCCA /* WidgetKit.framework */; };
 		C02790BA2ACD297100BBDCCA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02790B92ACD297100BBDCCA /* SwiftUI.framework */; };
@@ -733,7 +732,6 @@
 				FA2474192ACD4BDB00D4C821 /* FriendsLocationMapView.swift in Sources */,
 				FA2474512ACD4D6E00D4C821 /* KakaoStore.swift in Sources */,
 				FA2474532ACD4D6E00D4C821 /* EmailLoginStore.swift in Sources */,
-				9B6268392ABC2D6800B309E8 /* LocationAndInfo.swift in Sources */,
 				8B91DBC32ACEA6A7005B2582 /* Validation.swift in Sources */,
 				FA24741B2ACD4BDB00D4C821 /* FriendsLocationAndInfoView.swift in Sources */,
 				FA24741B2ACD4BDB00D4C821 /* FriendsLocationAndInfoView.swift in Sources */,
