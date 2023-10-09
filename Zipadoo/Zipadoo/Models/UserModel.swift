@@ -24,7 +24,10 @@ struct User: Codable, Identifiable {
     var crustDepth: Int = 0
     /// 유저의 지각 약속 수
     var tardyCount: Int = 0
-    
+    /// 친구 id 배열
+    var friendsIdArray: [String]
+    /// 친구요청 id배역
+    var friendsIdRequestArray: [String]
     /*
     /// 유저의 약속 수
     let promiseCount: Int?
