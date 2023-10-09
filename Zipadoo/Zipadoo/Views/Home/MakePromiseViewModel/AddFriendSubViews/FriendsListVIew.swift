@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct FriendsListVIew: View {
+    
+    @StateObject var friendsStore: FriendsStore = FriendsStore()
+    
     @Binding var isShowingSheet: Bool
-    @Binding var selectedFriends: [String]
+    @Binding var selectedFriends: [User]
     @State private var showAlert = false
     @State private var alertMessage = ""
-    
-    // 더미데이터
-    let friends = ["임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "이재승", "장여훈", "정한두"]
     
     var body: some View {
         NavigationStack {
@@ -29,8 +29,8 @@ struct FriendsListVIew: View {
                             } else {
                                 ScrollView(.horizontal) {
                                     HStack {
-                                        ForEach(selectedFriends, id: \.self) { name in
-                                            FriendSellView(name: name, selectedFriends: $selectedFriends).padding()
+                                        ForEach(selectedFriends) { friend in
+                                            FriendSellView(friend: friend, selectedFriends: $selectedFriends).padding()
                                                 .padding(.trailing, -50)
                                         }
                                     }
@@ -43,18 +43,19 @@ struct FriendsListVIew: View {
                         }
                     }
                 }
-            List(friends, id: \.self) { friend in
+            // MARK: 친구목록
+            List(friendsStore.friendsFetchArray) { friend in
                 HStack {
-                    Image(systemName: "person.circle.fill")
-                        .foregroundColor(.gray)
-                        .font(.title3)
-                    Text(friend)
+                    ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
+                    
+                    Text(friend.nickName)
                         .onTapGesture {
+                            // 친구를 선택하면 seledtedFriends에 추가
                             if !selectedFriends.contains(friend) {
                                 selectedFriends.append(friend)
                             } else {
                                 showAlert = true
-                                alertMessage = "\(friend)님은 이미 존재합니다."
+                                alertMessage = "\(friend.nickName)님은 이미 존재합니다."
                             }
                         }
                 }
@@ -70,6 +71,12 @@ struct FriendsListVIew: View {
             .listStyle(.plain)
             .navigationTitle("친구 목록")
             .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                Task {
+                    try await friendsStore.fetchFriends()
+                }
+                
+            }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
@@ -84,5 +91,5 @@ struct FriendsListVIew: View {
 }
 
 #Preview {
-    FriendsListVIew(isShowingSheet: .constant(true), selectedFriends: .constant([""]))
+    FriendsListVIew(isShowingSheet: .constant(true), selectedFriends: .constant([dummyUser]))
 }
