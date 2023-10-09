@@ -241,7 +241,7 @@ final class FriendsStore: ObservableObject {
             
             // 친구 요청목록 업데이트
             let newIdRequestArray = requestArray + [userId]
-            var updateData = ["friendsIdRequestArray": newIdRequestArray] // 현재 친구목록 + 추가친구 id 더하기
+            let updateData = ["friendsIdRequestArray": newIdRequestArray] // 현재 친구목록 + 추가친구 id 더하기
             
             try await dbRef.document(friendId).updateData(updateData)
             
@@ -269,7 +269,7 @@ final class FriendsStore: ObservableObject {
             
             // 요청목록 업데이트
             let newIdRequestArray = friendsIdRequestArray.filter { $0 != friendId }
-            var updateData = ["friendsIdRequestArray": newIdRequestArray]
+            let updateData = ["friendsIdRequestArray": newIdRequestArray]
             try await Firestore.firestore().collection("Users").document(userId).updateData(updateData)
             
             // 다시 요청목록 업데이트
