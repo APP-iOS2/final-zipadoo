@@ -21,48 +21,34 @@ struct HomeMainView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                // 약속 배열 값 존재하는지 확인.
-//                if promise.promiseViewModel.isEmpty {
-//                    Text("현재 약속이 1도 없어요!")
-//                        .toolbar {
-//                            ToolbarItem(placement: .topBarTrailing) {
-//                                NavigationLink {
-//                                    AddPromiseView()
-//                                } label: {
-//                                    Text("약속 추가")
-//                                }
-//                            }
-//                        }
-//                } else {
-                    VStack {
-                        ForEach(promise.promiseViewModel, id: \.self) { promise in
-                            if let loginUserID = loginUser.currentUser?.id {
-                                if loginUserID == promise.makingUserID {
-                                    NavigationLink {
-                                        PromiseDetailView()
-                                    } label: {
-                                        VStack(alignment: .leading) {
-                                            HStack {
-                                                Text(promise.promiseTitle)
-                                                    .font(.title)
-                                                    .fontWeight(.bold)
-                                                
-                                                Spacer()
-                                                
-                                                Image(systemName: "map.fill")
-                                                    .fontWeight(.bold)
-                                                    .foregroundStyle(Color.white)
-                                                    .padding(8)
-                                                    .background(Color.black)
-                                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                                    .overlay(
-                                                        RoundedRectangle(cornerRadius: 10)
-                                                            .shadow(color: .black, radius: 1, x: 1, y: 1)
-                                                            .opacity(0.3)
-                                                    )
-                                            }
-                                            .padding(.vertical, 10)
+            VStack {
+                List(promise.promiseViewModel, id: \.self) { promise in
+                    if let loginUserID = loginUser.currentUser?.id {
+                        if loginUserID == promise.makingUserID {
+                            NavigationLink {
+                                PromiseDetailView(promise: promise)
+                            } label: {
+                                VStack(alignment: .leading) {
+                                    HStack {
+                                        Text(promise.promiseTitle)
+                                            .font(.title)
+                                            .fontWeight(.bold)
+                                        
+                                        Spacer()
+                                        
+                                        Image(systemName: "map.fill")
+                                            .fontWeight(.bold)
+                                            .foregroundStyle(Color.white)
+                                            .padding(8)
+                                            .background(Color.black)
+                                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                                            .overlay(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .shadow(color: .black, radius: 1, x: 1, y: 1)
+                                                    .opacity(0.3)
+                                            )
+                                    }
+                                    .padding(.vertical, 10)
                                     
                                     Group {
                                         HStack {
@@ -125,31 +111,29 @@ struct HomeMainView: View {
                                         .foregroundStyle(Color.black)
                                     }
                                     .padding()
-                                } else {
-                                    
                                 }
                             }
                         }
                     }
-                    .padding()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button {
-                                isShownFullScreenCover.toggle()
-                            } label: {
-                                Text("약속 추가")
-                            }
-                            .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                                AddPromiseView()
-                            })
+                }
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button {
+                            isShownFullScreenCover.toggle()
+                        } label: {
+                            Text("약속 추가")
                         }
+                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+                            AddPromiseView()
+                        })
                     }
                 }
             }
         }
     }
-//}
+}
 
 #Preview {
     HomeMainView()
