@@ -20,18 +20,9 @@ final class FriendsStore: ObservableObject {
     var friendsIdArray: [String] = []
     var friendsIdRequestArray: [String] = []
     
-    /*
-    init() async throws {
-//        friendsIdArray = currentUser?.friendsIdArray ?? []
-//        friendsIdRequestArray = currentUser?.friendsIdRequestArray ?? []
-        do {
-            try await self.fetchFriends()
-            try await self.fetchFriendsRequest()
-        } catch {
-            print("히히")
-        }
-    }
-     */
+    @Published var alertMessage: String = ""
+    
+    let dbRef = Firestore.firestore().collection("Users")
     
     /// 사용자의 친구 가져오기
     @MainActor
@@ -44,7 +35,7 @@ final class FriendsStore: ObservableObject {
             }
             let user = try await UserStore.fetchUser(userId: userId)
             friendsIdArray = user?.friendsIdArray ?? []
-            
+            print("fetchFriends : \(friendsIdArray)")
             // 친구 id로 친구정보 가져오기
             var tempArray: [User] = []
             
@@ -59,7 +50,7 @@ final class FriendsStore: ObservableObject {
             DispatchQueue.main.async {
                 self.friendsFetchArray = tempArray
             }
-            print(friendsFetchArray)
+//            print(friendsFetchArray)
  
         } catch {
             print("fetch 실패")
@@ -77,6 +68,7 @@ final class FriendsStore: ObservableObject {
             let user = try await UserStore.fetchUser(userId: userId)
             friendsIdRequestArray = user?.friendsIdRequestArray ?? []
             
+            // 요청목록 가져오기
             var tempArray: [User] = []
 
             for id in friendsIdRequestArray {
@@ -99,28 +91,101 @@ final class FriendsStore: ObservableObject {
         
     }
     
-    /// 친구 추가
-    func addFriend(friendId: String) async throws {
-        let newIdArray = friendsIdArray + [friendId]
-        var updateData = ["friendsIdArray": newIdArray] // 현재 친구목록 + 추가친구 id 더하기
+    /// 친구 닉네임으로 친구id 가져오기
+    @MainActor
+    func findFriend(friendNickname: String, completion: @escaping (Bool) -> Void) async throws {
+        
+        let snapshot = dbRef.whereField("nickName", isEqualTo: friendNickname)
         
         do {
+//            try await fetchFriends()
             
-            try await Firestore.firestore().collection("Users").document(currentUser?.id ?? "").updateData(updateData)
+            guard let userId = currentUser?.id else {
+                return
+            }
+            // 이미 있는 친구 id이면 하지 말기, 내 id면... 하지 말기
             
-            // 다시 친구목록 업데이트
-            currentUser?.friendsIdArray = newIdArray
-            friendsIdArray = currentUser?.friendsIdArray ?? []
-            // 다시 패치
-            try await self.fetchFriends()
+            // 해당 닉네임이 없으면 false반환
+            let querySnapshot = try await snapshot.getDocuments()
+            if querySnapshot.isEmpty {
+               print("해당 닉네임 가진 친구 없음")
+               completion(false) // 중복된 닉네임이 없을 경우 false를 반환
+           } else {
+               // 닉네임이 있으면 조건 따진 후 addRequest 함수 실행
+               guard let document = querySnapshot.documents.first else {
+                   return
+               }
+               let friendId = document.documentID // 친구 아이디
+               // 친구 정보 가져오기
+               let opponent: User? = try await UserStore.fetchUser(userId: friendId)
+               guard let opponent else {
+                   return
+               }
+               
+               if friendId == userId {
+                   // 내 아이디인 경우
+                   print("나의 아이디 입력")
+                   alertMessage = "본인에게는 친구요청 할 수 없습니다"
+                   completion(false)
+               } else if friendsIdArray.contains(friendId) {
+                   // 이미 친구인 경우
+                   print("이미 친구")
+                   alertMessage = "이미 친구입니다"
+                   completion(false)
+                   
+               } else if opponent.friendsIdRequestArray.contains(userId) {
+                   // 이미 요청한 경우
+                   print("이미 요청")
+                   alertMessage = "이미 요청한 친구입니다"
+                   completion(false)
+               } else {
+                   // 조건에 맞는 경우
+                   print("조건에 맞음!")
+                   try await addRequest(friendId: friendId)
+                   completion(true)
+               }
+               
+           }
+        } catch {
+            return
+        }
+    }
+
+    /// 친구 추가
+    func addFriend(friendId: String) async throws {
+        do {
+            try await fetchFriends()
+            try await fetchFriendsRequest()
+            
+            var updateData = [String: Any]()
+            
+            let newIdArray = friendsIdArray + [friendId]
+            updateData["friendsIdArray"] = newIdArray // 현재 친구목록 + 추가친구 id 더하기
+            
+            let newIdRequestArray = friendsIdRequestArray.filter { $0 != friendId }
+            updateData["friendsIdRequestArray"] = newIdRequestArray
+            
+            // 현재 사용자 id, 친구 정보 가져오는거 실패하면 return
+            let opponent: User? = try await UserStore.fetchUser(userId: friendId)
+            guard let userId = currentUser?.id else {
+                return
+            }
+            guard let opponent else {
+                return
+            }
+            try await dbRef.document(userId).updateData(updateData)
             
             // 친구쪽 추가
-            let opponent: User? = try await UserStore.fetchUser(userId: friendId)
-            if let user = opponent {
-                let updateOpponentData = ["friendsIdArray": user.friendsIdArray + [user.id]]
-                try await Firestore.firestore().collection("Users").document(user.id).updateData(updateData)
-            }
+            let updateOpponentData = ["friendsIdArray": opponent.friendsIdArray + [userId]]
+            try await dbRef.document(opponent.id).updateData(updateOpponentData)
+
+            // 다시 친구목록 업데이트
+//            currentUser?.friendsIdArray = newIdArray
+//            friendsIdArray = currentUser?.friendsIdArray ?? []
             
+            try await fetchFriends()
+            try await fetchFriendsRequest()
+
         } catch {
             print("파이어베이스 업데이트 실패")
         }
@@ -128,12 +193,14 @@ final class FriendsStore: ObservableObject {
     
     /// 친구 삭제
     func removeFriend(friendId: String) async throws {
-        let newIdArray = friendsIdArray.filter { $0 != friendId }
-        var updateData = ["friendsIdArray": newIdArray]
-        print(friendsFetchArray)
         do {
+            try await fetchFriends()
+
+            let newIdArray = friendsIdArray.filter { $0 != friendId }
+            let updateData = ["friendsIdArray": newIdArray]
+        
             // 현재 사용자 id, 친구 정보 가져오는거 실패하면 return
-            var opponent: User? = try await UserStore.fetchUser(userId: friendId)
+            let opponent: User? = try await UserStore.fetchUser(userId: friendId)
             guard let userId = currentUser?.id else {
                 return
             }
@@ -142,49 +209,68 @@ final class FriendsStore: ObservableObject {
             }
             
             // 유저정보 업데이트
-            try await Firestore.firestore().collection("Users").document(currentUser?.id ?? "").updateData(updateData)
+            try await dbRef.document(userId).updateData(updateData)
             // 친구쪽 삭제
             let updateOpponentData = ["friendsIdArray": opponent.friendsIdArray.filter { $0 !=  userId}]
-            try await Firestore.firestore().collection("Users").document(opponent.id).updateData(updateOpponentData)
+            try await dbRef.document(opponent.id).updateData(updateOpponentData)
 
             // friendsIdArray 업데이트
-            currentUser?.friendsIdArray = newIdArray
-            friendsIdArray = currentUser?.friendsIdArray ?? []
+//            currentUser?.friendsIdArray = newIdArray
+//            friendsIdArray = currentUser?.friendsIdArray ?? []
             
-            // 다시 패치
-            try await self.fetchFriends()
+            try await fetchFriends()
             
         } catch {
             print("파이어베이스 업데이트 실패")
         }
     }
     
-    /// 친구요청 추가
+    /// 친구에게 친구요청
     func addRequest(friendId: String) async throws {
-        let newIdRequestArray = friendsIdArray + [friendId]
-        var updateData = ["friendsIdRequestArray": newIdRequestArray] // 현재 친구목록 + 추가친구 id 더하기
         
         do {
-            try await Firestore.firestore().collection("Users").document(currentUser?.id ?? "").updateData(updateData)
+            // 친구의 friendIdrequestArray가져오기
+            let opponent = try await UserStore.fetchUser(userId: friendId)
+            guard let userId = currentUser?.id else {
+                return
+            }
+            guard let opponent else {
+                return
+            }
+            let requestArray = opponent.friendsIdRequestArray
+            
+            // 친구 요청목록 업데이트
+            let newIdRequestArray = requestArray + [userId]
+            var updateData = ["friendsIdRequestArray": newIdRequestArray] // 현재 친구목록 + 추가친구 id 더하기
+            
+            try await dbRef.document(friendId).updateData(updateData)
             
             // 다시 요청목록 업데이트
-            currentUser?.friendsIdRequestArray = newIdRequestArray
-            friendsIdRequestArray = currentUser?.friendsIdRequestArray ?? []
+//            currentUser?.friendsIdRequestArray = newIdRequestArray
+//            friendsIdRequestArray = currentUser?.friendsIdRequestArray ?? []
 
             // 다시 패치
-            try await self.fetchFriendsRequest()
+//            try await self.fetchFriendsRequest()
+            
         } catch {
             print("파이어베이스 업데이트 실패")
         }
     }
     
-    /// 친구요청 삭제
+    /// 친구요청 거절
     func removeRequest(friendId: String) async throws {
-        let newIdRequestArray = friendsIdArray.filter { $0 != friendId }
-        var updateData = ["friendsIdRequestArray": newIdRequestArray]
         
         do {
-            try await Firestore.firestore().collection("Users").document(currentUser?.id ?? "").updateData(updateData)
+            try await fetchFriendsRequest()
+            
+            guard let userId = currentUser?.id else {
+                return
+            }
+            
+            // 요청목록 업데이트
+            let newIdRequestArray = friendsIdRequestArray.filter { $0 != friendId }
+            var updateData = ["friendsIdRequestArray": newIdRequestArray]
+            try await Firestore.firestore().collection("Users").document(userId).updateData(updateData)
             
             // 다시 요청목록 업데이트
             currentUser?.friendsIdRequestArray = newIdRequestArray

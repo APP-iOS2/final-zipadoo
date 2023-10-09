@@ -39,24 +39,12 @@ struct FriendsView: View {
             .pickerStyle(SegmentedPickerStyle())
             .navigationTitle("친구 관리")
             .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                Task {
-                    try await friendsStore.fetchFriends()
-                    try await friendsStore.fetchFriendsRequest()
-                }
-            }
-            .refreshable {
-                Task {
-                    try await friendsStore.fetchFriends()
-                    try await friendsStore.fetchFriendsRequest()
-                }
-            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        FriendsRegistrationView()
+                        FriendsRegistrationView(friendsStore: friendsStore)
                     } label: {
-                        Label("Add", systemImage: "magnifyingglass")
+                        Label("Add", systemImage: "person.crop.circle.fill.badge.plus")
                     }
                 }
             }
@@ -115,6 +103,16 @@ struct FriendsView: View {
             }
         }
         .listStyle(.plain)
+        .onAppear {
+            Task {
+                try await friendsStore.fetchFriends()
+            }
+        }
+        .refreshable {
+            Task {
+                try await friendsStore.fetchFriends()
+            }
+        }
     }
     
     // MARK: - 요청목록 뷰
@@ -169,6 +167,16 @@ struct FriendsView: View {
             }
         }
         .listStyle(.plain)
+        .onAppear {
+            Task {
+                try await friendsStore.fetchFriendsRequest()
+            }
+        }
+        .refreshable {
+            Task {
+                try await friendsStore.fetchFriendsRequest()
+            }
+        }
     }
 }
 

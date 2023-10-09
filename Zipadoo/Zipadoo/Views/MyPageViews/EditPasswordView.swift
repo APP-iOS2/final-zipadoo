@@ -16,14 +16,17 @@ struct EditPasswordView: View {
     
     /// 알람노출
     @State private var isEditAlert: Bool = false
+    
     /// 비밀번호확인이 다르다면 true
     private var isPasswordDifferent: Bool {
         viewModel.newpassword != viewModel.newpasswordCheck
     }
+    
     /// 비어있는 TextField가 있을 때 true
     private var isFieldEmpty: Bool {
         viewModel.newpassword.isEmpty || viewModel.newpasswordCheck.isEmpty
     }
+    
     var body: some View {
         VStack {
             secureTextFieldCell("새로운 비밀번호", text: $viewModel.newpassword)
@@ -41,6 +44,7 @@ struct EditPasswordView: View {
                     .foregroundStyle(.green)
                     .font(.footnote)
             }
+            
             Spacer()
         }
         .padding()
@@ -58,6 +62,7 @@ struct EditPasswordView: View {
             Alert(
                 title: Text(""),
                 message: Text("회원정보가 수정됩니다"),
+                
                 primaryButton: .default(Text("취소"), action: {
                     isEditAlert = false
                 }),
