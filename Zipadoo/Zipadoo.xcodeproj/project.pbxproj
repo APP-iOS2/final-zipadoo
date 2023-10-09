@@ -17,7 +17,6 @@
 		3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */; };
 		8B1350DA2ACFC53A00432E9C /* FriendsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1350D92ACFC53A00432E9C /* FriendsStore.swift */; };
 		8B1350E02AD1724A00432E9C /* EditPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1350DF2AD1724A00432E9C /* EditPasswordView.swift */; };
-		8B1350E42AD3E49C00432E9C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B1350E32AD3E49C00432E9C /* GoogleService-Info.plist */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */; };
 		8B973A342AC5930D00C67B5F /* LoginByEmailPWView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B973A2F2AC5930C00C67B5F /* LoginByEmailPWView.swift */; };
@@ -144,7 +143,6 @@
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		8B1350D92ACFC53A00432E9C /* FriendsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsStore.swift; sourceTree = "<group>"; };
 		8B1350DF2AD1724A00432E9C /* EditPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPasswordView.swift; sourceTree = "<group>"; };
-		8B1350E32AD3E49C00432E9C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyle.swift; sourceTree = "<group>"; };
 		8B973A2F2AC5930C00C67B5F /* LoginByEmailPWView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginByEmailPWView.swift; sourceTree = "<group>"; };
@@ -506,7 +504,6 @@
 		FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */ = {
 			isa = PBXGroup;
 			children = (
-				8B1350E32AD3E49C00432E9C /* GoogleService-Info.plist */,
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
@@ -693,7 +690,6 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-				8B1350E42AD3E49C00432E9C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
