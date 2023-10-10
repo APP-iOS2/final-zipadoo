@@ -15,7 +15,14 @@ struct AddPromiseView: View {
     
     // 저장될 변수
     @State private var promiseTitle: String = ""
-    @State private var date = Date()
+    @State private var date = Calendar.current.date(byAdding: .minute, value: 30, to: Date())! // 현재시간+30분을 디폴트 시간으로 설정
+    
+//    var formattedDate: String {
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.locale = Locale(identifier: "ko_KR") // 한국 로케일 설정
+//            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm" // 원하는 날짜 및 시간 형식 설정
+//            return dateFormatter.string(from: date)
+//        }
     
     // 지각비 변수 및 상수 값
     @State private var selectedValue: Int = 0
@@ -23,9 +30,12 @@ struct AddPromiseView: View {
     let maxValue: Int = 5000
     let step: Int = 100
     
-    private let today = Calendar.current.startOfDay(for: Date())
+    @State private var selectedDate = Calendar.current.date(byAdding: .minute, value: 30, to: Date())! // 디폴트 시간 이전으로 설정하지 못하게 픽스
     @State private var addFriendSheet: Bool = false
-    @State private var selectedFriends: [String] = []
+    
+    /// 약속에 참여할 친구배열
+    @State private var selectedFriends: [User] = []
+    
     //    @State private var mapViewSheet: Bool = false
     @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "") /// 장소에 대한 정보 값
     @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
@@ -36,7 +46,7 @@ struct AddPromiseView: View {
     
     var isAllWrite: Bool {
         return !promiseTitle.isEmpty &&
-        Calendar.current.startOfDay(for: date) != today &&
+        Calendar.current.startOfDay(for: date) != selectedDate &&
         !promiseLocation.address.isEmpty
     }
     
@@ -88,10 +98,12 @@ struct AddPromiseView: View {
                         .foregroundColor(.secondary)
                         .font(.subheadline)
                     
-                    DatePicker("날짜/시간", selection: $date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
+                    DatePicker("날짜/시간", selection: $date, in: self.selectedDate..., displayedComponents: [.date, .hourAndMinute])
                         .datePickerStyle(.compact)
                         .labelsHidden()
                         .padding(.top, 10)
+//                    Text("\(date.timeIntervalSince1970)")
+//                    Text("\(formattedDate)")
                     
                      
                     
@@ -161,7 +173,7 @@ struct AddPromiseView: View {
                     .padding(.top, 10)
                     
                     // MARK: - 약속 친구 추가 구현
-                    AddFriendCellView()
+                    AddFriendCellView(selectedFriends: $selectedFriends)
                 }
                 .padding(.horizontal, 15)
             }

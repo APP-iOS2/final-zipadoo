@@ -25,12 +25,14 @@ struct HomeMainView: View {
             ScrollView {
                 VStack {
                     if let loginUserID = loginUser.currentUser?.id {
+
                         ForEach(promise.promiseViewModel, id: \.self) { promise in
                             if loginUserID == promise.makingUserID {
                                 NavigationLink {
                                     PromiseDetailView(promise: promise)
                                 } label: {
                                     VStack(alignment: .leading) {
+
                                         
                                         // MARK: - 약속 제목, 맵 버튼
                                         HStack {
@@ -40,6 +42,7 @@ struct HomeMainView: View {
                                             
                                             Spacer()
                                             
+
                                             Image(systemName: "map.fill")
                                                 .fontWeight(.bold)
                                                 .foregroundStyle(Color.primary)
@@ -108,7 +111,9 @@ struct HomeMainView: View {
                                 
                                 .padding()
                                 
+
                             }
+                            .padding()
                         }
                         
                     }
@@ -164,6 +169,7 @@ struct HomeMainView: View {
            
                     //            .ignoresSafeArea(.all)
                     
+
                 }
             }
         }
