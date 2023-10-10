@@ -48,6 +48,8 @@
 		C0519DB22AD4E529000CE04E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0519DB12AD4E529000CE04E /* GoogleService-Info.plist */; };
 		C0519DB42AD4EB72000CE04E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C0519DB32AD4EB72000CE04E /* FirebaseAnalytics */; };
 		C0519DB62AD4EB72000CE04E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C0519DB52AD4EB72000CE04E /* FirebaseMessaging */; };
+		C0519DB82AD50D00000CE04E /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C0519DB72AD50D00000CE04E /* FirebaseAnalytics */; };
+		C0519DBA2AD50D00000CE04E /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = C0519DB92AD50D00000CE04E /* FirebaseMessaging */; };
 		C069D2BC2AC145D100A62E04 /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = C069D2BB2AC145D100A62E04 /* AppsFlyerLib */; };
 		FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */; };
 		FA24740A2ACD4BDB00D4C821 /* PlaceMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E42ACD4BDB00D4C821 /* PlaceMarkView.swift */; };
@@ -242,8 +244,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0519DBA2AD50D00000CE04E /* FirebaseMessaging in Frameworks */,
 				C02790BA2ACD297100BBDCCA /* SwiftUI.framework in Frameworks */,
 				C02790B82ACD297100BBDCCA /* WidgetKit.framework in Frameworks */,
+				C0519DB82AD50D00000CE04E /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,6 +607,10 @@
 			dependencies = (
 			);
 			name = ZipadooWidgetExtension;
+			packageProductDependencies = (
+				C0519DB72AD50D00000CE04E /* FirebaseAnalytics */,
+				C0519DB92AD50D00000CE04E /* FirebaseMessaging */,
+			);
 			productName = ZipadooWidgetExtension;
 			productReference = C02790B52ACD297100BBDCCA /* ZipadooWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -1176,6 +1184,16 @@
 			productName = FirebaseAnalytics;
 		};
 		C0519DB52AD4EB72000CE04E /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FAB58B7A2ABD1879006B9E11 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		C0519DB72AD50D00000CE04E /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FAB58B7A2ABD1879006B9E11 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		C0519DB92AD50D00000CE04E /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = FAB58B7A2ABD1879006B9E11 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
