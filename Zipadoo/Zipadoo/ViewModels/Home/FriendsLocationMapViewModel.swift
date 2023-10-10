@@ -108,7 +108,10 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
                 guard let self = self, let response = response else { return }
 
                 let friendName = friendLocation.title
-                let remainingDistance = response.routes[0].distance
+                // 거리
+//                let remainingDistance = response.routes[0].distance
+                let remainingDistance = calculateDistanceInMeters(x1: friendLocation.coordinate.latitude, y1: friendLocation.coordinate.longitude, x2: destinationLocation.coordinate.latitude, y2: destinationLocation.coordinate.longitude)
+                print("remainingDistance: \(remainingDistance)")
                 let formattedDistance = self.formatDistance(remainingDistance)
                 var lineColor: UIColor = .clear
 
@@ -147,7 +150,7 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
                 guard let self = self, let response = response else { return }
 
                 let friendName = myLocation.title
-                let remainingDistance = response.routes[0].distance
+                let remainingDistance = calculateDistanceInMeters(x1: myLocation.coordinate.latitude, y1: myLocation.coordinate.longitude, x2: destinationLocation.coordinate.latitude, y2: destinationLocation.coordinate.longitude)
                 let formattedDistance = self.formatDistance(remainingDistance)
                 var lineColor: UIColor = .clear
 
@@ -191,4 +194,28 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
         renderer.lineWidth = 4.0
         return renderer
     }
+}
+
+// 재승 작성, 위도,경도로 미터 구하는 함수
+func degreesToRadians(_ degrees: Double) -> Double {
+    return degrees * .pi / 180.0
+}
+
+func calculateDistanceInMeters(x1: Double, y1: Double, x2: Double, y2: Double) -> Double {
+    let earthRadius = 6371000.0 // 지구의 반경 (미터)
+
+    let lat1 = degreesToRadians(x1)
+    let lon1 = degreesToRadians(y1)
+    let lat2 = degreesToRadians(x2)
+    let lon2 = degreesToRadians(y2)
+
+    let dLat = lat2 - lat1
+    let dLon = lon2 - lon1
+
+    let a = sin(dLat/2) * sin(dLat/2) + cos(lat1) * cos(lat2) * sin(dLon/2) * sin(dLon/2)
+    let c = 2 * atan2(sqrt(a), sqrt(1-a))
+
+    let distance = earthRadius * c
+
+    return distance
 }

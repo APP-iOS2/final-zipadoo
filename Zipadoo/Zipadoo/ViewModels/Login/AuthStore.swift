@@ -7,12 +7,11 @@
 
 import Firebase
 import FirebaseAuth
-import FirebaseFirestoreSwift
-import Firebase
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 import SwiftUI
 
-class AuthStore: ObservableObject {
+final class AuthStore: ObservableObject {
     
     /// 파베 토큰 저장
     @Published var userSession: FirebaseAuth.User?
@@ -97,7 +96,7 @@ class AuthStore: ObservableObject {
     /// 로그인 스토어 데이터를 받아서 파이어베이스에 보내기 (email, 카카오, 애플)
     func addUserData(id: String, name: String, nickName: String, phoneNumber: String, profileImageString: String) async throws {
         do {
-            let user = User(id: id, name: name, nickName: nickName, phoneNumber: phoneNumber, potato: 0, profileImageString: profileImageString, crustDepth: 0, tardyCount: 0)
+            let user = User(id: id, name: name, nickName: nickName, phoneNumber: phoneNumber, potato: 0, profileImageString: profileImageString, crustDepth: 0, tardyCount: 0, friendsIdArray: [], friendsIdRequestArray: [])
             try dbRef.document(id).setData(from: user)
             
         } catch {

@@ -8,97 +8,179 @@
 import SwiftUI
 
 struct FriendsView: View {
-    let friends = ["임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "이재승", "장여훈", "정한두"]
+    
+    @StateObject var friendsStore: FriendsStore = FriendsStore()
+    /// 친구 삭제 알람
+    @State private var isDeleteAlert: Bool = false
+    /// segmentedControl 인덱스
+    @State private var selectedSegmentIndex: Int = 0
+    /// 삭제버튼 눌렸을 때 선택된 친구
+    @State private var selectedFriendId: String = ""
     
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(friends, id: \.self) { friend in
-                    HStack {
-                        Image(systemName: "person.circle.fill")
-                            .font(.title3)
-                            .foregroundColor(.gray)
-                        Text(friend)
-                    }
-                }
-            }
-            .listStyle(.plain)
-            
-            FriendsRequestCellView()
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(lineWidth: 2)
-                )
-                .padding(.bottom, 30)
-            
-            //            ScrollView(.horizontal, showsIndicators: false) {
-            //                HStack {
-            //                    ForEach(friends, id: \.self ) { fri in
-            //                        FriendsRequestCellView()
-            //                    }
-            //                    .overlay(
-            //                        RoundedRectangle(cornerRadius: 10)
-            //                            .stroke(lineWidth: 2)
-            //                    )
-            //                }
-            //            }
-                .navigationTitle("친구 목록")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        NavigationLink {
-                            //                        FriendsRegistrationView()
-                        } label: {
-                            Label("Add", systemImage: "plus")
-                        }
-                    }
-                }
-        }
-    }
-}
-
-struct FriendsRequestCellView: View {
-    let friends = ["임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "이재승", "장여훈", "정한두"]
-    
-    var body: some View {
-        HStack {
             VStack {
-                Text("\(friends[0])님이 친구 요청을 보냈어요")
-                    .padding()
+                Picker("option", selection: $selectedSegmentIndex) {
+                    Text("친구 목록").tag(0)
+                    Text("요청 목록").tag(1)
+                }
                 
-                HStack {
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("거절")
-                        
-                    })
-                    .foregroundColor(.red)
-                    .padding(7)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(lineWidth: 1.0)
-                    )
-                    
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("수락")
-                    })
-                    .padding(7)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(lineWidth: 1.0)
-                    )
-                    .padding(.leading, 20)
+                VStack {
+                    switch selectedSegmentIndex {
+                    case 0:
+                        friendListView
+                    case 1:
+                        friendRequestView
+                    default:
+                        friendListView
+                    }
                 }
             }
+            .pickerStyle(SegmentedPickerStyle())
+            .navigationTitle("친구 관리")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink {
+                        FriendsRegistrationView(friendsStore: friendsStore)
+                    } label: {
+                        Label("Add", systemImage: "person.crop.circle.fill.badge.plus")
+                    }
+                }
+            }
+            .alert(isPresented: $isDeleteAlert) {
+                Alert(
+                    title: Text(""),
+                    message: Text("친구목록에서 삭제됩니다"),
+
+                    primaryButton: .default(Text("취소"), action: {
+                        isDeleteAlert = false
+                    }),
+                    secondaryButton: .destructive(Text("삭제"), action: {
+                        isDeleteAlert = false
+                        Task {
+                            // 파베연결
+                            try await friendsStore.removeFriend(friendId: selectedFriendId)
+                        }
+                    })
+                )
+            }
+            
         }
-        .padding()
     }
+    
+    // MARK: - 친구 목록 뷰
+    private var friendListView: some View {
+        List {
+            ForEach(friendsStore.friendsFetchArray) { friend in
+                ZStack {
+                    // 친구프로필 이동(임시로 MyPage뷰로 이동)
+                    NavigationLink(destination: MyPageView(), label: {
+                        HStack {
+                            ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
+                            
+                            Text(friend.nickName)
+                        }
+                    })
+                    
+                    // 친구 삭제 버튼
+                    HStack {
+                        Spacer()
+                        
+                        Text("삭제")
+                            .padding(5)
+                            .foregroundColor(.gray)
+                            .background(.white)
+                            .onTapGesture {
+                                selectedFriendId = friend.id
+                                isDeleteAlert.toggle()
+                            }
+                    }
+                     
+                }
+                .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+            }
+        }
+        .listStyle(.plain)
+        .onAppear {
+            Task {
+                try await friendsStore.fetchFriends()
+            }
+        }
+        .refreshable {
+            Task {
+                try await friendsStore.fetchFriends()
+            }
+        }
+    }
+    
+    // MARK: - 요청목록 뷰
+    private var friendRequestView: some View {
+        List {
+            ForEach(friendsStore.requestFetchArray) { friend in
+                
+                ZStack {
+                    // 친구프로필 이동
+                    NavigationLink(destination: MyPageView(), label: {
+                        HStack {
+                            ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
+                                
+                            Text(friend.nickName)
+                        }
+                    })
+                                             
+                    HStack {
+                        Spacer()
+                        
+                        // 수락
+                        Text("수락")
+                        .padding(5)
+                        .foregroundColor(.green)
+                        .background(.white)
+                        .onTapGesture {
+                            // 수락
+                            selectedFriendId = friend.id
+                            Task {
+                                try await friendsStore.addFriend(friendId: selectedFriendId)
+                                try await friendsStore.removeRequest(friendId: selectedFriendId)
+                            }
+                        }
+                        .padding(.trailing, 4)
+                        
+                        // 거절 버튼
+                        Text("거절")
+                            .padding(5)
+                            .foregroundColor(.red)
+                            .background(.white)
+                            .onTapGesture {
+                                // 거절
+                                Task {
+                                    try await friendsStore.removeRequest(friendId: selectedFriendId)
+                                }
+                            }
+                        
+                    }
+                }
+                .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+            }
+        }
+        .listStyle(.plain)
+        .onAppear {
+            Task {
+                try await friendsStore.fetchFriendsRequest()
+            }
+        }
+        .refreshable {
+            Task {
+                try await friendsStore.fetchFriendsRequest()
+            }
+        }
+    }
+    
 }
 
 #Preview {
-    FriendsView()
-    //        FriendsRequestCellView()
+    NavigationStack {
+        FriendsView()
+    }
 }
