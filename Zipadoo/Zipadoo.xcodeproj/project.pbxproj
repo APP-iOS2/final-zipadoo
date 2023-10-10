@@ -23,6 +23,7 @@
 		8B973A372AC5930D00C67B5F /* SigninByEmail2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B973A322AC5930D00C67B5F /* SigninByEmail2View.swift */; };
 		8B973A382AC5930D00C67B5F /* SigninByEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B973A332AC5930D00C67B5F /* SigninByEmailView.swift */; };
 		8B973A3A2AC593DE00C67B5F /* KakaoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B973A392AC593DE00C67B5F /* KakaoTest.swift */; };
+		8BA14B1A2AD44EF800DEB733 /* FriendsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA14B192AD44EF800DEB733 /* FriendsStore.swift */; };
 		8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */; };
 		8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC92AC1401E00A4694C /* UserModel.swift */; };
 		8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */; };
@@ -110,6 +111,7 @@
 		8B973A322AC5930D00C67B5F /* SigninByEmail2View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SigninByEmail2View.swift; sourceTree = "<group>"; };
 		8B973A332AC5930D00C67B5F /* SigninByEmailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SigninByEmailView.swift; sourceTree = "<group>"; };
 		8B973A392AC593DE00C67B5F /* KakaoTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KakaoTest.swift; sourceTree = "<group>"; };
+		8BA14B192AD44EF800DEB733 /* FriendsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsStore.swift; sourceTree = "<group>"; };
 		8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		8BD44EC92AC1401E00A4694C /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
@@ -226,6 +228,14 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		8BA14B182AD44ECE00DEB733 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				8BA14B192AD44EF800DEB733 /* FriendsStore.swift */,
+			);
+			path = Friends;
+			sourceTree = "<group>";
+		};
 		8BAAEAC92ABC444800477574 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
@@ -337,6 +347,7 @@
 				FA2474322ACD4D6E00D4C821 /* UserStore.swift */,
 				FA2474402ACD4D6E00D4C821 /* Login */,
 				FA2474332ACD4D6E00D4C821 /* Home */,
+				8BA14B182AD44ECE00DEB733 /* Friends */,
 				FA24743B2ACD4D6E00D4C821 /* MyPage */,
 				FA2474382ACD4D6E00D4C821 /* ProfileImageUploader.swift */,
 				FA2474392ACD4D6E00D4C821 /* ImagePicker.swift */,
@@ -603,6 +614,7 @@
 				FA2474252ACD4BDB00D4C821 /* AddPromiseTitleCell.swift in Sources */,
 				FA2474472ACD4D6E00D4C821 /* MapViewContainer.swift in Sources */,
 				FA2474122ACD4BDB00D4C821 /* SearchbarCell.swift in Sources */,
+				8BA14B1A2AD44EF800DEB733 /* FriendsStore.swift in Sources */,
 				FA24740B2ACD4BDB00D4C821 /* FriendsLocationListView.swift in Sources */,
 				8BEDA03B2ACE45890056046B /* EditPasswordView.swift in Sources */,
 				FA24741A2ACD4BDB00D4C821 /* AddPromiseView.swift in Sources */,

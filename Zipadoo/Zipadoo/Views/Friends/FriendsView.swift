@@ -8,11 +8,14 @@
 import SwiftUI
 
 struct FriendsView: View {
-    let friends = ["임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "이재승", "장여훈", "정한두"]
+    
+    @StateObject var friendsStore: FriendsStore = FriendsStore()
     /// 친구 삭제 알람
     @State private var isDeleteAlert: Bool = false
     /// segmentedControl 인덱스
     @State private var selectedSegmentIndex: Int = 0
+    /// 삭제버튼 눌렸을 때 선택된 친구
+    @State private var selectedFriendId: String = ""
     
     var body: some View {
         NavigationStack {
@@ -39,9 +42,9 @@ struct FriendsView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
-                        FriendsRegistrationView()
+                        FriendsRegistrationView(friendsStore: friendsStore)
                     } label: {
-                        Label("Add", systemImage: "magnifyingglass")
+                        Label("Add", systemImage: "person.crop.circle.fill.badge.plus")
                     }
                 }
             }
@@ -56,7 +59,8 @@ struct FriendsView: View {
                     secondaryButton: .destructive(Text("삭제"), action: {
                         isDeleteAlert = false
                         Task {
-                            // 삭제 로직
+                            // 파베연결
+                            try await friendsStore.removeFriend(friendId: selectedFriendId)
                         }
                     })
                 )
@@ -68,14 +72,14 @@ struct FriendsView: View {
     // MARK: - 친구 목록 뷰
     private var friendListView: some View {
         List {
-            ForEach(friends, id: \.self) { friend in
+            ForEach(friendsStore.friendsFetchArray) { friend in
                 ZStack {
-                    // 친구프로필 이동
+                    // 친구프로필 이동(임시로 MyPage뷰로 이동)
                     NavigationLink(destination: MyPageView(), label: {
                         HStack {
-                            ProfileImageView(imageString: "", size: .xSmall)
+                            ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
                             
-                            Text(friend)
+                            Text(friend.nickName)
                         }
                     })
                     
@@ -88,6 +92,7 @@ struct FriendsView: View {
                             .foregroundColor(.gray)
                             .background(.white)
                             .onTapGesture {
+                                selectedFriendId = friend.id
                                 isDeleteAlert.toggle()
                             }
                     }
@@ -97,20 +102,30 @@ struct FriendsView: View {
             }
         }
         .listStyle(.plain)
+        .onAppear {
+            Task {
+                try await friendsStore.fetchFriends()
+            }
+        }
+        .refreshable {
+            Task {
+                try await friendsStore.fetchFriends()
+            }
+        }
     }
     
     // MARK: - 요청목록 뷰
     private var friendRequestView: some View {
         List {
-            ForEach(friends, id: \.self) { friend in
+            ForEach(friendsStore.requestFetchArray) { friend in
                 
                 ZStack {
                     // 친구프로필 이동
                     NavigationLink(destination: MyPageView(), label: {
                         HStack {
-                            ProfileImageView(imageString: "", size: .xSmall)
+                            ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
                                 
-                            Text(friend)
+                            Text(friend.nickName)
                         }
                     })
                                              
@@ -124,19 +139,25 @@ struct FriendsView: View {
                         .background(.white)
                         .onTapGesture {
                             // 수락
+                            selectedFriendId = friend.id
+                            Task {
+                                try await friendsStore.addFriend(friendId: selectedFriendId)
+                                try await friendsStore.removeRequest(friendId: selectedFriendId)
+                            }
                         }
                         .padding(.trailing, 4)
                         
                         // 거절 버튼
-                        Button("거절") {
-                            isDeleteAlert.toggle()
-                        }
-                        .padding(5)
-                        .foregroundColor(.red)
-                        .background(.white)
-                        .onTapGesture {
-                            // 거절
-                        }
+                        Text("거절")
+                            .padding(5)
+                            .foregroundColor(.red)
+                            .background(.white)
+                            .onTapGesture {
+                                // 거절
+                                Task {
+                                    try await friendsStore.removeRequest(friendId: selectedFriendId)
+                                }
+                            }
                         
                     }
                 }
@@ -144,21 +165,15 @@ struct FriendsView: View {
             }
         }
         .listStyle(.plain)
-        .alert(isPresented: $isDeleteAlert) {
-            Alert(
-                title: Text(""),
-                message: Text("친구목록에서 삭제됩니다"),
-
-                primaryButton: .default(Text("취소"), action: {
-                    isDeleteAlert = false
-                }),
-                secondaryButton: .destructive(Text("삭제"), action: {
-                    isDeleteAlert = false
-                    Task {
-                        // 삭제 로직
-                    }
-                })
-            )
+        .onAppear {
+            Task {
+                try await friendsStore.fetchFriendsRequest()
+            }
+        }
+        .refreshable {
+            Task {
+                try await friendsStore.fetchFriendsRequest()
+            }
         }
     }
     
