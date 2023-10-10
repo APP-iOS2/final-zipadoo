@@ -61,7 +61,7 @@ struct HomeMainView: View {
                                         
                                         HStack {
                                             Image(systemName: "clock")
-                                            Text("\(promise.promiseDate)")
+                                            Text("\(datePromise)")
                                         }
                                         .padding(.bottom, 20)
                                         
@@ -69,66 +69,53 @@ struct HomeMainView: View {
                                             Text("6km")
                                             Spacer()
                                             
-                                            Group {
-                                                HStack {
-                                                    Image(systemName: "pin")
-                                                    Text("장소 \(promise.destination)")
-                                                }
-                                                
-                                                /// 저장된 promiseDate값을 Date 타입으로 변환
-                                                let datePromise = Date(timeIntervalSince1970: promise.promiseDate)
-                                                
-                                                HStack {
-                                                    Image(systemName: "clock")
-                                                    Text("\(datePromise)")
-                                                }
-                                                .padding(.bottom, 20)
-                                                
-                                                HStack {
-                                                    Text("6km")
-                                                    Spacer()
-                                                    
-                                                    Text("5,000원")
-                                                        .fontWeight(.semibold)
-                                                        .font(.title3)
-                                                }
-                                                .padding(.vertical, 10)
-                                                
-                                            }
-                                            .font(.callout)
-                                            .fontWeight(.semibold)
-                                            .foregroundStyle(.black).opacity(0.5)
-                                            // 참여자의 ID를 통해 참여자 정보 가져오기
+                                            Text("5,000원")
+                                                .fontWeight(.semibold)
+                                                .font(.title3)
                                         }
-                                        .padding()
-                                        .overlay(
-                                            ZStack {
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .shadow(color: .black, radius: 15, x: 10, y: 10)
-                                                    .opacity(0.1)
-                                            }
-                                        )
-                                        .foregroundStyle(Color.black)
+                                        .padding(.vertical, 10)
                                     }
-                                    .padding()
+                                    .font(.callout)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(.black).opacity(0.5)
                                 }
+                                .padding()
+                                .overlay(
+                                    ZStack {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .shadow(color: .black, radius: 15, x: 10, y: 10)
+                                            .opacity(0.1)
+                                    }
+                                )
+                                .foregroundStyle(Color.black)
                             }
+                            .padding()
                         }
                     }
                 }
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            isShownFullScreenCover.toggle()
-                        } label: {
-                            Text("약속 추가")
-                        }
-                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                            AddPromiseView()
-                        })
+            }
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+//            .onAppear {
+//                Task {
+//                    try await promise.fetchPromise()
+//                }
+//            }
+            .refreshable {
+                Task {
+                    try await promise.fetchPromise()
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        isShownFullScreenCover.toggle()
+                    } label: {
+                        Text("약속 추가")
                     }
+                    .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+                        AddPromiseView()
+                    })
                 }
             }
         }
