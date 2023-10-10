@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct AddFriendCellView: View {
-    @State private var addFriendsSheet: Bool = false
     /// 약속에 참여할 친구배열
-    @State private var selectedFriends: [User] = []
+    @Binding var selectedFriends: [User]
+    
+    @State private var addFriendsSheet: Bool = false
     
     var body: some View {
         HStack {
@@ -67,5 +68,5 @@ struct AddFriendCellView: View {
 }
 
 #Preview {
-    AddFriendCellView()
+    AddFriendCellView(selectedFriends: .constant([dummyUser]))
 }

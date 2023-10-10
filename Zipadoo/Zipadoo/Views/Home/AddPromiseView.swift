@@ -25,7 +25,10 @@ struct AddPromiseView: View {
     
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var addFriendSheet: Bool = false
-    @State private var selectedFriends: [String] = []
+    
+    /// 약속에 참여할 친구배열
+    @State private var selectedFriends: [User] = []
+    
     //    @State private var mapViewSheet: Bool = false
     @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "") /// 장소에 대한 정보 값
     @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
@@ -157,7 +160,7 @@ struct AddPromiseView: View {
                     .padding(.top, 10)
                     
                     // MARK: - 약속 친구 추가 구현
-                    AddFriendCellView()
+                    AddFriendCellView(selectedFriends: $selectedFriends)
                 }
                 .padding(.horizontal, 15)
             }

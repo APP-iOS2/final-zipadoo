@@ -50,19 +50,21 @@ struct FriendsListVIew: View {
             
             // MARK: 친구목록
             List(friendsStore.friendsFetchArray) { friend in
-                HStack {
-                    ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
-                    
-                    Text(friend.nickName)
-                        .onTapGesture {
-                            // 친구를 선택하면 seledtedFriends에 추가
-                            if !selectedFriends.contains(friend) {
-                                selectedFriends.append(friend)
-                            } else {
-                                showAlert = true
-                                alertMessage = "\(friend.nickName)님은 이미 존재합니다."
-                            }
-                        }
+                Button {
+                    // 친구를 선택하면 seledtedFriends에 추가
+                    if !selectedFriends.contains(friend) {
+                        selectedFriends.append(friend)
+                    } else {
+                        showAlert = true
+                        alertMessage = "\(friend.nickName)님은 이미 존재합니다."
+                    }
+                } label: {
+                    HStack {
+                        ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
+                        
+                        Text(friend.nickName)
+                        
+                    }
                 }
                 .alert(isPresented: $showAlert) {
                     Alert(
