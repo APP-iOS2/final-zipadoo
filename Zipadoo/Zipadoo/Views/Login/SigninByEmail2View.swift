@@ -18,16 +18,16 @@ struct SigninByEmail2View: View {
     
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea(.all) // 배경색
+            Color.primary.ignoresSafeArea(.all) // 배경색
             
             VStack(alignment: .leading) {
-                Rectangle().frame(height: 30) // Spacer() 대용
-                
+                Spacer().frame(width: 50, height: 50)// 공간
                 HStack {
                     Spacer()
                     
                     Text(adminMessage) // 상단 안내 문구
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
+                        .colorInvert()
                         .font(.title2)
                         .fontWeight(.semibold)
                         .padding(.bottom, 10)
@@ -53,15 +53,16 @@ struct SigninByEmail2View: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8)
-                                        .foregroundColor(Color.white.opacity(0.5))
+                                        .foregroundColor(Color.secondary)
                                         .clipShape(Circle())
                                 } else {
                                     Image("defaultProfile")
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8)
-                                        .foregroundColor(Color.white.opacity(0.5))
-                                        .background(Color.white)
+                                        .foregroundColor(Color.secondary
+                                        )
+                                        .background(Color.secondary)
                                         .clipShape(Circle())
                                 }
                             }
@@ -80,7 +81,7 @@ struct SigninByEmail2View: View {
             }
             .padding(.leading, 15)
             .padding(.trailing, 15)
-            .background(Color.black)
+            .background(Color.primary)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     

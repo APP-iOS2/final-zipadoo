@@ -22,15 +22,15 @@ struct LoginByEmailPWView: View {
     
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea(.all) // 배경색
+            Color.primary.ignoresSafeArea(.all) // 배경색
             
             VStack(alignment: .leading) {
-                Rectangle().frame(height: 50)
-                    
+                Spacer().frame(width: 50, height: 50)// 공간
                 HStack {
                     // 안내 문구1
                     Text("비밀번호를 입력해 주세요.")
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
+                        .colorInvert()
                         .font(.title2)
                         .fontWeight(.semibold)
                         .padding(.bottom, 10)
@@ -44,7 +44,8 @@ struct LoginByEmailPWView: View {
                     } label: {
                         Image(systemName: isPasswordVisible ? "eye.slash.fill" : "eye.fill")
                             .fontWeight(.semibold)
-                            .foregroundColor(Color.white.opacity(0.5))
+                            .foregroundColor(Color.primary.opacity(0.5))
+                            .colorInvert()
                             .padding(.trailing, -2)
                     }
                 }
@@ -53,16 +54,20 @@ struct LoginByEmailPWView: View {
                     HStack {
                         // 비밀번호 숨겼을 경우 ***표시
                         if isPasswordVisible == false {
-                            SecureField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.gray))
-                                .foregroundColor(Color.white.opacity(0.3))
+                            SecureField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
+                                .foregroundColor(Color.primary)
+                                .colorInvert()
+                                .opacity(0.9)
                                 .font(.title3)
                                 .fontWeight(.semibold)
                                 .autocapitalization(.none)
                                 .frame(height: 35)
                             
                         } else { // 비밀번호 보이게 할 경우 숫자 표시
-                            TextField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.white))
-                                .foregroundColor(Color.white.opacity(0.3))
+                            TextField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
+                                .foregroundColor(Color.primary)
+                                .colorInvert()
+                                .opacity(0.9)
                                 .font(.title3)
                                 .fontWeight(.semibold)
                                 .autocapitalization(.none)
@@ -75,25 +80,27 @@ struct LoginByEmailPWView: View {
                         } label: {
                             Image(systemName: "x.circle.fill")
                         }
+                        .foregroundColor(Color.primary.opacity(0.4))
+                        .colorInvert()
                         
                     }
-                    .foregroundColor(Color.white.opacity(0.4))
                     
                     Rectangle().frame(height: 1)
-                        .foregroundStyle(Color.white.opacity(0.5))
+                        .foregroundStyle(Color.secondary)
                         .padding(.bottom, 5)
                     
                     // 비밀번호 확인 안내문구
                     Text(adminMessage)
                         .font(.subheadline)
-                        .foregroundStyle(Color.white.opacity(0.7))
+                        .foregroundStyle(Color.primary.opacity(0.7))
+                        .colorInvert()
                     
                 }
                       
                 Spacer()
             }
             .padding([.leading, .trailing])
-            .background(Color.black)
+            .background(Color.clear)
             // 상단 네비게이션 바
             .navigationBarItems(trailing:
                                     Button(action: {
