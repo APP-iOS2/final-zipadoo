@@ -35,10 +35,14 @@ struct AddPromiseView: View {
     @State private var friends = ["병구", "상규", "예슬", "한두", "아라", "해수", "여훈"]
     @State private var addFriendSheet: Bool = false
     @State private var selectedFriends: [String] = ["김상규", "나예슬", "윤해수", "임병구"]
+    /// 장소 맵프리뷰를 띄우는 시트 값
     @State private var mapViewSheet: Bool = false
-    @State private var promiseLocation: PromiseLocation = PromiseLocation(destination: "", address: "", latitude: LocationManager().location?.coordinate.latitude ?? 0.0, longitude: LocationManager().location?.coordinate.longitude ?? 0.0) /// 장소에 대한 정보 값/// 장소명 값
-    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
-    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
+    /// 장소에 대한 정보 값
+    @State private var promiseLocation: PromiseLocation = PromiseLocation(destination: "", address: "", latitude: LocationManager().location?.coordinate.latitude ?? 0.0, longitude: LocationManager().location?.coordinate.longitude ?? 0.0)
+    /// 검색 결과에 나온 장소 클릭값
+    @State var isClickedPlace: Bool = false
+    /// 장소 추가 버튼 클릭값
+    @State var addLocationButton: Bool = false
     @State private var showingAlert: Bool = false
     @State private var showingPenalty: Bool = false
     
@@ -109,15 +113,24 @@ struct AddPromiseView: View {
                                 .foregroundColor(.white)
                         }
                         .buttonStyle(.borderedProminent)
+                        
                         Spacer()
                         
-                        Button {
-                            mapViewSheet = true
-                        } label: {
-                            Text(promiseLocation.destination)
-                                .font(.callout)
-                        }
-                        .sheet(isPresented: $mapViewSheet) {
+                        if !promiseLocation.destination.isEmpty {
+                            Button {
+                                mapViewSheet = true
+                            } label: {
+                                HStack {
+                                    Text("\(promiseLocation.destination)")
+                                        .font(.callout)
+                                    Image(systemName: "chevron.forward")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 6)
+                                        .padding(.leading, -5)
+                                }
+                            }
+                            .sheet(isPresented: $mapViewSheet) {
                                 VStack {
                                     RoundedRectangle(cornerRadius: 8)
                                         .frame(width: 50, height: 5)
@@ -128,6 +141,7 @@ struct AddPromiseView: View {
                                         .presentationDetents([.height(700)])
                                         .padding(.top, 15)
                                 }
+                            }
                         }
                         Spacer()
                     }

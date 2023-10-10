@@ -35,6 +35,7 @@ struct MapView: View {
     /// 화면 클릭 값(직접설정맵뷰)
     @State private var selectedPlace: Bool = false
     
+    @Binding var isClickedPlace: Bool
     @Binding var promiseLocation: PromiseLocation
     
     let locationManager = CLLocationManager()
@@ -44,8 +45,10 @@ struct MapView: View {
             ZStack {
                 Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: [promiseLocation]) { location in
                     MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)) {
-                        PlaceMarkerCell()
-                            .offset(x: 0, y: -50)
+                        if selectedPlace == true {
+                            PlaceMarkerCell()
+                                .offset(x: 0, y: -50)
+                        }
                     }
                 }
                 
@@ -112,6 +115,7 @@ struct MapView: View {
                                         } else {
                                             destination = placeOfText
                                         }
+                                        isClickedPlace = false
                                         promiseLocation = addLocationStore.setLocation(destination: destination, address: address, latitude: coordX, longitude: coordY)
                                         print(destination)
                                         print(address)
@@ -198,5 +202,5 @@ struct MapView: View {
 }
 
 #Preview {
-    MapView(destination: .constant(""), address: .constant(""), coordX: .constant(0.0), coordY: .constant(0.0), promiseLocation: .constant(PromiseLocation(destination: "서울시청", address: "", latitude: 37.5665, longitude: 126.9780)))
+    MapView(destination: .constant(""), address: .constant(""), coordX: .constant(0.0), coordY: .constant(0.0), isClickedPlace: .constant(false), promiseLocation: .constant(PromiseLocation(destination: "서울시청", address: "", latitude: 37.5665, longitude: 126.9780)))
 }

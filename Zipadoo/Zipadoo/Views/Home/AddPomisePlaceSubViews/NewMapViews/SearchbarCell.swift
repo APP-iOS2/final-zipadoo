@@ -18,7 +18,7 @@ struct SearchBarCell: View {
     /// 검색버튼에 의한 리스트 도출 값
     @State var searching: Bool = false
     /// accuracy: 정렬기준
-    @State private var sort: String = "distance"
+    @State private var sort: String = "accuracy" // distance
     /// 거리로 부터 5000m내의 검색결과 제공(잘 안되는것 같음)
     @State private var radius: Int = 5000
     /// 장소에 대한 URL 값 (카카오맵 기반)
@@ -115,7 +115,6 @@ struct SearchBarCell: View {
                                     }
                                     Spacer()
                                     
-                                    
                                     /// ( i ) 버튼을 누르면 검색을 통해 얻은 url값으로 더 자세한 정보가 담긴 카카오맵 웹뷰 시트가 띄어짐
                                     Button {
                                         placeURL = result.place_url
@@ -136,8 +135,6 @@ struct SearchBarCell: View {
                     }
                 }
                 .navigationBarBackButtonHidden(true)
-            } else {
-                
             }
         }
     }

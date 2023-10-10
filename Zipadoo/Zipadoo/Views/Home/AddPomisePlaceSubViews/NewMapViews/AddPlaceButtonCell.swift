@@ -77,6 +77,10 @@ struct AddPlaceButtonCell: View {
                     }
                 }
         }
+        .onDisappear {
+            coordX = 0.0
+            coordY = 0.0
+        }
     }
 }
 
