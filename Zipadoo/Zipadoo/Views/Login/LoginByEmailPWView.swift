@@ -27,7 +27,7 @@ struct LoginByEmailPWView: View {
             VStack(alignment: .leading) {
                 Spacer().frame(width: 50, height: 50)// 공간
                 HStack {
-                    // 안내 문구1
+                    // MARK: - 비밀번호 입력 안내 문구1
                     Text("비밀번호를 입력해 주세요.")
                         .foregroundColor(.primary)
                         .colorInvert()
@@ -49,7 +49,7 @@ struct LoginByEmailPWView: View {
                             .padding(.trailing, -2)
                     }
                 }
-                
+                // MARK: - 비밀번호 입력 칸
                 Group {
                     HStack {
                         // 비밀번호 숨겼을 경우 ***표시
@@ -74,7 +74,7 @@ struct LoginByEmailPWView: View {
                                 .frame(height: 35)
                         }
                         
-                        // 입력한 비밀번호 지우기 버튼
+                        // MARK: - 입력한 비밀번호 지우기 버튼
                         Button {
                             emailLoginStore.password = ""
                         } label: {
@@ -89,7 +89,7 @@ struct LoginByEmailPWView: View {
                         .foregroundStyle(Color.secondary)
                         .padding(.bottom, 5)
                     
-                    // 비밀번호 확인 안내문구
+                    // MARK: - 비밀번호 확인 안내문구
                     Text(adminMessage)
                         .font(.subheadline)
                         .foregroundStyle(Color.primary.opacity(0.7))
@@ -101,7 +101,7 @@ struct LoginByEmailPWView: View {
             }
             .padding([.leading, .trailing])
             .background(Color.clear)
-            // 상단 네비게이션 바
+            // MARK: - 상단 네비게이션 바 "로그인" 버튼
             .navigationBarItems(trailing:
                                     Button(action: {
                 

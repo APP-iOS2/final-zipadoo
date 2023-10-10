@@ -23,6 +23,8 @@ struct LoginEmailCheckView: View {
             VStack(alignment: .leading) { // 왼쪽 정렬
                 Spacer()
                     .frame(width: 50, height: 50)// 공간
+                
+                // MARK: - 상단 문구
                 HStack {
                     Text("이메일을 입력해 주세요.") // 상단 안내 문구
                         .foregroundColor(.primary)
@@ -37,7 +39,7 @@ struct LoginEmailCheckView: View {
                     .foregroundStyle(Color.primary.opacity(0.7))
                     .colorInvert()
       
-                // 이메일 중복 체크 하여 각 경우에 따라 뷰 버튼 활성화
+                // MARK: - 이메일 중복 체크 하여 각 경우에 따라 네비게이션 링크 버튼 활성화 됨
                 HStack {
                     NavigationLink(destination: SigninByEmailView(emailLoginStore: emailLoginStore), isActive: $isSigninLinkActive) {
                         EmptyView() // 빈 뷰를 사용하여 링크 트리거를 활성화합니다.
@@ -52,7 +54,7 @@ struct LoginEmailCheckView: View {
                              
                 Group {
                     HStack {
-                        // 이메일 입력 칸
+                        // MARK: - 이메일 입력 칸
                         TextField("이메일", text: $emailLoginStore.email, prompt: Text("이메일").foregroundColor(.secondary.opacity(0.7)))
                             .foregroundColor(Color.primary)
                             .colorInvert()
@@ -63,7 +65,7 @@ struct LoginEmailCheckView: View {
                             .frame(height: 35)
                             .keyboardType(.emailAddress)
                         
-                        // 내용 지우기 버튼
+                        // MARK: - 내용 지우기 버튼
                         Button {
                             emailLoginStore.email = ""
                         } label: {
@@ -78,7 +80,7 @@ struct LoginEmailCheckView: View {
                         .padding(.bottom, 5)
                     
                     HStack {
-                        // TextField가 비어있을때만이메일형식 유효 메세지
+                        // TextField가 비어있을 때만 이메일 형식 유효 메세지
                         if emailLoginStore.email.isEmpty {
                             Text("\(validMessage)")
                                 .font(.subheadline)
@@ -91,6 +93,8 @@ struct LoginEmailCheckView: View {
                     Spacer()
                 } // Group
                 .background(Color.primary)
+                
+                // MARK: - "다음" 버튼
                 .navigationBarItems(trailing:
                                         Button("다음") {
                     if isCorrectEmail(email: emailLoginStore.email) {

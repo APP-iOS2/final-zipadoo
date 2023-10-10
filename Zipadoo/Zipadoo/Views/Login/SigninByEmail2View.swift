@@ -24,8 +24,8 @@ struct SigninByEmail2View: View {
                 Spacer().frame(width: 50, height: 50)// 공간
                 HStack {
                     Spacer()
-                    
-                    Text(adminMessage) // 상단 안내 문구
+                    // - MARK: 상단 메세지: 프로필 사진 등록해주세요
+                    Text(adminMessage)
                         .foregroundColor(.primary)
                         .colorInvert()
                         .font(.title2)
@@ -39,7 +39,7 @@ struct SigninByEmail2View: View {
                 HStack {
                     Spacer()
                     
-                    // 앨범 이미지 선택 버튼
+                    // MARK: - 앨범 이미지 선택 버튼
                     ZStack {
                         
                         Button {
@@ -82,6 +82,7 @@ struct SigninByEmail2View: View {
             .padding(.leading, 15)
             .padding(.trailing, 15)
             .background(Color.primary)
+            // MARK: - 상단 회원가입 버튼
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     

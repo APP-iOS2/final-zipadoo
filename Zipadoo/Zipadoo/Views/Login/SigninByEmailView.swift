@@ -28,7 +28,7 @@ struct SigninByEmailView: View {
             VStack(alignment: .leading) {
                 
                 Rectangle().frame(height: 50) // Spacer() 공간
-                
+                // MARK: - 입력 안내 메세지
                 Text("계정이 없습니다. \n가입할 이름과 휴대폰 번호를 입력해 주세요.")
                     .foregroundColor(.primary)
                     .colorInvert()
@@ -40,7 +40,7 @@ struct SigninByEmailView: View {
                     .foregroundStyle(.red.opacity(0.7))
                 
                 Group {
-                    // 이름 입력 칸
+                    // MARK: - 이름 입력
                     HStack {
                         TextField("닉네임", text: $emailLoginStore.nickName, prompt: Text("닉네임").foregroundColor(.secondary.opacity(0.7)))
                             .foregroundColor(Color.primary)
@@ -67,7 +67,7 @@ struct SigninByEmailView: View {
                         .foregroundStyle(Color.secondary)
                         .padding(.bottom, 5)
                     
-                    // 하단 안내 문구
+                    // MARK: - 이름 하단 안내 문구
                     HStack {
                         Text("2~6자로 입력해주세요. 프로필 수정에서 변경 가능합니다.")
                             .font(.subheadline)
@@ -76,7 +76,7 @@ struct SigninByEmailView: View {
                         Spacer()
                     }
                     
-                    // 휴대폰 번호 입력 칸
+                    // MARK: - 휴대폰 번호 입력
                     Spacer()
                         .frame(height: 20) // 공간용
                     
@@ -121,7 +121,7 @@ struct SigninByEmailView: View {
                     
                     Spacer()
                         .frame(height: 20)// 공간용
-                    
+                    // MARK: - 비밀번호 입력
                     Group {
                         HStack {
                             SecureField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
@@ -142,7 +142,6 @@ struct SigninByEmailView: View {
                             .colorInvert()
                         }
                      
-                        
                         Rectangle().frame(height: 1)
                             .foregroundStyle(Color.secondary)
                             .padding(.bottom, 5)
@@ -158,12 +157,13 @@ struct SigninByEmailView: View {
                         
                         Spacer()
 
-                    }// Group 휴대폰번호 입력 창
+                    } // 비밀번호 Group
                     Spacer()
-                } // Group
+                } // 모든 입력 Group
                 .background(Color.primary)
             }
             .padding([.leading, .trailing])
+            // MARK: - 상단 다음 넘어가기 버튼
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
