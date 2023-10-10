@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct MyPageView: View {
     
@@ -22,7 +23,7 @@ struct MyPageView: View {
     }
     
     let dummyImageString: String = "https://cdn.discordapp.com/attachments/1153285599625748531/1154611582748336148/9b860155ad6b6c37.png"
-
+    
     let dummyKm: Int = 1000
     @State var isShownFullScreenCover = false
     @State private var progressBarValue: Double = 0
@@ -34,49 +35,58 @@ struct MyPageView: View {
                 HStack {
                     // 프로필 이미지
                     ProfileImageView(imageString: userImageString, size: .small)
- 
+                    
                     /*
-                    AsyncImage(url: URL(string: dummyImageString)) { image in
-                        image.resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 200)
-                            .cornerRadius(10000)
-                    } placeholder: {
-                        ProgressView()
-                    }
+                     AsyncImage(url: URL(string: dummyImageString)) { image in
+                     image.resizable()
+                     .aspectRatio(contentMode: .fit)
+                     .frame(width: 200)
+                     .cornerRadius(10000)
+                     } placeholder: {
+                     ProgressView()
+                     }
                      */
                     // 프로필 기능모음
                     VStack(alignment: .leading) {
-//                        NavigationLink {
-//                            SettingView()
-//                        } label: {
-//                            Image(systemName: "gearshape")
-//                                .foregroundColor(.black)
-//                        }
-//                        .padding(.bottom)
+                        //                        NavigationLink {
+                        //                            SettingView()
+                        //                        } label: {
+                        //                            Image(systemName: "gearshape")
+                        //                                .foregroundColor(.black)
+                        //                        }
+                        //                        .padding(.bottom)
                         Text("\(currentUser?.nickName ?? "안나옴") 님")
                             .font(.title2)
                             .bold()
                         // 프로필 버튼 모음
                         HStack {
+                            //                            NavigationLink {
+                            //                                MyPotatoView()
+                            //                            } label: {
+                            //                                HStack {
+                            //                                    Image(systemName: "bitcoinsign.circle.fill")
+                            //                                    Text("\(currentUser?.potato ?? 0)")
+                            //                                        .underline()
+                            //                                }
+                            //                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                            //                                .foregroundStyle(.black)
+                            //                                .font(.headline)
+                            //                                .bold()
+                            //                            }
+                            HStack {
+                                Image(systemName: "bitcoinsign.circle.fill")
+                                Text("\(currentUser?.potato ?? 0)")
+                            }
+                            .foregroundStyle(.black)
+                            .font(.headline)
+                            .bold()
+                            
+                            Spacer()
+                            
                             NavigationLink {
                                 MyPotatoView()
                             } label: {
-                                HStack {
-                                    Image(systemName: "bitcoinsign.circle.fill")
-                                    Text("\(currentUser?.potato ?? 0)")
-                                        .underline()
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: 4))
-                                .foregroundStyle(.black)
-                                .font(.headline)
-                                .bold()
-                            }
-                            Spacer()
-                            Button {
-                                isShownFullScreenCover.toggle()
-                            } label: {
-                                Text("충전하기")
+                                Text("내역보기")
                                     .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
                                     .background(.brown.opacity(0.3))
                                     .clipShape(RoundedRectangle(cornerRadius: 4))
@@ -104,11 +114,11 @@ struct MyPageView: View {
                 .padding(.top)
                 
                 MyPageProgressBar(progress: $progressBarValue)
-//                    .onAppear {
-//                        withAnimation(.linear(duration: 3)) {
-//                            progressBarValue = 0.8
-//                        }
-//                    }
+                //                    .onAppear {
+                //                        withAnimation(.linear(duration: 3)) {
+                //                            progressBarValue = 0.8
+                //                        }
+                //                    }
                 
                 HStack {
                     Text("약속을 잘 지켜보아요~")
