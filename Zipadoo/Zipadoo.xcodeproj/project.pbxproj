@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		04C7A85A2AC94889001B2AF8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04C7A8592AC94889001B2AF8 /* Alamofire */; };
+		088F7D402AD4DED40094B9B4 /* ReceivingLocationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F7D3F2AD4DED40094B9B4 /* ReceivingLocationTestView.swift */; };
+		088F7D422AD4EAB50094B9B4 /* GPSStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F7D412AD4EAB50094B9B4 /* GPSStore.swift */; };
 		08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B42ABC1BE0005D231D /* MyPageView.swift */; };
 		08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */; };
 		08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BA2ABC1DA2005D231D /* SettingView.swift */; };
@@ -32,7 +34,6 @@
 		9B8FE8272ACE377B00C1EEFC /* MyLocationAndInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */; };
 		C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C04BCDC22ABD545A0024B487 /* LocationModel.swift */; };
 		C069D2BC2AC145D100A62E04 /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = C069D2BB2AC145D100A62E04 /* AppsFlyerLib */; };
-		FA1DF0142ACF984600953C08 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1DF0132ACF984600953C08 /* GoogleService-Info.plist */; };
 		FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */; };
 		FA24740A2ACD4BDB00D4C821 /* PlaceMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E42ACD4BDB00D4C821 /* PlaceMarkView.swift */; };
 		FA24740B2ACD4BDB00D4C821 /* FriendsLocationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */; };
@@ -98,6 +99,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		088F7D3F2AD4DED40094B9B4 /* ReceivingLocationTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceivingLocationTestView.swift; sourceTree = "<group>"; };
+		088F7D412AD4EAB50094B9B4 /* GPSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSStore.swift; sourceTree = "<group>"; };
 		08C6F0B42ABC1BE0005D231D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
 		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
@@ -122,7 +125,6 @@
 		C04BCDC22ABD545A0024B487 /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Zipadoo.entitlements; sourceTree = "<group>"; };
 		C069D2B92AC141AC00A62E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		FA1DF0132ACF984600953C08 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpectedTravelTimeMarkView.swift; sourceTree = "<group>"; };
 		FA2473E42ACD4BDB00D4C821 /* PlaceMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMarkView.swift; sourceTree = "<group>"; };
 		FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationListView.swift; sourceTree = "<group>"; };
@@ -266,6 +268,7 @@
 				FA2473FD2ACD4BDB00D4C821 /* PromiseDetailView.swift */,
 				FA2473FE2ACD4BDB00D4C821 /* FriendsLocationView.swift */,
 				FA2473FF2ACD4BDB00D4C821 /* MakePromiseViewModel */,
+				088F7D3F2AD4DED40094B9B4 /* ReceivingLocationTestView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -348,6 +351,7 @@
 				FA24743A2ACD4D6E00D4C821 /* LocationStore.swift */,
 				FA24743D2ACD4D6E00D4C821 /* PromiseViewModel.swift */,
 				FA24743F2ACD4D6E00D4C821 /* PromiseDetailStore.swift */,
+				088F7D412AD4EAB50094B9B4 /* GPSStore.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -403,7 +407,6 @@
 			children = (
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
-				FA1DF0132ACF984600953C08 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -555,7 +558,6 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-				FA1DF0142ACF984600953C08 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,6 +589,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				088F7D422AD4EAB50094B9B4 /* GPSStore.swift in Sources */,
 				FA2474192ACD4BDB00D4C821 /* FriendsLocationMapView.swift in Sources */,
 				FA2474512ACD4D6E00D4C821 /* KakaoStore.swift in Sources */,
 				FA2474532ACD4D6E00D4C821 /* EmailLoginStore.swift in Sources */,
@@ -618,6 +621,7 @@
 				FA2474492ACD4D6E00D4C821 /* FriendsLocationMapViewModelExpectedTravelTime.swift in Sources */,
 				8B973A3A2AC593DE00C67B5F /* KakaoTest.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
+				088F7D402AD4DED40094B9B4 /* ReceivingLocationTestView.swift in Sources */,
 				FA2474272ACD4BDB00D4C821 /* AddPromiseUserCell.swift in Sources */,
 				FA24740A2ACD4BDB00D4C821 /* PlaceMarkView.swift in Sources */,
 				FA2474522ACD4D6E00D4C821 /* ContentViewModel.swift in Sources */,

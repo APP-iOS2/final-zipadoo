@@ -5,7 +5,6 @@
 //  Created by Handoo Jeong on 2023/10/04.
 //
 
-import Foundation
 import SwiftUI
 import MapKit
 
@@ -14,7 +13,20 @@ struct TravelTime {
     let imageName: String
     let isMe: Bool
     let lineColor: UIColor // 새로운 변수 lineColor 추가
+//    let userID: String
+//    let userName: String
+//    let userNickName: String
+//    let userProfileImageString: String
+//    let promiseID: String
+//    let promiseMakingUserID: String
+//    let promiseTitle: String
+//    let promiseDate: String
+//    let promiseDestination: String
+//    let locationID: String
+//    let coordinate: Double
 }
+
+// 1. Location 변경 쓸건지?, 새로운 구조체 쓸건지?,
 
 class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate {
     @Published var travelInfoDictionary: [String: TravelTime] = [:]
@@ -37,10 +49,10 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
         imgString: "flag",
         isMe: false
     )
-
+    // 여기에 유저 위치, 이름, 이미지 넣기
     let friendsLocation: [LocationAndInfo] = [
         LocationAndInfo(
-            coordinate: CLLocationCoordinate2D(latitude: 37.437453, longitude: 127.002293),
+            coordinate: CLLocationCoordinate2D(latitude: GPSStore().lastSeenLocation?.coordinate.latitude ?? 37.547551, longitude: GPSStore().lastSeenLocation?.coordinate.longitude ?? 127.080315),
             title: "정한두",
             imgString: "dragon",
             isMe: true
