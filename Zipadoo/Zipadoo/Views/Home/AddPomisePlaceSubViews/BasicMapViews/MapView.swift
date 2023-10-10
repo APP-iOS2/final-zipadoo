@@ -61,6 +61,7 @@ struct MapView: View {
 //                                        getAddressInfo()
                                         makingKorAddress()
                                     }
+                                    selectedPlace = true
                                 }
                             } label: {
                                 Image(systemName: "location.fill")

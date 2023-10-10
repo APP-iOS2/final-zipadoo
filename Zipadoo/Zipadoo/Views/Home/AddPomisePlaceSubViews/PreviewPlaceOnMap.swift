@@ -27,10 +27,17 @@ struct PreviewPlaceOnMap: View {
                         }
                     AnnotationMarker()
                 }
+                .offset(x: 0, y: -50)
             }
         }
         .onAppear {
             position = .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: promiseLocation.latitude, longitude: promiseLocation.longitude), latitudinalMeters: 500, longitudinalMeters: 500))
+        }
+        .mapControls {
+            MapUserLocationButton()
+                .mapControlVisibility(.visible)
+            MapPitchToggle()
+                .mapControlVisibility(.visible)
         }
     }
 }

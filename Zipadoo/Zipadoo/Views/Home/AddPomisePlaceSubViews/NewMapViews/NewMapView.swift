@@ -15,9 +15,9 @@ struct NewMapView: View {
     @Namespace var mapScope
 
     @ObservedObject var searchOfKakaoLocal: SearchOfKakaoLocal = SearchOfKakaoLocal.sharedInstance
-    @State var userPosition: MapCameraPosition = .userLocation(followsHeading: true, fallback: .automatic) /// 유저의 현재위치 카메라 좌표 값
-    @State var placePosition: MapCameraPosition = .automatic /// 장소에 대한 카메라 좌표 값
-    @State var camerBounds: MapCameraBounds = MapCameraBounds() /// 카메라의 확대값
+    @State var userPosition: MapCameraPosition = MapCameraPosition.userLocation(followsHeading: true, fallback: .automatic) /// 유저의 현재위치 카메라 좌표 값
+    @State var placePosition: MapCameraPosition = MapCameraPosition.automatic /// 장소에 대한 카메라 좌표 값
+    @State var cameraBounds: MapCameraBounds = MapCameraBounds(minimumDistance: 800)
     @State var selectedPlacePosition: CLLocationCoordinate2D? /// 장소에 대한 위치 값
     /// 장소명 값
     @Binding var destination: String
@@ -34,17 +34,17 @@ struct NewMapView: View {
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                Map(position: $userPosition, bounds: camerBounds, scope: mapScope) {
+                Map(position: $userPosition, bounds: cameraBounds, scope: mapScope) {
                     UserAnnotation()
                     
                     if isClickedPlace == true {
-                        Annotation(destination, coordinate: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780)) {
+                        Annotation(destination, coordinate: placePosition.region?.center ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780)) {
                             AnnotationCell()
                         }
                         UserAnnotation()
                         
                     } else {
-                        UserAnnotation()
+                        
                     }
                 }
                 .mapStyle(.standard(pointsOfInterest: .all, showsTraffic: true))
@@ -71,24 +71,23 @@ struct NewMapView: View {
                 MapCompass(scope: mapScope)
                     .mapControlVisibility(.visible)
             }
-            .onChange(of: userPosition) { newValue in
-                userPosition = newValue
+            .onAppear {
+                CLLocationManager().requestWhenInUseAuthorization()
             }
-        }
-        .onMapCameraChange(frequency: .continuous) {
-            userPosition = .automatic
-            
-            // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
-            if isClickedPlace == true {
-                selectedPlacePosition = CLLocationCoordinate2D(latitude: promiseLocation.latitude, longitude: promiseLocation.longitude)
-                placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), latitudinalMeters: 500, longitudinalMeters: 500))
-//                placePosition = .region(.init(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: .infinity, longitudeDelta: .infinity)))
-                camerBounds = .init(centerCoordinateBounds: (MKCoordinateRegion(center: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), latitudinalMeters: 500, longitudinalMeters: 500)))
-                print("이동된 카메라 위도: \(promiseLocation.latitude)")
-                print("이동된 카메라 경도: \(promiseLocation.longitude)")
-                print("이동 성공")
-            } else {
-                placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), latitudinalMeters: 500, longitudinalMeters: 500))
+//            .onChange(of: userPosition) { newValue in
+//                userPosition = newValue
+//            }
+            .onMapCameraChange(frequency: .continuous) {
+                userPosition = .automatic
+                
+                // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
+                if isClickedPlace == true {
+                    selectedPlacePosition = CLLocationCoordinate2D(latitude: coordX, longitude: coordY)
+                    placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), latitudinalMeters: 500, longitudinalMeters: 500))
+//                    placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), latitudinalMeters: 500, longitudinalMeters: 500))
+                } else {
+                    placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), latitudinalMeters: 500, longitudinalMeters: 500))
+                }
             }
         }
     }

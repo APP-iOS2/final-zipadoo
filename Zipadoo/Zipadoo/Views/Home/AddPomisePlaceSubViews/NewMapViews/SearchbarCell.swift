@@ -18,13 +18,15 @@ struct SearchBarCell: View {
     /// 검색버튼에 의한 리스트 도출 값
     @State var searching: Bool = false
     /// accuracy: 정렬기준
-    @State private var sort: String = "accuracy"
+    @State private var sort: String = "distance"
     /// 거리로 부터 5000m내의 검색결과 제공(잘 안되는것 같음)
     @State private var radius: Int = 5000
     /// 장소에 대한 URL 값 (카카오맵 기반)
     @State private var placeURL: String?
     /// 검색 결과 리스트의 i 버튼 클릭 값
     @State private var clickedPlaceInfo: Bool = false
+    
+    var locationManager: LocationManager = LocationManager()
     
     @Binding var isClickedPlace: Bool
     @Binding var destination: String
@@ -42,7 +44,9 @@ struct SearchBarCell: View {
                 Button {
                     searching = true
                     isClickedPlace = false
-                    searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: String(LocationManager().location?.coordinate.latitude ?? 0.0), currentPoiY: String(LocationManager().location?.coordinate.longitude ?? 0.0), radius: radius, sort: sort)
+                    searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: String(locationManager.location?.coordinate.latitude ?? 0.0), currentPoiY: String(locationManager.location?.coordinate.longitude ?? 0.0), radius: radius, sort: sort)
+                    print("현재 사용자 위도(장소검색): \(locationManager.location?.coordinate.latitude ?? 0.0)")
+                    print("현재 사용자 경도(장소검색): \(locationManager.location?.coordinate.longitude ?? 0.0)")
                 } label: {
                     ZStack {
                         Color.blue
@@ -64,7 +68,7 @@ struct SearchBarCell: View {
                             if let xValue = Double(result.y), let yValue = Double(result.x) {
                                 coordX = xValue
                                 coordY = yValue
-                                selectedPlacePosition = CLLocationCoordinate2D(latitude: coordX, longitude: coordX)
+                                selectedPlacePosition = CLLocationCoordinate2D(latitude: coordX, longitude: coordY)
                             } else {
                                 print("변환 실패")
                             }
@@ -81,8 +85,8 @@ struct SearchBarCell: View {
                             
                             print("장소 이름: \(destination)")
                             print("주소: \(address)")
-                            print("장소 위도: \(promiseLocation.latitude)")
-                            print("장소 경도: \(promiseLocation.longitude)")
+                            print("장소 위도: \(selectedPlacePosition?.latitude ?? 0.0)")
+                            print("장소 경도: \(selectedPlacePosition?.longitude ?? 0.0)")
                             print("거리: \(result.distance)")
                             
                             isClickedPlace = true

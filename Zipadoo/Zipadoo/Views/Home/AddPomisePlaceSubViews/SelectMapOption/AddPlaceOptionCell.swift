@@ -11,7 +11,7 @@ import SwiftUI
 
 enum MapOption: String, CaseIterable {
     case click = "직접 설정"
-    case search = "검색하기"
+    case search = "장소 검색"
 }
 
 // MARK: - 상단탭바 뷰모델
