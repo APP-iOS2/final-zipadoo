@@ -9,7 +9,7 @@ import Combine // Set<AnyCancellable>()에 필요
 import Firebase
 import Foundation
 
-class ContentViewModel: ObservableObject {
+final class ContentViewModel: ObservableObject {
     
     private let auth = AuthStore.shared
     private var cancellables = Set<AnyCancellable>()

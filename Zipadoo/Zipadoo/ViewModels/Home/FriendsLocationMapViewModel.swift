@@ -9,9 +9,15 @@ import Foundation
 import SwiftUI
 import MapKit
 
+struct TravelTime {
+    let distanceText: String
+    let imageName: String
+    let isMe: Bool
+    let lineColor: UIColor // 새로운 변수 lineColor 추가
+}
+
 class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate {
-    @Published var travelTimesText: [String: (String, String, Bool)] = [:]
-    @State var travelTimes: [String: TimeInterval] = [:]
+    @Published var travelInfoDictionary: [String: TravelTime] = [:]
 
     var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(),
@@ -19,6 +25,11 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
     )
 
     private let mapView = MKMapView()
+    
+    // TravelTime에 사용할 색상 배열
+    private let travelTimeColors: [UIColor] = [
+        .red, .orange, .yellow, .green, .blue, .cyan, .purple, .brown, .black
+    ]
 
     let destinationLocation: LocationAndInfo = LocationAndInfo(
         coordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323),
@@ -96,16 +107,27 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
             directions.calculate { [weak self] response, error in
                 guard let self = self, let response = response else { return }
 
-                let route = response.routes[0]
-                self.mapView.addOverlay(route.polyline, level: .aboveRoads)
-
                 let friendName = friendLocation.title
-                let remainingDistance = route.distance
-
-                self.travelTimes[friendName] = remainingDistance
-
+                // 거리
+//                let remainingDistance = response.routes[0].distance
+                let remainingDistance = calculateDistanceInMeters(x1: friendLocation.coordinate.latitude, y1: friendLocation.coordinate.longitude, x2: destinationLocation.coordinate.latitude, y2: destinationLocation.coordinate.longitude)
+                print("remainingDistance: \(remainingDistance)")
                 let formattedDistance = self.formatDistance(remainingDistance)
-                self.travelTimesText[friendName] = (formattedDistance, friendLocation.imgString, false)
+                var lineColor: UIColor = .clear
+
+                if let travelTime = self.travelInfoDictionary[friendName] {
+                    lineColor = travelTime.lineColor
+                } else {
+                    lineColor = self.travelTimeColors[self.travelInfoDictionary.count % self.travelTimeColors.count]
+                }
+
+                // travelTimesText에 데이터를 저장합니다.
+                let travelTime = TravelTime(distanceText: formattedDistance, imageName: friendLocation.imgString, isMe: false, lineColor: lineColor)
+                self.travelInfoDictionary[friendName] = travelTime
+
+                // mapView를 업데이트하고 뷰를 다시 그릴 수 있도록 알립니다.
+                self.mapView.addOverlay(response.routes[0].polyline, level: .aboveRoads)
+                self.objectWillChange.send()
             }
         }
 
@@ -127,16 +149,24 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
             directions.calculate { [weak self] response, error in
                 guard let self = self, let response = response else { return }
 
-                let route = response.routes[0]
-                self.mapView.addOverlay(route.polyline, level: .aboveRoads)
-
                 let friendName = myLocation.title
-                let remainingDistance = route.distance
-
-                self.travelTimes[friendName] = remainingDistance
-
+                let remainingDistance = calculateDistanceInMeters(x1: myLocation.coordinate.latitude, y1: myLocation.coordinate.longitude, x2: destinationLocation.coordinate.latitude, y2: destinationLocation.coordinate.longitude)
                 let formattedDistance = self.formatDistance(remainingDistance)
-                self.travelTimesText[friendName] = (formattedDistance, myLocation.imgString, true)
+                var lineColor: UIColor = .clear
+
+                if let travelTime = self.travelInfoDictionary[friendName] {
+                    lineColor = travelTime.lineColor
+                } else {
+                    lineColor = self.travelTimeColors[self.travelInfoDictionary.count % self.travelTimeColors.count]
+                }
+
+                // travelTimesText에 데이터를 저장합니다.
+                let travelTime = TravelTime(distanceText: formattedDistance, imageName: myLocation.imgString, isMe: true, lineColor: lineColor)
+                self.travelInfoDictionary[friendName] = travelTime
+
+                // mapView를 업데이트하고 뷰를 다시 그릴 수 있도록 알립니다.
+                self.mapView.addOverlay(response.routes[0].polyline, level: .aboveRoads)
+                self.objectWillChange.send()
             }
         }
     }
@@ -152,15 +182,40 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
 
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.strokeColor = getRandomColor()
+        if let friendName = overlay.title,
+           let travelTime = travelInfoDictionary[friendName ?? "nobody"],
+           let index = Array(travelInfoDictionary.keys).firstIndex(of: friendName ?? "nobody") {
+            // travelTimeColors 배열에서 색상 할당
+            renderer.strokeColor = travelTimeColors[index % travelTimeColors.count]
+        } else {
+            // travelTimeColors 배열을 모두 사용한 경우, 랜덤 색상 사용
+            renderer.strokeColor = travelTimeColors.randomElement() ?? .black
+        }
         renderer.lineWidth = 4.0
         return renderer
     }
+}
 
-    private func getRandomColor() -> UIColor {
-        let randomRed = CGFloat.random(in: 0...1)
-        let randomGreen = CGFloat.random(in: 0...1)
-        let randomBlue = CGFloat.random(in: 0...1)
-        return UIColor(red: randomRed, green: randomGreen, blue: randomBlue, alpha: 1.0)
-    }
+// 재승 작성, 위도,경도로 미터 구하는 함수
+func degreesToRadians(_ degrees: Double) -> Double {
+    return degrees * .pi / 180.0
+}
+
+func calculateDistanceInMeters(x1: Double, y1: Double, x2: Double, y2: Double) -> Double {
+    let earthRadius = 6371000.0 // 지구의 반경 (미터)
+
+    let lat1 = degreesToRadians(x1)
+    let lon1 = degreesToRadians(y1)
+    let lat2 = degreesToRadians(x2)
+    let lon2 = degreesToRadians(y2)
+
+    let dLat = lat2 - lat1
+    let dLon = lon2 - lon1
+
+    let a = sin(dLat/2) * sin(dLat/2) + cos(lat1) * cos(lat2) * sin(dLon/2) * sin(dLon/2)
+    let c = 2 * atan2(sqrt(a), sqrt(1-a))
+
+    let distance = earthRadius * c
+
+    return distance
 }

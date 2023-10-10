@@ -35,7 +35,6 @@ struct MyPageView: View {
                 HStack {
                     // 프로필 이미지
                     ProfileImageView(imageString: userImageString, size: .small)
-                    
                     /*
                      AsyncImage(url: URL(string: dummyImageString)) { image in
                      image.resizable()
