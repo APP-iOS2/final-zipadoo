@@ -45,10 +45,8 @@ struct MyPageView: View {
                         ProgressView()
                     }
                      */
-                    
-                    Spacer()
                     // 프로필 기능모음
-                    VStack(alignment: .trailing) {
+                    VStack(alignment: .leading) {
 //                        NavigationLink {
 //                            SettingView()
 //                        } label: {
@@ -59,32 +57,39 @@ struct MyPageView: View {
                         Text("\(currentUser?.nickName ?? "안나옴") 님")
                             .font(.title2)
                             .bold()
-                            .padding(.bottom)
-                        NavigationLink {
-                            MyPotatoView()
-                        } label: {
-                            HStack {
-                                Image(systemName: "bitcoinsign.circle.fill")
-                                Text("\(currentUser?.potato ?? 0)")
-                                    .underline()
-                            }
-                            .font(.title3)
-                            .bold()
-                            .foregroundColor(.black)
-                        }
-                        Button {
-                            isShownFullScreenCover.toggle()
-                        } label: {
-                            Text("충전하기")
-                                .font(.title3)
+                        // 프로필 버튼 모음
+                        HStack {
+                            NavigationLink {
+                                MyPotatoView()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "bitcoinsign.circle.fill")
+                                    Text("\(currentUser?.potato ?? 0)")
+                                        .underline()
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                                .foregroundStyle(.black)
+                                .font(.headline)
                                 .bold()
-                                .padding(.top, 5)
+                            }
+                            Spacer()
+                            Button {
+                                isShownFullScreenCover.toggle()
+                            } label: {
+                                Text("충전하기")
+                                    .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+                                    .background(.brown.opacity(0.3))
+                                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                                    .foregroundStyle(.black)
+                                    .font(.headline)
+                                    .bold()
+                                    .padding(.top, 5)
+                            }
                         }
                         .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
                             TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
                         })
                     }
-                    .padding(.horizontal, 12)
                 }
                 .padding(.bottom)
                 
@@ -142,32 +147,35 @@ struct MyPageView: View {
                     
                     HStack {
                         Image(systemName: "person.2")
+                            .frame(width: 15)
                         Text("4")
+                            .frame(width: 15)
                         Text("약속 진짜 안지켜요")
                             .padding(10)
-                            .background(.gray)
-                            .cornerRadius(80)
-                            .opacity(0.5)
+                            .background(.brown.opacity(0.3))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                     HStack {
                         Image(systemName: "person.2")
+                            .frame(width: 15)
                         Text("3")
+                            .frame(width: 15)
                         Text("진짜 지각만해서 지각에 묻어버리고 싶어요")
                             .padding(10)
-                            .background(.gray)
-                            .cornerRadius(80)
-                            .opacity(0.5)
+                            .background(.brown.opacity(0.3))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                     HStack {
                         Image(systemName: "person.2")
+                            .frame(width: 15)
                         Text("12")
+                            .frame(width: 15)
                         Text("한 20분 정도 늦어요")
                             .padding(10)
-                            .background(.gray)
-                            .cornerRadius(80)
-                            .opacity(0.5)
+                            .background(.brown.opacity(0.3))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                 }
@@ -204,8 +212,7 @@ struct MyPageProgressBar: View {
                 Rectangle()
                     .frame(height: 25)
                     .cornerRadius(5)
-                    .foregroundColor(.gray)
-                    .opacity(0.5)
+                    .foregroundStyle(.brown.opacity(0.3))
                 
                 ZStack {
                     Rectangle()
@@ -213,8 +220,7 @@ struct MyPageProgressBar: View {
                         .cornerRadius(5)
                         .foregroundColor(.brown)
                     
-                    Text("지각횟수 0회")
-                        .foregroundStyle(.white)
+                    Text("  지각횟수 0회")
                 }
             }
         }

@@ -57,7 +57,6 @@ final class EditProfileViewModel: ObservableObject {
         if !data.isEmpty {
             do {
                 try await Firestore.firestore().collection("Users").document(currentUser?.id ?? "").updateData(data)
-                
             } catch {
                 print("파이어베이스 업데이트 실패")
             }

@@ -7,12 +7,11 @@
 
 import Firebase
 import FirebaseAuth
-import FirebaseFirestoreSwift
-import Firebase
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 import SwiftUI
 
-class AuthStore: ObservableObject {
+final class AuthStore: ObservableObject {
     
     /// 파베 토큰 저장
     @Published var userSession: FirebaseAuth.User?

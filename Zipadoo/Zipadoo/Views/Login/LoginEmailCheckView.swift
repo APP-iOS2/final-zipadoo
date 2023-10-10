@@ -69,10 +69,10 @@ struct LoginEmailCheckView: View {
                             Image(systemName: "x.circle.fill")
                         }
                     }
-                    .foregroundColor(.white.opacity(0.4))
+                    .foregroundColor(Color.white.opacity(0.4))
                     
                     Rectangle().frame(height: 1)
-                        .foregroundStyle(.white.opacity(0.5))
+                        .foregroundStyle(Color.white.opacity(0.5))
                         .padding(.bottom, 5)
                     
                     HStack {
@@ -80,7 +80,7 @@ struct LoginEmailCheckView: View {
                         if emailLoginStore.email.isEmpty {
                             Text("\(validMessage)")
                                 .font(.subheadline)
-                                .foregroundStyle(.red.opacity(0.7))
+                                .foregroundStyle(Color.red.opacity(0.7))
                         }
                         
                         Spacer()
@@ -91,7 +91,7 @@ struct LoginEmailCheckView: View {
                 .background(Color.black)
                 .navigationBarItems(trailing:
                                         Button("다음") {
-                    if emailLoginStore.isCorrectEmail() {
+                    if isCorrectEmail(email: emailLoginStore.email) {
                         // 여기에 데이터를 파이어베이스로 보내고 중복 체크를 수행하는 코드를 추가합니다.
                         emailLoginStore.emailCheck(email: emailLoginStore.email) { isUnique in
                             uniqueEmail = isUnique // 중복 체크 결과를 업데이트합니다.
