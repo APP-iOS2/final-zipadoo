@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import CoreLocation
 
 struct AddPromiseView: View {
     
@@ -14,12 +15,15 @@ struct AddPromiseView: View {
     @Environment(\.dismiss) private var dismiss
     
     var promiseViewModel: PromiseViewModel = PromiseViewModel()
-//    var user: User
+    //    var user: User
     
     // 저장될 변수
     @State private var promiseTitle: String = ""
     @State private var date = Date()
-    @State private var address = ""
+    @State private var destination: String = "" // 약속 장소 이름
+    @State private var address = "" // 약속장소 주소
+    @State private var coordX = 0.0 // 약속장소 위도
+    @State private var coordY = 0.0 // 약속장소 경도
     
     // 지각비 변수 및 상수 값
     @State private var selectedValue: Int = 0
@@ -31,10 +35,14 @@ struct AddPromiseView: View {
     @State private var friends = ["병구", "상규", "예슬", "한두", "아라", "해수", "여훈"]
     @State private var addFriendSheet: Bool = false
     @State private var selectedFriends: [String] = ["김상규", "나예슬", "윤해수", "임병구"]
-    //    @State private var mapViewSheet: Bool = false
-    @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "") /// 장소에 대한 정보 값
-    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
-    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
+    /// 장소 맵프리뷰를 띄우는 시트 값
+    @State private var mapViewSheet: Bool = false
+    /// 장소에 대한 정보 값
+    @State private var promiseLocation: PromiseLocation = PromiseLocation(destination: "", address: "", latitude: LocationManager().location?.coordinate.latitude ?? 0.0, longitude: LocationManager().location?.coordinate.longitude ?? 0.0)
+    /// 검색 결과에 나온 장소 클릭값
+    @State var isClickedPlace: Bool = false
+    /// 장소 추가 버튼 클릭값
+    @State var addLocationButton: Bool = false
     @State private var showingAlert: Bool = false
     @State private var showingPenalty: Bool = false
     
@@ -96,22 +104,47 @@ struct AddPromiseView: View {
                         .bold()
                         .padding(.top, 40)
                     
-                    /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
-                    NavigationLink {
-                        AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
-                    } label: {
-                        Label("지역검색", systemImage: "mappin")
-                            .foregroundColor(.white)
+                    HStack {
+                        /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
+                        NavigationLink {
+                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, promiseLocation: $promiseLocation)
+                        } label: {
+                            Label("지역검색", systemImage: "mappin")
+                                .foregroundColor(.white)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        
+                        Spacer()
+                        
+                        if !promiseLocation.destination.isEmpty {
+                            Button {
+                                mapViewSheet = true
+                            } label: {
+                                HStack {
+                                    Text("\(promiseLocation.destination)")
+                                        .font(.callout)
+                                    Image(systemName: "chevron.forward")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 6)
+                                        .padding(.leading, -5)
+                                }
+                            }
+                            .sheet(isPresented: $mapViewSheet) {
+                                VStack {
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .frame(width: 50, height: 5)
+                                        .foregroundStyle(Color.gray)
+                                        .padding(.top, 10)
+                                    
+                                    PreviewPlaceOnMap(promiseLocation: $promiseLocation)
+                                        .presentationDetents([.height(700)])
+                                        .padding(.top, 15)
+                                }
+                            }
+                        }
+                        Spacer()
                     }
-                    .buttonStyle(.borderedProminent)
-                    //                    .sheet(isPresented: $mapViewSheet, content: {
-                    //                        MapView(mapViewSheet: $mapViewSheet, promiseLocation: $promiseLocation)
-                    //                            .presentationDetents([.height(900)])
-                    //                    })
-                    
-                    Text(promiseLocation.address)
-                        .font(.callout)
-                    
                     // MARK: - 지각비 구현
                     /*
                      지각비 구현 초기안
@@ -202,7 +235,10 @@ struct AddPromiseView: View {
                                                     makingUserID: "유저ID" /*user.id*/, // 사용자 ID를 적절히 설정해야 합니다.
                                                     promiseTitle: promiseTitle,
                                                     promiseDate: date.timeIntervalSince1970, // 날짜 및 시간을 TimeInterval로 변환
-                                                    destination: promiseLocation.address,
+                                                    destination: promiseLocation.destination,
+                                                    address: promiseLocation.address,
+                                                    latitude: promiseLocation.latitude,
+                                                    longitude: promiseLocation.longitude,
                                                     participantIdArray: selectedFriends,
                                                     checkDoublePromise: false, // 원하는 값으로 설정
                                                     locationIdArray: []))

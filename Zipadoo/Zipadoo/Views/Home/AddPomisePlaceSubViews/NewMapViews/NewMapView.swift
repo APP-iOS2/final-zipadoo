@@ -13,37 +13,48 @@ import MapKit
 /// 두가지 기능을 합칠 수 있는 방법을 찾을 경우 도입 시도해볼 예정
 struct NewMapView: View {
     @Namespace var mapScope
-
-    @ObservedObject var searchOfKakaoLocal: SearchOfKakaoLocal = SearchOfKakaoLocal.sharedInstance
-    @State var userPosition: MapCameraPosition = .userLocation(followsHeading: true, fallback: .automatic) /// 유저의 현재위치 카메라 좌표 값
-    @State var placePosition: MapCameraPosition = .automatic /// 장소에 대한 카메라 좌표 값
-    @State var camerBounds: MapCameraBounds = MapCameraBounds() /// 카메라의 확대값
-    @State var selectedPlacePosition: CLLocationCoordinate2D? /// 장소에 대한 위치 값
-    @State var placeName: String = "" /// 장소 이름
     
+    @ObservedObject var searchOfKakaoLocal: SearchOfKakaoLocal = SearchOfKakaoLocal.sharedInstance
+    /// 유저의 현재위치 카메라 좌표 값
+    @State var userPosition: MapCameraPosition = .userLocation(followsHeading: true, fallback: .automatic)
+    /// 클릭한 장소에 대한 카메라 포지션 값
+    @State var placePosition: MapCameraPosition = .automatic
+    /// placePosition값을 넣기 위한 대한 카메라 포지션 값
+    @State var movePosition: MapCameraPosition = .automatic
+    /// 카메라 높이
+    @State var cameraBounds: MapCameraBounds = MapCameraBounds(minimumDistance: 500)
+    /// 클릭한 장소에 대한 위치 값
+    @State var selectedPlacePosition: CLLocationCoordinate2D?
+    /// 장소명 값
+    @Binding var destination: String
+    /// 주소 값
+    @Binding var address: String
+    /// 약속장소 위도
+    @Binding var coordX: Double
+    /// 약속장소 경도
+    @Binding var coordY: Double
     @Binding var isClickedPlace: Bool
     @Binding var addLocationButton: Bool
     @Binding var promiseLocation: PromiseLocation
-
+    
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottom) {
-                Map(position: $userPosition, bounds: camerBounds, scope: mapScope) {
+                Map(position: $userPosition, bounds: cameraBounds, scope: mapScope) {
                     UserAnnotation()
                     
                     if isClickedPlace == true {
-                        Annotation(placeName, coordinate: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780)) {
+                        Annotation(destination, coordinate: movePosition.region?.center ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780)) {
                             AnnotationCell()
                         }
                         UserAnnotation()
                         
                     } else {
-                        UserAnnotation()
                     }
                 }
                 .mapStyle(.standard(pointsOfInterest: .all, showsTraffic: true))
                 if isClickedPlace == true {
-                    AddPlaceButtonCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: promiseLocation)
+                    AddPlaceButtonCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, promiseLocation: $promiseLocation)
                         .padding(.bottom, 40)
                 } else {
                     
@@ -52,7 +63,7 @@ struct NewMapView: View {
             .safeAreaInset(edge: .bottom) {
                 HStack {
                     Spacer()
-                    SearchBarCell(isClickedPlace: $isClickedPlace, placeName: $placeName, selectedPlacePosition: $selectedPlacePosition, promiseLocation: $promiseLocation)
+                    SearchBarCell(isClickedPlace: $isClickedPlace, destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, selectedPlacePosition: $selectedPlacePosition, promiseLocation: $promiseLocation)
                     Spacer()
                 }
                 .background(.ultraThinMaterial)
@@ -65,28 +76,37 @@ struct NewMapView: View {
                 MapCompass(scope: mapScope)
                     .mapControlVisibility(.visible)
             }
-            .onChange(of: userPosition) { newValue in
-                userPosition = newValue
+            .onAppear {
+                CLLocationManager().requestWhenInUseAuthorization()
+            }
+            .onChange(of: placePosition) {
+                withAnimation {
+                    userPosition = .automatic
+                }
+            }
+            .onMapCameraChange(frequency: .continuous) {
+                withAnimation {
+                    // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
+                    if isClickedPlace == true {
+                        selectedPlacePosition = CLLocationCoordinate2D(latitude: coordX, longitude: coordY)
+                        //                        placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)))
+                        placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), latitudinalMeters: 700, longitudinalMeters: 700))
+                        movePosition = placePosition
+                        
+                    } else {
+                        //                        placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)))
+                        movePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ?? CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), latitudinalMeters: 700, longitudinalMeters: 700))
+                        //                        userPosition = placePosition
+                    }
+                }
             }
         }
-        .onMapCameraChange(frequency: .continuous) {
-            userPosition = .automatic
-            
-            // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
-            if isClickedPlace == true {
-                selectedPlacePosition = CLLocationCoordinate2D(latitude: promiseLocation.latitude, longitude: promiseLocation.longitude)
-                placePosition = .region(.init(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: .infinity, longitudeDelta: .infinity)))
-                camerBounds = .init(centerCoordinateBounds: MKCoordinateRegion(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: .infinity, longitudeDelta: .infinity)))
-                print("이동된 카메라 위도: \(promiseLocation.latitude)")
-                print("이동된 카메라 경도: \(promiseLocation.longitude)")
-                print("이동 성공")
-            } else {
-                placePosition = .region(.init(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: .infinity, longitudeDelta: .infinity)))
-            }
+        .onDisappear {
+            isClickedPlace = false
         }
     }
 }
 
 #Preview {
-    NewMapView(isClickedPlace: .constant(false), addLocationButton: .constant(false), promiseLocation: .constant(PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "서울시청")))
+    NewMapView(destination: .constant(""), address: .constant(""), coordX: .constant(0.0), coordY: .constant(0.0), isClickedPlace: .constant(false), addLocationButton: .constant(false), promiseLocation: .constant(PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
 }
