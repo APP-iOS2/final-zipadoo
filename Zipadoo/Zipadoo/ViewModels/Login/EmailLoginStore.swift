@@ -20,6 +20,8 @@ final class EmailLoginStore: ObservableObject {
     /// 선택한 프로필 이미지 UIImage
     @Published var selectedImage: UIImage?
     
+    let dbRef = Firestore.firestore().collection("Users")
+
     /// 유저 회원가입
     func createUser() async throws {
         
@@ -75,5 +77,24 @@ final class EmailLoginStore: ObservableObject {
             print("nil, nil반환")
         }
          */
+    }
+    
+    // 닉네임 중복체크
+    func nicknameCheck(completion: @escaping (Bool) -> Void) {
+        dbRef.whereField("nickName", isEqualTo: nickName).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("데이터베이스 조회 중 오류 발생: \(error.localizedDescription)")
+                completion(false) // 오류 발생 시 false를 반환
+                return
+            }
+            // 중복된 닉네임이 없으면 querySnapshot은 비어 있을 것입니다.
+            if querySnapshot?.isEmpty == true {
+                print("중복되는 닉네임 없음")
+                completion(false) // 중복된 이메일이 없을 경우 false를 반환
+            } else {
+                print("중복되는 닉네임 있음")
+                completion(true) // 중복된 이메일이 있을 경우 true를 반환
+            }
+        }
     }
 }
