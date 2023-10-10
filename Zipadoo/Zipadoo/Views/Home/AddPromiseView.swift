@@ -15,7 +15,14 @@ struct AddPromiseView: View {
     
     // 저장될 변수
     @State private var promiseTitle: String = ""
-    @State private var date = Date()
+    @State private var date = Calendar.current.date(byAdding: .minute, value: 30, to: Date())! // 현재시간+30분을 디폴트 시간으로 설정
+    
+//    var formattedDate: String {
+//            let dateFormatter = DateFormatter()
+//            dateFormatter.locale = Locale(identifier: "ko_KR") // 한국 로케일 설정
+//            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm" // 원하는 날짜 및 시간 형식 설정
+//            return dateFormatter.string(from: date)
+//        }
     
     // 지각비 변수 및 상수 값
     @State private var selectedValue: Int = 0
@@ -23,7 +30,7 @@ struct AddPromiseView: View {
     let maxValue: Int = 5000
     let step: Int = 100
     
-    private let today = Calendar.current.startOfDay(for: Date())
+    @State private var selectedDate = Calendar.current.date(byAdding: .minute, value: 30, to: Date())! // 디폴트 시간 이전으로 설정하지 못하게 픽스
     @State private var addFriendSheet: Bool = false
     
     /// 약속에 참여할 친구배열
@@ -39,7 +46,7 @@ struct AddPromiseView: View {
     
     var isAllWrite: Bool {
         return !promiseTitle.isEmpty &&
-        Calendar.current.startOfDay(for: date) != today &&
+        Calendar.current.startOfDay(for: date) != selectedDate &&
         !promiseLocation.address.isEmpty
     }
     
@@ -89,10 +96,12 @@ struct AddPromiseView: View {
                     Text("약속시간 1시간 전부터 위치공유가 시작됩니다.")
                         .foregroundColor(.gray)
                     
-                    DatePicker("날짜/시간", selection: $date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
+                    DatePicker("날짜/시간", selection: $date, in: self.selectedDate..., displayedComponents: [.date, .hourAndMinute])
                         .datePickerStyle(.compact)
                         .labelsHidden()
                         .padding(.top, 10)
+//                    Text("\(date.timeIntervalSince1970)")
+//                    Text("\(formattedDate)")
                     
                     // MARK: - 약속 장소 구현
                     Text("약속 장소")
