@@ -6,7 +6,9 @@
 //
 
 import Firebase
+import FirebaseAuth
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 import SwiftUI
 
 final class AuthStore: ObservableObject {

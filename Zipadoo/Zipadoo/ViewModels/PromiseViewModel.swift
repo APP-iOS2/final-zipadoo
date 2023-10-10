@@ -69,6 +69,7 @@ class PromiseViewModel: ObservableObject {
     /// 약속 추가 함수
     func addPromise(_ promise: Promise) {
         let newData: [String: Any] = [
+            "makingUserID": "\(promise.makingUserID)",
             "promiseTitle": "\(promise.promiseTitle)",
             "promiseDate": "\(promise.promiseDate)",
             "destination": "\(promise.destination)",
