@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct MyPageView: View {
     
@@ -22,7 +23,7 @@ struct MyPageView: View {
     }
     
     let dummyImageString: String = "https://cdn.discordapp.com/attachments/1153285599625748531/1154611582748336148/9b860155ad6b6c37.png"
-
+    
     let dummyKm: Int = 1000
     @State var isShownFullScreenCover = false
     @State private var progressBarValue: Double = 0
@@ -33,58 +34,71 @@ struct MyPageView: View {
                 
                 HStack {
                     // 프로필 이미지
-                    ProfileImageView(imageString: userImageString, size: .large)
- 
+                    ProfileImageView(imageString: userImageString, size: .small)
                     /*
-                    AsyncImage(url: URL(string: dummyImageString)) { image in
-                        image.resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 200)
-                            .cornerRadius(10000)
-                    } placeholder: {
-                        ProgressView()
-                    }
+                     AsyncImage(url: URL(string: dummyImageString)) { image in
+                     image.resizable()
+                     .aspectRatio(contentMode: .fit)
+                     .frame(width: 200)
+                     .cornerRadius(10000)
+                     } placeholder: {
+                     ProgressView()
+                     }
                      */
-                    
-                    Spacer()
                     // 프로필 기능모음
-                    VStack(alignment: .trailing) {
-//                        NavigationLink {
-//                            SettingView()
-//                        } label: {
-//                            Image(systemName: "gearshape")
-//                                .foregroundColor(.black)
-//                        }
-//                        .padding(.bottom)
+                    VStack(alignment: .leading) {
+                        //                        NavigationLink {
+                        //                            SettingView()
+                        //                        } label: {
+                        //                            Image(systemName: "gearshape")
+                        //                                .foregroundColor(.black)
+                        //                        }
+                        //                        .padding(.bottom)
                         Text("\(currentUser?.nickName ?? "안나옴") 님")
                             .font(.title2)
                             .bold()
-                            .padding(.bottom)
-                        NavigationLink {
-                            MyPotatoView()
-                        } label: {
+                        // 프로필 버튼 모음
+                        HStack {
+                            //                            NavigationLink {
+                            //                                MyPotatoView()
+                            //                            } label: {
+                            //                                HStack {
+                            //                                    Image(systemName: "bitcoinsign.circle.fill")
+                            //                                    Text("\(currentUser?.potato ?? 0)")
+                            //                                        .underline()
+                            //                                }
+                            //                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                            //                                .foregroundStyle(.black)
+                            //                                .font(.headline)
+                            //                                .bold()
+                            //                            }
                             HStack {
                                 Image(systemName: "bitcoinsign.circle.fill")
                                 Text("\(currentUser?.potato ?? 0)")
-                                    .underline()
                             }
-                            .font(.title3)
+                            .foregroundStyle(.black)
+                            .font(.headline)
                             .bold()
-                            .foregroundColor(.black)
-                        }
-                        Button {
-                            isShownFullScreenCover.toggle()
-                        } label: {
-                            Text("충전하기")
-                                .font(.title3)
-                                .bold()
-                                .padding(.top, 5)
+                            
+                            Spacer()
+                            
+                            NavigationLink {
+                                MyPotatoView()
+                            } label: {
+                                Text("내역보기")
+                                    .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+                                    .background(.brown.opacity(0.3))
+                                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                                    .foregroundStyle(.black)
+                                    .font(.headline)
+                                    .bold()
+                                    .padding(.top, 5)
+                            }
                         }
                         .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
                             TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
                         })
                     }
-                    .padding(.horizontal, 12)
                 }
                 .padding(.bottom)
                 
@@ -99,11 +113,11 @@ struct MyPageView: View {
                 .padding(.top)
                 
                 MyPageProgressBar(progress: $progressBarValue)
-//                    .onAppear {
-//                        withAnimation(.linear(duration: 3)) {
-//                            progressBarValue = 0.8
-//                        }
-//                    }
+                //                    .onAppear {
+                //                        withAnimation(.linear(duration: 3)) {
+                //                            progressBarValue = 0.8
+                //                        }
+                //                    }
                 
                 HStack {
                     Text("약속을 잘 지켜보아요~")
@@ -142,32 +156,35 @@ struct MyPageView: View {
                     
                     HStack {
                         Image(systemName: "person.2")
+                            .frame(width: 15)
                         Text("4")
+                            .frame(width: 15)
                         Text("약속 진짜 안지켜요")
                             .padding(10)
-                            .background(.gray)
-                            .cornerRadius(80)
-                            .opacity(0.5)
+                            .background(.brown.opacity(0.3))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                     HStack {
                         Image(systemName: "person.2")
+                            .frame(width: 15)
                         Text("3")
+                            .frame(width: 15)
                         Text("진짜 지각만해서 지각에 묻어버리고 싶어요")
                             .padding(10)
-                            .background(.gray)
-                            .cornerRadius(80)
-                            .opacity(0.5)
+                            .background(.brown.opacity(0.3))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                     HStack {
                         Image(systemName: "person.2")
+                            .frame(width: 15)
                         Text("12")
+                            .frame(width: 15)
                         Text("한 20분 정도 늦어요")
                             .padding(10)
-                            .background(.gray)
-                            .cornerRadius(80)
-                            .opacity(0.5)
+                            .background(.brown.opacity(0.3))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                 }
@@ -204,8 +221,7 @@ struct MyPageProgressBar: View {
                 Rectangle()
                     .frame(height: 25)
                     .cornerRadius(5)
-                    .foregroundColor(.gray)
-                    .opacity(0.5)
+                    .foregroundStyle(.brown.opacity(0.3))
                 
                 ZStack {
                     Rectangle()
@@ -213,8 +229,7 @@ struct MyPageProgressBar: View {
                         .cornerRadius(5)
                         .foregroundColor(.brown)
                     
-                    Text("지각횟수 0회")
-                        .foregroundStyle(.white)
+                    Text("  지각횟수 0회")
                 }
             }
         }
