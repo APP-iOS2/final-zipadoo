@@ -42,23 +42,25 @@ struct PromiseDetailView: View {
     // MARK: - body
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading) {
-                sharingStatusView
-                
-                titleView
-                
-                destinationView
-                
-                dateView
-                
-                remainingTimeView
-                
-                FriendsLocationStatusView()
-            }
-            .padding(.horizontal, 12)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    zipadooToolbarView
+            ScrollView {
+                VStack(alignment: .leading) {
+                    sharingStatusView
+                    
+                    titleView
+                    
+                    destinationView
+                    
+                    dateView
+                    
+                    remainingTimeView
+                    
+                    FriendsLocationStatusView()
+                }
+                .padding(.horizontal, 12)
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        zipadooToolbarView
+                    }
                 }
             }
         }
@@ -146,11 +148,6 @@ struct PromiseDetailView: View {
     }
     
     // MARK: Custom Methods
-//    private func calculateRemainingTime() {
-//        let promiseDate = postPromise.promiseDate
-//        remainingTime = promiseDate - currentDate
-//    }
-  
     private func calculateDate(date: Double) -> String {
         let date = Date(timeIntervalSince1970: date)
         let dateFormatter = DateFormatter()
@@ -197,13 +194,16 @@ struct PromiseDetailView: View {
     }
 }
 
-//#Preview {
-//    PromiseDetailView(promise:
-//                        Promise(makingUserID: "3",
-//                                promiseTitle: "지파두 모각코^ㅡ^",
-//                                promiseDate: 1697094371.302136,
-//                                destination: "서울특별시 종로구 종로3길 17",
-//                                participantIdArray: ["3", "4", "5"],
-//                                checkDoublePromise: false,
-//                                locationIdArray: ["35", "34", "89"]))
-//}
+#Preview {
+    PromiseDetailView(promise:
+                        Promise(makingUserID: "3",
+                                promiseTitle: "지파두 모각코^ㅡ^",
+                                promiseDate: 1697094371.302136,
+                                destination: "서울특별시 종로구 종로3길 17",
+                                address: "멋쟁이 사자처럼 본사",
+                                latitude: 161.3,
+                                longitude: 12.4,
+                                participantIdArray: ["3", "4", "5"],
+                                checkDoublePromise: false,
+                                locationIdArray: ["35", "34", "89"]))
+}
