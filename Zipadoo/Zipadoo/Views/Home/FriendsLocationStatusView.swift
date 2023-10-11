@@ -73,6 +73,7 @@ struct FriendsLocationStatusView: View {
                     .progressViewStyle(BarProgressStyle(height: 25))
                     .transition(.opacity)
                     .shadow(radius: 5)
+                    .padding(.bottom, 60)
             }
             /* HStack {
                 Button(action: {
@@ -94,7 +95,6 @@ struct FriendsLocationStatusView: View {
                 })
             } */
         }
-        .padding()
     }
 }
 
