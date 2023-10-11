@@ -180,10 +180,10 @@ struct PromiseDetailView: View {
             return "약속 시간이 거의 다 됐어요!"
         case 60..<3600:
             let minute = remainingTime / 60
-            return "약속 \(Int(minute))분 전"
+            return "약속 \(Int(minute)+1)분 전"
         case 3600..<86400:
             let hours = remainingTime / (60 * 60)
-            return "약속 \(Int(hours))시간 전"
+            return "약속 \(Int(hours)+1)시간 전"
         case 86400...:
             let days = calculateRemainingDate(current: currentDate, promise: promiseDate)
             return "약속 \(days)일 전"
