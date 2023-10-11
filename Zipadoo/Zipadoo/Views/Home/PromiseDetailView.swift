@@ -176,10 +176,10 @@ struct PromiseDetailView: View {
         switch remainingTime {
 //        case 1..<60:
 //            return "약속 시간이 거의 다 됐어요!"
-//        case 60..<3600:
-//            let minute = remainingTime / 60
-//            return "약속 \(Int(minute))분 전"
-        case ..<3600:
+        case 60..<1800:
+            let minute = remainingTime / 60
+            return "약속 \(Int(minute))분 전"
+        case 1800..<3600:
             return "친구의 위치 현황을 확인해보세요!"
         case 3600..<86400:
             let hours = remainingTime / (60 * 60)
