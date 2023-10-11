@@ -215,7 +215,7 @@ struct PromiseDetailView: View {
     PromiseDetailView(promise:
                         Promise(makingUserID: "3",
                                 promiseTitle: "지파두 모각코^ㅡ^",
-                                promiseDate: 1697011171.302136,
+                                promiseDate: 1697111171.302136,
                                 destination: "서울특별시 종로구 종로3길 17",
                                 address: "멋쟁이 사자처럼 본사",
                                 latitude: 161.3,

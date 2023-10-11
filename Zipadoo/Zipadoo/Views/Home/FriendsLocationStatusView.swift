@@ -114,11 +114,11 @@ struct BarProgressStyle: ProgressViewStyle {
                     RoundedRectangle(cornerRadius: 10.0)
                         .fill(Color(uiColor: .systemGray3))
                         .frame(height: height)
-                        .frame(width: geometry.size.width)
+                        .frame(width: geometry.size.width - 30)
                     
                     RoundedRectangle(cornerRadius: 10.0)
                         .fill(Color(color))
-                        .frame(width: geometry.size.width * CGFloat(progress), height: height)
+                        .frame(width: geometry.size.width * CGFloat(progress) - 30, height: height)
                         .overlay {
                             if let currentValueLabel = configuration.currentValueLabel {
                                 currentValueLabel
@@ -129,9 +129,11 @@ struct BarProgressStyle: ProgressViewStyle {
                     Image("MoleImage")
                         .resizable()
                         .frame(width: 50, height: 50)
-                        .offset(x: geometry.size.width * CGFloat(progress) - 25, y: 0)
+                        .offset(x: geometry.size.width * CGFloat(progress) - 55, y: 0)
                 }
             }
+            .padding(.leading, 8)
+            .padding(.trailing, 22)
         }
     }
 }
