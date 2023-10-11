@@ -99,6 +99,7 @@
 		FAB58B942ABD1879006B9E11 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B932ABD1879006B9E11 /* FirebaseFirestore */; };
 		FAB58B982ABD1879006B9E11 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B972ABD1879006B9E11 /* FirebaseFirestoreSwift */; };
 		FAB58BAE2ABD1879006B9E11 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58BAD2ABD1879006B9E11 /* FirebaseStorage */; };
+		FAD257F42AD69A920017D16C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAD257F32AD69A920017D16C /* GoogleService-Info.plist */; };
 		FAD257E72AD65F4B0017D16C /* AnnotationMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD257D92AD65F4B0017D16C /* AnnotationMarker.swift */; };
 		FAD257E82AD65F4B0017D16C /* PlaceInfoWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD257DB2AD65F4B0017D16C /* PlaceInfoWebView.swift */; };
 		FAD257E92AD65F4B0017D16C /* NewMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD257DC2AD65F4B0017D16C /* NewMapView.swift */; };
@@ -234,6 +235,7 @@
 		FA24745B2ACE39AC00D4C821 /* DateChanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateChanger.swift; sourceTree = "<group>"; };
 		FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPagePromiseStore.swift; sourceTree = "<group>"; };
 		FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastPromiseView.swift; sourceTree = "<group>"; };
+		FAD257F32AD69A920017D16C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/Zipadoo/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FAD257D92AD65F4B0017D16C /* AnnotationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationMarker.swift; sourceTree = "<group>"; };
 		FAD257DB2AD65F4B0017D16C /* PlaceInfoWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceInfoWebView.swift; sourceTree = "<group>"; };
 		FAD257DC2AD65F4B0017D16C /* NewMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMapView.swift; sourceTree = "<group>"; };
@@ -551,6 +553,7 @@
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
+				FAD257F32AD69A920017D16C /* GoogleService-Info.plist */,
 				FAD257F12AD66F310017D16C /* GoogleService-Info.plist */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -735,6 +738,7 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
+				FAD257F42AD69A920017D16C /* GoogleService-Info.plist in Resources */,
 				FAD257F22AD66F310017D16C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
