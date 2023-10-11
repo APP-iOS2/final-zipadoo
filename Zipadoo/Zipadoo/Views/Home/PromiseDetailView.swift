@@ -18,7 +18,7 @@ struct PromiseDetailView: View {
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
     @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
     
-    @Binding var postPromise: Promise
+//    @Binding var postPromise: Promise
   
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
@@ -146,10 +146,10 @@ struct PromiseDetailView: View {
     }
     
     // MARK: Custom Methods
-    private func calculateRemainingTime() {
-        let promiseDate = postPromise.promiseDate
-        remainingTime = promiseDate - currentDate
-    }
+//    private func calculateRemainingTime() {
+//        let promiseDate = postPromise.promiseDate
+//        remainingTime = promiseDate - currentDate
+//    }
   
     private func calculateDate(date: Double) -> String {
         let date = Date(timeIntervalSince1970: date)
@@ -197,13 +197,13 @@ struct PromiseDetailView: View {
     }
 }
 
-#Preview {
-    PromiseDetailView(promise:
-                        Promise(makingUserID: "3",
-                                promiseTitle: "지파두 모각코^ㅡ^",
-                                promiseDate: 1697094371.302136,
-                                destination: "서울특별시 종로구 종로3길 17",
-                                participantIdArray: ["3", "4", "5"],
-                                checkDoublePromise: false,
-                                locationIdArray: ["35", "34", "89"]))
-}
+//#Preview {
+//    PromiseDetailView(promise:
+//                        Promise(makingUserID: "3",
+//                                promiseTitle: "지파두 모각코^ㅡ^",
+//                                promiseDate: 1697094371.302136,
+//                                destination: "서울특별시 종로구 종로3길 17",
+//                                participantIdArray: ["3", "4", "5"],
+//                                checkDoublePromise: false,
+//                                locationIdArray: ["35", "34", "89"]))
+//}

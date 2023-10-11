@@ -36,6 +36,6 @@ struct MapOptionSelectView: View {
     }
 }
 
-#Preview {
-    MapOptionSelectView(mapOptions: .click, isClickedPlace: .constant(false), addLocationButton: .constant(false), destination: .constant(""), address: .constant(""), coordX: .constant(0.0), coordY: .constant(0.0), promiseLocation: .constant(PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
-}
+//#Preview {
+//    MapOptionSelectView(mapOptions: .click, isClickedPlace: .constant(false), addLocationButton: .constant(false), destination: .constant(""), address: .constant(""), coordX: .constant(0.0), coordY: .constant(0.0), promiseLocation: .constant(PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
+//}

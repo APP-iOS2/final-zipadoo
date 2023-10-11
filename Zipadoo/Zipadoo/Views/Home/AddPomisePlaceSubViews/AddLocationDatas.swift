@@ -36,7 +36,7 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 // MARK: - 장소 등록에 필요한 구조체 데이터
 /// 장소 등록에 필요한 구조체 데이터
 struct PromiseLocation: Identifiable, Codable {
-    var id: UUID = UUID()
+    var id: String = UUID().uuidString
     var destination: String // 주소
     var address: String // 주소
     var latitude: Double // 위도

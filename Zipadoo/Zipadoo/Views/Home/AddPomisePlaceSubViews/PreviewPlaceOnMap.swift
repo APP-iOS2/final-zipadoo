@@ -42,6 +42,6 @@ struct PreviewPlaceOnMap: View {
     }
 }
 
-#Preview {
-    PreviewPlaceOnMap(promiseLocation: .constant(PromiseLocation(destination: "서울시청", address: "", latitude: 37.5665, longitude: 126.9780)))
-}
+//#Preview {
+//    PreviewPlaceOnMap(promiseLocation: .constant(PromiseLocation(destination: "서울시청", address: "", latitude: 37.5665, longitude: 126.9780)))
+//}

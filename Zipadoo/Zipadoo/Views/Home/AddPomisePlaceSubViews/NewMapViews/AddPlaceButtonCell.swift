@@ -84,7 +84,7 @@ struct AddPlaceButtonCell: View {
     }
 }
 
-#Preview {
-    AddPlaceButtonCell(isClickedPlace: .constant(true), addLocationButton: .constant(false),
-                       destination: .constant("동서울종합터미널"), address: .constant("서울 광진구 강변역로 50"), coordX: .constant(0.0), coordY: .constant(0.0), promiseLocation: .constant(PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
-}
+//#Preview {
+//    AddPlaceButtonCell(isClickedPlace: .constant(true), addLocationButton: .constant(false),
+//                       destination: .constant("동서울종합터미널"), address: .constant("서울 광진구 강변역로 50"), coordX: .constant(0.0), coordY: .constant(0.0), promiseLocation: .constant(PromiseLocation(destination: "", address: "", latiid: UUID, tude: 37.5665, longitude: 126.9780)))
+//}

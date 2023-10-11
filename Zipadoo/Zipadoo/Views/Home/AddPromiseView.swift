@@ -34,8 +34,8 @@ struct AddPromiseView: View {
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var addFriendSheet: Bool = false
     @State private var selectedFriends: [String] = []
-    //    @State private var mapViewSheet: Bool = false
-    @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "") /// 장소에 대한 정보 값
+    @State private var mapViewSheet: Bool = false
+    @State var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) // 장소에 대한 정보 값
     @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
     @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
     @State private var showingConfirmAlert: Bool = false
@@ -66,7 +66,7 @@ struct AddPromiseView: View {
                     
                     HStack {
                         TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
-                            
+                        
                             .onChange(of: promiseTitle) {
                                 if promiseTitle.count > 15 {
                                     promiseTitle = String(promiseTitle.prefix(15))
@@ -101,7 +101,7 @@ struct AddPromiseView: View {
                         .labelsHidden()
                         .padding(.top, 10)
                     
-                     
+                    
                     
                     // MARK: - 약속 장소 구현
                     Text("약속 장소")
@@ -250,12 +250,12 @@ struct AddPromiseView: View {
                     }
                     .alert(isPresented: $showingCancelAlert) {
                         Alert(
-                        title: Text("약속 등록을 취소합니다."),
-                        message: Text("작성 중인 내용은 저장되지 않습니다."),
-                        primaryButton: .destructive(Text("등록 취소"), action: {
-                        dismiss()
-                        }),
-                        secondaryButton: .default(Text("계속 작성"), action: {
+                            title: Text("약속 등록을 취소합니다."),
+                            message: Text("작성 중인 내용은 저장되지 않습니다."),
+                            primaryButton: .destructive(Text("등록 취소"), action: {
+                                dismiss()
+                            }),
+                            secondaryButton: .default(Text("계속 작성"), action: {
                                 
                             })
                         )
@@ -283,9 +283,9 @@ struct AddPromiseView: View {
                 .frame(maxWidth: .infinity)
                 .presentationDetents([.height(300)])
             })
-//            .sheet(isPresented: $addFriendSheet) {
-//                FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)
-//            }
+            //            .sheet(isPresented: $addFriendSheet) {
+            //                FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)
+            //            }
             .onTapGesture {
                 hideKeyboard()
             }
@@ -293,6 +293,6 @@ struct AddPromiseView: View {
     }
 }
 
-#Preview {
-    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
-}
+//#Preview {
+//    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
+//}
