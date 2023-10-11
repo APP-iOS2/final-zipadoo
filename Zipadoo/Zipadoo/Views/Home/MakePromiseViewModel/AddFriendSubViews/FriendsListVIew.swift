@@ -8,6 +8,18 @@
 import SwiftUI
 
 struct FriendsListVIew: View {
+    
+    let loginUser: UserStore
+    
+    // 현재 로그인한 유저의 데이터
+    //    @StateObject private var loginUser: UserStore = UserStore()
+    
+    // 로그인한 유저의 친구 ID 리스트
+    @State private var loginUserFriendsListID: [String] = []
+    
+    // 유저가 선택한 친구 ID 리스트
+    @State private var chooseLoginUserFriendsListID = []
+    
     @Binding var isShowingSheet: Bool
     @Binding var selectedFriends: [String]
     @State private var showAlert = false
@@ -40,9 +52,14 @@ struct FriendsListVIew: View {
                                 .frame(height: 90)
                                 .scrollIndicators(.hidden)
                             }
-                        }
-                    }
-                }
+                        } // HStack
+                    } // VStack
+                } // overlay
+            if loginUserFriendsListID.isEmpty {
+                Text("저런...친구가 없군요...")
+            } else {
+                
+            }
             List(friends, id: \.self) { friend in
                 HStack {
                     Image(systemName: "person.circle.fill")
@@ -79,10 +96,21 @@ struct FriendsListVIew: View {
                     }
                 }
             }
-        }
+            .onAppear {
+                if let userID = AuthStore.shared.currentUser?.id {
+                    loginUser.fetchLoginUserFriendsID(userID, loginUserFriendsListID)
+//                    { friendsIdArray in
+//                        if let friendsIdArray = friendsIdArray {
+//                            loginUserFriendsListID = friendsIdArray
+//                            print(loginUserFriendsListID)
+//                        }
+//                    }
+                }
+            }
+        } // NavigationStack
     }
 }
 
 #Preview {
-    FriendsListVIew(isShowingSheet: .constant(true), selectedFriends: .constant([""]))
+    FriendsListVIew(loginUser: UserStore(), isShowingSheet: .constant(true), selectedFriends: .constant([""]))
 }

@@ -14,12 +14,12 @@ import SwiftUI
 
 /*
  static var dummyUser = [
-     User(name: "현정", nickName: "stacy", phoneNumber: "0100000", potato: 1000, crustDepth: 300, tardyCount: 10),
-     User(name: "병구", nickName: "뱅구", phoneNumber: "010202", potato: 30, crustDepth: 200, tardyCount: 5),
-     User(name: "아라", nickName: "or zr", phoneNumber: "010339", potato: 200, crustDepth: 100, tardyCount: 8),
-     User(name: "해수", nickName: "깃신", phoneNumber: "010234", potato: 30, crustDepth: 150, tardyCount: 5)
+ User(name: "현정", nickName: "stacy", phoneNumber: "0100000", potato: 1000, crustDepth: 300, tardyCount: 10),
+ User(name: "병구", nickName: "뱅구", phoneNumber: "010202", potato: 30, crustDepth: 200, tardyCount: 5),
+ User(name: "아라", nickName: "or zr", phoneNumber: "010339", potato: 200, crustDepth: 100, tardyCount: 8),
+ User(name: "해수", nickName: "깃신", phoneNumber: "010234", potato: 30, crustDepth: 150, tardyCount: 5)
  ]
-
+ 
  */
 
 final class UserStore: ObservableObject {
@@ -27,12 +27,11 @@ final class UserStore: ObservableObject {
     @Published var userFetchArray: [User] = []
     
     @Published var currentUser: User?
-        
+    
     let dbRef = Firestore.firestore().collection("Users")
     
     init() {
         Task { try await loginUser() }
-
     }
     
     /// 모든 유저 정보 가져오기 -> 성공
@@ -82,22 +81,42 @@ final class UserStore: ObservableObject {
         self.currentUser = user
     }
     
-    /*
-     /// 유저데이터 파베에 추가 함수 ->  AuthStore에 있음
-    func addUserData() async throws {
-        do {
-            // 스포리지에 저장한 사진 주소String
-            guard let imageUrlString = try await ProfileImageUploader.uploadImage(image: UIImage(imageLiteralResourceName: "images")) else { return }
-            
-            let user = User(name: "되라구!@", nickName: "hey", phoneNumber: "13", potato: 4, profileImageString: imageUrlString, crustDepth: 2, tardyCount: 5)
-            try dbRef.document(user.id).setData(from: user)
-            fetchAllUsers()
-            
-        } catch {
-            print("User 등록 실패")
+    func fetchLoginUserFriendsID(_ userID: String, _ friendIdArray: [String]) -> Void {
+        // 문서를 가져와서 사용자 ID를 가지는 문서 읽기
+        dbRef.document(userID).getDocument { (document, error) in
+            if let error = error {
+                print("에러: \(error)")
+            } else {
+                if let document = document, document.exists {
+                    if let fieldValue = document.get("friendsIdArray") as? [String] {
+                        return fieldValue
+                        print("Field Value: \(fieldValue)")
+                    } else {
+                        print("필드의 값을 찾을 수 없습니다.")
+                    }
+                } else {
+                    print("문서가 존재하지 않습니다.")
+                }
+            }
         }
     }
-     */
-
-    /// 업데이트는 따로 만들어서 마이페이지쪽 ViewModel에서 구현
-}
+        
+        /*
+         /// 유저데이터 파베에 추가 함수 ->  AuthStore에 있음
+         func addUserData() async throws {
+         do {
+         // 스포리지에 저장한 사진 주소String
+         guard let imageUrlString = try await ProfileImageUploader.uploadImage(image: UIImage(imageLiteralResourceName: "images")) else { return }
+         
+         let user = User(name: "되라구!@", nickName: "hey", phoneNumber: "13", potato: 4, profileImageString: imageUrlString, crustDepth: 2, tardyCount: 5)
+         try dbRef.document(user.id).setData(from: user)
+         fetchAllUsers()
+         
+         } catch {
+         print("User 등록 실패")
+         }
+         }
+         */
+        
+        /// 업데이트는 따로 만들어서 마이페이지쪽 ViewModel에서 구현
+    }

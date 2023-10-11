@@ -83,7 +83,7 @@ struct PromiseDetailView: View {
         }
         .onReceive(timer, perform: { _ in
             currentDate = Date().timeIntervalSince1970
-            formatRemainingTime()
+//            formatRemainingTime()
         })
         .navigationDestination(isPresented: $isShowingEditView) {
             // TODO: 수정뷰

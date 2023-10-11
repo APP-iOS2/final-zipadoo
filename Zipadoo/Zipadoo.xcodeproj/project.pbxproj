@@ -142,12 +142,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		043E689C2ACC0E33007B7395 /* PlaceInfoWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoWebView.swift; sourceTree = "<group>"; };
-		04C7A84C2AC9405B001B2AF8 /* NewMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMapView.swift; sourceTree = "<group>"; };
-		04C7A8522AC94752001B2AF8 /* SearchbarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchbarCell.swift; sourceTree = "<group>"; };
-		04C7A8542AC94776001B2AF8 /* AnnotationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCell.swift; sourceTree = "<group>"; };
-		04C7A8562AC9479A001B2AF8 /* AddPlaceButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlaceButtonCell.swift; sourceTree = "<group>"; };
-		04CF2F992AD3E88300A2F660 /* TestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingView.swift; sourceTree = "<group>"; };
 		08BC9AF12ACF973A0003AE32 /* EditPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPasswordView.swift; sourceTree = "<group>"; };
 		08C6F0B42ABC1BE0005D231D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
@@ -322,12 +316,6 @@
 		8BAAEAC92ABC444800477574 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
-				04C7A84C2AC9405B001B2AF8 /* NewMapView.swift */,
-				04C7A8522AC94752001B2AF8 /* SearchbarCell.swift */,
-				04C7A8542AC94776001B2AF8 /* AnnotationCell.swift */,
-				04C7A8562AC9479A001B2AF8 /* AddPlaceButtonCell.swift */,
-				043E689C2ACC0E33007B7395 /* PlaceInfoWebView.swift */,
-				04CF2F992AD3E88300A2F660 /* TestingView.swift */,
 				3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */,
 				8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */,
 			);

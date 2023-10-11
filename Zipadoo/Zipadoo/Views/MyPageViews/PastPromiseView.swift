@@ -10,6 +10,8 @@ import WidgetKit
 
 struct PastPromiseView: View {
     @StateObject private var promise: PromiseViewModel = PromiseViewModel()
+    @StateObject private var loginUser: UserStore = UserStore()
+    
     @State private var isShownFullScreenCover: Bool = false
     
     var body: some View {
@@ -103,7 +105,7 @@ struct PastPromiseView: View {
                                 Text("삭제")
                             }
                             .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                                AddPromiseView()
+                                AddPromiseView(loginUser: loginUser)
                             })
                         }
                     }

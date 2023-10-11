@@ -50,6 +50,7 @@ struct AddPromiseView: View {
     }
     
     @State private var addPromise: Promise = Promise()
+    var loginUser: UserStore
     
     @StateObject private var promise: PromiseViewModel = PromiseViewModel()
     @StateObject private var authUser: AuthStore = AuthStore()
@@ -101,8 +102,6 @@ struct AddPromiseView: View {
                         .datePickerStyle(.compact)
                         .labelsHidden()
                         .padding(.top, 10)
-                    
-                    
                     
                     // MARK: - 약속 장소 구현
                     Text("약속 장소")
@@ -195,7 +194,7 @@ struct AddPromiseView: View {
                     .padding(.top, 10)
                     
                     // MARK: - 약속 친구 추가 구현
-                    AddFriendCellView()
+                    AddFriendCellView(loginUser: loginUser)
                 }
                 .padding(.horizontal, 15)
             }

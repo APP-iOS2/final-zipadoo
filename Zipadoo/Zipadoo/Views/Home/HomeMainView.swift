@@ -125,7 +125,7 @@ struct HomeMainView: View {
                             Text("약속 추가")
                         }
                         .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                            AddPromiseView()
+                            AddPromiseView(loginUser: loginUser)
                         })
                     }
                 } // toolbar

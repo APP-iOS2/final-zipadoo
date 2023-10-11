@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct AddFriendCellView: View {
+    let loginUser: UserStore
+    
     @State private var addFriendsSheet: Bool = false
     
     @State private var selectedFriends: [String] = []
@@ -61,11 +63,11 @@ struct AddFriendCellView: View {
                 }
             }
             .sheet(isPresented: $addFriendsSheet) {
-                FriendsListVIew(isShowingSheet: $addFriendsSheet, selectedFriends: $selectedFriends)
+                FriendsListVIew(loginUser: loginUser, isShowingSheet: $addFriendsSheet, selectedFriends: $selectedFriends)
             }
     }
 }
 
 #Preview {
-    AddFriendCellView()
+    AddFriendCellView(loginUser: UserStore())
 }
