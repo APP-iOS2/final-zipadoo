@@ -7,22 +7,19 @@
 
 import SwiftUI
 
-/// 더미 유저
-let dummyUser: User = User(id: "1", name: "gs", nickName: "닉네임", phoneNumber: "01", profileImageString: "22", friendsIdArray: ["12", "2"], friendsIdRequestArray: ["3"])
-
 struct FriendSellView: View {
-    var friend: User
-    @Binding var selectedFriends: [User]
+    var name: String
+    @Binding var selectedFriends: [String]
     
     var body: some View {
         //        ForEach(selectedFriends.indices, id: \.self) { index in
         VStack {
             ZStack {
-                ProfileImageView(imageString: friend.profileImageString, size: .small)
+                Circle().stroke(Color.gray)
                 //                    .frame(width: 75, height: 60)
                 Button {
                     print("친구 삭제")
-                    deleteFriend(friend)
+                    deleteFriend(name)
                 } label: {
                     Image(systemName: "minus.circle.fill")
                         .resizable()
@@ -34,13 +31,13 @@ struct FriendSellView: View {
             .shadow(radius: 1)
             .tint(.red)
             
-            Text(friend.nickName)
+            Text("\(name)")
                 .font(.callout)
         }
         .frame(width: 85, height: 85)
         //        }
     }
-    func deleteFriend(_ item: User) {
+    func deleteFriend(_ item: String) {
         if let index = selectedFriends.firstIndex(of: item) {
             selectedFriends.remove(at: index)
         }
@@ -48,5 +45,5 @@ struct FriendSellView: View {
 }
 
 #Preview {
-    FriendSellView(friend: dummyUser, selectedFriends: .constant([dummyUser]))
+    FriendSellView(name: "해수", selectedFriends: .constant(["장여훈"]))
 }

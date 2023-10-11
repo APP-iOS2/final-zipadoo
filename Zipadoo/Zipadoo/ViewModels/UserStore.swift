@@ -70,8 +70,6 @@ final class UserStore: ObservableObject {
         let user = try snapshot.data(as: User.self)
         
         self.currentUser = user
-        
-        print("Debug: User is \(self.currentUser)")
     }
     
     /*

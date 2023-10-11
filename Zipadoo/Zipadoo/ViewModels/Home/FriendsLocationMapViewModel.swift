@@ -38,7 +38,7 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
         isMe: false
     )
 
-    let friendsLocation: [LocationAndInfo] = [
+    var friendsLocation: [LocationAndInfo] = [
         LocationAndInfo(
             coordinate: CLLocationCoordinate2D(latitude: 37.437453, longitude: 127.002293),
             title: "정한두",

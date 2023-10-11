@@ -90,7 +90,8 @@ struct FriendsView: View {
                         Text("삭제")
                             .padding(5)
                             .foregroundColor(.gray)
-                            .background(.white)
+                            .background(.primary)
+                            .colorInvert()
                             .onTapGesture {
                                 selectedFriendId = friend.id
                                 isDeleteAlert.toggle()
@@ -136,7 +137,9 @@ struct FriendsView: View {
                         Text("수락")
                         .padding(5)
                         .foregroundColor(.green)
-                        .background(.white)
+                        .colorInvert()
+                        .background(.primary)
+                        .colorInvert()
                         .onTapGesture {
                             // 수락
                             selectedFriendId = friend.id
@@ -151,7 +154,9 @@ struct FriendsView: View {
                         Text("거절")
                             .padding(5)
                             .foregroundColor(.red)
-                            .background(.white)
+                            .colorInvert()
+                            .background(.primary)
+                            .colorInvert()
                             .onTapGesture {
                                 // 거절
                                 Task {
