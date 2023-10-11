@@ -91,6 +91,7 @@ struct SearchBarCell: View {
                             
                             isClickedPlace = true
                             searching = false
+                            hideKeyboard()
                         } label: {
                             VStack(alignment: .leading) {
                                 HStack {

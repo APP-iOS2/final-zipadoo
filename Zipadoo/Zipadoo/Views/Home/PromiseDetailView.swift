@@ -19,11 +19,14 @@ struct PromiseDetailView: View {
     @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
     
     @Binding var postPromise: Promise
+  
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
     @State private var isShowingEditView: Bool = false
     @State private var isShowingShareSheet: Bool = false
+    let promise: Promise
+    var color: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
     
     // MARK: - Properties
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
@@ -61,11 +64,11 @@ struct PromiseDetailView: View {
         }
         .onAppear {
             currentDate = Date().timeIntervalSince1970
-            calculateRemainingTime()
+            formatRemainingTime()
         }
         .onReceive(timer, perform: { _ in
             currentDate = Date().timeIntervalSince1970
-            calculateRemainingTime()
+            formatRemainingTime()
         })
         .navigationDestination(isPresented: $isShowingEditView) {
             // TODO: 수정뷰
@@ -107,37 +110,37 @@ struct PromiseDetailView: View {
     
     private var sharingStatusView: some View {
         Text(destinagionStatus.rawValue)
-            .foregroundStyle(statusColor)
+            .foregroundStyle(.white)
             .font(.caption).bold()
             .padding([.vertical, .horizontal], 12)
-            .background(.yellow)
+            .background(Color(color))
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.bottom, 12)
     }
     
     private var titleView: some View {
-        Text(postPromise.promiseTitle)
+        Text(promise.promiseTitle)
             .font(.largeTitle)
             .bold()
             .padding(.vertical, 12)
     }
     
     private var dateView: some View {
-        Text(("일시 : \(promiseDetailStore.calculateDate(date: postPromise.promiseDate))"))
+        Text(("일시 : \(calculateDate(date: promise.promiseDate))"))
             .padding(.vertical, 3)
     }
     
     private var destinationView: some View {
-        Text("장소 : \(postPromise.destination)")
+        Text("장소 : \(promise.destination)")
     }
     
     private var remainingTimeView: some View {
-        Text(formatRemainingTime(time: remainingTime))
-            .foregroundStyle(statusColor)
+        Text(formatRemainingTime())
+            .foregroundStyle(.white)
             .bold()
             .frame(maxWidth: .infinity)
             .padding(.vertical, 12)
-            .background(.yellow)
+            .background(Color(color))
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .padding(.vertical, 12)
     }
@@ -147,26 +150,60 @@ struct PromiseDetailView: View {
         let promiseDate = postPromise.promiseDate
         remainingTime = promiseDate - currentDate
     }
+  
+    private func calculateDate(date: Double) -> String {
+        let date = Date(timeIntervalSince1970: date)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일 | a hh:mm"
+        return dateFormatter.string(from: date)
+    }
     
-    private func formatRemainingTime(time: Double) -> String {
-        switch time {
-        case 1...60:
+    private func formatRemainingTime() -> String {
+        let promiseDate = promise.promiseDate
+        remainingTime = promiseDate - currentDate
+        switch remainingTime {
+        case 1..<60:
             return "약속 시간이 거의 다 됐어요!"
-        case 61...3600:
-            let minute = time / 60
+        case 60..<3600:
+            let minute = remainingTime / 60
             return "약속 \(Int(minute))분 전"
-        case 3601...86400:
-            let hours = time / (60 * 60)
+        case 3600..<86400:
+            let hours = remainingTime / (60 * 60)
             return "약속 \(Int(hours))시간 전"
-        case 86401...:
-            let days = time / (24 * 60 * 60)
-            return "약속 \(Int(days))일 전"
+        case 86400...:
+            let days = calculateRemainingDate(current: currentDate, promise: promiseDate)
+            return "약속 \(days)일 전"
         default:
             return "약속 시간이 됐어요!"
         }
     }
+    
+    private func calculateRemainingDate(current: Double, promise: Double) -> Int {
+        let calendar = Calendar.current
+        
+        let nowDate = Date(timeIntervalSince1970: current)
+        let promiseDate = Date(timeIntervalSince1970: promise)
+        
+        let startOfToday = calendar.startOfDay(for: nowDate)
+        let startOfPromiseDay = calendar.startOfDay(for: promiseDate)
+        
+        let components = calendar.dateComponents([.day], from: startOfToday, to: startOfPromiseDay)
+
+        if let days = components.day {
+            return days
+        }
+        
+        return -1
+    }
 }
 
 #Preview {
-    PromiseDetailView(postPromise: .constant(promise))
+    PromiseDetailView(promise:
+                        Promise(makingUserID: "3",
+                                promiseTitle: "지파두 모각코^ㅡ^",
+                                promiseDate: 1697094371.302136,
+                                destination: "서울특별시 종로구 종로3길 17",
+                                participantIdArray: ["3", "4", "5"],
+                                checkDoublePromise: false,
+                                locationIdArray: ["35", "34", "89"]))
 }

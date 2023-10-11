@@ -32,18 +32,14 @@ struct AddPromiseView: View {
     let step: Int = 100
     
     private let today = Calendar.current.startOfDay(for: Date())
-    @State private var friends = ["병구", "상규", "예슬", "한두", "아라", "해수", "여훈"]
     @State private var addFriendSheet: Bool = false
-    @State private var selectedFriends: [String] = ["김상규", "나예슬", "윤해수", "임병구"]
-    /// 장소 맵프리뷰를 띄우는 시트 값
-    @State private var mapViewSheet: Bool = false
-    /// 장소에 대한 정보 값
-    @State private var promiseLocation: PromiseLocation = PromiseLocation(destination: "", address: "", latitude: LocationManager().location?.coordinate.latitude ?? 0.0, longitude: LocationManager().location?.coordinate.longitude ?? 0.0)
-    /// 검색 결과에 나온 장소 클릭값
-    @State var isClickedPlace: Bool = false
-    /// 장소 추가 버튼 클릭값
-    @State var addLocationButton: Bool = false
-    @State private var showingAlert: Bool = false
+    @State private var selectedFriends: [String] = []
+    //    @State private var mapViewSheet: Bool = false
+    @State private var promiseLocation: PromiseLocation = PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "") /// 장소에 대한 정보 값
+    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
+    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
+    @State private var showingConfirmAlert: Bool = false
+    @State private var showingCancelAlert: Bool = false
     @State private var showingPenalty: Bool = false
     
     var isAllWrite: Bool {
@@ -51,6 +47,11 @@ struct AddPromiseView: View {
         Calendar.current.startOfDay(for: date) != today &&
         !promiseLocation.address.isEmpty
     }
+    
+    @State private var addPromise: Promise = Promise()
+    
+    @StateObject private var promise: PromiseViewModel = PromiseViewModel()
+    @StateObject private var authUser: AuthStore = AuthStore()
     
     var body: some View {
         NavigationStack {
@@ -65,6 +66,7 @@ struct AddPromiseView: View {
                     
                     HStack {
                         TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
+                            
                             .onChange(of: promiseTitle) {
                                 if promiseTitle.count > 15 {
                                     promiseTitle = String(promiseTitle.prefix(15))
@@ -75,14 +77,14 @@ struct AddPromiseView: View {
                             .foregroundColor(.gray)
                             .padding(.trailing, -7)
                         Text("/15")
-                            .foregroundColor(.gray)
+                            .foregroundColor(.secondary)
                     }
                     .padding(.top, 10)
                     
                     Divider()
                         .frame(maxWidth: .infinity)
                         .overlay {
-                            Color.gray
+                            Color.secondary
                         }
                     
                     // MARK: - 약속 날짜/시간 선택 구현
@@ -91,12 +93,15 @@ struct AddPromiseView: View {
                         .bold()
                         .padding(.top, 40)
                     Text("약속시간 1시간 전부터 위치공유가 시작됩니다.")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.secondary)
+                        .font(.subheadline)
                     
                     DatePicker("날짜/시간", selection: $date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
                         .datePickerStyle(.compact)
                         .labelsHidden()
                         .padding(.top, 10)
+                    
+                     
                     
                     // MARK: - 약속 장소 구현
                     Text("약속 장소")
@@ -189,24 +194,6 @@ struct AddPromiseView: View {
                     .padding(.top, 10)
                     
                     // MARK: - 약속 친구 추가 구현
-                    HStack {
-                        Text("친구추가")
-                            .font(.title2)
-                            .bold()
-                        
-                        Spacer()
-                        
-                        Button {
-                            addFriendSheet.toggle()
-                            print("친구 추가")
-                        } label: {
-                            Label("추가하기", systemImage: "plus")
-                                .foregroundColor(.black)
-                        }
-                        .buttonStyle(.bordered)
-                    }
-                    .padding(.top, 40)
-                    
                     AddFriendCellView()
                 }
                 .padding(.horizontal, 15)
@@ -214,16 +201,23 @@ struct AddPromiseView: View {
             .scrollIndicators(.hidden)
             .navigationTitle("약속 추가")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
+                    // MARK: - 약속 등록 버튼 구현
                     Button {
-                        showingAlert.toggle()
+                        addPromise.makingUserID = authUser.currentUser?.id ?? "not ID"
+                        addPromise.promiseTitle = promiseTitle
+                        addPromise.promiseDate = date.timeIntervalSince1970
+                        addPromise.destination = promiseLocation.address
+                        promise.addPromise(addPromise)
+                        showingConfirmAlert.toggle()
                     } label: {
                         Text("등록")
                             .foregroundColor(isAllWrite ? .blue : .gray)
                     }
                     .disabled(!isAllWrite)
-                    .alert(isPresented: $showingAlert) {
+                    .alert(isPresented: $showingConfirmAlert) {
                         Alert(
                             title: Text(""),
                             message: Text("등록이 완료되었습니다."),
@@ -246,8 +240,40 @@ struct AddPromiseView: View {
                         )
                     }
                 }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        showingCancelAlert.toggle()
+                    } label: {
+                        Text("취소")
+                            .foregroundColor(.red)
+                            .bold()
+                    }
+                    .alert(isPresented: $showingCancelAlert) {
+                        Alert(
+                        title: Text("약속 등록을 취소합니다."),
+                        message: Text("작성 중인 내용은 저장되지 않습니다."),
+                        primaryButton: .destructive(Text("등록 취소"), action: {
+                        dismiss()
+                        }),
+                        secondaryButton: .default(Text("계속 작성"), action: {
+                                
+                            })
+                        )
+                    }
+                }
+                
             }
             .sheet(isPresented: $showingPenalty, content: {
+                HStack {
+                    Spacer()
+                    Button {
+                        showingPenalty.toggle()
+                    } label: {
+                        Text("결정")
+                    }
+                }
+                .padding(.horizontal, 15)
+                
                 Picker(selection: $selectedValue, label: Text("지각비")) {
                     ForEach((minValue...maxValue).filter { $0 % step == 0 }, id: \.self, content: { value in
                         Text("\(value)").tag(value)
@@ -255,11 +281,11 @@ struct AddPromiseView: View {
                 }
                 .pickerStyle(WheelPickerStyle())
                 .frame(maxWidth: .infinity)
-                .presentationDetents([.height(200)])
+                .presentationDetents([.height(300)])
             })
-            .sheet(isPresented: $addFriendSheet) {
-                FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)
-            }
+//            .sheet(isPresented: $addFriendSheet) {
+//                FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)
+//            }
             .onTapGesture {
                 hideKeyboard()
             }

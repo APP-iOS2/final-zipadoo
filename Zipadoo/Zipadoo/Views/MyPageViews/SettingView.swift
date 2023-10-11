@@ -24,11 +24,17 @@ struct SettingView: View {
             
             Section {
                 NavigationLink {
-                    AccountView()
+                    EditProfileView()
                     
                 } label: {
                     Text("회원정보 수정")
                     
+                }
+                
+                NavigationLink {
+                    EditPasswordView()
+                } label: {
+                    Text("비밀번호 변경")
                 }
                 
                 NavigationLink {

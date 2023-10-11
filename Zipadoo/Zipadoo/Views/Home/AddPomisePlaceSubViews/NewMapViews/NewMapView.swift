@@ -52,6 +52,9 @@ struct NewMapView: View {
                     } else {
                     }
                 }
+                .onTapGesture {
+                    hideKeyboard()
+                }
                 .mapStyle(.standard(pointsOfInterest: .all, showsTraffic: true))
                 if isClickedPlace == true {
                     AddPlaceButtonCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, promiseLocation: $promiseLocation)

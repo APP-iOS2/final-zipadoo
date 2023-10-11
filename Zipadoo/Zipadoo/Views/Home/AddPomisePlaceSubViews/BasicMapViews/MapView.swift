@@ -74,11 +74,10 @@ struct MapView: View {
                                     .padding()
                                     .background(Color.white)
                                     .clipShape(Circle())
-                                    .shadow(color: .black, radius: 3)
+                                    .shadow(color: .black, radius: 1)
                             }
                             Spacer()
                         }
-                        .safeAreaPadding(.top, 50)
                         .padding()
                     }
                     
@@ -87,7 +86,7 @@ struct MapView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundStyle(.white)
-                            .frame(width: 340, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+                            .frame(width: 350, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
                             .shadow(radius: 15)
                             .overlay {
                                 VStack {
@@ -137,7 +136,7 @@ struct MapView: View {
                             }
                     }
                 }
-                .padding(.bottom, 30)
+                .padding(.bottom, 10)
             }
             .ignoresSafeArea(edges: .all)
             .onAppear {

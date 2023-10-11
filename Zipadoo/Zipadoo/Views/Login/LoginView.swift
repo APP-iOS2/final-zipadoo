@@ -27,6 +27,8 @@ struct LoginView: View {
                 NavigationView {
                     ZStack {
                         VStack {
+                            
+                            // MARK: -두더지 이미지
                             Spacer(minLength: spaceHeight)
                             Image("Dothez")
                                 .resizable()
@@ -39,10 +41,11 @@ struct LoginView: View {
                                 }
                             Spacer(minLength: 50)
                         }
+
                         VStack {
                             Spacer(minLength: 5)
                             
-                            // 이메일 로그인 버튼
+                            // MARK: -이메일 로그인 버튼
                             NavigationLink {
                                 LoginEmailCheckView()
                             } label: {
@@ -53,7 +56,7 @@ struct LoginView: View {
                                     .cornerRadius(5)
                             }
                             
-                            // 카카오톡 로그인 버튼
+                            // MARK: -카카오톡 로그인 버튼
                             Button {
                                 /*
                                  kakaoStore.kakaoLogin()
@@ -76,7 +79,7 @@ struct LoginView: View {
                             }
                             .disabled(true)
                             
-                            // 애플 로그인 버튼
+                            // MARK: - 애플 로그인 버튼
                             Button {
                                 print("apple login")
                             } label: {
@@ -94,6 +97,7 @@ struct LoginView: View {
                                     .foregroundColor(Color(dothezColor))
                             }
                         }
+
                     } // ScrollView
                     .frame(maxWidth: UIScreen.main.bounds.width)
                     .background(Color.black, ignoresSafeAreaEdges: .all)
