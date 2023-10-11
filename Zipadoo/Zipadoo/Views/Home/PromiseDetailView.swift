@@ -219,6 +219,9 @@ struct PromiseDetailView: View {
                             promiseTitle: "지파두 모각코^ㅡ^",
                             promiseDate: 1697094371.302136,
                             destination: "서울특별시 종로구 종로3길 17",
+                            address: "",
+                            latitude: 0.0,
+                            longitude: 0.0,
                             participantIdArray: ["3", "4", "5"],
                             checkDoublePromise: false,
                             locationIdArray: ["35", "34", "89"]))

@@ -68,24 +68,28 @@ class PromiseViewModel: ObservableObject {
     //            print("Error getting documents: \(error)")
     //        }
     //    }
-    func fetchData() {
-        dbRef.getDocuments { (snapshot, error) in
-            guard error == nil else {
-                print("오류: \(error!)")
-                return
-            }
-            var temp: [Promise] = []
-            if let snapshot = snapshot {
-                for document in snapshot.documents {
-                    if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
-                       let promise = try? JSONDecoder().decode(Promise.self, from: jsonData) {
-                        temp.append(promise)
-                    }
+    
+    func fetchData() async throws {
+        do {
+            dbRef.getDocuments { (snapshot, error) in
+                guard error == nil else {
+                    print("오류: \(error!)")
+                    return
                 }
-                self.promiseViewModel = temp
-                print(self.promiseViewModel)
+                var temp: [Promise] = []
+                if let snapshot = snapshot {
+                    for document in snapshot.documents {
+                        if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
+                           let promise = try? JSONDecoder().decode(Promise.self, from: jsonData) {
+                            temp.append(promise)
+                        }
+                    }
+                    self.promiseViewModel = temp
+                    print(self.promiseViewModel)
+                }
             }
-      }
+        }
+    }
     
     // MARK: - 약속 추가 함수
     /// 약속 추가 함수
