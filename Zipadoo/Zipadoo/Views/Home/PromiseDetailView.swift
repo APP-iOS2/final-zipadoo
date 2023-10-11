@@ -17,9 +17,6 @@ struct PromiseDetailView: View {
     // MARK: - Property Wrappers
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
     @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
-    
-//    @Binding var postPromise: Promise
-  
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
@@ -37,6 +34,9 @@ struct PromiseDetailView: View {
     }
     var statusColor: Color {
         remainingTime < 60 * 30 ? .primary : .secondary
+    }
+    var isDisableRemaingButton: Bool {
+        remainingTime > 60 * 30
     }
     
     // MARK: - body
@@ -56,11 +56,11 @@ struct PromiseDetailView: View {
                     
                     FriendsLocationStatusView()
                 }
-                .padding(.horizontal, 12)
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        zipadooToolbarView
-                    }
+            }
+            .padding(.horizontal, 12)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    zipadooToolbarView
                 }
             }
         }
@@ -137,14 +137,19 @@ struct PromiseDetailView: View {
     }
     
     private var remainingTimeView: some View {
-        Text(formatRemainingTime())
-            .foregroundStyle(.white)
-            .bold()
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .background(Color(color))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .padding(.vertical, 12)
+        Button {
+            
+        } label: {
+            Text(formatRemainingTime())
+                .foregroundStyle(.white)
+                .bold()
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .background(Color(color))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .padding(.vertical, 12)
+        .disabled(isDisableRemaingButton)
     }
     
     // MARK: Custom Methods
@@ -159,11 +164,13 @@ struct PromiseDetailView: View {
         let promiseDate = promise.promiseDate
         remainingTime = promiseDate - currentDate
         switch remainingTime {
-        case 1..<60:
-            return "약속 시간이 거의 다 됐어요!"
-        case 60..<3600:
-            let minute = remainingTime / 60
-            return "약속 \(Int(minute))분 전"
+//        case 1..<60:
+//            return "약속 시간이 거의 다 됐어요!"
+//        case 60..<3600:
+//            let minute = remainingTime / 60
+//            return "약속 \(Int(minute))분 전"
+        case ..<3600:
+            return "친구의 위치 현황을 확인해보세요!"
         case 3600..<86400:
             let hours = remainingTime / (60 * 60)
             return "약속 \(Int(hours))시간 전"
@@ -198,7 +205,7 @@ struct PromiseDetailView: View {
     PromiseDetailView(promise:
                         Promise(makingUserID: "3",
                                 promiseTitle: "지파두 모각코^ㅡ^",
-                                promiseDate: 1697094371.302136,
+                                promiseDate: 1697011171.302136,
                                 destination: "서울특별시 종로구 종로3길 17",
                                 address: "멋쟁이 사자처럼 본사",
                                 latitude: 161.3,
