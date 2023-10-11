@@ -11,6 +11,7 @@ import WidgetKit
 // 친구 프로필
 struct FriendProfileView: View {
     
+    var user: User
     /// 현재 로그인된 유저(옵셔널)
     let currentUser: User? = AuthStore.shared.currentUser
     /// 유저가 있으면 유저프로필 String저장
@@ -33,8 +34,8 @@ struct FriendProfileView: View {
             VStack(alignment: .leading) {
                 HStack {
                     // 프로필 이미지
-                    ProfileImageView(imageString: userImageString, size: .small)
-                        Text("\(currentUser?.nickName ?? "홍길동") 님")
+                    ProfileImageView(imageString: user.profileImageString, size: .small)
+                    Text("\(user.nickName ?? "???") 님")
                             .font(.title2)
                             .bold()
                     
@@ -54,7 +55,25 @@ struct FriendProfileView: View {
                 }
                 .padding(.top)
                 
-                MyPageProgressBar(progress: $progressBarValue)
+                VStack {
+                    ZStack(alignment: .leading) {
+                        Rectangle()
+                            .frame(height: 30)
+                            .cornerRadius(5)
+                            .foregroundStyle(.brown.opacity(0.3))
+                        
+                        ZStack {
+                            Rectangle()
+                                .frame(width: CGFloat() * UIScreen.main.bounds.width, height: 25)
+                                .cornerRadius(5)
+                                .foregroundColor(.brown)
+                            
+                            Text("지각횟수 \(user.crustDepth)회")
+                                .padding(.leading, 5)
+                                .bold()
+                        }
+                    }
+                }
                 //                    .onAppear {
                 //                        withAnimation(.linear(duration: 3)) {
                 //                            progressBarValue = 0.8
@@ -123,30 +142,6 @@ struct FriendProfileView: View {
 }
 
 #Preview {
-    FriendProfileView()
+    FriendProfileView(user: .sampleData)
 }
 
-struct LateProgressBar: View {
-    @Binding var progress: Double
-    
-    var body: some View {
-        VStack {
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .frame(height: 30)
-                    .cornerRadius(5)
-                    .foregroundStyle(.brown.opacity(0.3))
-                
-                ZStack {
-                    Rectangle()
-                        .frame(width: CGFloat(progress) * UIScreen.main.bounds.width, height: 25)
-                        .cornerRadius(5)
-                        .foregroundColor(.brown)
-                    
-                    Text("  지각횟수 0회")
-                        .bold()
-                }
-            }
-        }
-    }
-}
