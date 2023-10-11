@@ -266,6 +266,6 @@ struct AddPromiseView: View {
     }
 }
 
-//#Preview {
-//    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
-//}
+// #Preview {
+//     AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
+// }

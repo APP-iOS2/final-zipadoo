@@ -9,7 +9,7 @@ import Foundation
 
 struct Promise: Hashable, Identifiable, Codable {
     /// 약속 ID 값
-    var id: String 
+    var id: String
     /// 약속 생성 사용자 ID 값
     var makingUserID: String
     /// 약속 제목

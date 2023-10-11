@@ -143,16 +143,16 @@ class PromiseViewModel: ObservableObject {
            checkDoublePromise: false, // 원하는 값으로 설정
            locationIdArray: [])
         
-        // locationIdArray에 친구Location객체 id저장
-        for id in promise.participantIdArray {
-            // Location객체 생성
-            let friendLocation = Location(id: UUID().uuidString, participantId: id)
-            promise.locationIdArray.append(friendLocation.id) // promise.locationIdArray에 저장
-            
-            LocationStore.addLocationData(location: friendLocation) // 파베에 Location저장
-        }
-        
         do {
+            // locationIdArray에 친구Location객체 id저장
+            for id in promise.participantIdArray {
+                // Location객체 생성
+                let friendLocation = Location(id: UUID().uuidString, participantId: id)
+                promise.locationIdArray.append(friendLocation.id) // promise.locationIdArray에 저장
+                
+                LocationStore.addLocationData(location: friendLocation) // 파베에 Location저장
+            }
+        
             try dbRef.document(promise.id)
                 .setData(from: promise)
             
@@ -213,7 +213,13 @@ class PromiseViewModel: ObservableObject {
     //        }
     //    }
     
-    func deletePromiseData(promiseId: String) {
+    func deletePromiseData(promiseId: String, locationIdArray: [String]) {
+        
+        // 연결된 Location 먼저 삭제
+        for locationId in locationIdArray {
+            LocationStore.deleteLocationData(locationId: locationId)
+        }
         dbRef.document(promiseId).delete()
+        
     }
 }

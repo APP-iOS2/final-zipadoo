@@ -69,7 +69,7 @@ struct PromiseDetailView: View {
                 title: Text("약속 내역을 삭제합니다."),
                 message: Text("해당 작업은 복구되지 않습니다."),
                 primaryButton: .destructive(Text("삭제하기"), action: {
-                    deletePromise.deletePromiseData(promiseId: promise.id)
+                    deletePromise.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
                     dismiss()
                 }),
                 secondaryButton: .default(Text("돌아가기"), action: {
