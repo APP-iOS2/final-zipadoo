@@ -46,7 +46,7 @@ struct ZipadooApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            FriendsMapView()
 //                .onOpenURL(perform: { url in
 //                    if AuthApi.isKakaoTalkLoginUrl(url) {
 //                        AuthController.handleOpenUrl(url: url)
