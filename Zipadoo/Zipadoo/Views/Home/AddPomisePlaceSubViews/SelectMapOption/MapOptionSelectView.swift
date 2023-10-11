@@ -13,20 +13,29 @@ struct MapOptionSelectView: View {
     var mapOptions: MapOption
     @Binding var isClickedPlace: Bool
     @Binding var addLocationButton: Bool
+    /// 장소명 값
+    @Binding var destination: String
+    /// 주소 값
+    @Binding var address: String
+    /// 약속장소 위도
+    @Binding var coordX: Double
+    /// 약속장소 경도
+    @Binding var coordY: Double
+    
     @Binding var promiseLocation: PromiseLocation
     
     var body: some View {
         VStack {
             switch mapOptions {
             case .click:
-                MapView(promiseLocation: $promiseLocation)
+                MapView(destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, isClickedPlace: $isClickedPlace, promiseLocation: $promiseLocation)
             case .search:
-                NewMapView(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
+                NewMapView(destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
             }
         }
     }
 }
 
 #Preview {
-    MapOptionSelectView(mapOptions: .click, isClickedPlace: .constant(false), addLocationButton: .constant(false), promiseLocation: .constant(PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "서울시청")))
+    MapOptionSelectView(mapOptions: .click, isClickedPlace: .constant(false), addLocationButton: .constant(false), destination: .constant(""), address: .constant(""), coordX: .constant(0.0), coordY: .constant(0.0), promiseLocation: .constant(PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
 }

@@ -11,7 +11,7 @@ import WidgetKit
 
 /// 약속 리스트 뷰
 struct HomeMainView: View {
-    
+  
     @StateObject private var loginUser: UserStore = UserStore()
     @StateObject private var promise: PromiseViewModel = PromiseViewModel()
     
@@ -163,6 +163,16 @@ struct HomeMainView: View {
            
                     //            .ignoresSafeArea(.all)
                     
+                }
+                .refreshable {
+                    Task {
+                        try await promiseViewModel.fetchPromise()
+                    }
+                }
+                .onAppear {
+                    Task {
+                        try await promiseViewModel.fetchPromise()
+                    }
                 }
             }
         }

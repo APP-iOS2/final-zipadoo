@@ -70,9 +70,9 @@ class SearchOfKakaoLocal: ObservableObject {
                 .responseJSON(completionHandler: { response in
                     switch response.result {
                     case .success(let value):
-                        if let json = value as? [String:Any],
-                           let documents = json["documents"] as? [[String : Any]],
-                           let meta = json["meta"] as? [String : Any],
+                        if let json = value as? [String: Any],
+                           let documents = json["documents"] as? [[String: Any]],
+                           let meta = json["meta"] as? [String: Any],
                            let metaInfoData = try? JSONSerialization.data(withJSONObject: meta),
                            let metaInfo = try? JSONDecoder().decode(MetaInfo.self, from: metaInfoData) {
                             self.metaInfo = metaInfo
@@ -114,4 +114,3 @@ class SearchOfKakaoLocal: ObservableObject {
         fetchData()
     }
 }
-
