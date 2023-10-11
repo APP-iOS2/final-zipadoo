@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Codable, Identifiable, Equatable {
+struct User: Codable, Identifiable {
     /// 사용자 ID
     var id: String
     /// 사용자 이름
