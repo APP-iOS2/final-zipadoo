@@ -11,6 +11,7 @@ import UIKit
 enum SharingStatus: String {
     case preparing = "위치 공유 준비중"
     case sharing = "위치 공유중"
+    case done = "약속 종료하기"
 }
 
 struct PromiseDetailView: View {
@@ -23,20 +24,24 @@ struct PromiseDetailView: View {
     @State private var isShowingEditView: Bool = false
     @State private var isShowingShareSheet: Bool = false
     let promise: Promise
-    var color: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+    let activeColor: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+    let disabledColor: UIColor = #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
     
     // MARK: - Properties
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     
     // 약속시간 30분 전 활성화
     var destinagionStatus: SharingStatus {
-        remainingTime < 60 * 30 ? .sharing : .preparing
+        remainingTime > 60 * 30 ? .preparing : remainingTime > 0 ? .sharing : .done
     }
     var statusColor: Color {
-        remainingTime < 60 * 30 ? .primary : .secondary
+        destinagionStatus == .preparing ? Color(disabledColor) : Color(activeColor)
     }
-    var isDisableRemaingButton: Bool {
+    var isDisableLocationButton: Bool {
         remainingTime > 60 * 30
+    }
+    var isDisableEndButton: Bool {
+        destinagionStatus != .done
     }
     
     // MARK: - body
@@ -111,13 +116,18 @@ struct PromiseDetailView: View {
     }
     
     private var sharingStatusView: some View {
-        Text(destinagionStatus.rawValue)
-            .foregroundStyle(.white)
-            .font(.caption).bold()
-            .padding([.vertical, .horizontal], 12)
-            .background(Color(color))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .padding(.bottom, 12)
+        Button {
+            // TODO: 약속 종료 Bool값 toggle
+        } label: {
+            Text(destinagionStatus.rawValue)
+                .foregroundStyle(.white)
+                .font(.caption).bold()
+        }
+        .padding([.vertical, .horizontal], 12)
+        .background(statusColor)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .padding(.bottom, 12)
+        .disabled(isDisableEndButton)
     }
     
     private var titleView: some View {
@@ -146,10 +156,10 @@ struct PromiseDetailView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 12)
-        .background(Color(color))
+        .background(statusColor)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .padding(.vertical, 12)
-        .disabled(isDisableRemaingButton)
+        .disabled(isDisableLocationButton)
     }
     
     // MARK: Custom Methods
