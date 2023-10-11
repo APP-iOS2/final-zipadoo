@@ -18,6 +18,7 @@ struct AddPromiseView: View {
     //    var user: User
     
     // 저장될 변수
+    @State private var id: String = ""
     @State private var promiseTitle: String = ""
     @State private var date = Date()
     @State private var destination: String = "" // 약속 장소 이름
@@ -206,11 +207,6 @@ struct AddPromiseView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     // MARK: - 약속 등록 버튼 구현
                     Button {
-                        addPromise.makingUserID = authUser.currentUser?.id ?? "not ID"
-                        addPromise.promiseTitle = promiseTitle
-                        addPromise.promiseDate = date.timeIntervalSince1970
-                        addPromise.destination = promiseLocation.address
-                        promise.addPromise(addPromise)
                         showingConfirmAlert.toggle()
                     } label: {
                         Text("등록")
@@ -225,8 +221,9 @@ struct AddPromiseView: View {
                                     .default(Text("확인"),
                                              action: {
                                                  dismiss()
-                                                 promiseViewModel.addPromise(Promise(
-                                                    makingUserID: "유저ID" /*user.id*/, // 사용자 ID를 적절히 설정해야 합니다.
+                                                 promiseViewModel.addPromiseData(promise: Promise(
+                                                    id: UUID().uuidString,
+                                                    makingUserID: authUser.currentUser?.id ?? "not ID",
                                                     promiseTitle: promiseTitle,
                                                     promiseDate: date.timeIntervalSince1970, // 날짜 및 시간을 TimeInterval로 변환
                                                     destination: promiseLocation.destination,
