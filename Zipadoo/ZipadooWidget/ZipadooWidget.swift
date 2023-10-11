@@ -138,24 +138,33 @@ struct ZipadooWidgetEntryView: View {
         VStack(alignment: .leading) {
             Text(entry.title)
                 .font(.title2)
+                .bold()
+                .padding(.bottom, 5)
             
-            Text(entry.destination)
-                .font(.title2)
-            
-            HStack(alignment: .lastTextBaseline) {
-                Text(entry.time)
-                    .font(.largeTitle)
+            HStack {
+                VStack(alignment: .leading) {
+                    Text(entry.destination)
+                        .font(.title2)
+                    Text(entry.time)
+                        .font(.largeTitle)
+                }
+                .bold()
                 
                 Spacer()
                 
-                Text("도착")
-                    .font(.title2)
+                HStack(alignment: .lastTextBaseline) {
+                    Text("\(entry.arrivalMember)명")
+                        .bold()
+                        .font(.largeTitle)
+                    
+                    Text("도착")
+                        .bold()
+                        .font(.title2)
+                        .padding(.leading, -5)
+                }
                 
-                Text("\(entry.arrivalMember)명")
-                    .font(.largeTitle)
             }
         }
-        .bold()
     }
 }
 
@@ -184,10 +193,10 @@ struct ZipadooWidget: Widget {
     ZipadooWidget()
 } timeline: {
     ZipadooEntry(date: Date(),
-                 title: "Zipadoo 뒷풀이",
-                 destination: "앤티앤즈 센트럴시티터미널역점",
-                 time: "pm 06:30",
-                 arrivalMember: 111)
+                 title: "Zipadoo",
+                 destination: "오늘의 일정은?",
+                 time: "",
+                 arrivalMember: -1)
 }
 
 #Preview(as: .systemMedium) {

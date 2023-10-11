@@ -58,6 +58,7 @@ struct AddPromiseView: View {
                     
                     HStack {
                         TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
+                            
                             .onChange(of: promiseTitle) {
                                 if promiseTitle.count > 15 {
                                     promiseTitle = String(promiseTitle.prefix(15))
@@ -68,14 +69,14 @@ struct AddPromiseView: View {
                             .foregroundColor(.gray)
                             .padding(.trailing, -7)
                         Text("/15")
-                            .foregroundColor(.gray)
+                            .foregroundColor(.secondary)
                     }
                     .padding(.top, 10)
                     
                     Divider()
                         .frame(maxWidth: .infinity)
                         .overlay {
-                            Color.gray
+                            Color.secondary
                         }
                     
                     // MARK: - 약속 날짜/시간 선택 구현
@@ -84,12 +85,15 @@ struct AddPromiseView: View {
                         .bold()
                         .padding(.top, 40)
                     Text("약속시간 1시간 전부터 위치공유가 시작됩니다.")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.secondary)
+                        .font(.subheadline)
                     
                     DatePicker("날짜/시간", selection: $date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
                         .datePickerStyle(.compact)
                         .labelsHidden()
                         .padding(.top, 10)
+                    
+                     
                     
                     // MARK: - 약속 장소 구현
                     Text("약속 장소")
