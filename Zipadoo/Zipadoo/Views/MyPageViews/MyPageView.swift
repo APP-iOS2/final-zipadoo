@@ -34,7 +34,13 @@ struct MyPageView: View {
                 
                 HStack {
                     // 프로필 이미지
-                    ProfileImageView(imageString: userImageString, size: .small)
+                    ProfileImageView(imageString: currentUser?.profileImageString ?? userImageString, size: .regular)
+                     
+//                        .overlay(
+//                        Circle()
+//                            .stroke(Color.secondary, lineWidth: 1)
+//                        )
+
                     /*
                      AsyncImage(url: URL(string: dummyImageString)) { image in
                      image.resizable()
@@ -54,9 +60,16 @@ struct MyPageView: View {
                         //                                .foregroundColor(.black)
                         //                        }
                         //                        .padding(.bottom)
-                        Text("\(currentUser?.nickName ?? "안나옴") 님")
-                            .font(.title2)
-                            .bold()
+                        HStack {
+//                            Text("칭호").frame(width: 60)
+//                                .foregroundColor(.secondary)
+                              
+                            Text("\(currentUser?.nickName ?? "안나옴") 님")
+                                .font(.title2)
+                                .bold()
+                                .frame(width: 100)
+                              
+                        }
                         // 프로필 버튼 모음
                         HStack {
                             //                            NavigationLink {
@@ -73,32 +86,43 @@ struct MyPageView: View {
                             //                                .bold()
                             //                            }
                             HStack {
-                                Image(systemName: "bitcoinsign.circle.fill")
-                                Text("\(currentUser?.potato ?? 0)")
+                                Image("potato")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 25, height: 25)
+                             
+                                    Text("\(currentUser?.potato ?? 0)")
+                                        .frame(width: 60)
+                                        .padding(.leading, -15)
+                                    
                             }
-                            .foregroundStyle(.black)
+                            .padding(.leading, 10)
+                            
+                            .foregroundStyle(.primary)
                             .font(.headline)
                             .bold()
                             
-                            Spacer()
-                            
+                            HStack {
+                                Spacer()
                             NavigationLink {
                                 MyPotatoView()
                             } label: {
                                 Text("내역보기")
                                     .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
-                                    .background(.brown.opacity(0.3))
+                                    .background(.zipadoo.opacity(0.2))
                                     .clipShape(RoundedRectangle(cornerRadius: 4))
-                                    .foregroundStyle(.black)
+                                    .foregroundColor(.primary)
                                     .font(.headline)
                                     .bold()
                                     .padding(.top, 5)
                             }
                         }
+                        }
                         .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
                             TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
                         })
                     }
+                    .padding(.leading, 20)
                 }
                 .padding(.bottom)
                 
@@ -106,29 +130,57 @@ struct MyPageView: View {
                 
                 HStack {
                     Text("지각 깊이")
-                        .font(.headline)
+                        .font(.title2)
+                        .fontWeight(.semibold)
                     Spacer()
+                    
                     Text("지하 \(currentUser?.crustDepth ?? 100)km")
+                        .fontWeight(.semibold)
+                        .foregroundColor(.secondary)
+                 
                 }
-                .padding(.top)
+                .padding(.vertical)
                 
-                MyPageProgressBar(progress: $progressBarValue)
-                //                    .onAppear {
-                //                        withAnimation(.linear(duration: 3)) {
-                //                            progressBarValue = 0.8
-                //                        }
-                //                    }
-                
-                HStack {
-                    Text("약속을 잘 지켜보아요~")
-                        .font(.footnote)
-                        .lineLimit(1)
-                    Spacer()
-                    // 계산 필요
-                    Text("지각률 0%")
-                        .foregroundColor(.red)
+                ZStack {
+                    HStack {
+                        Image("land2")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(RoundedRectangle(cornerRadius: 5).size(width: 200, height: 200))
+                            .frame(width: 100)
+                            .blur(radius: 0.5)
+                    }
+                        MyPageProgressBar(progress: $progressBarValue)
+                        //                    .onAppear {
+                        //                        withAnimation(.linear(duration: 3)) {
+                        //                            progressBarValue = 0.8
+                        //                        }
+                        //                    }
+                            .padding(.bottom, -20)
+                            .padding(.trailing, 60)
+                    HStack {
+                        Spacer()
+                        VStack(alignment: .trailing) {
+                            Spacer()
+                            Text("지각률 0%")
+                                .foregroundColor(.red)
+                                .fontWeight(.semibold)
+                            
+                            Text("지각횟수 0회")
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                       
+                                Text("약속을 잘 지켜보아요")
+                                    .foregroundColor(.secondary)
+                                    .font(.footnote)
+                                    .padding(.vertical, 5)
+
+                        }
+                    }
                 }
                 
+                .padding(.leading, -120)
+
                 Divider()
                 
                 NavigationLink {
@@ -138,68 +190,97 @@ struct MyPageView: View {
                         Text("지난 약속")
                         Spacer()
                         Image(systemName: "chevron.right")
+                        
                     }
-                    .font(.headline)
-                    .foregroundColor(.black)
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.primary)
                     .padding(.top)
                     .padding(.bottom)
                 }
                 
                 Divider()
                 
-                Text("받은 매너 평가")
-                    .font(.headline)
-                    .padding(.top)
-                    .padding(.bottom)
+                Text("획득 배지")
+                    .font(.title2)
+                    .fontWeight(.semibold)
+                    .padding(.vertical)
                 
+                Group {
+                    HStack {
+                        Spacer()
+                        Image("badges")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: UIScreen.main.bounds.width * 0.8)
+                          
+                        Spacer()
+                    }
+                }
+                
+                /*
                 Group {
                     
                     HStack {
-                        Image(systemName: "person.2")
-                            .frame(width: 15)
-                        Text("4")
-                            .frame(width: 15)
+                            Image(systemName: "person.2")
+                                .frame(width: 15)
+                                .font(.title3)
+                            Text("4")
+                                .font(.footnote)
+                                .frame(width: 30)
                         Text("약속 진짜 안지켜요")
+                            .padding(.horizontal, 5)
                             .padding(10)
-                            .background(.brown.opacity(0.3))
+                            .background(.zipadoo.opacity(0.1))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                     HStack {
-                        Image(systemName: "person.2")
-                            .frame(width: 15)
-                        Text("3")
-                            .frame(width: 15)
+                            Image(systemName: "person.2")
+                                .frame(width: 15)
+                                .font(.title3)
+                            Text("3")
+                                .font(.footnote)
+                                .frame(width: 30)
                         Text("진짜 지각만해서 지각에 묻어버리고 싶어요")
+                            .padding(.horizontal, 5)
                             .padding(10)
-                            .background(.brown.opacity(0.3))
+                            .background(.zipadoo.opacity(0.1))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
                     
                     HStack {
-                        Image(systemName: "person.2")
-                            .frame(width: 15)
-                        Text("12")
-                            .frame(width: 15)
+                            Image(systemName: "person.2")
+                                .frame(width: 15)
+                                .font(.title3)
+                            Text("123")
+                                .font(.footnote)
+                                .frame(width: 30)
                         Text("한 20분 정도 늦어요")
+                            .padding(.horizontal, 5)
                             .padding(10)
-                            .background(.brown.opacity(0.3))
+                            .background(.zipadoo.opacity(0.1))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
+                          
                     }
                     
                 }
-                .font(.footnote)
+                .padding(.leading, 10)
+                .font(.subheadline)
+                 
+                 */ // 당근마켓 매너평가
+                
                 Spacer()
             }
             .padding()
-            
+       
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
                         SettingView()
                     } label: {
                         Image(systemName: "gearshape")
-                            .foregroundColor(.black)
+                            .foregroundColor(.primary)
                     }
                 }
             }
@@ -219,17 +300,23 @@ struct MyPageProgressBar: View {
         VStack {
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .frame(height: 25)
+                    .frame(width: 30, height: 120 )
                     .cornerRadius(5)
-                    .foregroundStyle(.brown.opacity(0.3))
-                
+                    .foregroundStyle(.zipadoo.opacity(0.5))
+                 
                 ZStack {
                     Rectangle()
-                        .frame(width: CGFloat(progress) * UIScreen.main.bounds.width, height: 25)
+                        .frame(width: 30, height: CGFloat(progress) * 120)
                         .cornerRadius(5)
-                        .foregroundColor(.brown)
+                        .foregroundColor(.zipadoo)
                     
-                    Text("  지각횟수 0회")
+                    VStack {
+                        Image("dothez")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30)
+                    }
+                    
                 }
             }
         }
