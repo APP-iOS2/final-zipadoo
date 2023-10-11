@@ -1,14 +1,15 @@
 //
-//  MyPageView.swift
+//  FriendProfileView.swift
 //  Zipadoo
 //
-//  Created by 이재승 on 2023/09/21.
+//  Created by 장여훈 on 10/11/23.
 //
 
 import SwiftUI
 import WidgetKit
 
-struct MyPageView: View {
+// 친구 프로필
+struct FriendProfileView: View {
     
     /// 현재 로그인된 유저(옵셔널)
     let currentUser: User? = AuthStore.shared.currentUser
@@ -21,7 +22,6 @@ struct MyPageView: View {
             "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
         }
     }
-    
     let dummyImageString: String = "https://cdn.discordapp.com/attachments/1153285599625748531/1154611582748336148/9b860155ad6b6c37.png"
     
     let dummyKm: Int = 1000
@@ -31,74 +31,16 @@ struct MyPageView: View {
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
-                
                 HStack {
                     // 프로필 이미지
                     ProfileImageView(imageString: userImageString, size: .small)
-                    /*
-                     AsyncImage(url: URL(string: dummyImageString)) { image in
-                     image.resizable()
-                     .aspectRatio(contentMode: .fit)
-                     .frame(width: 200)
-                     .cornerRadius(10000)
-                     } placeholder: {
-                     ProgressView()
-                     }
-                     */
-                    // 프로필 기능모음
-                    VStack(alignment: .leading) {
-                        //                        NavigationLink {
-                        //                            SettingView()
-                        //                        } label: {
-                        //                            Image(systemName: "gearshape")
-                        //                                .foregroundColor(.black)
-                        //                        }
-                        //                        .padding(.bottom)
-                        Text("\(currentUser?.nickName ?? "안나옴") 님")
+                        Text("\(currentUser?.nickName ?? "홍길동") 님")
                             .font(.title2)
                             .bold()
-                        // 프로필 버튼 모음
-                        HStack {
-                            //                            NavigationLink {
-                            //                                MyPotatoView()
-                            //                            } label: {
-                            //                                HStack {
-                            //                                    Image(systemName: "bitcoinsign.circle.fill")
-                            //                                    Text("\(currentUser?.potato ?? 0)")
-                            //                                        .underline()
-                            //                                }
-                            //                                .clipShape(RoundedRectangle(cornerRadius: 4))
-                            //                                .foregroundStyle(.black)
-                            //                                .font(.headline)
-                            //                                .bold()
-                            //                            }
-                            HStack {
-                                Image(systemName: "bitcoinsign.circle.fill")
-                                Text("\(currentUser?.potato ?? 0)")
-                            }
-                            .foregroundStyle(.black)
-                            .font(.headline)
-                            .bold()
-                            
-                            Spacer()
-                            
-                            NavigationLink {
-                                MyPotatoView()
-                            } label: {
-                                Text("내역보기")
-                                    .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
-                                    .background(.brown.opacity(0.3))
-                                    .clipShape(RoundedRectangle(cornerRadius: 4))
-                                    .foregroundStyle(.black)
-                                    .font(.headline)
-                                    .bold()
-                                    .padding(.top, 5)
-                            }
-                        }
-                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                            TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
-                        })
-                    }
+                    
+                    .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+                        TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
+                    })
                 }
                 .padding(.bottom)
                 
@@ -128,23 +70,6 @@ struct MyPageView: View {
                     Text("지각률 0%")
                         .foregroundColor(.red)
                 }
-                
-                Divider()
-                
-                NavigationLink {
-                    PastPromiseView()
-                } label: {
-                    HStack {
-                        Text("지난 약속")
-                        Spacer()
-                        Image(systemName: "chevron.right")
-                    }
-                    .font(.headline)
-                    .foregroundColor(.black)
-                    .padding(.top)
-                    .padding(.bottom)
-                }
-                
                 Divider()
                 
                 Text("받은 매너 평가")
@@ -186,33 +111,22 @@ struct MyPageView: View {
                             .background(.brown.opacity(0.3))
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                     }
-                    
                 }
                 .font(.footnote)
                 Spacer()
             }
             .padding()
-            
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink {
-                        SettingView()
-                    } label: {
-                        Image(systemName: "gearshape")
-                            .foregroundColor(.black)
-                    }
-                }
-            }
-            
+            .navigationTitle("프로필")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
 
 #Preview {
-    MyPageView()
+    FriendProfileView()
 }
 
-struct MyPageProgressBar: View {
+struct LateProgressBar: View {
     @Binding var progress: Double
     
     var body: some View {

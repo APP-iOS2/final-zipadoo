@@ -5,8 +5,9 @@
 //  Created by 남현정 on 2023/10/10.
 //
 
+import SwiftUI
 import Firebase
- import SwiftUI
+import FirebaseFirestore
 
  /// 친구등록, 친구불러오기
  final class FriendsStore: ObservableObject {
