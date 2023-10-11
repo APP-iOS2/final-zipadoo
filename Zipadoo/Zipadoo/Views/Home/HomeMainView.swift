@@ -159,7 +159,17 @@ struct HomeMainView: View {
                                       print("Failed to encode Promise:", error)
                                   }
                               }
-            }  // ScrollView
+            }
+            .onAppear {
+                Task {
+                    try await promise.fetchData()
+                }
+            }
+            .refreshable {
+                Task {
+                    try await promise.fetchData()
+                }
+            }// ScrollView
            
                     //            .ignoresSafeArea(.all)
                     

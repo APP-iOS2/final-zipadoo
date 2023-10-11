@@ -14,6 +14,7 @@ struct AddPromiseView: View {
     @Environment(\.dismiss) private var dismiss
     
     // 저장될 변수
+    @State private var id: String = ""
     @State private var promiseTitle: String = ""
     @State private var date = Date()
     
@@ -58,7 +59,7 @@ struct AddPromiseView: View {
                     
                     HStack {
                         TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
-                            
+                        
                             .onChange(of: promiseTitle) {
                                 if promiseTitle.count > 15 {
                                     promiseTitle = String(promiseTitle.prefix(15))
@@ -93,7 +94,7 @@ struct AddPromiseView: View {
                         .labelsHidden()
                         .padding(.top, 10)
                     
-                     
+                    
                     
                     // MARK: - 약속 장소 구현
                     Text("약속 장소")
@@ -173,11 +174,16 @@ struct AddPromiseView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     // MARK: - 약속 등록 버튼 구현
                     Button {
-                        addPromise.makingUserID = authUser.currentUser?.id ?? "not ID"
-                        addPromise.promiseTitle = promiseTitle
-                        addPromise.promiseDate = date.timeIntervalSince1970
-                        addPromise.destination = promiseLocation.address
-                        promise.addPromise(addPromise)
+                        promise.addPromiseData(promise: Promise(
+                            id: UUID().uuidString, // 새로운 UUID 생성
+                            makingUserID: authUser.currentUser?.id ?? "not ID",
+                            promiseTitle: promiseTitle,
+                            promiseDate: date.timeIntervalSince1970, // 시간을 타임스탬프로 변환
+                            destination: promiseLocation.address,
+                            participantIdArray: selectedFriends, // 선택한 친구들의 ID 배열
+                            checkDoublePromise: false, // 기본값 설정
+                            locationIdArray: [] // 기본값 설정
+                        ))
                         showingConfirmAlert.toggle()
                     } label: {
                         Text("등록")
@@ -206,12 +212,12 @@ struct AddPromiseView: View {
                     }
                     .alert(isPresented: $showingCancelAlert) {
                         Alert(
-                        title: Text("약속 등록을 취소합니다."),
-                        message: Text("작성 중인 내용은 저장되지 않습니다."),
-                        primaryButton: .destructive(Text("등록 취소"), action: {
-                        dismiss()
-                        }),
-                        secondaryButton: .default(Text("계속 작성"), action: {
+                            title: Text("약속 등록을 취소합니다."),
+                            message: Text("작성 중인 내용은 저장되지 않습니다."),
+                            primaryButton: .destructive(Text("등록 취소"), action: {
+                                dismiss()
+                            }),
+                            secondaryButton: .default(Text("계속 작성"), action: {
                                 
                             })
                         )
@@ -239,9 +245,9 @@ struct AddPromiseView: View {
                 .frame(maxWidth: .infinity)
                 .presentationDetents([.height(300)])
             })
-//            .sheet(isPresented: $addFriendSheet) {
-//                FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)
-//            }
+            //            .sheet(isPresented: $addFriendSheet) {
+            //                FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)
+            //            }
             .onTapGesture {
                 hideKeyboard()
             }

@@ -9,7 +9,7 @@ import Foundation
 
 struct Promise: Hashable, Identifiable, Codable {
     /// 약속 ID 값
-    let id: String = UUID().uuidString
+    var id: String = UUID().uuidString
     /// 약속 생성 사용자 ID 값
     var makingUserID: String
     /// 약속 제목
@@ -25,7 +25,8 @@ struct Promise: Hashable, Identifiable, Codable {
     /// 밑에 Percentage모델 id 배열
     var locationIdArray: [String]
     
-    init(makingUserID: String, promiseTitle: String, promiseDate: Double, destination: String, participantIdArray: [String], checkDoublePromise: Bool, locationIdArray: [String]) {
+    init(id: String, makingUserID: String, promiseTitle: String, promiseDate: Double, destination: String, participantIdArray: [String], checkDoublePromise: Bool, locationIdArray: [String]) {
+        self.id = id
         self.makingUserID = makingUserID
         self.promiseTitle = promiseTitle
         self.promiseDate = promiseDate
@@ -36,6 +37,7 @@ struct Promise: Hashable, Identifiable, Codable {
     }
     
     init() {
+        self.id = ""
         self.makingUserID = ""
         self.promiseTitle = ""
         self.promiseDate = 10.0
