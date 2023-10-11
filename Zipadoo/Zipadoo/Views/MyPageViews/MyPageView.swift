@@ -219,7 +219,7 @@ struct MyPageProgressBar: View {
         VStack {
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .frame(height: 25)
+                    .frame(height: 30)
                     .cornerRadius(5)
                     .foregroundStyle(.brown.opacity(0.3))
                 
@@ -230,6 +230,7 @@ struct MyPageProgressBar: View {
                         .foregroundColor(.brown)
                     
                     Text("  지각횟수 0회")
+                        .bold()
                 }
             }
         }
