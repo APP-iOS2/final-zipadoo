@@ -18,6 +18,7 @@ struct AddPromiseView: View {
     //    var user: User
     
     // 저장될 변수
+    @State private var id: String = ""
     @State private var promiseTitle: String = ""
     @State private var date = Date()
     @State private var destination: String = "" // 약속 장소 이름
@@ -206,11 +207,16 @@ struct AddPromiseView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     // MARK: - 약속 등록 버튼 구현
                     Button {
-                        addPromise.makingUserID = authUser.currentUser?.id ?? "not ID"
-                        addPromise.promiseTitle = promiseTitle
-                        addPromise.promiseDate = date.timeIntervalSince1970
-                        addPromise.destination = promiseLocation.address
-                        promise.addPromise(addPromise)
+                        promise.addPromiseData(promise: Promise(
+                            id: UUID().uuidString, // 새로운 UUID 생성
+                            makingUserID: authUser.currentUser?.id ?? "not ID",
+                            promiseTitle: promiseTitle,
+                            promiseDate: date.timeIntervalSince1970, // 시간을 타임스탬프로 변환
+                            destination: promiseLocation.address,
+                            participantIdArray: selectedFriends, // 선택한 친구들의 ID 배열
+                            checkDoublePromise: false, // 기본값 설정
+                            locationIdArray: [] // 기본값 설정
+                        ))
                         showingConfirmAlert.toggle()
                     } label: {
                         Text("등록")

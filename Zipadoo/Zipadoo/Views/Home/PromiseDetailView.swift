@@ -25,6 +25,8 @@ struct PromiseDetailView: View {
     @State private var remainingTime: Double = 0.0
     @State private var isShowingEditView: Bool = false
     @State private var isShowingShareSheet: Bool = false
+    @StateObject var deletePromise: PromiseViewModel = PromiseViewModel()
+    @State private var isShowingDeleteAlert: Bool = false
     let promise: Promise
     var color: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
     
@@ -62,6 +64,19 @@ struct PromiseDetailView: View {
                 }
             }
         }
+        .alert(isPresented: $isShowingDeleteAlert) {
+            Alert(
+                title: Text("약속 내역을 삭제합니다."),
+                message: Text("해당 작업은 복구되지 않습니다."),
+                primaryButton: .destructive(Text("삭제하기"), action: {
+                    deletePromise.deletePromiseData(promiseId: promise.id)
+                    dismiss()
+                }),
+                secondaryButton: .default(Text("돌아가기"), action: {
+                })
+            )
+        }
+        
         .onAppear {
             currentDate = Date().timeIntervalSince1970
             formatRemainingTime()
@@ -93,13 +108,12 @@ struct PromiseDetailView: View {
                 Button {
                     isShowingEditView = true
                 } label: {
-                   Text("수정")
+                    Text("수정")
                 }
                 Button {
-                    // TODO: 파베에서 해당 약속 delete
-                    dismiss()
+                    isShowingDeleteAlert.toggle()
                 } label: {
-                   Text("삭제")
+                    Text("삭제")
                 }
             } label: {
                 Label("More", systemImage: "ellipsis")
@@ -188,7 +202,7 @@ struct PromiseDetailView: View {
         let startOfPromiseDay = calendar.startOfDay(for: promiseDate)
         
         let components = calendar.dateComponents([.day], from: startOfToday, to: startOfPromiseDay)
-
+        
         if let days = components.day {
             return days
         }
@@ -197,13 +211,15 @@ struct PromiseDetailView: View {
     }
 }
 
-//#Preview {
-//    PromiseDetailView(promise:
-//                        Promise(makingUserID: "3",
-//                                promiseTitle: "지파두 모각코^ㅡ^",
-//                                promiseDate: 1697094371.302136,
-//                                destination: "서울특별시 종로구 종로3길 17",
-//                                participantIdArray: ["3", "4", "5"],
-//                                checkDoublePromise: false,
-//                                locationIdArray: ["35", "34", "89"]))
-//}
+#Preview {
+    PromiseDetailView(promise:
+                        Promise(
+                            id: "",
+                            makingUserID: "3",
+                            promiseTitle: "지파두 모각코^ㅡ^",
+                            promiseDate: 1697094371.302136,
+                            destination: "서울특별시 종로구 종로3길 17",
+                            participantIdArray: ["3", "4", "5"],
+                            checkDoublePromise: false,
+                            locationIdArray: ["35", "34", "89"]))
+}
