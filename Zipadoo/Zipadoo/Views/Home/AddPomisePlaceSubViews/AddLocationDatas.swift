@@ -36,17 +36,18 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 // MARK: - 장소 등록에 필요한 구조체 데이터
 /// 장소 등록에 필요한 구조체 데이터
 struct PromiseLocation: Identifiable, Codable {
-    var id: UUID = UUID()
+    var id: String = UUID().uuidString
+    var destination: String // 주소
+    var address: String // 주소
     var latitude: Double // 위도
     var longitude: Double // 경도
-    var address: String // 주소
 }
 
 // MARK: - 직접 등록 맵뷰에 필요한 클래스 데이터
 /// 직접 등록 맵뷰에 필요한 클래스 데이터
 class AddLocationStore {
-    func setLocation(latitude: Double, longitude: Double, address: String) -> PromiseLocation {
-        let location = PromiseLocation(latitude: latitude, longitude: longitude, address: address)
+    func setLocation(destination: String, address: String, latitude: Double, longitude: Double) -> PromiseLocation {
+        let location = PromiseLocation(destination: destination, address: address, latitude: latitude, longitude: longitude)
         return location
     }
 }

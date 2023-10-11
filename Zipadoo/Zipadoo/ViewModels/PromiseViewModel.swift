@@ -85,8 +85,7 @@ class PromiseViewModel: ObservableObject {
                 self.promiseViewModel = temp
                 print(self.promiseViewModel)
             }
-        }
-    }
+      }
     
     // MARK: - 약속 추가 함수
     /// 약속 추가 함수

@@ -18,19 +18,27 @@ struct Promise: Hashable, Identifiable, Codable {
     var promiseDate: Double
     /// 장소
     var destination: String
+    /// 주소
+    var address: String
+    /// 위도
+    var latitude: Double
+    /// 경도
+    var longitude: Double
     /// 참여자 ID 값
     var participantIdArray: [String]
     /// 약속 중복 값 확인
     var checkDoublePromise: Bool
     /// 밑에 Percentage모델 id 배열
     var locationIdArray: [String]
-    
-    init(id: String, makingUserID: String, promiseTitle: String, promiseDate: Double, destination: String, participantIdArray: [String], checkDoublePromise: Bool, locationIdArray: [String]) {
-        self.id = id
+  
+    init(id: String, makingUserID: String, promiseTitle: String, promiseDate: Double, destination: String, address: String, latitude: Double, longitude: Double, participantIdArray: [String], checkDoublePromise: Bool, locationIdArray: [String]) {
         self.makingUserID = makingUserID
         self.promiseTitle = promiseTitle
         self.promiseDate = promiseDate
         self.destination = destination
+        self.address = address
+        self.latitude = latitude
+        self.longitude = longitude
         self.participantIdArray = participantIdArray
         self.checkDoublePromise = checkDoublePromise
         self.locationIdArray = locationIdArray
@@ -42,6 +50,9 @@ struct Promise: Hashable, Identifiable, Codable {
         self.promiseTitle = ""
         self.promiseDate = 10.0
         self.destination = ""
+        self.address = ""
+        self.latitude = 0.0
+        self.longitude = 0.0
         self.participantIdArray = ["1", "2"]
         self.checkDoublePromise = false
         self.locationIdArray = ["1", "2"]

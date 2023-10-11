@@ -15,6 +15,11 @@ enum SharingStatus: String {
 
 struct PromiseDetailView: View {
     // MARK: - Property Wrappers
+    @ObservedObject private var promiseDetailStore = PromiseDetailStore()
+    @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
+    
+//    @Binding var postPromise: Promise
+  
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
@@ -155,6 +160,11 @@ struct PromiseDetailView: View {
     }
     
     // MARK: Custom Methods
+//    private func calculateRemainingTime() {
+//        let promiseDate = postPromise.promiseDate
+//        remainingTime = promiseDate - currentDate
+//    }
+  
     private func calculateDate(date: Double) -> String {
         let date = Date(timeIntervalSince1970: date)
         let dateFormatter = DateFormatter()
