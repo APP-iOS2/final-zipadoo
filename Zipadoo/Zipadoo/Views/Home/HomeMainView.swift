@@ -25,8 +25,26 @@ struct HomeMainView: View {
             ScrollView {
                 VStack {
                     if let loginUserID = loginUser.currentUser?.id {
-                        ForEach(promise.promiseViewModel, id: \.self) { promise in
-                            if loginUserID == promise.makingUserID {
+                        let filteredPromises = promise.promiseViewModel.filter { promise in
+                            return loginUserID == promise.makingUserID
+                        }
+                        
+                        if filteredPromises.isEmpty {
+                            VStack {
+                                Image(.zipadoo)
+                                    .resizable()
+                                    .frame(width: 200, height: 200)
+                                
+                                Text("약속이 없어요\n 약속을 만들어 보세요!")
+                                    .multilineTextAlignment(.center)
+                                    .font(.title)
+                                    .foregroundColor(.secondary)
+                                    .padding()
+                            }
+                            .padding(.top, 100)
+                            
+                        } else {
+                            ForEach(filteredPromises, id: \.self) { promise in
                                 NavigationLink {
                                     PromiseDetailView(promise: promise)
                                 } label: {
@@ -64,7 +82,7 @@ struct HomeMainView: View {
                                             .padding(.bottom, 5)
                                             
                                             /// 저장된 promiseDate값을 Date 타입으로 변환
-                                            var datePromise = Date(timeIntervalSince1970: promise.promiseDate)
+                                            let datePromise = Date(timeIntervalSince1970: promise.promiseDate)
                                             
                                             HStack {
                                                 Image(systemName: "clock")
@@ -96,7 +114,7 @@ struct HomeMainView: View {
                                             RoundedRectangle(cornerRadius: 10)
                                                 .opacity(0.2)
                                                 .shadow(color: .secondary, radius: 10, x: 5, y: 5)
-                                                
+                                            
                                             //                                        .stroke(Color.black, lineWidth: 0.3)
                                             
                                         }
@@ -112,7 +130,7 @@ struct HomeMainView: View {
                         }
                         
                     }
-                       
+                    
                 } // VStack
                 // MARK: - 약속 추가 버튼
                 .padding()
@@ -130,42 +148,89 @@ struct HomeMainView: View {
                     }
                 } // toolbar
                 .onAppear {
-                                  print(Date().timeIntervalSince1970)
-                                  var calendar = Calendar.current
-                                  calendar.timeZone = NSTimeZone.local
-                                  let encoder = JSONEncoder()
-
-                                  var widgetDatas: [WidgetData] = []
-
-                                  for promise in promise.promiseViewModel {
-                                      let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
-                                      let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
-                                      let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-
-                                      if promiseDateComponents == todayComponents {
-                                          // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
-                                          let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
-                                          widgetDatas.append(data)
-                                      }
-                                  }
-
-                                  do {
-                                      let encodedData = try encoder.encode(widgetDatas)
-
-                                      UserDefaults.shared.set(encodedData, forKey: "todayPromises")
-
-                                      WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
-                                  } catch {
-                                      print("Failed to encode Promise:", error)
-                                  }
-                              }
-            }  // ScrollView
-           
-                    //            .ignoresSafeArea(.all)
+                    print(Date().timeIntervalSince1970)
+                    var calendar = Calendar.current
+                    calendar.timeZone = NSTimeZone.local
+                    let encoder = JSONEncoder()
                     
+                    var widgetDatas: [WidgetData] = []
+                    
+                    for promise in promise.promiseViewModel {
+                        let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+                        let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
+                        let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+                        
+                        if promiseDateComponents == todayComponents {
+                            // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
+                            let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
+                            widgetDatas.append(data)
+                        }
+                    }
+                    
+                    do {
+                        let encodedData = try encoder.encode(widgetDatas)
+                        
+                        UserDefaults.shared.set(encodedData, forKey: "todayPromises")
+                        
+                        WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
+                    } catch {
+                        print("Failed to encode Promise:", error)
+                    }
                 }
             }
+            .onAppear {
+                Task {
+                    try await promise.fetchData()
+                }
+            }
+            .refreshable {
+                Task {
+                    try await promise.fetchData()
+                }
+            }// ScrollView
+            //            .ignoresSafeArea(.all)
+            
+//            var widgetDatas: [WidgetData] = []
+//            
+//            for promise in promise.promiseViewModel {
+//                let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+//                let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
+//                let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+//                
+//                if promiseDateComponents == todayComponents {
+//                    // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
+//                    let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
+//                    widgetDatas.append(data)
+//                }
+//            }
+            
+//            do {
+//                let encodedData = try encoder.encode(widgetDatas)
+//                
+//                UserDefaults.shared.set(encodedData, forKey: "todayPromises")
+//                
+//                WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
+//            } catch {
+//                print("Failed to encode Promise:", error)
+//            }
         }
+    }  // ScrollView
+    
+    //            .ignoresSafeArea(.all)
+    
+}
+//                .refreshable {
+//                    Task {
+//                        try await promise.promiseViewModel.fetchPromise()
+//                    }
+//                }
+//                .onAppear {
+//                    Task {
+//                        try await promise.promiseViewModel.fetchPromise()
+//                    }
+//                }
+//    }
+//}
 
 // MARK: - 시간 형식변환 함수
 func formatDate(date: Date) -> String {
