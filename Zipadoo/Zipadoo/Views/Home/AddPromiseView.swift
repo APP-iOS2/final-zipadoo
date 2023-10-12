@@ -28,9 +28,7 @@ struct AddPromiseView: View {
     
     // 지각비 변수 및 상수 값
     @State private var selectedValue: Int = 0
-    let minValue: Int = 0
-    let maxValue: Int = 10000
-    let step: Int = 500
+    private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
     
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var addFriendSheet: Bool = false
@@ -104,8 +102,6 @@ struct AddPromiseView: View {
                         .datePickerStyle(.compact)
                         .labelsHidden()
                         .padding(.top, 10)
-                    
-                    
                     
                     // MARK: - 약속 장소 구현
                     Text("약속 장소")
@@ -274,10 +270,10 @@ struct AddPromiseView: View {
                 }
                 .padding(.horizontal, 15)
                 
-                Picker(selection: $selectedValue, label: Text("지각비")) {
-                    ForEach((minValue...maxValue).filter { $0 % step == 0 }, id: \.self, content: { value in
+                Picker("지각비", selection: $selectedValue) {
+                    ForEach(availableValues, id: \.self) { value in
                         Text("\(value)").tag(value)
-                    })
+                    }
                 }
                 .pickerStyle(WheelPickerStyle())
                 .frame(maxWidth: .infinity)
