@@ -140,19 +140,15 @@ struct PromiseDetailView: View {
     }
     
     private var remainingTimeView: some View {
-        Button {
-            // TODO: 위치 현황뷰(지도ver) 이동
-        } label: {
-            Text(formatRemainingTime())
-                .foregroundStyle(.white)
-                .bold()
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 12)
-        .background(statusColor)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(.vertical, 12)
-        .disabled(isDisableLocationButton)
+        Text(formatRemainingTime())
+            .foregroundStyle(.white)
+            .font(.title).bold()
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 15)
+            .background(statusColor)
+            .clipShape(RoundedRectangle(cornerRadius: 28))
+            .padding(.vertical, 12)
+            .opacity(0.8)
     }
     
     // MARK: Custom Methods
@@ -167,19 +163,25 @@ struct PromiseDetailView: View {
         let promiseDate = promise.promiseDate
         remainingTime = promiseDate - currentDate
         switch remainingTime {
-//        case 1..<60:
-//            return "약속 시간이 거의 다 됐어요!"
+        case 1..<60:
+            let second = Int(remainingTime) % 60
+            return String(format: "약속까지 %02d초 전", second)
         case 60..<1800:
-            let minute = remainingTime / 60
-            return "약속 \(Int(minute))분 전"
+            let minute = Int(remainingTime) / 60
+            let second = Int(remainingTime) % 60
+            return String(format: "약속까지 %02d분 %02d초 전", minute, second)
         case 1800..<3600:
-            return "친구의 위치 현황을 확인해보세요!"
+            let minute = Int(remainingTime) / 60
+            return "약속까지 \(minute)분 전"
         case 3600..<86400:
             let hours = remainingTime / (60 * 60)
-            return "약속 \(Int(hours))시간 전"
+            let minute = Int(remainingTime) % (60 * 60) / 60
+            var message = "약속까지 \(Int(hours))시간 "
+            message += minute == 0 ? "전" : " \(minute)분 전"
+            return message
         case 86400...:
             let days = calculateRemainingDate(current: currentDate, promise: promiseDate)
-            return "약속 \(days)일 전"
+            return "약속까지 \(days)일 전"
         default:
             return "약속 시간이 됐어요!"
         }
