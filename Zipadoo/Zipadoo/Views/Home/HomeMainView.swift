@@ -112,15 +112,12 @@ struct HomeMainView: View {
                                     .overlay(
                                         ZStack {
                                             RoundedRectangle(cornerRadius: 10)
-                                                .opacity(0.2)
-                                                .shadow(color: .secondary, radius: 10, x: 5, y: 5)
-                                            
-                                            //                                        .stroke(Color.black, lineWidth: 0.3)
-                                            
+                                                .foregroundColor(.zipadoo)
+                                                .opacity(0.05)
+                                                .shadow(color: .zipadoo, radius: 10, x: 5, y: 5)
                                         }
-                                        
+                                  
                                     )
-                                    .foregroundStyle(Color.primary)
                                     
                                 }
                                 
