@@ -113,8 +113,7 @@ struct BarProgressStyle: ProgressViewStyle {
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 10.0)
                         .fill(Color(uiColor: .systemGray3))
-                        .frame(height: height)
-                        .frame(width: geometry.size.width - 30)
+                        .frame(width: geometry.size.width - 30, height: height)
                     
                     RoundedRectangle(cornerRadius: 10.0)
                         .fill(Color(color))
