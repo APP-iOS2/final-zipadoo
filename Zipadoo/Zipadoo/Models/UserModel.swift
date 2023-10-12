@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct User: Codable, Identifiable {
+struct User: Codable, Identifiable, Equatable {
     /// 사용자 ID
     var id: String
     /// 사용자 이름
@@ -32,4 +32,8 @@ struct User: Codable, Identifiable {
     /// 유저의 약속 수
     let promiseCount: Int?
      */
+}
+
+extension User {
+    static let sampleData: User = .init(id: "1234", name: "홍길동", nickName: "길똥이", phoneNumber: "010-1234-5678", profileImageString: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png", crustDepth: 4, friendsIdArray: ["12345","123456"], friendsIdRequestArray: [])
 }

@@ -18,8 +18,7 @@ struct SigninByEmail2View: View {
     
     var body: some View {
         ZStack {
-            Color.primary.ignoresSafeArea(.all) // 배경색
-            
+           
             VStack(alignment: .leading) {
                 Spacer().frame(width: 50, height: 50)// 공간
                 HStack {
@@ -27,7 +26,6 @@ struct SigninByEmail2View: View {
                     // - MARK: 상단 메세지: 프로필 사진 등록해주세요
                     Text(adminMessage)
                         .foregroundColor(.primary)
-                        .colorInvert()
                         .font(.title2)
                         .fontWeight(.semibold)
                         .padding(.bottom, 10)
@@ -62,8 +60,12 @@ struct SigninByEmail2View: View {
                                         .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8)
                                         .foregroundColor(Color.secondary
                                         )
-                                        .background(Color.secondary)
                                         .clipShape(Circle())
+                                        .overlay(
+                                             Circle()
+                                                 .stroke(Color.primary, lineWidth: 1) // 테두리의 색상 및 두께 설정
+                                         )
+
                                 }
                             }
                         }
@@ -81,7 +83,7 @@ struct SigninByEmail2View: View {
             }
             .padding(.leading, 15)
             .padding(.trailing, 15)
-            .background(Color.primary)
+           
             // MARK: - 상단 회원가입 버튼
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -100,6 +102,7 @@ struct SigninByEmail2View: View {
                 }
             }
         }
+  
     }
 }
     

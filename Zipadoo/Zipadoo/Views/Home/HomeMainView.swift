@@ -25,8 +25,26 @@ struct HomeMainView: View {
             ScrollView {
                 VStack {
                     if let loginUserID = loginUser.currentUser?.id {
-                        ForEach(promise.promiseViewModel, id: \.self) { promise in
-                            if loginUserID == promise.makingUserID {
+                        let filteredPromises = promise.promiseViewModel.filter { promise in
+                            return loginUserID == promise.makingUserID
+                        }
+                        
+                        if filteredPromises.isEmpty {
+                            VStack {
+                                Image(.zipadoo)
+                                    .resizable()
+                                    .frame(width: 200, height: 200)
+                                
+                                Text("약속이 없어요\n 약속을 만들어 보세요!")
+                                    .multilineTextAlignment(.center)
+                                    .font(.title)
+                                    .foregroundColor(.secondary)
+                                    .padding()
+                            }
+                            .padding(.top, 100)
+                            
+                        } else {
+                            ForEach(filteredPromises, id: \.self) { promise in
                                 NavigationLink {
                                     PromiseDetailView(promise: promise)
                                 } label: {

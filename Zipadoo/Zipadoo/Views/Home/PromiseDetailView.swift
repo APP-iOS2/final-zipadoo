@@ -11,6 +11,7 @@ import UIKit
 enum SharingStatus: String {
     case preparing = "위치 공유 준비중"
     case sharing = "위치 공유중"
+    case done = "약속 종료하기"
 }
 
 struct PromiseDetailView: View {
@@ -18,9 +19,7 @@ struct PromiseDetailView: View {
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
     @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
     @StateObject var loginUser: UserStore = UserStore()
-    
-    //    @Binding var postPromise: Promise
-    
+  
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
@@ -29,34 +28,43 @@ struct PromiseDetailView: View {
     @StateObject var deletePromise: PromiseViewModel = PromiseViewModel()
     @State private var isShowingDeleteAlert: Bool = false
     let promise: Promise
-    var color: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+    let activeColor: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+    let disabledColor: UIColor = #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
     
     // MARK: - Properties
     let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
     
     // 약속시간 30분 전 활성화
     var destinagionStatus: SharingStatus {
-        remainingTime < 60 * 30 ? .sharing : .preparing
+        remainingTime > 60 * 30 ? .preparing : remainingTime > 0 ? .sharing : .done
     }
     var statusColor: Color {
-        remainingTime < 60 * 30 ? .primary : .secondary
+        destinagionStatus == .preparing ? Color(disabledColor) : Color(activeColor)
+    }
+    var isDisableLocationButton: Bool {
+        remainingTime > 60 * 30
+    }
+    var isDisableEndButton: Bool {
+        destinagionStatus != .done
     }
     
     // MARK: - body
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading) {
-                sharingStatusView
-                
-                titleView
-                
-                destinationView
-                
-                dateView
-                
-                remainingTimeView
-                
-                FriendsLocationStatusView()
+            ScrollView {
+                VStack(alignment: .leading) {
+                    sharingStatusView
+                    
+                    titleView
+                    
+                    destinationView
+                    
+                    dateView
+                    
+                    remainingTimeView
+                    
+                    FriendsLocationStatusView()
+                }
             }
             .padding(.horizontal, 12)
             .toolbar {
@@ -145,13 +153,18 @@ struct PromiseDetailView: View {
     }
     
     private var sharingStatusView: some View {
-        Text(destinagionStatus.rawValue)
-            .foregroundStyle(.white)
-            .font(.caption).bold()
-            .padding([.vertical, .horizontal], 12)
-            .background(Color(color))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .padding(.bottom, 12)
+        Button {
+            // TODO: 약속 종료 Bool값 toggle
+        } label: {
+            Text(destinagionStatus.rawValue)
+                .foregroundStyle(.white)
+                .font(.caption).bold()
+        }
+        .padding([.vertical, .horizontal], 12)
+        .background(statusColor)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .padding(.bottom, 12)
+        .disabled(isDisableEndButton)
     }
     
     private var titleView: some View {
@@ -171,14 +184,19 @@ struct PromiseDetailView: View {
     }
     
     private var remainingTimeView: some View {
-        Text(formatRemainingTime())
-            .foregroundStyle(.white)
-            .bold()
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .background(Color(color))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .padding(.vertical, 12)
+        Button {
+            // TODO: 위치 현황뷰(지도ver) 이동
+        } label: {
+            Text(formatRemainingTime())
+                .foregroundStyle(.white)
+                .bold()
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .background(statusColor)
+        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .padding(.vertical, 12)
+        .disabled(isDisableLocationButton)
     }
     
     // MARK: Custom Methods
@@ -186,7 +204,7 @@ struct PromiseDetailView: View {
     //        let promiseDate = postPromise.promiseDate
     //        remainingTime = promiseDate - currentDate
     //    }
-    
+  
     private func calculateDate(date: Double) -> String {
         let date = Date(timeIntervalSince1970: date)
         let dateFormatter = DateFormatter()
@@ -198,11 +216,13 @@ struct PromiseDetailView: View {
         let promiseDate = promise.promiseDate
         remainingTime = promiseDate - currentDate
         switch remainingTime {
-        case 1..<60:
-            return "약속 시간이 거의 다 됐어요!"
-        case 60..<3600:
+//        case 1..<60:
+//            return "약속 시간이 거의 다 됐어요!"
+        case 60..<1800:
             let minute = remainingTime / 60
             return "약속 \(Int(minute))분 전"
+        case 1800..<3600:
+            return "친구의 위치 현황을 확인해보세요!"
         case 3600..<86400:
             let hours = remainingTime / (60 * 60)
             return "약속 \(Int(hours))시간 전"
