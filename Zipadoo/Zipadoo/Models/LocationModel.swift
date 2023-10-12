@@ -9,7 +9,7 @@ import Foundation
 
 struct Location: Codable {
     /// id
-    var id = UUID().uuidString
+    var id: String
     /// 사용자 id
     let participantId: String
     /// 출발지점

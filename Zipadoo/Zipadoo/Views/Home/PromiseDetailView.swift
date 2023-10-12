@@ -78,7 +78,7 @@ struct PromiseDetailView: View {
                 title: Text("약속 내역을 삭제합니다."),
                 message: Text("해당 작업은 복구되지 않습니다."),
                 primaryButton: .destructive(Text("삭제하기"), action: {
-                    deletePromise.deletePromiseData(promiseId: promise.id)
+                    deletePromise.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
                     dismiss()
                 }),
                 secondaryButton: .default(Text("돌아가기"), action: {
@@ -220,12 +220,12 @@ struct PromiseDetailView: View {
 //            return "약속 시간이 거의 다 됐어요!"
         case 60..<1800:
             let minute = remainingTime / 60
-            return "약속 \(Int(minute))분 전"
+            return "약속 \(Int(minute)+1)분 전"
         case 1800..<3600:
             return "친구의 위치 현황을 확인해보세요!"
         case 3600..<86400:
             let hours = remainingTime / (60 * 60)
-            return "약속 \(Int(hours))시간 전"
+            return "약속 \(Int(hours)+1)시간 전"
         case 86400...:
             let days = calculateRemainingDate(current: currentDate, promise: promiseDate)
             return "약속 \(days)일 전"
