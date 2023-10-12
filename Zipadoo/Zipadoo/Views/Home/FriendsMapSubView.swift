@@ -17,7 +17,14 @@ struct FriendsMapSubView: View {
     let destinationCoordinate: CLLocationCoordinate2D
     var promiseTitle: String = "용인오세용"
     var remaningPromiseTime: String = "2시간 30분"
-    
+    // 프로필 이미지 (유저 프로필 이미지가 없을 때)
+    let profileImages: [String] = [
+        "bear", "dragon", "elephant", "lion", "owl", "rabbit", "seahorse", "snake", "wolf"
+    ]
+    // 프로필 이름 (테스트용)
+    let profileNames: [String] = [
+        "임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "장여훈", "정한두"
+    ]
     var body: some View {
         VStack {
             Group {
@@ -34,7 +41,7 @@ struct FriendsMapSubView: View {
                     Button {
                         region = .region(MKCoordinateRegion(center: annotation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                     } label: {
-                        InfoView(name: annotation.participantId, imageName: "유저이미지", departureLatitude: destinationCoordinate.latitude, departureLongitude: destinationCoordinate.longitude, currentLatitude: annotation.currentLatitude, currentLongitude: annotation.currentLongitude)
+                        InfoView(name: profileNames.randomElement() ?? "이름없음", imageName: profileImages.randomElement() ?? "bear", departureLatitude: destinationCoordinate.latitude, departureLongitude: destinationCoordinate.longitude, currentLatitude: annotation.currentLatitude ?? 0, currentLongitude: annotation.currentLongitude ?? 0)
                     }
                 }
             }
@@ -69,11 +76,10 @@ struct InfoView: View {
     let currentLatitude: Double
     let currentLongitude: Double
     @State private var distance: Double = 0
-//    let lineColor: UIColor
+    // 예상 경로 색
     let strokeColors: [UIColor] = [
         .red, .orange, .yellow, .green, .blue, .cyan, .purple, .brown, .black
     ]
-    
     var body: some View {
         VStack {
             Text(name)
@@ -82,7 +88,7 @@ struct InfoView: View {
                 Circle()
                     .frame(width: 60)
                     .foregroundColor(Color(strokeColors.randomElement() ?? .blue))
-                Image(.bear)
+                Image(imageName)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 50)

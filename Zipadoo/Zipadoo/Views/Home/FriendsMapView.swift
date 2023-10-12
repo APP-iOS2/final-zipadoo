@@ -37,6 +37,14 @@ struct FriendsMapView: View {
     let strokeColors: [UIColor] = [
         .red, .orange, .yellow, .green, .blue, .cyan, .purple, .brown, .black
     ]
+    // 프로필 이미지 (유저 프로필 이미지가 없을 때)
+    let profileImages: [String] = [
+        "bear", "dragon", "elephant", "lion", "owl", "rabbit", "seahorse", "snake", "wolf"
+    ]
+    // 프로필 이름 (테스트용)
+    let profileNames: [String] = [
+        "임병구", "김상규", "나예슬", "남현정", "선아라", "이재승", "윤해수", "장여훈", "정한두"
+    ]
     // 맵뷰 카메라 세팅
     @State private var region: MapCameraPosition = .automatic
     // 현황 뷰 띄우기
@@ -65,8 +73,8 @@ struct FriendsMapView: View {
                     }
                     // 친구 위치 표시
                     ForEach(friendsAnnotation) { annotation in
-                        Annotation("여기에 유저 이름", coordinate: annotation.currentCoordinate, anchor: .center) {
-                            Image(.bear)
+                        Annotation(profileNames.randomElement() ?? "이름없음", coordinate: annotation.currentCoordinate, anchor: .center) {
+                            Image(profileImages.randomElement() ?? "bear")
                                 .resizable()
                                 .resizable()
                                 .frame(width: 25, height: 25) // 크기 조절
@@ -97,11 +105,6 @@ struct FriendsMapView: View {
                             } label: {
                                 Text("약속 위치")
                             }
-//                            Button {
-//                                fetchRoute(startCoordinate: CLLocationCoordinate2D(latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0), destinationCoordinate: destinationCoordinate)
-//                            } label: {
-//                                Text("길 안내")
-//                            }
                             Toggle("길 안내", isOn: $isShowingRoute)
                         } label: {
                             Image(systemName: "lineweight")
@@ -114,10 +117,10 @@ struct FriendsMapView: View {
                 }
                 Button {
                     if firstUploadLocation {
-                        locationStore.addLocationData(location: myLocation)
+                        LocationStore.addLocationData(location: myLocation)
                         firstUploadLocation = false
                     } else {
-                        locationStore.updateCurrentLocation(locationId: myLocation.id, newLatitude: myLocation.currentLatitude, newLongtitude: myLocation.currentLongitude)
+                        locationStore.updateCurrentLocation(locationId: myLocation.id, newLatitude: myLocation.currentLatitude ?? 0.0, newLongtitude: myLocation.currentLongitude ?? 0.0)
                     }
                 } label: {
                     Text("내 위치 데이터 파베보내기")
@@ -135,7 +138,10 @@ struct FriendsMapView: View {
             }
         }
         .task {
-            myLocation = Location(participantId: "나임", departureLatitude: 37.547551, departureLongitude: 127.080315, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+            // 테스트용
+            myLocation = Location(participantId: "이재승", departureLatitude: 37.547551, departureLongitude: 127.080315, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+        }
+        .onChange(of: isShowingRoute) {
             if isShowingRoute {
                 fetchRoute(startCoordinate: CLLocationCoordinate2D(latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0), destinationCoordinate: destinationCoordinate)
             }

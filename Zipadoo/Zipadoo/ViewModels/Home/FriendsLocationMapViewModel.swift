@@ -49,8 +49,7 @@ class FriendsLocationMapViewModel: NSObject, ObservableObject, MKMapViewDelegate
         imgString: "flag",
         isMe: false
     )
-    // 여기에 유저 위치, 이름, 이미지 넣기
-    let friendsLocation: [LocationAndInfo] = [
+    var friendsLocation: [LocationAndInfo] = [
         LocationAndInfo(
             coordinate: CLLocationCoordinate2D(latitude: GPSStore().lastSeenLocation?.coordinate.latitude ?? 37.547551, longitude: GPSStore().lastSeenLocation?.coordinate.longitude ?? 127.080315),
             title: "정한두",

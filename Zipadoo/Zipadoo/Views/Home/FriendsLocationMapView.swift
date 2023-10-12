@@ -10,24 +10,34 @@ import MapKit
 
 struct FriendsLocationMapView: View {
     @StateObject var viewModel = FriendsLocationMapViewModel()
+    @State private var position: MapCameraPosition = .automatic
     
     var body: some View {
         VStack {
-            MapViewContainer(viewModel: viewModel)
-                .onAppear {
-                    viewModel.addDestinationPin()
-                    viewModel.addFriendPinsAndCalculateTravelTimes()
-                    
-                    let locations = [viewModel.destinationLocation] + viewModel.friendsLocation.filter { $0.isMe }
-                    
-                    if let centerCoordinate = calculateCenterCoordinate(for: locations) {
-                        
-                        viewModel.region = MKCoordinateRegion(
-                            center: centerCoordinate,
-                            span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-                        )
+            Map(position: $position) {
+                ForEach(viewModel.friendsLocation) { person in
+                    Annotation(person.title, coordinate: person.coordinate, anchor: .bottom) {
+                        Image(person.imgString)
+                            .resizable()
+                            .frame(width: 40, height: 40)
                     }
                 }
+            }
+            .onAppear {
+                viewModel.friendsLocation.append(viewModel.destinationLocation)
+                viewModel.addDestinationPin()
+                viewModel.addFriendPinsAndCalculateTravelTimes()
+                
+                let locations = [viewModel.destinationLocation] + viewModel.friendsLocation.filter { $0.isMe }
+                
+                if let centerCoordinate = calculateCenterCoordinate(for: locations) {
+                    
+                    viewModel.region = MKCoordinateRegion(
+                        center: centerCoordinate,
+                        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+                    )
+                }
+            }
         }
         .edgesIgnoringSafeArea(.all)
     }

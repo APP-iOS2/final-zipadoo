@@ -34,14 +34,15 @@ struct PastPromiseView: View {
                                         
                                         Image(systemName: "map.fill")
                                             .fontWeight(.bold)
-                                            .foregroundStyle(Color.white)
+                                            .foregroundStyle(Color.primary)
+                                            .colorInvert()
                                             .padding(8)
-                                            .background(Color.black)
+                                            .background(Color.primary)
                                             .clipShape(RoundedRectangle(cornerRadius: 10))
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 10)
-                                                    .shadow(color: .black, radius: 1, x: 1, y: 1)
-                                                    .opacity(0.3)
+                                                    .shadow(color: .primary, radius: 1, x: 1, y: 1)
+                                                    .opacity(0.2)
                                                 //
                                             )
                                     }
@@ -75,19 +76,19 @@ struct PastPromiseView: View {
                                     }
                                     .font(.callout)
                                     .fontWeight(.semibold)
-                                    .foregroundStyle(.black).opacity(0.5)
+                                    .foregroundStyle(.primary).opacity(0.5)
                                     // 참여자의 ID를 통해 참여자 정보 가져오기
                                 }
                                 .padding()
                                 .overlay(
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 10)
-                                            .shadow(color: .black, radius: 15, x: 10, y: 10)
+                                            .shadow(color: .primary, radius: 15, x: 10, y: 10)
                                             .opacity(0.1)
                                         //                                        .stroke(Color.black, lineWidth: 0.3)
                                     }
                                 )
-                                .foregroundStyle(Color.black)
+                                .foregroundStyle(Color.primary)
                             }
                             .padding()
                             

@@ -22,7 +22,6 @@ struct LoginByEmailPWView: View {
     
     var body: some View {
         ZStack {
-            Color.primary.ignoresSafeArea(.all) // 배경색
             
             VStack(alignment: .leading) {
                 Spacer().frame(width: 50, height: 50)// 공간
@@ -30,7 +29,6 @@ struct LoginByEmailPWView: View {
                     // MARK: - 비밀번호 입력 안내 문구1
                     Text("비밀번호를 입력해 주세요.")
                         .foregroundColor(.primary)
-                        .colorInvert()
                         .font(.title2)
                         .fontWeight(.semibold)
                         .padding(.bottom, 10)
@@ -45,7 +43,6 @@ struct LoginByEmailPWView: View {
                         Image(systemName: isPasswordVisible ? "eye.slash.fill" : "eye.fill")
                             .fontWeight(.semibold)
                             .foregroundColor(Color.primary.opacity(0.5))
-                            .colorInvert()
                             .padding(.trailing, -2)
                     }
                 }
@@ -56,7 +53,6 @@ struct LoginByEmailPWView: View {
                         if isPasswordVisible == false {
                             SecureField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
                                 .foregroundColor(Color.primary)
-                                .colorInvert()
                                 .opacity(0.9)
                                 .font(.title3)
                                 .fontWeight(.semibold)
@@ -66,7 +62,6 @@ struct LoginByEmailPWView: View {
                         } else { // 비밀번호 보이게 할 경우 숫자 표시
                             TextField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
                                 .foregroundColor(Color.primary)
-                                .colorInvert()
                                 .opacity(0.9)
                                 .font(.title3)
                                 .fontWeight(.semibold)
@@ -81,8 +76,6 @@ struct LoginByEmailPWView: View {
                             Image(systemName: "x.circle.fill")
                         }
                         .foregroundColor(Color.primary.opacity(0.4))
-                        .colorInvert()
-                        
                     }
                     
                     Rectangle().frame(height: 1)
@@ -93,8 +86,6 @@ struct LoginByEmailPWView: View {
                     Text(adminMessage)
                         .font(.subheadline)
                         .foregroundStyle(Color.primary.opacity(0.7))
-                        .colorInvert()
-                    
                 }
                       
                 Spacer()

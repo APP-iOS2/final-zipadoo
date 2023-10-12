@@ -8,6 +8,7 @@
 import SwiftUI
 import MapKit
 import CoreLocation
+import Alamofire
 
 // MARK: - 직접 장소 설정할 수 있는 옵션의 맵뷰
 /// 현재 MapView와 NewMapView 간의 버전이 서로 다르기 때문에 우선 두가지 옵션을 선택할 수 있도록 구현
@@ -21,11 +22,33 @@ struct MapView: View {
     @State private var region = MKCoordinateRegion(
         center: CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780),
         span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009))
-    /// 주소 값
-    @State var address = ""
+    
+    @State private var placeOfText = ""
+    
+    @State var placeAPin = false
+    @State var pinLocation: CLLocationCoordinate2D? = nil
     /// 화면 클릭 값(직접설정맵뷰)
     @State private var selectedPlace: Bool = false
-
+    @State private var cameraProsition: MapCameraPosition = .camera(
+        MapCamera(
+            centerCoordinate: CLLocationCoordinate2D(latitude: CLLocationManager().location?.coordinate.latitude ?? 36.5665, longitude: CLLocationManager().location?.coordinate.longitude ?? 126.9880),
+            distance: 3729
+//            heading: 92,
+//            pitch: 70
+        )
+    )
+    var cameraBounding: MapCameraBounds = MapCameraBounds(minimumDistance: 700)
+    
+    /// 장소명 값
+    @Binding var destination: String
+    /// 주소 값
+    @Binding var address: String
+    /// 약속장소 위도
+    @Binding var coordX: Double
+    /// 약속장소 경도
+    @Binding var coordY: Double
+    
+    @Binding var isClickedPlace: Bool
     @Binding var promiseLocation: PromiseLocation
     
     let locationManager = CLLocationManager()
@@ -33,39 +56,56 @@ struct MapView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: [promiseLocation]) { location in
-                    MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)) {
-                        PlaceMarkerCell()
-                            .offset(x: 0, y: -50)
-                    }
-                }
-                
-                VStack {
-                    HStack {
-                        Spacer()
-                        
-                        VStack {
-                            Button {
-                                if let userLocation = locationManager.location?.coordinate {
-                                    withAnimation {
-                                        region.center = userLocation
-                                        makingKorAddress()
-                                    }
-                                }
-                            } label: {
-                                Image(systemName: "location.fill")
-                                    .resizable()
-                                    .frame(width: 20, height: 20)
-                                    .bold()
-                                    .padding()
-                                    .background(Color.white)
-                                    .clipShape(Circle())
-                                    .shadow(color: .black, radius: 1)
+                MapReader { reader in
+                    Map(position: $cameraProsition, bounds: cameraBounding, interactionModes: .all, scope: mapScope) {
+                        UserAnnotation()
+                        if let pl = pinLocation {
+                            Annotation(address, coordinate: pl) {
+                                AnnotationCell()
                             }
-                            Spacer()
+                            UserAnnotation()
                         }
-                        .padding()
                     }
+                    .mapStyle(.standard(elevation: .automatic))
+                    .mapControls {
+                        MapCompass(scope: mapScope)
+                            .mapControlVisibility(.hidden)
+                    }
+                    .onTapGesture(perform: { screenCoord in
+                        pinLocation = reader.convert(screenCoord, from: .local)
+                        placeAPin = false
+                        coordX = pinLocation?.latitude ?? 36.5665
+                        coordY = pinLocation?.longitude ?? 126.9880
+                           
+                        let geocoder = CLGeocoder()
+                        geocoder.reverseGeocodeLocation(CLLocation(
+                            latitude: pinLocation?.latitude ?? 36.5665,
+                            longitude: pinLocation?.longitude ?? 126.9880),
+                            preferredLocale: Locale(identifier: "ko_KR")) { placemarks, error in
+                            if let placemark = placemarks?.first {
+                                address = [ placemark.locality, placemark.thoroughfare, placemark.subThoroughfare].compactMap { $0 }.joined(separator: " ")
+                            }
+                        }
+                        selectedPlace = true
+                        if let pinLocation {
+                            print("tap: screen \(screenCoord), location \(pinLocation)")
+                        }
+                        print("coordX: \(coordX) / coordY: \(coordY)")
+                    })
+                }
+                .overlay(alignment: .topTrailing) {
+                    VStack {
+                        MapUserLocationButton(scope: mapScope)
+                        MapPitchToggle(scope: mapScope)
+                        MapCompass(scope: mapScope)
+                            .mapControlVisibility(.visible)
+                    }
+                    .padding(.top)
+                    .buttonBorderShape(.circle)
+                }
+                .mapScope(mapScope)
+    
+                VStack {
                     
                     Spacer()
                     
@@ -77,10 +117,11 @@ struct MapView: View {
                             .overlay {
                                 VStack {
                                     Spacer()
-                                    
                                     if selectedPlace == true {
-                                        Text(promiseLocation.address)
-                                            .font(.title3)
+                                        TextField(address, text: $placeOfText)
+                                            .textFieldStyle(.roundedBorder)
+                                            .padding(.horizontal)
+                                            .frame(height: 30)
                                     } else {
                                         Text("약속 장소를 선택해 주세요")
                                             .font(.title3)
@@ -90,10 +131,19 @@ struct MapView: View {
                                     Spacer()
                                     
                                     Button {
-                                        promiseLocation = addLocationStore.setLocation(
-                                            latitude: promiseLocation.latitude,
-                                            longitude: promiseLocation.longitude,
-                                            address: promiseLocation.address)
+                                        // 텍스트필드에서 입력이 없을 시 임의로 주소를 장소명으로,
+                                        // 입력이 있을 시 입력한 텍스트를 장소명으로 지정
+                                        if placeOfText == "" {
+                                            destination = address
+                                        } else {
+                                            destination = placeOfText
+                                        }
+                                        isClickedPlace = false
+                                        promiseLocation = addLocationStore.setLocation(destination: destination, address: address, latitude: coordX, longitude: coordY)
+                                        print(destination)
+                                        print(address)
+                                        print(coordX)
+                                        print(coordY)
                                         dismiss()
                                     } label: {
                                         Text("장소 선택하기")
@@ -112,30 +162,10 @@ struct MapView: View {
             .onAppear {
                 locationManager.requestWhenInUseAuthorization()
             }
-            .onTapGesture {
-                makingKorAddress()
-                selectedPlace = true
-            }
-        }
-    }
-    
-    func makingKorAddress() {
-        let touchPoint = region.center
-        promiseLocation = PromiseLocation(latitude: touchPoint.latitude, longitude: touchPoint.longitude, address: promiseLocation.address)
-        let geocoder = CLGeocoder()
-        geocoder.reverseGeocodeLocation(CLLocation(
-            latitude: touchPoint.latitude,
-            longitude: touchPoint.longitude),
-            preferredLocale: Locale(identifier: "ko_KR")) { placemarks, error in
-            if let placemark = placemarks?.first {
-                promiseLocation.address = [ placemark.locality,
-                            placemark.thoroughfare,
-                            placemark.subThoroughfare].compactMap { $0 }.joined(separator: " ")
-            }
         }
     }
 }
 
 #Preview {
-    MapView(promiseLocation: .constant(PromiseLocation(latitude: 37.5665, longitude: 126.9780, address: "서울시청")))
+    MapView(destination: .constant(""), address: .constant(""), coordX: .constant(0.0), coordY: .constant(0.0), isClickedPlace: .constant(false), promiseLocation: .constant(PromiseLocation(destination: "서울시청", address: "", latitude: 37.5665, longitude: 126.9780)))
 }
