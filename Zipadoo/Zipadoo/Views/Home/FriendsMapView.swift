@@ -68,14 +68,13 @@ struct FriendsMapView: View {
                     UserAnnotation(anchor: .center)
                     // 도착 위치 표시
                     Annotation("약속 위치", coordinate: destinationCoordinate, anchor: .bottom) {
-                        Image(systemName: "hand.raised.fill")
+                        Image(systemName: "figure.2.arms.open")
                             .foregroundColor(.brown)
                     }
                     // 친구 위치 표시
                     ForEach(friendsAnnotation) { annotation in
                         Annotation(profileNames.randomElement() ?? "이름없음", coordinate: annotation.currentCoordinate, anchor: .center) {
                             Image(profileImages.randomElement() ?? "bear")
-                                .resizable()
                                 .resizable()
                                 .frame(width: 25, height: 25) // 크기 조절
                                 .aspectRatio(contentMode: .fill)
@@ -108,7 +107,7 @@ struct FriendsMapView: View {
                             Toggle("길 안내", isOn: $isShowingRoute)
                         } label: {
                             Image(systemName: "lineweight")
-                                .padding(16)
+                                .padding(15)
                                 .background(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                                 .padding(4)
@@ -120,7 +119,7 @@ struct FriendsMapView: View {
                         LocationStore.addLocationData(location: myLocation)
                         firstUploadLocation = false
                     } else {
-                        locationStore.updateCurrentLocation(locationId: myLocation.id, newLatitude: myLocation.currentLatitude ?? 0.0, newLongtitude: myLocation.currentLongitude ?? 0.0)
+                        locationStore.updateCurrentLocation(locationId: myLocation.id, newLatitude: myLocation.currentLatitude, newLongtitude: myLocation.currentLongitude)
                     }
                 } label: {
                     Text("내 위치 데이터 파베보내기")
@@ -144,6 +143,8 @@ struct FriendsMapView: View {
         .onChange(of: isShowingRoute) {
             if isShowingRoute {
                 fetchRoute(startCoordinate: CLLocationCoordinate2D(latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0), destinationCoordinate: destinationCoordinate)
+            } else {
+                route = nil
             }
         }
     }

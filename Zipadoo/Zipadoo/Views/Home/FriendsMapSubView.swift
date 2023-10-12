@@ -41,7 +41,12 @@ struct FriendsMapSubView: View {
                     Button {
                         region = .region(MKCoordinateRegion(center: annotation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                     } label: {
-                        InfoView(name: profileNames.randomElement() ?? "이름없음", imageName: profileImages.randomElement() ?? "bear", departureLatitude: destinationCoordinate.latitude, departureLongitude: destinationCoordinate.longitude, currentLatitude: annotation.currentLatitude ?? 0, currentLongitude: annotation.currentLongitude ?? 0)
+                        InfoView(name: profileNames.randomElement() ?? "이름없음",
+                                 imageName: profileImages.randomElement() ?? "bear",
+                                 departureLatitude: destinationCoordinate.latitude,
+                                 departureLongitude: destinationCoordinate.longitude,
+                                 currentLatitude: annotation.currentLatitude,
+                                 currentLongitude: annotation.currentLongitude)
                     }
                 }
             }

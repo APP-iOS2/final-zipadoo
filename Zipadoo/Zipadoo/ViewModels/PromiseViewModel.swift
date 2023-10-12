@@ -213,13 +213,13 @@ class PromiseViewModel: ObservableObject {
     //        }
     //    }
     
-    func deletePromiseData(promiseId: String, locationIdArray: [String]) {
+    func deletePromiseData(promiseId: String, locationIdArray: [String]) async throws {
         
         // 연결된 Location 먼저 삭제
         for locationId in locationIdArray {
-            LocationStore.deleteLocationData(locationId: locationId)
+            try await LocationStore.deleteLocationData(locationId: locationId)
         }
-        dbRef.document(promiseId).delete()
+        try await dbRef.document(promiseId).delete()
         
     }
 }
