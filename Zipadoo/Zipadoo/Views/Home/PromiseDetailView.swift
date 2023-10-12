@@ -29,7 +29,7 @@ struct PromiseDetailView: View {
     let disabledColor: UIColor = #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
     
     // MARK: - Properties
-    let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     // 약속시간 30분 전 활성화
     var destinagionStatus: SharingStatus {
