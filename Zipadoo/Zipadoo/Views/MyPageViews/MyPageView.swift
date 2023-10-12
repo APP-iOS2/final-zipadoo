@@ -10,6 +10,7 @@ import WidgetKit
 
 struct MyPageView: View {
     
+    @ObservedObject var authStore = AuthStore()
     /// 현재 로그인된 유저(옵셔널)
     let currentUser: User? = AuthStore.shared.currentUser
     /// 유저가 있으면 유저프로필 String저장
@@ -54,10 +55,18 @@ struct MyPageView: View {
                         //                                .foregroundColor(.black)
                         //                        }
                         //                        .padding(.bottom)
-                        Text("\(currentUser?.nickName ?? "안나옴") 님")
-                            .font(.title2)
-                            .bold()
-                        // 프로필 버튼 모음
+                        HStack {
+                            Text("\(currentUser?.nickName ?? "안나옴") 님")
+                                .font(.title2)
+                                .bold()
+                            // 프로필 버튼 모음
+                            
+                            Spacer()
+                            
+                            Text("\(authStore.userSession?.email ?? "N/A")")
+                                .foregroundColor(.gray)
+                                
+                        }
                         HStack {
                             //                            NavigationLink {
                             //                                MyPotatoView()
