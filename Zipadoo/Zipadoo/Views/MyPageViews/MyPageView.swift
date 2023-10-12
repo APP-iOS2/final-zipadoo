@@ -393,7 +393,7 @@ struct MyPageProgressBar: View {
         VStack {
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .frame(width: 330, height: 30 )
+                    .frame(height: 30)
                     .cornerRadius(5)
                     .foregroundStyle(.zipadoo.opacity(0.3))
                  
@@ -411,8 +411,8 @@ struct MyPageProgressBar: View {
                             .rotationEffect(Angle(degrees: 90))
                             .shadow(radius: 10, x: 1, y: 1)
                     }
-                   
-                    
+                    Text("  지각횟수 0회")
+                        .bold()
                 }
             }
         }
