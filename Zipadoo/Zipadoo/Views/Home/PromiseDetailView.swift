@@ -11,7 +11,6 @@ import UIKit
 enum SharingStatus: String {
     case preparing = "위치 공유 준비중"
     case sharing = "위치 공유중"
-    case done = "약속 종료하기"
 }
 
 struct PromiseDetailView: View {
@@ -34,7 +33,7 @@ struct PromiseDetailView: View {
     
     // 약속시간 30분 전 활성화
     var destinagionStatus: SharingStatus {
-        remainingTime > 60 * 30 ? .preparing : remainingTime > 0 ? .sharing : .done
+        remainingTime > 60 * 30 ? .preparing : .sharing
     }
     var statusColor: Color {
         destinagionStatus == .preparing ? Color(disabledColor) : Color(activeColor)
@@ -42,17 +41,12 @@ struct PromiseDetailView: View {
     var isDisableLocationButton: Bool {
         remainingTime > 60 * 30
     }
-    var isDisableEndButton: Bool {
-        destinagionStatus != .done
-    }
     
     // MARK: - body
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
-                    sharingStatusView
-                    
                     titleView
                     
                     destinationView
@@ -127,21 +121,6 @@ struct PromiseDetailView: View {
             }
         }
         .foregroundColor(.secondary)
-    }
-    
-    private var sharingStatusView: some View {
-        Button {
-            // TODO: 약속 종료 Bool값 toggle
-        } label: {
-            Text(destinagionStatus.rawValue)
-                .foregroundStyle(.white)
-                .font(.caption).bold()
-        }
-        .padding([.vertical, .horizontal], 12)
-        .background(statusColor)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(.bottom, 12)
-        .disabled(isDisableEndButton)
     }
     
     private var titleView: some View {
