@@ -64,7 +64,7 @@ struct HomeMainView: View {
                                             .padding(.bottom, 5)
                                             
                                             /// 저장된 promiseDate값을 Date 타입으로 변환
-                                            var datePromise = Date(timeIntervalSince1970: promise.promiseDate)
+                                            let datePromise = Date(timeIntervalSince1970: promise.promiseDate)
                                             
                                             HStack {
                                                 Image(systemName: "clock")
@@ -159,23 +159,60 @@ struct HomeMainView: View {
                         print("Failed to encode Promise:", error)
                     }
                 }
-            }  // ScrollView
-            
+            }
+            .onAppear {
+                Task {
+                    try await promise.fetchData()
+                }
+            }
+            .refreshable {
+                Task {
+                    try await promise.fetchData()
+                }
+            }// ScrollView
             //            .ignoresSafeArea(.all)
             
+//            var widgetDatas: [WidgetData] = []
+//            
+//            for promise in promise.promiseViewModel {
+//                let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+//                let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
+//                let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+//                
+//                if promiseDateComponents == todayComponents {
+//                    // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
+//                    let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
+//                    widgetDatas.append(data)
+//                }
+//            }
+            
+//            do {
+//                let encodedData = try encoder.encode(widgetDatas)
+//                
+//                UserDefaults.shared.set(encodedData, forKey: "todayPromises")
+//                
+//                WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
+//            } catch {
+//                print("Failed to encode Promise:", error)
+//            }
         }
-        //                .refreshable {
-        //                    Task {
-        //                        try await promise.promiseViewModel.fetchPromise()
-        //                    }
-        //                }
-        //                .onAppear {
-        //                    Task {
-        //                        try await promise.promiseViewModel.fetchPromise()
-        //                    }
-        //                }
-    }
+    }  // ScrollView
+    
+    //            .ignoresSafeArea(.all)
+    
 }
+//                .refreshable {
+//                    Task {
+//                        try await promise.promiseViewModel.fetchPromise()
+//                    }
+//                }
+//                .onAppear {
+//                    Task {
+//                        try await promise.promiseViewModel.fetchPromise()
+//                    }
+//                }
+//    }
+//}
 
 // MARK: - 시간 형식변환 함수
 func formatDate(date: Date) -> String {
