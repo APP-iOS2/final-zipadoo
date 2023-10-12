@@ -17,10 +17,12 @@ struct PromiseDetailView: View {
     // MARK: - Property Wrappers
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
     @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
+    @StateObject var loginUser: UserStore = UserStore()
+  
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
-    @State private var isShowingEditView: Bool = false
+    @State private var isShowingEditSheet: Bool = false
     @State private var isShowingShareSheet: Bool = false
     @StateObject var deletePromise: PromiseViewModel = PromiseViewModel()
     @State private var isShowingDeleteAlert: Bool = false
@@ -67,7 +69,7 @@ struct PromiseDetailView: View {
                 title: Text("약속 내역을 삭제합니다."),
                 message: Text("해당 작업은 복구되지 않습니다."),
                 primaryButton: .destructive(Text("삭제하기"), action: {
-                    deletePromise.deletePromiseData(promiseId: promise.id)
+                    deletePromise.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
                     dismiss()
                 }),
                 secondaryButton: .default(Text("돌아가기"), action: {
@@ -82,9 +84,22 @@ struct PromiseDetailView: View {
             currentDate = Date().timeIntervalSince1970
             formatRemainingTime()
         })
-        .navigationDestination(isPresented: $isShowingEditView) {
-            // TODO: 수정뷰
+        .onAppear {
+            Task {
+                try await promiseViewModel.fetchData()
+            }
         }
+        .refreshable {
+            Task {
+                try await promiseViewModel.fetchData()
+            }
+        }
+//        .navigationDestination(isPresented: $isShowingEditSheet) {
+//            PromiseEditView(promise: .constant(promise))
+//        }
+        .sheet(isPresented: $isShowingEditSheet,
+               content: { PromiseEditView(promise: .constant(promise))
+        })
         .sheet(
             isPresented: $isShowingShareSheet,
             onDismiss: { print("Dismiss") },
@@ -102,10 +117,18 @@ struct PromiseDetailView: View {
             }
             
             Menu {
-                Button {
-                    isShowingEditView = true
-                } label: {
-                    Text("수정")
+                if loginUser.currentUser?.id == promise.makingUserID {
+                    Button {
+                        isShowingEditSheet.toggle()
+                    } label: {
+                        Text("수정")
+                    }
+                } else {
+                    Button {
+                        
+                    } label: {
+                        Text("나가기")
+                    }
                 }
                 Button {
                     isShowingDeleteAlert.toggle()
@@ -180,6 +203,11 @@ struct PromiseDetailView: View {
     }
     
     // MARK: Custom Methods
+    //    private func calculateRemainingTime() {
+    //        let promiseDate = postPromise.promiseDate
+    //        remainingTime = promiseDate - currentDate
+    //    }
+  
     private func calculateDate(date: Double) -> String {
         let date = Date(timeIntervalSince1970: date)
         let dateFormatter = DateFormatter()

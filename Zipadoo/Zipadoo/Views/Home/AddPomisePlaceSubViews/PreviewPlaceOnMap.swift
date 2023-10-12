@@ -13,6 +13,7 @@ struct PreviewPlaceOnMap: View {
     @Binding var promiseLocation: PromiseLocation
     var body: some View {
         Map(position: $position) {
+            UserAnnotation()
             Annotation("", coordinate: CLLocationCoordinate2D(latitude: promiseLocation.latitude, longitude: promiseLocation.longitude)) {
                 VStack {
                     RoundedRectangle(cornerRadius: 5)
@@ -22,12 +23,12 @@ struct PreviewPlaceOnMap: View {
                         .foregroundStyle(.yellow)
                         .overlay {
                             Text(promiseLocation.destination)
+                                .font(.footnote)
                                 .padding(.all, 12)
                                 .foregroundStyle(.black)
                         }
                     AnnotationMarker()
                 }
-                .offset(x: 0, y: -50)
             }
         }
         .onAppear {

@@ -19,7 +19,7 @@ struct LoginEmailCheckView: View {
     
     var body: some View {
         ZStack {
-            Color.primary.ignoresSafeArea(.all) // 배경색
+       
             VStack(alignment: .leading) { // 왼쪽 정렬
                 Spacer()
                     .frame(width: 50, height: 50)// 공간
@@ -28,7 +28,6 @@ struct LoginEmailCheckView: View {
                 HStack {
                     Text("이메일을 입력해 주세요.") // 상단 안내 문구
                         .foregroundColor(.primary)
-                        .colorInvert()
                         .font(.title2)
                         .fontWeight(.semibold)
                     Spacer()
@@ -37,7 +36,7 @@ struct LoginEmailCheckView: View {
                 Text("로그인과 비밀번호 찾기에 사용됩니다.")
                     .font(.subheadline)
                     .foregroundStyle(Color.primary.opacity(0.7))
-                    .colorInvert()
+
       
                 // MARK: - 이메일 중복 체크 하여 각 경우에 따라 네비게이션 링크 버튼 활성화 됨
                 HStack {
@@ -57,7 +56,6 @@ struct LoginEmailCheckView: View {
                         // MARK: - 이메일 입력 칸
                         TextField("이메일", text: $emailLoginStore.email, prompt: Text("이메일").foregroundColor(.secondary.opacity(0.7)))
                             .foregroundColor(Color.primary)
-                            .colorInvert()
                             .opacity(0.9)
                             .font(.title3)
                             .fontWeight(.semibold)
@@ -72,7 +70,6 @@ struct LoginEmailCheckView: View {
                             Image(systemName: "x.circle.fill")
                         }
                         .foregroundColor(Color.primary.opacity(0.4))
-                        .colorInvert()
                     }
                    
                     Rectangle().frame(height: 1)
@@ -92,7 +89,7 @@ struct LoginEmailCheckView: View {
                     
                     Spacer()
                 } // Group
-                .background(Color.primary)
+              
                 
                 // MARK: - "다음" 버튼
                 .navigationBarItems(trailing:
