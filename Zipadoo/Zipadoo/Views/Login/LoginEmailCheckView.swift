@@ -11,6 +11,8 @@ struct LoginEmailCheckView: View {
     
     @ObservedObject private var emailLoginStore: EmailLoginStore = EmailLoginStore()
     
+    @State private var idCheck: Bool = false
+    
     @State private var uniqueEmail: Bool = false // 이메일 중복 체크
     
     @State private var isSigninLinkActive: Bool = false // uniqueEmail = false일 경우 회원가입뷰 버튼으로 활성화
@@ -36,7 +38,7 @@ struct LoginEmailCheckView: View {
                     .font(.subheadline)
                     .foregroundStyle(.white.opacity(0.7))
                     .padding(.bottom, 7)
-      
+                
                 // 이메일 중복 체크 하여 각 경우에 따라 뷰 버튼 활성화
                 HStack {
                     NavigationLink(destination: SigninByEmailView(emailLoginStore: emailLoginStore), isActive: $isSigninLinkActive) {
@@ -49,7 +51,7 @@ struct LoginEmailCheckView: View {
                     }
                     .hidden() // 빈
                 }
-                             
+                
                 Group {
                     HStack {
                         // 이메일 입력 칸
@@ -110,13 +112,13 @@ struct LoginEmailCheckView: View {
                         emailLoginStore.email = ""
                     }
                     
-                    }
+                }
                     .foregroundColor(.blue)
                     .font(.headline)
                     .padding(.trailing, 5)
                     .disabled(emailLoginStore.email.isEmpty)
                 )
-                    
+                
             } // VStack
             .padding([.leading, .trailing])
         } // ZStack
