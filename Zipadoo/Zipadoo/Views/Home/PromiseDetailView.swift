@@ -38,9 +38,6 @@ struct PromiseDetailView: View {
     var statusColor: Color {
         destinagionStatus == .preparing ? Color(disabledColor) : Color(activeColor)
     }
-    var isDisableLocationButton: Bool {
-        remainingTime > 60 * 30
-    }
     
     // MARK: - body
     var body: some View {
@@ -58,7 +55,7 @@ struct PromiseDetailView: View {
                     memberStatusView
                 }
             }
-            .padding(.horizontal, 12)
+            .padding(.horizontal, 20)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     zipadooToolbarView
@@ -77,7 +74,6 @@ struct PromiseDetailView: View {
                 })
             )
         }
-        
         .onAppear {
             currentDate = Date().timeIntervalSince1970
             formatRemainingTime()
@@ -125,9 +121,8 @@ struct PromiseDetailView: View {
     
     private var titleView: some View {
         Text(promise.promiseTitle)
-            .font(.largeTitle)
-            .bold()
-            .padding(.vertical, 12)
+            .font(.title2).bold()
+            .padding(.bottom, 1)
     }
     
     private var dateView: some View {
@@ -244,8 +239,8 @@ struct PromiseDetailView: View {
                         Promise(
                             id: "",
                             makingUserID: "3",
-                            promiseTitle: "지파두 모각코^ㅡ^",
-                            promiseDate: 1697094371.302136,
+                            promiseTitle: "지각파는 두더지 모각코",
+                            promiseDate: 1697101051.302136,
                             destination: "서울특별시 종로구 종로3길 17",
                             address: "",
                             latitude: 0.0,
