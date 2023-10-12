@@ -34,6 +34,7 @@
 		8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */; };
 		9A10ADEB2AD7C7DF00AF37A3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A10ADEA2AD7C7DF00AF37A3 /* GoogleService-Info.plist */; };
 		9A10ADEC2AD7C7DF00AF37A3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A10ADEA2AD7C7DF00AF37A3 /* GoogleService-Info.plist */; };
+		9A10ADFB2AD83D0900AF37A3 /* SlidingTabView in Frameworks */ = {isa = PBXBuildFile; productRef = 9A10ADFA2AD83D0900AF37A3 /* SlidingTabView */; };
 		9B8FE8272ACE377B00C1EEFC /* MyLocationAndInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */; };
 		C02790B82ACD297100BBDCCA /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02790B72ACD297100BBDCCA /* WidgetKit.framework */; };
 		C02790BA2ACD297100BBDCCA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02790B92ACD297100BBDCCA /* SwiftUI.framework */; };
@@ -271,6 +272,7 @@
 				FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */,
 				FAB58B942ABD1879006B9E11 /* FirebaseFirestore in Frameworks */,
 				FAB58B982ABD1879006B9E11 /* FirebaseFirestoreSwift in Frameworks */,
+				9A10ADFB2AD83D0900AF37A3 /* SlidingTabView in Frameworks */,
 				FAB58B882ABD1879006B9E11 /* FirebaseAuth in Frameworks */,
 				FAB58B902ABD1879006B9E11 /* FirebaseDatabaseSwift in Frameworks */,
 				FAB58BAE2ABD1879006B9E11 /* FirebaseStorage in Frameworks */,
@@ -661,6 +663,7 @@
 				FAB58BAD2ABD1879006B9E11 /* FirebaseStorage */,
 				C069D2BB2AC145D100A62E04 /* AppsFlyerLib */,
 				04C7A8592AC94889001B2AF8 /* Alamofire */,
+				9A10ADFA2AD83D0900AF37A3 /* SlidingTabView */,
 			);
 			productName = Zipadoo;
 			productReference = FAD5FE392ABBD3E700E05E6E /* Zipadoo.app */;
@@ -698,6 +701,7 @@
 				FAB58B7A2ABD1879006B9E11 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C069D2BA2AC145D100A62E04 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */,
 				04C7A8582AC94889001B2AF8 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				9A10ADF92AD83D0900AF37A3 /* XCRemoteSwiftPackageReference "SlidingTabView" */,
 			);
 			productRefGroup = FAD5FE3A2ABBD3E700E05E6E /* Products */;
 			projectDirPath = "";
@@ -1175,6 +1179,14 @@
 				minimumVersion = 0.1.23;
 			};
 		};
+		9A10ADF92AD83D0900AF37A3 /* XCRemoteSwiftPackageReference "SlidingTabView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/QuynhNguyen/SlidingTabView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
 		C069D2BA2AC145D100A62E04 /* XCRemoteSwiftPackageReference "AppsFlyerFramework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/AppsFlyerSDK/AppsFlyerFramework";
@@ -1203,6 +1215,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 1BF69BD92ABD16C500DE635D /* XCRemoteSwiftPackageReference "payment-sdk-ios" */;
 			productName = TossPayments;
+		};
+		9A10ADFA2AD83D0900AF37A3 /* SlidingTabView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A10ADF92AD83D0900AF37A3 /* XCRemoteSwiftPackageReference "SlidingTabView" */;
+			productName = SlidingTabView;
 		};
 		C069D2BB2AC145D100A62E04 /* AppsFlyerLib */ = {
 			isa = XCSwiftPackageProductDependency;
