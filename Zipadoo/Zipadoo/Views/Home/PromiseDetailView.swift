@@ -55,7 +55,7 @@ struct PromiseDetailView: View {
                     
                     remainingTimeView
                     
-                    FriendsLocationStatusView()
+                    memberStatusView
                 }
             }
             .padding(.horizontal, 12)
@@ -149,6 +149,39 @@ struct PromiseDetailView: View {
             .clipShape(RoundedRectangle(cornerRadius: 28))
             .padding(.vertical, 12)
             .opacity(0.8)
+    }
+    
+    private var memberStatusView: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("친구 위치 현황")
+                    .font(.title3).bold()
+                
+                Spacer()
+                
+                if destinagionStatus == .sharing {
+                    Button {
+                        // TODO: 지도 상세뷰로 navigation
+                    } label: {
+                        HStack {
+                            Text("지도로 보기")
+                            Image(systemName: "chevron.right")
+                        }
+                    }
+                }
+            }
+            
+            if destinagionStatus != .sharing {
+                HStack {
+                    Image(systemName: "info.circle")
+                    Text("약속시간 30분 전부터 위치가 공유됩니다.")
+                }
+                .foregroundColor(.secondary)
+                .font(.caption)
+            }
+            
+            FriendsLocationStatusView()
+        }
     }
     
     // MARK: Custom Methods
