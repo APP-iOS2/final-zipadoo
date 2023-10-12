@@ -12,16 +12,6 @@ import FirebaseCore
 import FirebaseFirestore
 import SwiftUI
 
-/*
- static var dummyUser = [
-     User(name: "현정", nickName: "stacy", phoneNumber: "0100000", potato: 1000, crustDepth: 300, tardyCount: 10),
-     User(name: "병구", nickName: "뱅구", phoneNumber: "010202", potato: 30, crustDepth: 200, tardyCount: 5),
-     User(name: "아라", nickName: "or zr", phoneNumber: "010339", potato: 200, crustDepth: 100, tardyCount: 8),
-     User(name: "해수", nickName: "깃신", phoneNumber: "010234", potato: 30, crustDepth: 150, tardyCount: 5)
- ]
-
- */
-
 final class UserStore: ObservableObject {
     
     @Published var userFetchArray: [User] = []
