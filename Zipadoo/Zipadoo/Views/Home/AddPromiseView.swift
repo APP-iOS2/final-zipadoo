@@ -29,8 +29,8 @@ struct AddPromiseView: View {
     // 지각비 변수 및 상수 값
     @State private var selectedValue: Int = 0
     let minValue: Int = 0
-    let maxValue: Int = 5000
-    let step: Int = 100
+    let maxValue: Int = 10000
+    let step: Int = 500
     
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var addFriendSheet: Bool = false
@@ -178,7 +178,7 @@ struct AddPromiseView: View {
                         .font(.title2)
                         .bold()
                         .padding(.top, 40)
-                    Text("100 단위로 선택 가능합니다.")
+                    Text("500 단위로 선택 가능합니다.")
                         .foregroundColor(.gray)
                     
                     HStack {
@@ -293,6 +293,6 @@ struct AddPromiseView: View {
     }
 }
 
-//#Preview {
-//    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
-//}
+#Preview {
+    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
+}
