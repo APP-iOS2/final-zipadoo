@@ -69,14 +69,18 @@ struct MyPageView: View {
                                     .padding(.bottom, 10)
                                     
                                     HStack {
+                                        
+//                                        Text("지각생")
+//                                            .font(.subheadline)
+//                                            .foregroundStyle(.secondary)
 //                                        Text("위치")
 //                                            .font(.subheadline)
 //                                            .foregroundStyle(.secondary)
 //                                        
                                         
-                                        Text("지하 \(currentUser?.crustDepth ?? 100)km")
-                                            .font(.subheadline)
-                                            .foregroundColor(.primary)
+//                                        Text("지하 \(currentUser?.crustDepth ?? 100)km")
+//                                            .font(.subheadline)
+//                                            .foregroundColor(.primary)
                                         Spacer()
                                     }
                                     
@@ -86,9 +90,6 @@ struct MyPageView: View {
                                 .padding(.leading, 10)
                                 
                             }
-                            
-                            
-                            
                         }
                         .padding(.bottom, 30)
                         
@@ -104,10 +105,12 @@ struct MyPageView: View {
                                     Image("potato")
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
-                                        .frame(width: 24, height: 24)
+                                        .frame(width: 23, height: 20)
+                                       
                                     Text("감자")
                                         .foregroundColor(.secondary)
-                                    
+                                        .frame(width: 30, height: 20)
+              
                                     Spacer()
                                     
                                 }
@@ -124,13 +127,16 @@ struct MyPageView: View {
                                         Circle()
                                             .stroke(Color.primary, lineWidth: 1)
                                     }
-                                
+                                    .frame(width: 23, height: 20)
+                                    
                                 Text("캐시")
                                     .foregroundColor(.secondary)
-                                    .padding(.leading, 3)
+                                    .frame(width: 30, height: 20)
+                                   
                                 Spacer()
                                 Text("30,000")
                                     .fontWeight(.semibold)
+                               
                             }
                         }
                         .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
@@ -181,9 +187,6 @@ struct MyPageView: View {
                                 .font(.title3)
                                 .fontWeight(.semibold)
                             Spacer()
-                            
-                         
-                            
                         }
                         .padding(.vertical)
                         HStack {
