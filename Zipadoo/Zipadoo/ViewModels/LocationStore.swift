@@ -44,15 +44,19 @@ class LocationStore: ObservableObject {
             print("location 등록 실패")
         }
     }
-    
-    func updateDeparture(locationId: String, newValue departure: String) {
-        let updateData: [String: Any] = ["departure": departure]
-        dbRef.collection("Location").document(locationId).updateData(updateData)
+    // 아마 시작점 변경은 안쓰지 않을까
+    func updateDeparture(locationId: String, newLatitude: Double, newLongtitude: Double) {
+        let updateData1: [String: Any] = ["departureLatitude": newLatitude]
+        let updateData2: [String: Any] = ["departureLongitude": newLongtitude]
+        dbRef.collection("Location").document(locationId).updateData(updateData1)
+        dbRef.collection("Location").document(locationId).updateData(updateData2)
     }
     
-    func updateCurrentLocation(locationId: String, newValue currentLocation: String) {
-        let updateData: [String: Any] = ["currentLocation": currentLocation]
-        dbRef.collection("Location").document(locationId).updateData(updateData)
+    func updateCurrentLocation(locationId: String, newLatitude: Double, newLongtitude: Double) {
+        let updateData1: [String: Any] = ["currentLatitude": newLatitude]
+        let updateData2: [String: Any] = ["currentLongitude": newLongtitude]
+        dbRef.collection("Location").document(locationId).updateData(updateData1)
+        dbRef.collection("Location").document(locationId).updateData(updateData2)
     }
     
     func updateArriveTime(locationId: String, newValue arriveTime: Double) {

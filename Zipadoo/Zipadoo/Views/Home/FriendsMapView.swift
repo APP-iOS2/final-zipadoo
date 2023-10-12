@@ -18,69 +18,126 @@ import CoreLocation
 /// 4. 위도 경도 파베에 보내기
 /// 참고 상규님 MapView, NewMapView
 
-// 사용자 정의 Annotation 유형
-struct MyAnnotation: Identifiable {
-    let id = UUID()
-    let coordinate: CLLocationCoordinate2D
-    let name: String
-    let city: String
-    let imageString: String
-}
-
 struct FriendsMapView: View {
-    @StateObject var gpsStore = GPSStore()
-    // Annotation 배열 생성
-    @State private var friendsAnnotation = [
-        MyAnnotation(coordinate: CLLocationCoordinate2D(latitude: 37.547551, longitude: 127.080315), name: "정한두", city: "서울", imageString: "dragon"),
-        MyAnnotation(coordinate: CLLocationCoordinate2D(latitude: 37.536981, longitude: 126.999426), name: "임병구", city: "서울", imageString: "bear")
-    ]
+    @StateObject private var locationStore = LocationStore()
+    @StateObject private var gpsStore = GPSStore()
     
+    // 친구 위치 배열
+    @State private var friendsAnnotation = [
+        Location(participantId: "유저 아이디 넣을거임", departureLatitude: 37.547551, departureLongitude: 127.080315, currentLatitude: 37.547551, currentLongitude: 127.080315),
+        Location(participantId: "유저 아이디 넣을거임", departureLatitude: 37.536981, departureLongitude: 126.999426, currentLatitude: 37.536981, currentLongitude: 126.999426)
+    ]
+    // 도착지점, 로케이션이 아닌 약속에 가져야하는가?
     let destinationCoordinate = CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323)
-    @State var isShowingFriendSheet: Bool = false
-    @Namespace var mapScope
-    /// 초기 위치 값
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780),
-        span: MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009))
-    /// 주소 값
-    @State var address = ""
-    /// 화면 클릭 값(직접설정맵뷰)
-    @State private var selectedPlace: Bool = false
+    // 로케이션 데이터 분기를 위한 프로퍼티
+    @State private var firstUploadLocation: Bool = true
+    // 파베에 로케이션 보내기 위한 구조체
+    @State private var myLocation: Location = Location(participantId: "", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0)
+    // 예상 경로 색
+    let strokeColors: [UIColor] = [
+        .red, .orange, .yellow, .green, .blue, .cyan, .purple, .brown, .black
+    ]
+    // 맵뷰 카메라 세팅
+    @State private var region: MapCameraPosition = .automatic
+    // 현황 뷰 띄우기
+    @State private var isShowingFriendSheet: Bool = false
+    // 길 안내 토글
+    @State private var isShowingRoute: Bool = false
+    // 사용확인필요
+    @State private var mapSelection: MKMapItem?
+    // 길 안내 프로퍼티
+    @State private var getDirections = false
+    @State private var routeDisplaying = false
+    @State private var route: MKRoute?
+    @State private var routeDestination: MKMapItem?
+    
     // Marker는 시각적, Anntation은 정보 포함
     var body: some View {
         NavigationStack {
             VStack {
-                Map {
+                Map(position: $region, selection: $mapSelection) {
                     // 현재 위치 표시
                     UserAnnotation(anchor: .center)
                     // 도착 위치 표시
-                    Annotation("도착지점", coordinate: destinationCoordinate) {
-                        Image(systemName: "apple.logo")
+                    Annotation("약속 위치", coordinate: destinationCoordinate, anchor: .bottom) {
+                        Image(systemName: "hand.raised.fill")
+                            .foregroundColor(.brown)
                     }
                     // 친구 위치 표시
                     ForEach(friendsAnnotation) { annotation in
-                        Annotation(annotation.name, coordinate: annotation.coordinate, anchor: .center) {
-                            Image(annotation.imageString)
+                        Annotation("여기에 유저 이름", coordinate: annotation.currentCoordinate, anchor: .center) {
+                            Image(.bear)
                                 .resizable()
                                 .resizable()
-                                .frame(width: 30, height: 30) // 크기 조절
+                                .frame(width: 25, height: 25) // 크기 조절
                                 .aspectRatio(contentMode: .fill)
                         }
                     }
+                    // 경로 그리기
+                    if let route {
+                        MapPolyline(route.polyline)
+                            .stroke(Color(strokeColors.randomElement() ?? .blue), lineWidth: 6)
+                    }
+                    
                 }
                 .mapControls {
+                    MapCompass()
+                    MapPitchToggle()
                     MapUserLocationButton()
+                }
+                // 맵뷰 탭바같은거
+                .overlay(alignment: .topLeading) {
+                    VStack(alignment: .leading) {
+                        Menu {
+                            Button {
+                                withAnimation(.easeIn(duration: 1)) {
+                                    region = .region(MKCoordinateRegion(center: destinationCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                                }
+                                // 맵 화면을 약속 위치로 움직여주는 버튼 기능
+                            } label: {
+                                Text("약속 위치")
+                            }
+//                            Button {
+//                                fetchRoute(startCoordinate: CLLocationCoordinate2D(latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0), destinationCoordinate: destinationCoordinate)
+//                            } label: {
+//                                Text("길 안내")
+//                            }
+                            Toggle("길 안내", isOn: $isShowingRoute)
+                        } label: {
+                            Image(systemName: "lineweight")
+                                .padding(16)
+                                .background(.white)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .padding(4)
+                        }
+                    }
+                }
+                Button {
+                    if firstUploadLocation {
+                        locationStore.addLocationData(location: myLocation)
+                        firstUploadLocation = false
+                    } else {
+                        locationStore.updateCurrentLocation(locationId: myLocation.id, newLatitude: myLocation.currentLatitude, newLongtitude: myLocation.currentLongitude)
+                    }
+                } label: {
+                    Text("내 위치 데이터 파베보내기")
                 }
                 Button {
                     isShowingFriendSheet = true
                 } label: {
-                    Text("어디까지 왔나")
+                    Text("친구현황보기")
                 }
-
             }
             .sheet(isPresented: $isShowingFriendSheet) {
-                FriendsLocationListView(isShowingFriendSheet: $isShowingFriendSheet)
-                    .presentationDragIndicator(.visible)
+                FriendsMapSubView(isShowingFriendSheet: $isShowingFriendSheet, friendsAnnotation: friendsAnnotation, region: $region, myLocation: $myLocation, destinationCoordinate: destinationCoordinate, promiseTitle: "약속가져와야돼요", remaningPromiseTime: "약속에서 계산?")
+                    .presentationDetents([.medium, .large])
+                    .presentationCompactAdaptation(.none)
+            }
+        }
+        .task {
+            myLocation = Location(participantId: "나임", departureLatitude: 37.547551, departureLongitude: 127.080315, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+            if isShowingRoute {
+                fetchRoute(startCoordinate: CLLocationCoordinate2D(latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0), destinationCoordinate: destinationCoordinate)
             }
         }
     }
@@ -88,4 +145,26 @@ struct FriendsMapView: View {
 
 #Preview {
     FriendsMapView()
+}
+
+extension FriendsMapView {
+    func fetchRoute(startCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
+        let request = MKDirections.Request()
+        request.source = MKMapItem(placemark: .init(coordinate: startCoordinate))
+        request.destination = MKMapItem(placemark: .init(coordinate: destinationCoordinate))
+        
+        Task {
+            let result = try? await MKDirections(request: request).calculate()
+            route = result?.routes.first
+            routeDestination = MKMapItem(placemark: .init(coordinate: destinationCoordinate))
+            
+            withAnimation(.snappy) {
+                routeDisplaying = true
+                
+                if let rect = route?.polyline.boundingMapRect, routeDisplaying {
+                    region = .rect(rect)
+                }
+            }
+        }
+    }
 }
