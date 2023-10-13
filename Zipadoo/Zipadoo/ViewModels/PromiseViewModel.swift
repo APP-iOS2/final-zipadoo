@@ -156,7 +156,7 @@ class PromiseViewModel: ObservableObject {
             // locationIdArray에 친구Location객체 id저장
             for id in promise.participantIdArray {
                 // Location객체 생성
-                let friendLocation = Location(id: UUID().uuidString, participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0)
+                let friendLocation = Location(participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
                 promise.locationIdArray.append(friendLocation.id) // promise.locationIdArray에 저장
                 
                 LocationStore.addLocationData(location: friendLocation) // 파베에 Location저장
