@@ -68,7 +68,7 @@ struct PromiseEditView: View {
                     .padding(.top, 40)
                 DatePicker("날짜", selection: $editedPromiseDate, displayedComponents: [.date, .hourAndMinute])
                 
-//                AddFriendCellView(selectedFriends: <#Binding<[User]>#>)
+                AddFriendCellView(selectedFriends: $editPromise.selectedFriends)
                 
             }
             .onAppear {
