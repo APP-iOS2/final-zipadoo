@@ -418,4 +418,3 @@ struct MyPageProgressBar: View {
         }
     }
 }
-  

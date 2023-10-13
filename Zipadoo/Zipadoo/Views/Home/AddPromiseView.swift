@@ -257,7 +257,6 @@ struct AddPromiseView: View {
                 }
                 .padding(.horizontal, 15)
                 
-
                 Picker("지각비", selection: $selectedValue) {
                     ForEach(availableValues, id: \.self) { value in
 
@@ -281,4 +280,3 @@ struct AddPromiseView: View {
 #Preview {
     AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
 }
-

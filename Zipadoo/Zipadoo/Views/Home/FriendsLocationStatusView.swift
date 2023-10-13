@@ -70,6 +70,7 @@ extension FriendsLocationStatusView {
         }
         // 현재거리/총거리 비율
         return remainingDistance
+        
         // return "\(Int(remainingDistance * 100))%"
     }
     
@@ -101,10 +102,11 @@ struct BarProgressStyle: ProgressViewStyle {
                     RoundedRectangle(cornerRadius: 10.0)
                         .fill(Color(uiColor: .systemGray3))
                         .frame(width: geometry.size.width - 30, height: height)
+//                        .frame(width: geometry.size.width - 30, height: height)
                     
                     RoundedRectangle(cornerRadius: 10.0)
                         .fill(Color(color))
-                        .frame(width: geometry.size.width * CGFloat(progress) - 30, height: height)
+                        .frame(width: (geometry.size.width - 30) * CGFloat(progress), height: height)
                         .overlay {
                             if let currentValueLabel = configuration.currentValueLabel {
                                 currentValueLabel
@@ -115,7 +117,8 @@ struct BarProgressStyle: ProgressViewStyle {
                     Image("MoleImage")
                         .resizable()
                         .frame(width: 50, height: 50)
-                        .offset(x: geometry.size.width * CGFloat(progress) - 55, y: 0)
+                        .offset(x: (geometry.size.width - 30) * CGFloat(progress) - 25, y: 0)
+//                    geometry.size.width * CGFloat(progress)
                 }
             }
             .padding(.leading, 8)
