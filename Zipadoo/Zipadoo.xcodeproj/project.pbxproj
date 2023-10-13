@@ -54,6 +54,7 @@
 		C069D2BC2AC145D100A62E04 /* AppsFlyerLib in Frameworks */ = {isa = PBXBuildFile; productRef = C069D2BB2AC145D100A62E04 /* AppsFlyerLib */; };
 		C076BD9A2AD8FA86005AE81D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C076BD992AD8FA86005AE81D /* GoogleService-Info.plist */; };
 		C076BD9F2AD8FC0C005AE81D /* ArrivalMessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BD9E2AD8FC0C005AE81D /* ArrivalMessagingView.swift */; };
+		C076BDA12AD92042005AE81D /* AlertView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA02AD92042005AE81D /* AlertView+.swift */; };
 		FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */; };
 		FA24740A2ACD4BDB00D4C821 /* PlaceMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E42ACD4BDB00D4C821 /* PlaceMarkView.swift */; };
 		FA24740B2ACD4BDB00D4C821 /* FriendsLocationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */; };
@@ -191,6 +192,7 @@
 		C069D2B92AC141AC00A62E04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		C076BD992AD8FA86005AE81D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C076BD9E2AD8FC0C005AE81D /* ArrivalMessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalMessagingView.swift; sourceTree = "<group>"; };
+		C076BDA02AD92042005AE81D /* AlertView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AlertView+.swift"; sourceTree = "<group>"; };
 		FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpectedTravelTimeMarkView.swift; sourceTree = "<group>"; };
 		FA2473E42ACD4BDB00D4C821 /* PlaceMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMarkView.swift; sourceTree = "<group>"; };
 		FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationListView.swift; sourceTree = "<group>"; };
@@ -614,6 +616,7 @@
 			children = (
 				FAD3BD2B2AC3BA9D00117938 /* Extention.swift */,
 				C02790CD2ACD29DF00BBDCCA /* UserDefaults.swift */,
+				C076BDA02AD92042005AE81D /* AlertView+.swift */,
 			);
 			path = Extention;
 			sourceTree = "<group>";
@@ -885,6 +888,7 @@
 				FA24740C2ACD4BDB00D4C821 /* FriendsImageView.swift in Sources */,
 				FAD257EB2AD65F4B0017D16C /* AnnotationCell.swift in Sources */,
 				FA2474502ACD4D6E00D4C821 /* PromiseDetailStore.swift in Sources */,
+				C076BDA12AD92042005AE81D /* AlertView+.swift in Sources */,
 				8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */,
 				FA24744B2ACD4D6E00D4C821 /* ImagePicker.swift in Sources */,
 			);
