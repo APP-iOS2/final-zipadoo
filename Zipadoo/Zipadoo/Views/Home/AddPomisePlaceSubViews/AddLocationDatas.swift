@@ -13,7 +13,7 @@ import CoreLocation
 // struct AddLocation: Identifiable {
 //    let id = UUID()
 //    let coordinate: CLLocationCoordinate2D
-//}
+// }
 
 // MARK: - 직접 등록 맵뷰에 필요한 LocationManager 클래스
 /// 직접 등록 맵뷰에 필요한 LocationManager 클래스

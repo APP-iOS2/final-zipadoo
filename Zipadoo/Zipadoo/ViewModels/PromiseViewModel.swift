@@ -107,6 +107,15 @@ class PromiseViewModel: ObservableObject {
         }
     }
     
+    // PromiseId로 Promise객체 가져오기
+    static func fetchPromise(promiseId: String) async throws -> Promise {
+        let snapshot = try await Firestore.firestore().collection("Promise").document(promiseId).getDocument()
+        
+        let promise = try snapshot.data(as: Promise.self)
+        return promise
+
+    }
+    
     // MARK: - 약속 추가 함수
     /// 약속 추가 함수
     //    func addPromise(_ promise: Promise) {
@@ -128,7 +137,7 @@ class PromiseViewModel: ObservableObject {
     //        }
     //    }
     
-    func addPromiseData() {
+    func addPromiseData() async throws {
         // Promise객체 생성
         var promise = Promise(
            id: UUID().uuidString,
@@ -147,7 +156,7 @@ class PromiseViewModel: ObservableObject {
             // locationIdArray에 친구Location객체 id저장
             for id in promise.participantIdArray {
                 // Location객체 생성
-                let friendLocation = Location(id: UUID().uuidString, participantId: id)
+                let friendLocation = Location(id: UUID().uuidString, participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0)
                 promise.locationIdArray.append(friendLocation.id) // promise.locationIdArray에 저장
                 
                 LocationStore.addLocationData(location: friendLocation) // 파베에 Location저장
@@ -213,13 +222,13 @@ class PromiseViewModel: ObservableObject {
     //        }
     //    }
     
-    func deletePromiseData(promiseId: String, locationIdArray: [String]) {
+    func deletePromiseData(promiseId: String, locationIdArray: [String]) async throws {
         
         // 연결된 Location 먼저 삭제
         for locationId in locationIdArray {
-            LocationStore.deleteLocationData(locationId: locationId)
+            try await LocationStore.deleteLocationData(locationId: locationId)
         }
-        dbRef.document(promiseId).delete()
+        try await dbRef.document(promiseId).delete()
         
     }
 }
