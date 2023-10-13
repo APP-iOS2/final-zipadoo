@@ -27,7 +27,7 @@ struct FriendsRegistrationView: View {
                 .padding(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(.gray)
+                        .stroke(.secondary)
                 )
                 .padding(.bottom, 5)
             

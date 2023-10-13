@@ -5,8 +5,9 @@
 //  Created by 남현정 on 2023/10/10.
 //
 
+import SwiftUI
 import Firebase
- import SwiftUI
+import FirebaseFirestore
 
  /// 친구등록, 친구불러오기
  final class FriendsStore: ObservableObject {
@@ -98,12 +99,12 @@ import Firebase
          let snapshot = dbRef.whereField("nickName", isEqualTo: friendNickname)
 
          do {
- //            try await fetchFriends()
+             try await fetchFriends()
+             try await fetchFriendsRequest()
              
              guard let userId = currentUser?.id else {
                  return
              }
-             // 이미 있는 친구 id이면 하지 말기, 내 id면... 하지 말기
              
              // 해당 닉네임이 없으면 false반환
              let querySnapshot = try await snapshot.getDocuments()
@@ -137,15 +138,20 @@ import Firebase
                     // 이미 요청한 경우
                     print("이미 요청")
                     alertMessage = "이미 요청한 친구입니다"
-                   completion(false)
-               } else {
-                   // 조건에 맞는 경우
-                   print("조건에 맞음!")
-                   try await addRequest(friendId: friendId)
-                   completion(true)
-               }
-
-           }
+                    completion(false)
+                } else if friendsIdRequestArray.contains(friendId) {
+                    // 나에게 요청한 친구의 경우
+                    print("나에게 이미 요청")
+                    alertMessage = "이미 요청받은 친구입니다\n요청목록에서 확인해주세요"
+                    completion(false)
+                } else {
+                    // 조건에 맞는 경우
+                    print("조건에 맞음!")
+                    try await addRequest(friendId: friendId)
+                    completion(true)
+                }
+                
+            }
         } catch {
             return
         }
@@ -282,4 +288,8 @@ import Firebase
             print("파이어베이스 업데이트 실패")
         }
     }
+}
+
+extension FriendsStore {
+    static let sampleData: User = .init(id: "12345", name: "홍길동", nickName: "길동이", phoneNumber: "0101234", profileImageString: "https://img.newspim.com/news/2017/01/31/1701311632536400.jpg", crustDepth: 3, friendsIdArray: [], friendsIdRequestArray: [])
 }
