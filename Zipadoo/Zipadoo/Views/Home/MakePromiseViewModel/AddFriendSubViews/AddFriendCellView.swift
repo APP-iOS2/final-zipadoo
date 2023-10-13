@@ -14,7 +14,6 @@ struct AddFriendCellView: View {
     @State private var addFriendsSheet: Bool = false
     
     var body: some View {
-        ScrollView {
             HStack {
                 Text("친구추가")
                     .font(.title2)
@@ -64,7 +63,7 @@ struct AddFriendCellView: View {
                         }
                     }
                 }
-        }
+        
             .sheet(isPresented: $addFriendsSheet) {
                 FriendsListVIew(isShowingSheet: $addFriendsSheet, selectedFriends: $selectedFriends)
             }
