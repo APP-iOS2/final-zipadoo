@@ -81,13 +81,9 @@ struct PromiseEditView: View {
                     .bold()
                     .padding(.top, 40)
                 
-                ForEach(editSelectedFriends, id: \.self) { participantID in
-                    Text(participantID)
-                }
-                
-                ForEach(editSelectedFriends, id: \.self) { id in
-                    if let user = userStore.userFetchArray.first(where: { $0.id == id }) {
-                        Text(user.name)
+                ForEach(editSelectedFriends, id: \.self) { friendId in
+                    if let friend = userStore.userFetchArray.first(where: { $0.id == friendId }) {
+                            Text(friend.nickName)
                     }
                 }
             }
