@@ -24,6 +24,7 @@ struct FriendsView: View {
                     Text("친구 목록").tag(0)
                     Text("요청 목록").tag(1)
                 }
+                .padding()
                 
                 VStack {
                     switch selectedSegmentIndex {
@@ -75,7 +76,7 @@ struct FriendsView: View {
             ForEach(friendsStore.friendsFetchArray) { friend in
                 ZStack {
                     // 친구프로필 이동(임시로 MyPage뷰로 이동)
-                    NavigationLink(destination: MyPageView(), label: {
+                    NavigationLink(destination: FriendProfileView(user: friend), label: {
                         HStack {
                             ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
                             

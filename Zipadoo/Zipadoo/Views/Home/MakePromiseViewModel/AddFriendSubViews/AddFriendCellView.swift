@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct AddFriendCellView: View {
-    @State private var addFriendsSheet: Bool = false
+    /// 약속에 참여할 친구배열
+    @Binding var selectedFriends: [User]
     
-    @State private var selectedFriends: [String] = []
+    @State private var addFriendsSheet: Bool = false
     
     var body: some View {
         HStack {
@@ -38,16 +39,16 @@ struct AddFriendCellView: View {
                 HStack {
                     VStack {
                         HStack {
-/*
-                VStack {
-                    HStack {
-                        if selectedFriends.isEmpty {
-                            Text("초대 할 친구를 추가해주세요.")
-                        } else { */
+                            /*
+                             VStack {
+                             HStack {
+                             if selectedFriends.isEmpty {
+                             Text("초대 할 친구를 추가해주세요.")
+                             } else { */
                             ScrollView(.horizontal) {
                                 HStack {
-                                    ForEach(selectedFriends, id: \.self) { name in
-                                        FriendSellView(name: name, selectedFriends: $selectedFriends).padding()
+                                    ForEach(selectedFriends) { friend in
+                                        FriendSellView(selectedFriends: $selectedFriends, friend: friend).padding()
                                             .padding(.trailing, -50)
                                     }
                                 }
@@ -67,5 +68,5 @@ struct AddFriendCellView: View {
 }
 
 #Preview {
-    AddFriendCellView()
+    AddFriendCellView(selectedFriends: .constant([dummyUser]))
 }
