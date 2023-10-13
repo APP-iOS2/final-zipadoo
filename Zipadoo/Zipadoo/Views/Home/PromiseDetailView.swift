@@ -70,14 +70,14 @@ struct PromiseDetailView: View {
                 message: Text("해당 작업은 복구되지 않습니다."),
                 primaryButton: .destructive(Text("삭제하기"), action: {
                     Task {
-                          do {
-                              try await deletePromise.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
-                             
-                              dismiss()
-                          } catch {
-                              print("실패")
-                          }
-                      }
+                        do {
+                            try await deletePromise.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
+                           
+                            dismiss()
+                        } catch {
+                            print("실패")
+                        }
+                    }
                 }),
                 secondaryButton: .default(Text("돌아가기"), action: {
                 })
@@ -205,7 +205,7 @@ struct PromiseDetailView: View {
                 .font(.caption)
             }
             
-            FriendsLocationStatusView()
+            FriendsLocationStatusView(promise: promise)
         }
     }
     
