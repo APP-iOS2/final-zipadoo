@@ -66,9 +66,12 @@ struct HomeMainView: View {
                 }
                 
             }
- 
-         // ScrollView
-            //            .ignoresSafeArea(.all)
+            .refreshable {
+                Task {
+                    try await promise.fetchData()
+                }
+            }
+//            .ignoresSafeArea(.all)
             
 //            var widgetDatas: [WidgetData] = []
 //            

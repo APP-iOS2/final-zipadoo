@@ -14,6 +14,22 @@ import FirebaseCore
 class PromiseViewModel: ObservableObject {
     @Published var promiseViewModel: [Promise] = []
     
+    // 저장될 변수
+    @Published var id: String = ""
+    @Published var promiseTitle: String = ""
+    @Published var date = Date()
+    @Published var destination: String = "" // 약속 장소 이름
+    @Published var address = "" // 약속장소 주소
+    @Published var coordX = 0.0 // 약속장소 위도
+    @Published var coordY = 0.0 // 약속장소 경도
+    /// 장소에 대한 정보 값
+    @Published var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
+    /// 지각비 변수 및 상수 값
+    @Published var selectedValue: Int = 0
+    
+    /// 약속에 참여할 친구배열
+    @Published var selectedFriends: [User] = []
+    
     private let dbRef = Firestore.firestore().collection("Promise")
     
     init() {
@@ -91,6 +107,15 @@ class PromiseViewModel: ObservableObject {
         }
     }
     
+    // PromiseId로 Promise객체 가져오기
+    static func fetchPromise(promiseId: String) async throws -> Promise {
+        let snapshot = try await Firestore.firestore().collection("Promise").document(promiseId).getDocument()
+        
+        let promise = try snapshot.data(as: Promise.self)
+        return promise
+
+    }
+    
     // MARK: - 약속 추가 함수
     /// 약속 추가 함수
     //    func addPromise(_ promise: Promise) {
@@ -112,10 +137,45 @@ class PromiseViewModel: ObservableObject {
     //        }
     //    }
     
-    func addPromiseData(promise: Promise) {
+    func addPromiseData() async throws {
+        // Promise객체 생성
+        var promise = Promise(
+           id: UUID().uuidString,
+           makingUserID: AuthStore.shared.currentUser?.id ?? "not ID",
+           promiseTitle: promiseTitle,
+           promiseDate: date.timeIntervalSince1970, // 날짜 및 시간을 TimeInterval로 변환
+           destination: promiseLocation.destination,
+           address: promiseLocation.address,
+           latitude: promiseLocation.latitude,
+           longitude: promiseLocation.longitude,
+           participantIdArray: selectedFriends.map { $0.id },
+           checkDoublePromise: false, // 원하는 값으로 설정
+           locationIdArray: [])
+        
         do {
+            // locationIdArray에 친구Location객체 id저장
+            for id in promise.participantIdArray {
+                // Location객체 생성
+                let friendLocation = Location(id: UUID().uuidString, participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0)
+                promise.locationIdArray.append(friendLocation.id) // promise.locationIdArray에 저장
+                
+                LocationStore.addLocationData(location: friendLocation) // 파베에 Location저장
+            }
+        
             try dbRef.document(promise.id)
                 .setData(from: promise)
+            
+            id = ""
+            promiseTitle = ""
+            date = Date()
+            destination = "" // 약속 장소 이름
+            address = "" // 약속장소 주소
+            coordX = 0.0 // 약속장소 위도
+            coordY = 0.0 // 약속장소 경도
+            /// 장소에 대한 정보 값
+            promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
+            /// 지각비 변수 및 상수 값
+            selectedValue = 0
         } catch {
             print("약속 등록")
         }
@@ -162,7 +222,13 @@ class PromiseViewModel: ObservableObject {
     //        }
     //    }
     
-    func deletePromiseData(promiseId: String) {
-        dbRef.document(promiseId).delete()
+    func deletePromiseData(promiseId: String, locationIdArray: [String]) async throws {
+        
+        // 연결된 Location 먼저 삭제
+        for locationId in locationIdArray {
+            try await LocationStore.deleteLocationData(locationId: locationId)
+        }
+        try await dbRef.document(promiseId).delete()
+        
     }
 }
