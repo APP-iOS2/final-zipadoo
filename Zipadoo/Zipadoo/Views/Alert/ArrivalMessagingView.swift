@@ -97,6 +97,55 @@ struct ArrivalMessagingView: View {
     }
 }
 
+struct ArrivalMessagingModifier: ViewModifier {
+    @Binding var isPresented: Bool
+    /// 사용자 이름
+    let name: String
+    /// 사용자 이미지
+    let profileImgString: String
+    /// 사용자 도착 순위
+    let rank: Int
+    /// 약속시간 - 사용자가 도착한 시간
+    let arrivarDifference: Double
+    /// 지각시 차감될 감자 수
+    let potato: Int
+    
+    func body(content: Content) -> some View {
+        ZStack {
+            content
+            
+            if isPresented {
+                Rectangle()
+                    .fill(.black.opacity(0.5))
+                    .blur(radius: 0)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        self.isPresented = false
+                    }
+                
+                ArrivalMessagingView(isPresented: self.$isPresented, name: self.name, profileImgString: self.profileImgString, rank: self.rank, arrivarDifference: self.arrivarDifference, potato: self.potato
+                )
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+        }
+        .animation(
+            isPresented
+            ? .spring(response: 0.5)
+            : .none,
+            value: isPresented
+        )
+    }
+}
+
 #Preview {
-    ArrivalMessagingView(isPresented: .constant(true), name: "아라", profileImgString: "https://cdn.discordapp.com/emojis/1154686109234774058.webp?size=240&quality=lossless", rank: 2, arrivarDifference: 720.3641, potato: 500)
+    Text("약속 장소 도착 Alert")
+      .modifier(
+        ArrivalMessagingModifier(
+            isPresented: .constant(true),
+            name: "아라",
+            profileImgString: "https://cdn.discordapp.com/emojis/1154686109234774058.webp?size=240&quality=lossless",
+            rank: 2,
+            arrivarDifference: 720.3641,
+            potato: 500)
+      )
 }
