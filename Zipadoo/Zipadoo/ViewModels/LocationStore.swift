@@ -36,9 +36,9 @@ class LocationStore: ObservableObject {
         }
     }
     
-    func addLocationData(location: Location) {
+    static func addLocationData(location: Location) {
         do {
-            try dbRef.collection("Location").document(location.id)
+            try Firestore.firestore().collection("Location").document(location.id)
                 .setData(from: location)
         } catch {
             print("location 등록 실패")
@@ -60,7 +60,7 @@ class LocationStore: ObservableObject {
         dbRef.collection("Location").document(locationId).updateData(updateData)
     }
     
-    func deleteLocationData(locationId: String) {
-        dbRef.collection("Location").document(locationId).delete()
+    static func deleteLocationData(locationId: String) {
+        Firestore.firestore().collection("Location").document(locationId).delete()
     }
 }

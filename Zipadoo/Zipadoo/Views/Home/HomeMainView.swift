@@ -187,7 +187,8 @@ struct HomeMainView: View {
                 Task {
                     try await promise.fetchData()
                 }
-            }// ScrollView
+            }
+            // ScrollView
             //            .ignoresSafeArea(.all)
             
 //            var widgetDatas: [WidgetData] = []

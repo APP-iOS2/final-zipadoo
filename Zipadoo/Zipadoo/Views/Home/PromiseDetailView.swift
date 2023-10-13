@@ -11,17 +11,18 @@ import UIKit
 enum SharingStatus: String {
     case preparing = "위치 공유 준비중"
     case sharing = "위치 공유중"
-    case done = "약속 종료하기"
 }
 
 struct PromiseDetailView: View {
     // MARK: - Property Wrappers
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
     @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
+    @StateObject var loginUser: UserStore = UserStore()
+  
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
-    @State private var isShowingEditView: Bool = false
+    @State private var isShowingEditSheet: Bool = false
     @State private var isShowingShareSheet: Bool = false
     @StateObject var deletePromise: PromiseViewModel = PromiseViewModel()
     @State private var isShowingDeleteAlert: Bool = false
@@ -30,20 +31,14 @@ struct PromiseDetailView: View {
     let disabledColor: UIColor = #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
     
     // MARK: - Properties
-    let timer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     // 약속시간 30분 전 활성화
     var destinagionStatus: SharingStatus {
-        remainingTime > 60 * 30 ? .preparing : remainingTime > 0 ? .sharing : .done
+        remainingTime > 60 * 30 ? .preparing : .sharing
     }
     var statusColor: Color {
         destinagionStatus == .preparing ? Color(disabledColor) : Color(activeColor)
-    }
-    var isDisableLocationButton: Bool {
-        remainingTime > 60 * 30
-    }
-    var isDisableEndButton: Bool {
-        destinagionStatus != .done
     }
     
     // MARK: - body
@@ -51,8 +46,6 @@ struct PromiseDetailView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
-                    sharingStatusView
-                    
                     titleView
                     
                     destinationView
@@ -61,10 +54,10 @@ struct PromiseDetailView: View {
                     
                     remainingTimeView
                     
-                    FriendsLocationStatusView()
+                    memberStatusView
                 }
             }
-            .padding(.horizontal, 12)
+            .padding(.horizontal, 20)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     zipadooToolbarView
@@ -76,14 +69,13 @@ struct PromiseDetailView: View {
                 title: Text("약속 내역을 삭제합니다."),
                 message: Text("해당 작업은 복구되지 않습니다."),
                 primaryButton: .destructive(Text("삭제하기"), action: {
-                    deletePromise.deletePromiseData(promiseId: promise.id)
+                    deletePromise.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
                     dismiss()
                 }),
                 secondaryButton: .default(Text("돌아가기"), action: {
                 })
             )
         }
-        
         .onAppear {
             currentDate = Date().timeIntervalSince1970
             formatRemainingTime()
@@ -92,9 +84,22 @@ struct PromiseDetailView: View {
             currentDate = Date().timeIntervalSince1970
             formatRemainingTime()
         })
-        .navigationDestination(isPresented: $isShowingEditView) {
-            // TODO: 수정뷰
+        .onAppear {
+            Task {
+                try await promiseViewModel.fetchData()
+            }
         }
+        .refreshable {
+            Task {
+                try await promiseViewModel.fetchData()
+            }
+        }
+//        .navigationDestination(isPresented: $isShowingEditSheet) {
+//            PromiseEditView(promise: .constant(promise))
+//        }
+        .sheet(isPresented: $isShowingEditSheet,
+               content: { PromiseEditView(promise: .constant(promise))
+        })
         .sheet(
             isPresented: $isShowingShareSheet,
             onDismiss: { print("Dismiss") },
@@ -112,10 +117,18 @@ struct PromiseDetailView: View {
             }
             
             Menu {
-                Button {
-                    isShowingEditView = true
-                } label: {
-                    Text("수정")
+                if loginUser.currentUser?.id == promise.makingUserID {
+                    Button {
+                        isShowingEditSheet.toggle()
+                    } label: {
+                        Text("수정")
+                    }
+                } else {
+                    Button {
+                        
+                    } label: {
+                        Text("나가기")
+                    }
                 }
                 Button {
                     isShowingDeleteAlert.toggle()
@@ -129,26 +142,10 @@ struct PromiseDetailView: View {
         .foregroundColor(.secondary)
     }
     
-    private var sharingStatusView: some View {
-        Button {
-            // TODO: 약속 종료 Bool값 toggle
-        } label: {
-            Text(destinagionStatus.rawValue)
-                .foregroundStyle(.white)
-                .font(.caption).bold()
-        }
-        .padding([.vertical, .horizontal], 12)
-        .background(statusColor)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(.bottom, 12)
-        .disabled(isDisableEndButton)
-    }
-    
     private var titleView: some View {
         Text(promise.promiseTitle)
-            .font(.largeTitle)
-            .bold()
-            .padding(.vertical, 12)
+            .font(.title2).bold()
+            .padding(.bottom, 1)
     }
     
     private var dateView: some View {
@@ -161,22 +158,56 @@ struct PromiseDetailView: View {
     }
     
     private var remainingTimeView: some View {
-        Button {
-            // TODO: 위치 현황뷰(지도ver) 이동
-        } label: {
-            Text(formatRemainingTime())
-                .foregroundStyle(.white)
-                .bold()
+        Text(formatRemainingTime())
+            .foregroundStyle(.white)
+            .font(.title).bold()
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 15)
+            .background(statusColor)
+            .clipShape(RoundedRectangle(cornerRadius: 28))
+            .padding(.vertical, 12)
+            .opacity(0.8)
+    }
+    
+    private var memberStatusView: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("친구 위치 현황")
+                    .font(.title3).bold()
+                
+                Spacer()
+                
+                if destinagionStatus == .sharing {
+                    Button {
+                        // TODO: 지도 상세뷰로 navigation
+                    } label: {
+                        HStack {
+                            Text("지도로 보기")
+                            Image(systemName: "chevron.right")
+                        }
+                    }
+                }
+            }
+            
+            if destinagionStatus != .sharing {
+                HStack {
+                    Image(systemName: "info.circle")
+                    Text("약속시간 30분 전부터 위치가 공유됩니다.")
+                }
+                .foregroundColor(.secondary)
+                .font(.caption)
+            }
+            
+            FriendsLocationStatusView()
         }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 12)
-        .background(statusColor)
-        .clipShape(RoundedRectangle(cornerRadius: 12))
-        .padding(.vertical, 12)
-        .disabled(isDisableLocationButton)
     }
     
     // MARK: Custom Methods
+    //    private func calculateRemainingTime() {
+    //        let promiseDate = postPromise.promiseDate
+    //        remainingTime = promiseDate - currentDate
+    //    }
+  
     private func calculateDate(date: Double) -> String {
         let date = Date(timeIntervalSince1970: date)
         let dateFormatter = DateFormatter()
@@ -188,19 +219,25 @@ struct PromiseDetailView: View {
         let promiseDate = promise.promiseDate
         remainingTime = promiseDate - currentDate
         switch remainingTime {
-//        case 1..<60:
-//            return "약속 시간이 거의 다 됐어요!"
+        case 1..<60:
+            let second = Int(remainingTime) % 60
+            return String(format: "약속까지 %02d초 전", second)
         case 60..<1800:
-            let minute = remainingTime / 60
-            return "약속 \(Int(minute))분 전"
+            let minute = Int(remainingTime) / 60
+            let second = Int(remainingTime) % 60
+            return String(format: "약속까지 %02d분 %02d초 전", minute, second)
         case 1800..<3600:
-            return "친구의 위치 현황을 확인해보세요!"
+            let minute = Int(remainingTime) / 60
+            return "약속까지 \(minute)분 전"
         case 3600..<86400:
             let hours = remainingTime / (60 * 60)
-            return "약속 \(Int(hours))시간 전"
+            let minute = Int(remainingTime) % (60 * 60) / 60
+            var message = "약속까지 \(Int(hours))시간 "
+            message += minute == 0 ? "전" : " \(minute)분 전"
+            return message
         case 86400...:
             let days = calculateRemainingDate(current: currentDate, promise: promiseDate)
-            return "약속 \(days)일 전"
+            return "약속까지 \(days)일 전"
         default:
             return "약속 시간이 됐어요!"
         }
@@ -230,8 +267,8 @@ struct PromiseDetailView: View {
                         Promise(
                             id: "",
                             makingUserID: "3",
-                            promiseTitle: "지파두 모각코^ㅡ^",
-                            promiseDate: 1697094371.302136,
+                            promiseTitle: "지각파는 두더지 모각코",
+                            promiseDate: 1697101051.302136,
                             destination: "서울특별시 종로구 종로3길 17",
                             address: "",
                             latitude: 0.0,
