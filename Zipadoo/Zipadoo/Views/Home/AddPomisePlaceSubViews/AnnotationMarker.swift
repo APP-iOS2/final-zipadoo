@@ -17,12 +17,12 @@ struct AnnotationMarker: View {
                 .shadow(radius: 10)
                 .foregroundStyle(.blue)
             
-            Image(systemName: "arrowtriangle.down.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 10, height: 25)
-                .offset(x: 0, y: 22)
-                .foregroundStyle(.blue)
+//            Image(systemName: "arrowtriangle.down.fill")
+//                .resizable()
+//                .scaledToFit()
+//                .frame(width: 10, height: 25)
+//                .offset(x: 0, y: 22)
+//                .foregroundStyle(.blue)
             
             Image(systemName: "flag.fill")
                 .resizable()
@@ -30,6 +30,7 @@ struct AnnotationMarker: View {
                 .frame(width: 20, height: 20)
                 .foregroundStyle(.yellow)
         }
+        .offset(x: 0, y: -10)
     }
 }
 

@@ -1,29 +1,26 @@
 //
-//  NewMapView.swift
+//  NewMapsView.swift
 //  Zipadoo
 //
-//  Created by 김상규 on 10/1/23.
+//  Created by 김상규 on 10/13/23.
 //
 
 import SwiftUI
 import MapKit
 
-// MARK: - 검색 기능을 통해 장소 설정할 수 있는 옵션의 맵뷰
-/// 현재 MapView와 NewMapView 간의 버전이 서로 다르기 때문에 우선 두가지 옵션을 선택할 수 있도록 구현
-/// 두가지 기능을 합칠 수 있는 방법을 찾을 경우 도입 시도해볼 예정
-struct NewMapView: View {
+struct NewMapsView: View {
     @Namespace var mapScope
     
     @ObservedObject var searchOfKakaoLocal: SearchOfKakaoLocal = SearchOfKakaoLocal.sharedInstance
     /// 유저의 현재위치 카메라 좌표 값
-    @State private var userPosition: MapCameraPosition = .userLocation(followsHeading: false, fallback: .automatic)
+    @State private var userPosition: MapCameraPosition = .userLocation(followsHeading: true, fallback: .automatic)
     /// 클릭한 장소에 대한 카메라 포지션 값
     @State private var placePosition: MapCameraPosition = .camera(MapCamera(
         centerCoordinate: CLLocationCoordinate2D(latitude: CLLocationManager().location?.coordinate.latitude ?? 36.5665, longitude: CLLocationManager().location?.coordinate.longitude ?? 126.9880),
         distance: 3500
-        //            heading: 92,
-        //            pitch: 70
-    )
+//            heading: 92,
+//            pitch: 70
+        )
     )
     /// placePosition값을 넣기 위한 대한 카메라 포지션 값
     @State private var movePosition: MapCameraPosition = .automatic
@@ -54,13 +51,10 @@ struct NewMapView: View {
                             AnnotationCell()
                         }
                         UserAnnotation()
+                        
                     } else {
                         UserAnnotation()
                     }
-                }
-                .mapControls {
-                    MapCompass(scope: mapScope)
-                        .mapControlVisibility(.hidden)
                 }
                 .onTapGesture {
                     hideKeyboard()
@@ -68,7 +62,7 @@ struct NewMapView: View {
                 .mapStyle(.standard(pointsOfInterest: .all, showsTraffic: true))
                 if isClickedPlace == true {
                     AddPlaceButtonCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, promiseLocation: $promiseLocation)
-                        .padding(.bottom, 10)
+                        .padding(.bottom, 40)
                 } else {
                     
                 }
@@ -81,36 +75,41 @@ struct NewMapView: View {
                 }
                 .background(.ultraThinMaterial)
             }
-            .overlay(alignment: .topTrailing) {
-                VStack {
-                    MapUserLocationButton(scope: mapScope)
-                    MapPitchToggle(scope: mapScope)
-                    MapCompass(scope: mapScope)
-                        .mapControlVisibility(.visible)
-                }
-                .buttonBorderShape(.roundedRectangle)
-                .padding(.trailing, 5)
-                .padding(.top, 5)
+            .mapControls {
+                MapUserLocationButton(scope: mapScope)
+                    .mapControlVisibility(.visible)
+                MapPitchToggle(scope: mapScope)
+                    .mapControlVisibility(.visible)
+                MapCompass(scope: mapScope)
+                    .mapControlVisibility(.visible)
             }
             .mapScope(mapScope)
-            .onChange(of: placePosition) {
-                userPosition = placePosition
+            .onAppear {
+                CLLocationManager().requestWhenInUseAuthorization()
             }
-            .onMapCameraChange(frequency: .onEnd) {
-                // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
-                if isClickedPlace == true {
-                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 3500))
-                } else {
-//                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 3500))
+            .onChange(of: placePosition) {
+                withAnimation {
+                    userPosition = placePosition
+                }
+            }
+            .onMapCameraChange(frequency: .continuous) {
+                withAnimation {
+                    selectedPlacePosition = CLLocationCoordinate2D(latitude: coordX, longitude: coordY)
+                    // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
+                    if isClickedPlace == true {
+                        //   placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)))
+                        placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 3500))
+                    } else {
+                        //   placePosition = .region(MKCoordinateRegion(center: selectedPlacePosition ??  CLLocationCoordinate2D(latitude: 37.5665, longitude: 126.9780), span: MKCoordinateSpan(latitudeDelta: 0.02, longitudeDelta: 0.02)))
+                        placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 3500))
+                        //                        userPosition = placePosition
+                    }
                 }
             }
         }
-        .onAppear {
-            CLLocationManager().requestWhenInUseAuthorization()
+        .onDisappear {
+            isClickedPlace = false
         }
-//        .onDisappear {
-//            isClickedPlace = false
-//        }
     }
 }
 

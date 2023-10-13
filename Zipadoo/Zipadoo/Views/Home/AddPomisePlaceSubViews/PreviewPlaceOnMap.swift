@@ -12,7 +12,7 @@ struct PreviewPlaceOnMap: View {
     @State private var position: MapCameraPosition = MapCameraPosition.automatic
     @Binding var promiseLocation: PromiseLocation
     var body: some View {
-        Map(position: $position) {
+        Map(position: $position, bounds: MapCameraBounds(maximumDistance: 2000)) {
             UserAnnotation()
             Annotation("", coordinate: CLLocationCoordinate2D(latitude: promiseLocation.latitude, longitude: promiseLocation.longitude)) {
                 VStack {
@@ -32,7 +32,7 @@ struct PreviewPlaceOnMap: View {
             }
         }
         .onAppear {
-            position = .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: promiseLocation.latitude, longitude: promiseLocation.longitude), latitudinalMeters: 500, longitudinalMeters: 500))
+            position = .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: promiseLocation.latitude, longitude: promiseLocation.longitude), latitudinalMeters: 2000, longitudinalMeters: 2000))
         }
         .mapControls {
             MapUserLocationButton()

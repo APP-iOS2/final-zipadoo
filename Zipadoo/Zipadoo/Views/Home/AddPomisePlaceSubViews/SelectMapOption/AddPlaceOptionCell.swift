@@ -26,15 +26,13 @@ struct AddPlaceOptionCell: View {
     @Binding var addLocationButton: Bool
     @Binding var destination: String
     @Binding var address: String
-    @Binding var coordX: Double
-    @Binding var coordY: Double
     @Binding var promiseLocation: PromiseLocation
     
     var body: some View {
         VStack {
             animate()
-            MapOptionSelectView(mapOptions: selectMapOption, isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, promiseLocation: $promiseLocation)
-            Spacer()
+            MapOptionSelectView(mapOptions: selectMapOption, isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
+//            Spacer()
         }
     }
     
@@ -54,7 +52,6 @@ struct AddPlaceOptionCell: View {
                             .frame(height: 3)
                             .matchedGeometryEffect(id: "info", in: animation)
                     }
-                        
                 }
                 .onTapGesture {
                     withAnimation(.easeInOut) {

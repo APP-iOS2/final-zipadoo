@@ -135,15 +135,17 @@ struct SearchBarCell: View {
                         }
                     }
                 }
+                .padding(.trailing, 10)
+                .listStyle(.plain)
                 .navigationBarBackButtonHidden(true)
             }
         }
     }
 }
 
-//#Preview {
-//    SearchBarCell(isClickedPlace: .constant(false), destination: .constant("장소명"), address: .constant("주소"), coordX: .constant(0.0), coordY: .constant(0.0), selectedPlacePosition: .constant(CLLocationCoordinate2D(latitude: 37.39570088983171, longitude: 127.1104335101161)), promiseLocation: .constant( PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
-//}
+#Preview {
+    SearchBarCell(isClickedPlace: .constant(false), destination: .constant("장소명"), address: .constant("주소"), coordX: .constant(0.0), coordY: .constant(0.0), selectedPlacePosition: .constant(CLLocationCoordinate2D(latitude: 37.39570088983171, longitude: 127.1104335101161)), promiseLocation: .constant( PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
+}
 
 extension String: Identifiable {
     public var id: String { self }

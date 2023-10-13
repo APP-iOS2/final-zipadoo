@@ -55,6 +55,7 @@ struct AddPlaceButtonCell: View {
                                 .font(.title3)
                                 .padding(.top)
                                 .padding(.horizontal)
+//                                .foregroundStyle(.primary)
                             
                             Spacer()
                             

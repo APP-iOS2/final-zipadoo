@@ -23,8 +23,6 @@ struct AddPromiseView: View {
     @State private var date = Date()
     @State private var destination: String = "" // 약속 장소 이름
     @State private var address = "" // 약속장소 주소
-    @State private var coordX = 0.0 // 약속장소 위도
-    @State private var coordY = 0.0 // 약속장소 경도
     
     // 지각비 변수 및 상수 값
     @State private var selectedValue: Int = 0
@@ -116,7 +114,8 @@ struct AddPromiseView: View {
                     HStack {
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
                         NavigationLink {
-                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, promiseLocation: $promiseLocation)
+                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
+//                            TestingMaps(destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
                         } label: {
                             Label("지역검색", systemImage: "mappin")
                                 .foregroundColor(.white)

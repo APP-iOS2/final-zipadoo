@@ -25,13 +25,13 @@ struct MapView: View {
     
     @State private var placeOfText = ""
     
-    @State var placeAPin = false
-    @State var pinLocation: CLLocationCoordinate2D? = nil
+    @State private var placeAPin = false
+    @State private var pinLocation: CLLocationCoordinate2D? = nil
     /// 화면 클릭 값(직접설정맵뷰)
     @State private var selectedPlace: Bool = false
-    @State private var cameraProsition: MapCameraPosition = .camera(
+    @State private var cameraPosition: MapCameraPosition = .camera(
         MapCamera(
-            centerCoordinate: CLLocationCoordinate2D(latitude: CLLocationManager().location?.coordinate.latitude ?? 36.5665, longitude: CLLocationManager().location?.coordinate.longitude ?? 126.9880),
+            centerCoordinate: CLLocationCoordinate2D(latitude: CLLocationManager().location?.coordinate.latitude ?? 37.5665, longitude: CLLocationManager().location?.coordinate.longitude ?? 126.9780),
             distance: 3729
 //            heading: 92,
 //            pitch: 70
@@ -44,9 +44,9 @@ struct MapView: View {
     /// 주소 값
     @Binding var address: String
     /// 약속장소 위도
-    @Binding var coordX: Double
+    @State private var coordXX: Double = 0.0
     /// 약속장소 경도
-    @Binding var coordY: Double
+    @State private var coordYY: Double = 0.0
     
     @Binding var isClickedPlace: Bool
     @Binding var promiseLocation: PromiseLocation
@@ -57,7 +57,7 @@ struct MapView: View {
         NavigationStack {
             ZStack {
                 MapReader { reader in
-                    Map(position: $cameraProsition, bounds: cameraBounding, interactionModes: .all, scope: mapScope) {
+                    Map(position: $cameraPosition, bounds: cameraBounding, interactionModes: .all, scope: mapScope) {
                         UserAnnotation()
                         if let pl = pinLocation {
                             Annotation(address, coordinate: pl) {
@@ -74,8 +74,8 @@ struct MapView: View {
                     .onTapGesture(perform: { screenCoord in
                         pinLocation = reader.convert(screenCoord, from: .local)
                         placeAPin = false
-                        coordX = pinLocation?.latitude ?? 36.5665
-                        coordY = pinLocation?.longitude ?? 126.9880
+                        coordXX = pinLocation?.latitude ?? 36.5665
+                        coordYY = pinLocation?.longitude ?? 126.9880
                            
                         let geocoder = CLGeocoder()
                         geocoder.reverseGeocodeLocation(CLLocation(
@@ -90,7 +90,7 @@ struct MapView: View {
                         if let pinLocation {
                             print("tap: screen \(screenCoord), location \(pinLocation)")
                         }
-                        print("coordX: \(coordX) / coordY: \(coordY)")
+                        print("coordX: \(coordXX) / coordY: \(coordYY)")
                     })
                 }
                 .overlay(alignment: .topTrailing) {
@@ -100,8 +100,9 @@ struct MapView: View {
                         MapCompass(scope: mapScope)
                             .mapControlVisibility(.visible)
                     }
-                    .padding(.top)
-                    .buttonBorderShape(.circle)
+                    .padding(.top, 5)
+                    .padding(.trailing, 5)
+                    .buttonBorderShape(.roundedRectangle)
                 }
                 .mapScope(mapScope)
     
@@ -139,11 +140,11 @@ struct MapView: View {
                                             destination = placeOfText
                                         }
                                         isClickedPlace = false
-                                        promiseLocation = addLocationStore.setLocation(destination: destination, address: address, latitude: coordX, longitude: coordY)
+                                        promiseLocation = addLocationStore.setLocation(destination: destination, address: address, latitude: coordXX, longitude: coordYY)
                                         print(destination)
                                         print(address)
-                                        print(coordX)
-                                        print(coordY)
+                                        print(coordXX)
+                                        print(coordYY)
                                         dismiss()
                                     } label: {
                                         Text("장소 선택하기")
@@ -155,6 +156,7 @@ struct MapView: View {
                                 }
                             }
                     }
+                    .padding(.bottom, 30)
                 }
                 .padding(.bottom, 10)
             }
@@ -167,5 +169,5 @@ struct MapView: View {
 }
 
 #Preview {
-    MapView(destination: .constant(""), address: .constant(""), coordX: .constant(0.0), coordY: .constant(0.0), isClickedPlace: .constant(false), promiseLocation: .constant(PromiseLocation(destination: "서울시청", address: "", latitude: 37.5665, longitude: 126.9780)))
+    MapView(destination: .constant(""), address: .constant(""), isClickedPlace: .constant(false), promiseLocation: .constant(PromiseLocation(destination: "서울시청", address: "", latitude: 37.5665, longitude: 126.9780)))
 }

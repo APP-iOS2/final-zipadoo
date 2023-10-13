@@ -17,10 +17,6 @@ struct MapOptionSelectView: View {
     @Binding var destination: String
     /// 주소 값
     @Binding var address: String
-    /// 약속장소 위도
-    @Binding var coordX: Double
-    /// 약속장소 경도
-    @Binding var coordY: Double
     
     @Binding var promiseLocation: PromiseLocation
     
@@ -28,9 +24,9 @@ struct MapOptionSelectView: View {
         VStack {
             switch mapOptions {
             case .click:
-                MapView(destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, isClickedPlace: $isClickedPlace, promiseLocation: $promiseLocation)
+                MapView(destination: $destination, address: $address, isClickedPlace: $isClickedPlace, promiseLocation: $promiseLocation)
             case .search:
-                NewMapView(destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
+                NewMapView(destination: $destination, address: $address, isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
             }
         }
     }
