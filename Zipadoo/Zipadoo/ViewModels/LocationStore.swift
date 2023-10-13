@@ -25,37 +25,39 @@ class LocationStore: ObservableObject {
     let dbRef = Firestore.firestore()
     
     /// locationIdArray로 Location배열 패치
-    func fetchData(locationIdArray: [String]) async throws {
-        do {
-            var temp: [Location] = []
-            var locationParticipantTemp: [LocationAndParticipant] = []
-            
-            for locationId in locationIdArray {
-                let document = try await dbRef.collection("Location").document(locationId).getDocument()
-                
-//                let location = let promise = try snapshot.data(as: Location.self)
-                if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
-                   let locationData = try? JSONDecoder().decode(Location.self, from: jsonData) {
-                    // 닉네임 가져오기
-                    let nickname = try await fetchUserNickname(participantId: locationData.participantId)
-
-                    temp.append(locationData)
-                    
-                    // LocationAndNickname으로도 저장
-                    locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: nickname))
-                }
-            }
-            DispatchQueue.main.sync {
-                self.locationDatas = temp
-                self.locationParticipantDatas = locationParticipantTemp
-            }
-        
-            print(self.locationDatas)
-            
-        } catch {
-            print("fetch locationData failed")
-        }
-    }
+       @MainActor
+       func fetchData(locationIdArray: [String]) async throws {
+           do {
+//               locationDatas.removeAll()
+//               locationParticipantDatas.removeAll()
+               
+               var temp: [Location] = []
+               var locationParticipantTemp: [LocationAndParticipant] = []
+               
+               for locationId in locationIdArray {
+                   let snapshot = try await dbRef.collection("Location").document(locationId).getDocument()
+                   let locationData = try snapshot.data(as: Location.self)
+                   
+                   // 닉네임 가져오기
+                   let nickname = try await fetchUserNickname(participantId: locationData.participantId)
+                   
+                   temp.append(locationData)
+                   
+                   // LocationAndNickname으로도 저장
+                   locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: nickname))
+               }
+               
+               DispatchQueue.main.async {
+                   self.locationDatas = temp
+                   self.locationParticipantDatas = locationParticipantTemp
+               }
+           
+               print(self.locationDatas)
+               
+           } catch {
+               print("fetch locationData failed")
+           }
+       }
     
     /// locationData의 participantId로 유저의 닉네임만 가져오기
     func fetchUserNickname(participantId: String) async throws -> String {
@@ -105,6 +107,5 @@ class LocationStore: ObservableObject {
         }
     }
 }
-
 
 

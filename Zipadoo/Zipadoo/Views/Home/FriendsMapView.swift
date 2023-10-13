@@ -32,7 +32,7 @@ struct FriendsMapView: View {
     // 로케이션 데이터 분기를 위한 프로퍼티
     @State private var firstUploadLocation: Bool = true
     // 파베에 로케이션 보내기 위한 구조체
-    @State private var myLocation: Location = Location(participantId: "", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0)
+    @State private var myLocation: Location = Location(id: "F3A8AE7F-2820-4D39-8768-80B8B89AB5A7", participantId: "", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0)
     // 예상 경로 색
     let strokeColors: [UIColor] = [
         .red, .orange, .yellow, .green, .blue, .cyan, .purple, .brown, .black
@@ -46,7 +46,7 @@ struct FriendsMapView: View {
         "임병구", "김상규", "나예슬", "남현정", "선아라", "이재승", "윤해수", "장여훈", "정한두"
     ]
     // 맵뷰 카메라 세팅
-    @State private var region: MapCameraPosition = .automatic
+    @State private var region: MapCameraPosition = .userLocation(fallback: .automatic)
     // 현황 뷰 띄우기
     @State private var isShowingFriendSheet: Bool = false
     // 길 안내 토글
@@ -58,6 +58,8 @@ struct FriendsMapView: View {
     @State private var routeDisplaying = false
     @State private var route: MKRoute?
     @State private var routeDestination: MKMapItem?
+    // Location배열 패치를 위한 id배열
+    @State var locationIdArray: [String] = ["CEBCB8FA-2759-4EE5-827F-5C31CC08F148", "F3A8AE7F-2820-4D39-8768-80B8B89AB5A7", "CE5EF632-978E-4EBD-83A4-71D21DBCD2E2"]
     
     // Marker는 시각적, Anntation은 정보 포함
     var body: some View {
@@ -115,19 +117,11 @@ struct FriendsMapView: View {
                     }
                 }
                 Button {
-                    if firstUploadLocation {
-                        LocationStore.addLocationData(location: myLocation)
-                        firstUploadLocation = false
-                    } else {
-                        locationStore.updateCurrentLocation(locationId: myLocation.id, newLatitude: myLocation.currentLatitude, newLongtitude: myLocation.currentLongitude)
-                    }
-                } label: {
-                    Text("내 위치 데이터 파베보내기")
-                }
-                Button {
                     isShowingFriendSheet = true
                 } label: {
                     Text("친구현황보기")
+                        .font(.title3)
+                        .padding()
                 }
             }
             .sheet(isPresented: $isShowingFriendSheet) {
@@ -138,7 +132,43 @@ struct FriendsMapView: View {
         }
         .task {
             // 테스트용
-            myLocation = Location(participantId: "이재승", departureLatitude: 37.547551, departureLongitude: 127.080315, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+            myLocation = Location(participantId: "k6VioFa0mfTc1oRIUzMs9dzjHVf1", departureLatitude: 37.547551, departureLongitude: 127.080315, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+            // 자신의 로케이션 데이터 보내기
+            LocationStore.addLocationData(location: myLocation)
+            firstUploadLocation = false
+            // 패치해주는 코드
+            do {
+                try await locationStore.fetchData(locationIdArray: locationIdArray)
+                friendsAnnotation = locationStore.locationDatas
+                print("파베 패치 완료")
+            } catch {
+                print("파이어베이스 에러")
+            }
+        }
+        .onAppear {
+            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
+                print("5초 지남")
+                locationStore.updateCurrentLocation(locationId: myLocation.id, newLatitude: myLocation.currentLatitude, newLongtitude: myLocation.currentLongitude)
+                
+                Task {
+                    do {
+                        try await locationStore.fetchData(locationIdArray: locationIdArray)
+                        friendsAnnotation = locationStore.locationDatas
+                        print("파베 패치 완료")
+                        
+                        // 테스트를 위해 친구 위도값 계속 변경
+                        if friendsAnnotation.isEmpty {
+                            print("friendsAnnotation이 없습니다.")
+                        } else {
+                            friendsAnnotation[0].currentLatitude -= 0.001
+                            locationStore.updateCurrentLocation(locationId: friendsAnnotation[0].id, newLatitude: friendsAnnotation[0].currentLatitude, newLongtitude: friendsAnnotation[0].currentLongitude)
+                        }
+                    } catch {
+                        print("파이어베이스 에러: \(error)")
+                    }
+                }
+            }
+            RunLoop.current.add(timer, forMode: .default)
         }
         .onChange(of: isShowingRoute) {
             if isShowingRoute {

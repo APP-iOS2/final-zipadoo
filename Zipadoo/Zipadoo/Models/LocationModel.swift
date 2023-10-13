@@ -22,9 +22,9 @@ struct Location: Identifiable, Codable {
         return CLLocationCoordinate2D(latitude: departureLatitude, longitude: departureLongitude)
     }
     /// 현재 위도
-    let currentLatitude: Double
+    var currentLatitude: Double
     /// 현재 경도
-    let currentLongitude: Double
+    var currentLongitude: Double
     /// 현재 위치값
     var currentCoordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongitude)
