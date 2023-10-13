@@ -42,7 +42,7 @@ struct PastPromiseView: View {
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 10)
                                                     .shadow(color: .primary, radius: 1, x: 1, y: 1)
-                                                    .opacity(0.2)
+                                                    .opacity(0.3)
                                                 //
                                             )
                                     }
@@ -51,7 +51,7 @@ struct PastPromiseView: View {
                                     Group {
                                         HStack {
                                             Image(systemName: "pin")
-                                            Text("장소 \(promise.destination)")
+                                            Text("\(promise.destination)")
                                         }
                                         
                                         /// 저장된 promiseDate값을 Date 타입으로 변환
@@ -59,7 +59,7 @@ struct PastPromiseView: View {
                                         
                                         HStack {
                                             Image(systemName: "clock")
-                                            Text("\(promise.promiseDate)")
+                                            Text("\(formatDate(date: datePromise))")
                                         }
                                         .padding(.bottom, 20)
                                         
@@ -83,10 +83,11 @@ struct PastPromiseView: View {
                                 .overlay(
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 10)
-                                            .shadow(color: .primary, radius: 15, x: 10, y: 10)
-                                            .opacity(0.1)
-                                        //                                        .stroke(Color.black, lineWidth: 0.3)
+                                            .foregroundColor(.zipadoo)
+                                            .opacity(0.05)
+                                            .shadow(color: .zipadoo, radius: 10, x: 5, y: 5)
                                     }
+                              
                                 )
                                 .foregroundStyle(Color.primary)
                             }
@@ -96,18 +97,18 @@ struct PastPromiseView: View {
                     }
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button {
-                                // 삭제 코드 추가
-                            } label: {
-                                Text("삭제")
-                            }
-                            .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                                AddPromiseView()
-                            })
-                        }
-                    }
+//                    .toolbar {
+//                        ToolbarItem(placement: .topBarTrailing) {
+//                            Button {
+//                                // 삭제 코드 추가
+//                            } label: {
+//                               //
+//                            }
+//                            .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+//                                AddPromiseView()
+//                            })
+//                        }
+//                    }
                     .onAppear {
                         print(Date().timeIntervalSince1970)
                         var calendar = Calendar.current

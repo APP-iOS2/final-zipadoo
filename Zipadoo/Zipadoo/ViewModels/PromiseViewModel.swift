@@ -107,6 +107,15 @@ class PromiseViewModel: ObservableObject {
         }
     }
     
+    // PromiseId로 Promise객체 가져오기
+    static func fetchPromise(promiseId: String) async throws -> Promise {
+        let snapshot = try await Firestore.firestore().collection("Promise").document(promiseId).getDocument()
+        
+        let promise = try snapshot.data(as: Promise.self)
+        return promise
+
+    }
+    
     // MARK: - 약속 추가 함수
     /// 약속 추가 함수
     //    func addPromise(_ promise: Promise) {
@@ -128,7 +137,7 @@ class PromiseViewModel: ObservableObject {
     //        }
     //    }
     
-    func addPromiseData() {
+    func addPromiseData() async throws {
         // Promise객체 생성
         var promise = Promise(
            id: UUID().uuidString,
