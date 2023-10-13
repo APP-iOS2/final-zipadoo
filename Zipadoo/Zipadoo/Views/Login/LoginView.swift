@@ -120,7 +120,7 @@ struct LoginView: View {
                     } // NavigationView
                
             } // ZStack
-        } //NavigationStack
+        } // NavigationStack
     } // body
 } // struct
 
