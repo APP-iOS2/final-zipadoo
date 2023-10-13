@@ -10,43 +10,41 @@ import CoreLocation
 import MapKit
 
 struct FriendsMapSubView: View {
+    @ObservedObject var locationStore: LocationStore
     @Binding var isShowingFriendSheet: Bool
-    @State var friendsAnnotation: [Location] = []
     @Binding var region: MapCameraPosition
     @Binding var myLocation: Location
+    @State private var friendsAnnotation: [Location] = []
     let destinationCoordinate: CLLocationCoordinate2D
-    var promiseTitle: String = "용인오세용"
+    var promise: Promise
     var remaningPromiseTime: String = "2시간 30분"
     // 프로필 이미지 (유저 프로필 이미지가 없을 때)
     let profileImages: [String] = [
         "bear", "dragon", "elephant", "lion", "owl", "rabbit", "seahorse", "snake", "wolf"
     ]
-    // 프로필 이름 (테스트용)
-    let profileNames: [String] = [
-        "임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "장여훈", "정한두"
-    ]
     var body: some View {
         VStack {
             Group {
-                Text("\(promiseTitle)")
+                Text("\(promise.promiseTitle)")
                     .padding(.top)
                     .bold()
+                // 수정 필요
                 Text("남은시간 : \(remaningPromiseTime)")
                     .font(.title3)
                     .bold()
             }
             .padding(5)
             LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
-                ForEach(friendsAnnotation) { annotation in
+                ForEach(locationStore.locationParticipantDatas) { annotation in
                     Button {
-                        region = .region(MKCoordinateRegion(center: annotation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                        region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                     } label: {
-                        InfoView(name: profileNames.randomElement() ?? "이름없음",
-                                 imageName: profileImages.randomElement() ?? "bear",
+                        InfoView(name: annotation.nickname,
+                                 imageString: annotation.imageString,
                                  departureLatitude: destinationCoordinate.latitude,
                                  departureLongitude: destinationCoordinate.longitude,
-                                 currentLatitude: annotation.currentLatitude,
-                                 currentLongitude: annotation.currentLongitude)
+                                 currentLatitude: annotation.location.currentLatitude,
+                                 currentLongitude: annotation.location.currentLongitude)
                     }
                 }
             }
@@ -70,20 +68,27 @@ struct FriendsMapSubView: View {
 }
 
 #Preview {
-    FriendsMapSubView(isShowingFriendSheet: .constant(true), region: .constant(.automatic), myLocation: .constant(Location(participantId: "나임", departureLatitude: 37.547551, departureLongitude: 127.080315, currentLatitude: 37.547551, currentLongitude: 127.080315)), destinationCoordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323))
+    FriendsMapSubView(locationStore: LocationStore(), isShowingFriendSheet: .constant(true),
+                      region: .constant(.automatic),
+                      myLocation: .constant(Location(participantId: "나임",
+                                                     departureLatitude: 37.547551,
+                                                     departureLongitude: 127.080315,
+                                                     currentLatitude: 37.547551,
+                                                     currentLongitude: 127.080315)),
+                      destinationCoordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323),
+                      promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 0, longitude: 0, participantIdArray: [], checkDoublePromise: true, locationIdArray: []))
 }
 
 struct InfoView: View {
     let name: String
-    let imageName: String
+    let imageString: String
     let departureLatitude: Double
     let departureLongitude: Double
     let currentLatitude: Double
     let currentLongitude: Double
     @State private var distance: Double = 0
-    // 예상 경로 색
-    let strokeColors: [UIColor] = [
-        .red, .orange, .yellow, .green, .blue, .cyan, .purple, .brown, .black
+    let profileImages: [String] = [
+        "bear", "dragon", "elephant", "lion", "owl", "rabbit", "seahorse", "snake", "wolf"
     ]
     var body: some View {
         VStack {
@@ -92,11 +97,20 @@ struct InfoView: View {
             ZStack {
                 Circle()
                     .frame(width: 60)
-                    .foregroundColor(Color(strokeColors.randomElement() ?? .blue))
-                Image(imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 50)
+                    .foregroundColor(Color(.blue))
+                AsyncImage(url: URL(string: imageString), content: {
+                    image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50)
+                }) {
+                    Image(profileImages.randomElement() ?? "bear")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 50)
+                }
+                    
             }
             Text(formatDistance(distance))
         }
