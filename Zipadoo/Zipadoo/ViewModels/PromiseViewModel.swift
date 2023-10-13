@@ -12,7 +12,7 @@ import FirebaseCore
 
 @MainActor
 class PromiseViewModel: ObservableObject {
-    @Published var promiseViewModel: [Promise] = []
+    @Published var fetchPromiseData: [Promise] = []
     
     // 저장될 변수
     @Published var id: String = ""
@@ -84,7 +84,7 @@ class PromiseViewModel: ObservableObject {
     //            print("Error getting documents: \(error)")
     //        }
     //    }
-    
+    @MainActor
     func fetchData() async throws {
         do {
             dbRef.getDocuments { (snapshot, error) in
@@ -100,8 +100,9 @@ class PromiseViewModel: ObservableObject {
                             temp.append(promise)
                         }
                     }
-                    self.promiseViewModel = temp
-                    print(self.promiseViewModel)
+                    DispatchQueue.main.async {
+                        self.fetchPromiseData = temp
+                    }
                 }
             }
         }
@@ -137,6 +138,7 @@ class PromiseViewModel: ObservableObject {
     //        }
     //    }
     
+    @MainActor
     func addPromiseData() async throws {
         // Promise객체 생성
         var promise = Promise(
@@ -176,6 +178,10 @@ class PromiseViewModel: ObservableObject {
             promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
             /// 지각비 변수 및 상수 값
             selectedValue = 0
+            
+            // 약속 추가후 다시 패치
+            try await fetchData()
+            
         } catch {
             print("약속 등록")
         }

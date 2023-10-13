@@ -211,10 +211,12 @@ struct AddPromiseView: View {
                             dismissButton:
                                     .default(Text("확인"),
                                              action: {
-                                                 dismiss()
                                                  Task {
                                                      do {
                                                          try await promiseViewModel.addPromiseData()
+                                                         
+                                                         dismiss()
+                                                         
                                                      } catch {
                                                          print("등록 실패")
                                                      }

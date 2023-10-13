@@ -18,7 +18,7 @@ struct HomeMainView: View {
     @State private var isShownFullScreenCover: Bool = false
     
     // 약속의 갯수 확인
-    @State private var userPromiseArray: [Promise] = []
+//    @State private var userPromiseArray: [Promise] = []
     // 상단 탭바 인덱스
     @State private var tabIndex = 0 
     var body: some View {
@@ -66,11 +66,7 @@ struct HomeMainView: View {
                 }
                 
             }
-            .refreshable {
-                Task {
-                    try await promise.fetchData()
-                }
-            }
+    
 //            .ignoresSafeArea(.all)
             
 //            var widgetDatas: [WidgetData] = []
@@ -103,8 +99,9 @@ struct HomeMainView: View {
         ScrollView {
             VStack {
                 if let loginUserID = loginUser.currentUser?.id {
-                    let filteredPromises = promise.promiseViewModel.filter { promise in
-                        return loginUserID == promise.makingUserID
+                    // 내가만든 약속 또는 참여하는 약속 불러오기
+                    let filteredPromises = promise.fetchPromiseData.filter { promise in
+                        return loginUserID == promise.makingUserID || promise.participantIdArray.contains(loginUserID)
                     }
                     
                     if filteredPromises.isEmpty {
@@ -196,11 +193,21 @@ struct HomeMainView: View {
                                     }
                                     
                                 )
+                                .foregroundStyle(Color.primary)
                                 
                             }
                             
                             .padding()
                             
+                        } 
+                        .onAppear {
+                            Task {
+                                try await promise.fetchData()
+                                
+                                let filteredPromises = promise.fetchPromiseData.filter { promise in
+                                    return loginUserID == promise.makingUserID || promise.participantIdArray.contains(loginUserID)
+                                }
+                            }
                         }
                     }
                     
@@ -213,6 +220,7 @@ struct HomeMainView: View {
           
             // toolbar
             .onAppear {
+
                 print(Date().timeIntervalSince1970)
                 var calendar = Calendar.current
                 calendar.timeZone = NSTimeZone.local
@@ -220,7 +228,7 @@ struct HomeMainView: View {
                 
                 var widgetDatas: [WidgetData] = []
                 
-                for promise in promise.promiseViewModel {
+                for promise in promise.fetchPromiseData {
                     let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
                     let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
                     let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
@@ -241,7 +249,9 @@ struct HomeMainView: View {
                 } catch {
                     print("Failed to encode Promise:", error)
                 }
+                
             }
+           
         }
         .onAppear {
             Task {
@@ -253,7 +263,6 @@ struct HomeMainView: View {
                 try await promise.fetchData()
             }
         }
-      
     }
 
     // ScrollView
