@@ -108,7 +108,7 @@ struct PromiseDetailView: View {
 //            PromiseEditView(promise: .constant(promise))
 //        }
         .sheet(isPresented: $isShowingEditSheet,
-               content: { PromiseEditView(promise: .constant(promise))
+               content: { PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
         })
         .sheet(
             isPresented: $isShowingShareSheet,
