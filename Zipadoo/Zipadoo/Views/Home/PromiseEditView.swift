@@ -97,9 +97,22 @@ struct PromiseEditView: View {
                     .overlay {
                         HStack {
                             ScrollView(.horizontal) {
-                                HStack {
-                                    ForEach(editSelectedFriends, id: \.self) { friendId in
-                                        if let friend = userStore.userFetchArray.first(where: { $0.id == friendId }) {
+                                if selectedFriends.isEmpty {
+                                    HStack {
+                                        ForEach(editSelectedFriends, id: \.self) { friendId in
+                                            if let friend = userStore.userFetchArray.first(where: { $0.id == friendId }) {
+                                                FriendSellView(selectedFriends: $selectedFriends, friend: friend)
+                                                    .padding()
+                                                    .padding(.trailing, -50)
+
+                                            }
+                                        }
+                                    }
+                                    .padding(.leading, -20)
+                                    .padding(.trailing, 50)
+                                } else {
+                                    HStack {
+                                        ForEach(selectedFriends) { friend in
                                             FriendSellView(selectedFriends: $selectedFriends, friend: friend)
                                                 .padding()
                                                 .padding(.trailing, -50)
@@ -108,73 +121,38 @@ struct PromiseEditView: View {
                                     .padding(.leading, -20)
                                     .padding(.trailing, 50)
                                 }
-                                .frame(height: 90)
-                                .scrollIndicators(.hidden)
                             }
+                            .frame(height: 90)
+                            .scrollIndicators(.hidden)
                         }
                     }
                 
-//                RoundedRectangle(cornerRadius: 5)
-//                    .stroke(lineWidth: 0.5)
-//                    .frame(width: 315, height: 110)
-//                    .overlay {
-//                        HStack {
-//                            ScrollView(.horizontal) {
-//                                if selectedFriends.isEmpty {
-//                                    HStack {
-//                                        ForEach(editSelectedFriends, id: \.self) { friendId in
-//                                            if let friend = userStore.userFetchArray.first(where: { $0.id == friendId }) {
-//                                                FriendSellView(selectedFriends: $selectedFriends, friend: friend)
-//                                                    .padding()
-//                                                    .padding(.trailing, -50)
-//
-//                                            }
-//                                        }
-//                                    }
-//                                    .padding(.leading, -20)
-//                                    .padding(.trailing, 50)
-//                                } else {
-//                                    HStack {
-//                                        ForEach(selectedFriends) { friend in
-//                                            FriendSellView(selectedFriends: $selectedFriends, friend: friend)
-//                                                .padding()
-//                                                .padding(.trailing, -50)
-//                                        }
-//                                    }
-//                                    .padding(.leading, -20)
-//                                    .padding(.trailing, 50)
-//                                }
-//                            }
-//                            .frame(height: 90)
-//                            .scrollIndicators(.hidden)
-//                        }
-//                    }
-//                
-//                List(friendsStore.friendsFetchArray) { friend in
-//                    Button {
-//                        if !selectedFriends.contains(friend) {
-//                            selectedFriends.append(friend)
-//                            editSelectedFriends.append(friend.id)
-//                        } else {
-//                            showAlert = true
-//                            alertMessage = "\(friend.nickName)님은 이미 존재합니다."
-//                        }
-//                    } label: {
-//                        HStack {
-//                            ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
-//                            
-//                            Text(friend.nickName)
-//                        }
-//                    }
-//                    .alert(isPresented: $showAlert) {
-//                        Alert(
-//                            title: Text("알림"),
-//                            message: Text(alertMessage),
-//                            dismissButton: .default(Text("확인")) {
-//                            }
-//                        )
-//                    }
-//                }
+                List(friendsStore.friendsFetchArray) { friend in
+                    Button {
+                        if !selectedFriends.contains(friend) {
+                            selectedFriends.append(friend)
+                            editSelectedFriends.append(friend.id)
+                        } else {
+                            showAlert = true
+                            alertMessage = "\(friend.nickName)님은 이미 존재합니다."
+                        }
+                    } label: {
+                        HStack {
+                            ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
+                            
+                            Text(friend.nickName)
+                        }
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("알림"),
+                            message: Text(alertMessage),
+                            dismissButton: .default(Text("확인")) {
+                            }
+                        )
+                    }
+                }
+
             }
             .onAppear {
                 userStore.fetchAllUsers()
