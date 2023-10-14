@@ -32,7 +32,6 @@ final class PromiseViewModel: ObservableObject {
     
     init() {
         Task {
-            print("여기!!fetchData : init안에 있는거")
             try await fetchData()
         }
     }

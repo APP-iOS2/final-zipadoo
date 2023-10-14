@@ -213,7 +213,6 @@ struct HomeMainView: View {
             // toolbar
             .onAppear {
                 
-                print("여기!! Onappear 1")
                 print(Date().timeIntervalSince1970)
                 var calendar = Calendar.current
                 calendar.timeZone = NSTimeZone.local
@@ -245,7 +244,6 @@ struct HomeMainView: View {
             }
             .onAppear {
                 Task {
-                    print("여기!!!!!onappear2")
                     try await promise.fetchData()
                 }
             }
