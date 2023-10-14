@@ -52,7 +52,7 @@ struct FriendsView: View {
 //                    }
 //                }
             }
-            .pickerStyle(SegmentedPickerStyle())
+//            .pickerStyle(SegmentedPickerStyle())
             .navigationTitle("친구 관리")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

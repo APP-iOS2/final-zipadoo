@@ -14,7 +14,7 @@ struct AddPromiseView: View {
     // 환경변수
     @Environment(\.dismiss) private var dismiss
     
-    @StateObject private var promiseViewModel: PromiseViewModel = PromiseViewModel()
+    @StateObject var promiseViewModel: PromiseViewModel
     //    var user: User
 
     // 지각비관련 변수
@@ -42,9 +42,6 @@ struct AddPromiseView: View {
         !promiseViewModel.promiseLocation.address.isEmpty
     }
     
-    @State private var addPromise: Promise = Promise()
-    
-    @StateObject private var promise: PromiseViewModel = PromiseViewModel()
     @StateObject private var authUser: AuthStore = AuthStore()
     
     var body: some View {
@@ -215,8 +212,7 @@ struct AddPromiseView: View {
                                                      do {
                                                          try await promiseViewModel.addPromiseData()
                                                          
-                                                         dismiss()
-                                                         
+                                                         dismiss()                       
                                                      } catch {
                                                          print("등록 실패")
                                                      }
@@ -280,5 +276,5 @@ struct AddPromiseView: View {
 }
 
 #Preview {
-    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
+    AddPromiseView(promiseViewModel: PromiseViewModel()/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
 }
