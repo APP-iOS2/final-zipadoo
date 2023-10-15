@@ -176,8 +176,6 @@ final class PromiseViewModel: ObservableObject {
            locationIdArray: [])
         
         do {
-            try await fetchData()
-            
             // locationIdArray에 친구Location객체 id저장
             for id in promise.participantIdArray {
                 // Location객체 생성
@@ -203,8 +201,7 @@ final class PromiseViewModel: ObservableObject {
             promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
             /// 지각비 변수 및 상수 값
             selectedValue = 0
-            
-            try await fetchData()
+    
         } catch {
             print("약속 등록")
         }
