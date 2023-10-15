@@ -17,8 +17,10 @@ class PromiseViewModel: ObservableObject {
     @Published var fetchTrackingPromiseData: [Promise] = []
     /// 지난 약속 저장
     @Published var fetchPastPromiseData: [Promise] = []
+    /*
     /// 로그인중인 유저
-//    var currentUser: User?
+    var currentUser: User?
+     */
     // 저장될 변수
     @Published var id: String = ""
     @Published var promiseTitle: String = ""
@@ -94,17 +96,38 @@ class PromiseViewModel: ObservableObject {
         do {
             let snapshot = try await dbRef.getDocuments()
             
-            var temp: [Promise] = []
+            var tempPromiseArray: [Promise] = []
+            var tempPromiseTracking: [Promise] = []
+            var tempPastPromise: [Promise] = []
+            
+            /// 현재 시각
+            let currentDate = Date()
             
             for document in snapshot.documents {
                 if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
                    let promise = try? JSONDecoder().decode(Promise.self, from: jsonData) {
+                    /// 약속시간
+                    let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+                    /// 약속시간에서 3시간 후 시각
+                    let afterPromise = Calendar.current.date(byAdding: .hour, value: 3, to: promiseDate) ?? promiseDate // 3시간은 3600*3
                     
-                        temp.append(promise)   
+                    if Calendar.current.dateComponents([.second], from: currentDate, to: promiseDate).second ?? 0 > 0 {
+                        // 현재 시간이 아직 안됐을때
+                        tempPromiseArray.append(promise)
+                    } else if Calendar.current.dateComponents([.hour], from: currentDate, to: afterPromise).hour ?? 0 > 0 {
+                        // 추적중일떄
+                        tempPromiseTracking.append(promise)
+                    } else {
+                        // 지난 약속
+                        tempPastPromise.append(promise)
+                    }
                 }
             }
-            self.fetchPromiseData = temp
-            
+            DispatchQueue.main.async {
+                self.fetchPromiseData = tempPromiseArray
+                self.fetchTrackingPromiseData = tempPromiseTracking
+                self.fetchPastPromiseData = tempPastPromise
+            }
         } catch {
             print("fetchPromiseData failed")
         }
@@ -209,6 +232,8 @@ class PromiseViewModel: ObservableObject {
             promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
             /// 지각비 변수 및 상수 값
             selectedValue = 0
+            /// 선택된 친구 초기화
+            selectedFriends = []
             
         } catch {
             print("약속 등록")
@@ -263,6 +288,7 @@ class PromiseViewModel: ObservableObject {
             try await LocationStore.deleteLocationData(locationId: locationId)
         }
         try await dbRef.document(promiseId).delete()
-        
+        // 다시패치
+        try await fetchData()
     }
 }
