@@ -10,10 +10,8 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseCore
 
-@MainActor
-class PromiseViewModel: ObservableObject {
-    @Published var promiseViewModel: [Promise] = []
-    
+final class PromiseViewModel: ObservableObject {
+    @Published var fetchPromiseData: [Promise] = []
     // 저장될 변수
     @Published var id: String = ""
     @Published var promiseTitle: String = ""
@@ -84,28 +82,52 @@ class PromiseViewModel: ObservableObject {
     //            print("Error getting documents: \(error)")
     //        }
     //    }
-    
+    @MainActor
     func fetchData() async throws {
         do {
-            dbRef.getDocuments { (snapshot, error) in
-                guard error == nil else {
-                    print("오류: \(error!)")
-                    return
-                }
-                var temp: [Promise] = []
-                if let snapshot = snapshot {
-                    for document in snapshot.documents {
-                        if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
-                           let promise = try? JSONDecoder().decode(Promise.self, from: jsonData) {
-                            temp.append(promise)
-                        }
-                    }
-                    self.promiseViewModel = temp
-                    print(self.promiseViewModel)
+            let snapshot = try await dbRef.getDocuments()
+            
+            var temp: [Promise] = []
+            
+            for document in snapshot.documents {
+                if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
+                   let promise = try? JSONDecoder().decode(Promise.self, from: jsonData) {
+                    
+                        temp.append(promise)   
                 }
             }
+            self.fetchPromiseData = temp
+            
+        } catch {
+            print("fetchPromiseData failed")
         }
     }
+    /*
+     do {
+         // 로그인한 유저 id 못 받아오면 return
+         guard let loginUserID = AuthStore.shared.currentUser?.id else {
+             return
+         }
+         let snapshot = try await dbRef.getDocuments()
+
+         var temp: [Promise] = []
+         
+         for document in snapshot.documents {
+             if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
+                let promise = try? JSONDecoder().decode(Promise.self, from: jsonData) {
+                 
+                 // 내가 만든 또는 참여하는 약속만 배열에 넣기
+                 if loginUserID == promise.makingUserID || promise.participantIdArray.contains(loginUserID) {
+                     temp.append(promise)
+                 }
+             }
+         }
+         self.fetchPromiseData = temp
+
+     } catch {
+         print("fetchPromiseData failed")
+     }
+     */
     
     // PromiseId로 Promise객체 가져오기
     static func fetchPromise(promiseId: String) async throws -> Promise {
@@ -137,6 +159,7 @@ class PromiseViewModel: ObservableObject {
     //        }
     //    }
     
+    @MainActor
     func addPromiseData() async throws {
         // Promise객체 생성
         var promise = Promise(
@@ -164,6 +187,8 @@ class PromiseViewModel: ObservableObject {
         
             try dbRef.document(promise.id)
                 .setData(from: promise)
+            // 약속 추가후 다시 패치
+            try await fetchData()
             
             id = ""
             promiseTitle = ""
@@ -176,6 +201,7 @@ class PromiseViewModel: ObservableObject {
             promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
             /// 지각비 변수 및 상수 값
             selectedValue = 0
+    
         } catch {
             print("약속 등록")
         }

@@ -16,11 +16,11 @@ struct PastPromiseView: View {
         NavigationStack {
             ScrollView {
                 // 약속 배열 값 존재하는지 확인.
-                if promise.promiseViewModel.isEmpty {
+                if promise.fetchPromiseData.isEmpty {
                     Text("지난 약속 내역이 없습니다.")
                 } else {
                     VStack {
-                        ForEach(promise.promiseViewModel, id: \.self) { promise in
+                        ForEach(promise.fetchPromiseData, id: \.self) { promise in
                             NavigationLink {
                                 PromiseDetailView(promise: promise)
                             } label: {
@@ -117,7 +117,7 @@ struct PastPromiseView: View {
                         
                         var widgetDatas: [WidgetData] = []
                         
-                        for promise in promise.promiseViewModel {
+                        for promise in promise.fetchPromiseData {
                             let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
                             let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
                             let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())

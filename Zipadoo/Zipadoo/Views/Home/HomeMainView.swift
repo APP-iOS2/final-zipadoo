@@ -12,15 +12,16 @@ import SlidingTabView
 
 struct HomeMainView: View {
     
-    @StateObject private var loginUser: UserStore = UserStore()
-    @StateObject private var promise: PromiseViewModel = PromiseViewModel()
+    let user: User?
+//    @StateObject private var loginUser: UserStore = UserStore()
+    @StateObject var promise: PromiseViewModel = PromiseViewModel()
     
     @State private var isShownFullScreenCover: Bool = false
     
     // 약속의 갯수 확인
-    @State private var userPromiseArray: [Promise] = []
+//    @State private var userPromiseArray: [Promise] = []
     // 상단 탭바 인덱스
-    @State private var tabIndex = 0 
+    @State private var tabIndex = 0
     var body: some View {
         NavigationStack {
             VStack {
@@ -42,14 +43,14 @@ struct HomeMainView: View {
 //                    Text("종료된 약속").tag(1)
 //                }
 //                .pickerStyle(SegmentedPickerStyle())
-//                
+//
 //                if selectedSegmentIndex == 0 {
 //                                  PromiseListView // 앞으로의 약속
 //                              } else if selectedSegmentIndex == 1 {
 //                                  PastPromiseView() // 지난 약속
 //                              }
-//                
-            }  
+//
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -60,26 +61,22 @@ struct HomeMainView: View {
                             .fontWeight(.semibold)
                     }
                     .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                        AddPromiseView()
+                        AddPromiseView(promiseViewModel: promise)
                     })
                     
                 }
                 
             }
-            .refreshable {
-                Task {
-                    try await promise.fetchData()
-                }
-            }
+            
 //            .ignoresSafeArea(.all)
             
 //            var widgetDatas: [WidgetData] = []
-//            
+//
 //            for promise in promise.promiseViewModel {
 //                let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
 //                let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
 //                let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-//                
+//
 //                if promiseDateComponents == todayComponents {
 //                    // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
 //                    let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
@@ -89,9 +86,9 @@ struct HomeMainView: View {
             
 //            do {
 //                let encodedData = try encoder.encode(widgetDatas)
-//                
+//
 //                UserDefaults.shared.set(encodedData, forKey: "todayPromises")
-//                
+//
 //                WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
 //            } catch {
 //                print("Failed to encode Promise:", error)
@@ -102,12 +99,13 @@ struct HomeMainView: View {
     private var PromiseListView: some View {
         ScrollView {
             VStack {
-                if let loginUserID = loginUser.currentUser?.id {
-                    let filteredPromises = promise.promiseViewModel.filter { promise in
-                        return loginUserID == promise.makingUserID
+                if let loginUserID = user?.id {
+                    // 내가만든 약속 또는 참여하는 약속 불러오기
+                    let filteredPromises = promise.fetchPromiseData.filter { promise in
+                        return loginUserID == promise.makingUserID || promise.participantIdArray.contains(loginUserID)
                     }
                     
-                    if filteredPromises.isEmpty {
+                if filteredPromises.isEmpty {
                         VStack {
                             Image(.zipadoo)
                                 .resizable()
@@ -196,6 +194,7 @@ struct HomeMainView: View {
                                     }
                                     
                                 )
+                                .foregroundStyle(Color.primary)
                                 
                             }
                             
@@ -213,6 +212,7 @@ struct HomeMainView: View {
           
             // toolbar
             .onAppear {
+                
                 print(Date().timeIntervalSince1970)
                 var calendar = Calendar.current
                 calendar.timeZone = NSTimeZone.local
@@ -220,7 +220,7 @@ struct HomeMainView: View {
                 
                 var widgetDatas: [WidgetData] = []
                 
-                for promise in promise.promiseViewModel {
+                for promise in promise.fetchPromiseData {
                     let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
                     let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
                     let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
@@ -242,15 +242,15 @@ struct HomeMainView: View {
                     print("Failed to encode Promise:", error)
                 }
             }
-        }
-        .onAppear {
-            Task {
-                try await promise.fetchData()
+            .onAppear {
+                Task {
+                    try await promise.fetchData()
+                }
             }
-        }
-        .refreshable {
-            Task {
-                try await promise.fetchData()
+            .refreshable {
+                Task {
+                    try await promise.fetchData()
+                }
             }
         }
       
@@ -272,7 +272,7 @@ struct HomeMainView: View {
 //                    }
 //                }
 //    }
-//}
+// }
 
 // MARK: - 시간 형식변환 함수
 func formatDate(date: Date) -> String {
@@ -283,5 +283,5 @@ func formatDate(date: Date) -> String {
 }
 
 #Preview {
-    HomeMainView()
+    HomeMainView(user: User.sampleData)
 }
