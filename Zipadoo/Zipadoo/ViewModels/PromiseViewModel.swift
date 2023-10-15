@@ -183,6 +183,7 @@ final class PromiseViewModel: ObservableObject {
             LocationStore.addLocationData(location: myLocation) // 파베에 Location
             
             // 친구도 동일하게 저장
+            // locationIdArray에 친구Location객체 id저장
             for id in promise.participantIdArray {
                 // Location객체 생성
                 let friendLocation = Location(participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
@@ -207,7 +208,6 @@ final class PromiseViewModel: ObservableObject {
             promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
             /// 지각비 변수 및 상수 값
             selectedValue = 0
-            
         } catch {
             print("약속 등록")
         }
