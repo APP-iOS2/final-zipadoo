@@ -17,7 +17,8 @@ struct HomeMainView: View {
     @StateObject var promise: PromiseViewModel = PromiseViewModel()
     
     @State private var isShownFullScreenCover: Bool = false
-    
+    /// 약속후 3시간동안 트랙킹하는 약속을 보여주는 시트
+    @State private var isShowingTracking: Bool = false
     // 약속의 갯수 확인
 //    @State private var userPromiseArray: [Promise] = []
     // 상단 탭바 인덱스
@@ -65,8 +66,10 @@ struct HomeMainView: View {
                     })
                     
                 }
-                
             }
+            .sheet(isPresented: $isShowingTracking, content: {
+                PromiseTrackingView(promiseViewModel: promise)
+            })
             
 //            .ignoresSafeArea(.all)
             
@@ -97,8 +100,16 @@ struct HomeMainView: View {
         
     }
     private var PromiseListView: some View {
-        ScrollView {
-            VStack {
+        
+        VStack {
+            // 추적중인 약속버튼
+            Button(action: { isShowingTracking.toggle() }, label: {
+                Text("추적중인 약속")
+                    .foregroundStyle(.orange)
+            })
+            
+            // 예정된 약속 리스트
+            ScrollView {
                 if let loginUserID = user?.id {
                     // 내가만든 약속 또는 참여하는 약속 불러오기
                     let filteredPromises = promise.fetchPromiseData.filter { promise in
@@ -253,7 +264,7 @@ struct HomeMainView: View {
                 }
             }
         }
-      
+        
     }
 
     // ScrollView

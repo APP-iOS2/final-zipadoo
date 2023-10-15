@@ -10,8 +10,15 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseCore
 
-final class PromiseViewModel: ObservableObject {
+class PromiseViewModel: ObservableObject {
+    /// 예정인 약속 저장
     @Published var fetchPromiseData: [Promise] = []
+    /// 추적중인 약속 저장
+    @Published var fetchTrackingPromiseData: [Promise] = []
+    /// 지난 약속 저장
+    @Published var fetchPastPromiseData: [Promise] = []
+    /// 로그인중인 유저
+//    var currentUser: User?
     // 저장될 변수
     @Published var id: String = ""
     @Published var promiseTitle: String = ""
@@ -176,7 +183,6 @@ final class PromiseViewModel: ObservableObject {
            locationIdArray: [])
         
         do {
-            try await fetchData()
             
             // locationIdArray에 친구Location객체 id저장
             for id in promise.participantIdArray {
@@ -204,7 +210,6 @@ final class PromiseViewModel: ObservableObject {
             /// 지각비 변수 및 상수 값
             selectedValue = 0
             
-            try await fetchData()
         } catch {
             print("약속 등록")
         }
