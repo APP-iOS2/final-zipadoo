@@ -176,8 +176,6 @@ final class PromiseViewModel: ObservableObject {
            locationIdArray: [])
         
         do {
-            try await fetchData()
-            
             // 생성자의 Location객체 id locationIdArray에 저장
             let myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? " - no id - ", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
             
