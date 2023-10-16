@@ -29,7 +29,8 @@ struct HomeMainView: View {
                 // MARK: - 상단 슬라이딩 탭
                 SlidingTabView(selection: $tabIndex, tabs:
                                 ["예정된 약속", "종료된 약속"], animation: .easeInOut,
-                               activeAccentColor: .zipadoo, selectionBarColor: . zipadoo)
+                               activeAccentColor: .zipadoo, inactiveAccentColor: .zipadoo, selectionBarColor: .
+                               zipadoo)
                 Spacer()
                 if tabIndex == 0 {
                     PromiseListView
