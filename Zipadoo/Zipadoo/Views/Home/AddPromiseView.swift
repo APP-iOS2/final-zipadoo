@@ -174,7 +174,7 @@ struct AddPromiseView: View {
                         
                         Spacer()
                         
-                        Text("\(promiseViewModel.selectedValue)개")
+                        Text("\(selectedValue)개")
                             .font(.title3)
                             .padding(.leading, 100)
                     }
