@@ -14,7 +14,7 @@ struct AppInfoView: View {
     var body: some View {
         VStack {
             Spacer()
-            Group {
+            VStack(spacing: 10) {
                 Image(.zipadoo)
                     .resizable()
                     .scaledToFit()
@@ -24,20 +24,23 @@ struct AppInfoView: View {
                 Text("Zipadoo")
                     .font(.title)
                     .bold()
-            }
-            HStack {
-                Text("버전정보")
-                Text("\(appVersion)")
-                    .foregroundColor(.gray)
+                
+                HStack {
+                    Text("버전정보")
+                    Text("\(appVersion)")
+                        .foregroundColor(.gray)
+                }
             }
             
             Spacer()
+            
             Text("Copyrightⓒ 2023 Zipadoo All rights reserved")
                 .font(.caption2)
                 .foregroundColor(.gray)
-//                .padding()
         }
         .padding(.bottom, 50)
+        .navigationTitle("앱 정보")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
