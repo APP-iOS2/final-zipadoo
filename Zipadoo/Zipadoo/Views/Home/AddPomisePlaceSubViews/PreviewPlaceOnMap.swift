@@ -8,7 +8,9 @@
 import SwiftUI
 import MapKit
 
+/// 약속 등록자가 자신이 설정한 약속장소에 대해 확인할 수 있는 맵뷰
 struct PreviewPlaceOnMap: View {
+    /// 선택한 약속장소에 대한 카메라 포지션 값
     @State private var position: MapCameraPosition = MapCameraPosition.automatic
     @Binding var promiseLocation: PromiseLocation
     var body: some View {
@@ -30,7 +32,6 @@ struct PreviewPlaceOnMap: View {
                             }
                         Image(systemName: "arrowtriangle.down.fill")
                             .resizable()
-//                            .scaledToFit()
                             .frame(width: 5, height: 8, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                             .foregroundStyle(.yellow)
                             .offset(x: 0, y: 22)
