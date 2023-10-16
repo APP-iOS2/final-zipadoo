@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+    @EnvironmentObject var alertStore: AlertStore
     @StateObject var viewModel = ContentViewModel()
     
     var body: some View {
@@ -25,6 +25,7 @@ struct ContentView: View {
                         Text("홈")
                     }
                     .tag(0)
+                    .environmentObject(alertStore)
                 
                 // 친구리스트
                 FriendsView()
@@ -43,10 +44,12 @@ struct ContentView: View {
                     .tag(2)
                 
             }
+            .arrivalMessageAlert(isPresented: $alertStore.isPresentedArrival, arrival: alertStore.arrivalMsgAlert)
         }
     }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(AlertStore())
 }

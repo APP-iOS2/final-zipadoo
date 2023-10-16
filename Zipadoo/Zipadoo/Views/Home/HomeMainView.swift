@@ -11,7 +11,7 @@ import WidgetKit
 
 /// 약속 리스트 뷰
 struct HomeMainView: View {
-    
+    @EnvironmentObject var alertStore: AlertStore
     @StateObject private var loginUser: UserStore = UserStore()
     @StateObject private var promise: PromiseViewModel = PromiseViewModel()
     
@@ -24,6 +24,13 @@ struct HomeMainView: View {
         NavigationStack {
             ScrollView {
                 VStack {
+                    Button {
+                        alertStore.isPresentedArrival = true
+                        print($alertStore.isPresentedArrival)
+                    } label: {
+                        Text("알럿")
+                    }
+
                     if let loginUserID = loginUser.currentUser?.id {
                         let filteredPromises = promise.promiseViewModel.filter { promise in
                             return loginUserID == promise.makingUserID
@@ -242,4 +249,5 @@ func formatDate(date: Date) -> String {
 
 #Preview {
     HomeMainView()
+        .environmentObject(AlertStore())
 }
