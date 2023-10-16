@@ -144,4 +144,3 @@ struct FriendProfileView: View {
 #Preview {
     FriendProfileView(user: .sampleData)
 }
-

@@ -14,9 +14,8 @@ struct AddPromiseView: View {
     // 환경변수
     @Environment(\.dismiss) private var dismiss
     
-    @StateObject private var promiseViewModel: PromiseViewModel = PromiseViewModel()
+    @StateObject var promiseViewModel: PromiseViewModel
     //    var user: User
-    
 
     // 지각비관련 변수
     let minValue: Int = 0
@@ -27,7 +26,6 @@ struct AddPromiseView: View {
     @State private var selectedValue: Int = 0
     private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
 
-    
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var addFriendSheet: Bool = false
     
@@ -44,9 +42,6 @@ struct AddPromiseView: View {
         !promiseViewModel.promiseLocation.address.isEmpty
     }
     
-    @State private var addPromise: Promise = Promise()
-    
-    @StateObject private var promise: PromiseViewModel = PromiseViewModel()
     @StateObject private var authUser: AuthStore = AuthStore()
     
     var body: some View {
@@ -211,8 +206,15 @@ struct AddPromiseView: View {
                             dismissButton:
                                     .default(Text("확인"),
                                              action: {
-                                                 dismiss()
-                                                 promiseViewModel.addPromiseData()
+                                                 Task {
+                                                     do {
+                                                         try await promiseViewModel.addPromiseData()
+                                                         
+                                                         dismiss()                       
+                                                     } catch {
+                                                         print("등록 실패")
+                                                     }
+                                                 }
                                              })
                         )
                     }
@@ -251,7 +253,6 @@ struct AddPromiseView: View {
                 }
                 .padding(.horizontal, 15)
                 
-
                 Picker("지각비", selection: $selectedValue) {
                     ForEach(availableValues, id: \.self) { value in
 
@@ -273,6 +274,5 @@ struct AddPromiseView: View {
 }
 
 #Preview {
-    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
+    AddPromiseView(promiseViewModel: PromiseViewModel()/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
 }
-

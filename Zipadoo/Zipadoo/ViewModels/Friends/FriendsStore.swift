@@ -34,6 +34,7 @@ import FirebaseFirestore
              guard let userId = currentUser?.id else {
                  return
              }
+             print("친구 유저정보 가져오기 성공")
              let user = try await UserStore.fetchUser(userId: userId)
              friendsIdArray = user?.friendsIdArray ?? []
              print("fetchFriends : \(friendsIdArray)")
