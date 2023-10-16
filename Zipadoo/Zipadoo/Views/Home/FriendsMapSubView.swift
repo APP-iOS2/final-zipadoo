@@ -107,7 +107,7 @@ struct InfoView: View {
                 Circle()
                     .frame(width: 60)
                     .foregroundColor(Color(.blue))
-                AsyncImage(url: URL(string: imageString), content: {
+                /*AsyncImage(url: URL(string: imageString), content: {
                     image in
                     image
                         .resizable()
@@ -118,7 +118,11 @@ struct InfoView: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 50)
-                }
+                }*/
+                Image(.dothez)
+                    .resizable()
+                    .frame(width: 25, height: 25) // 크기 조절
+                    .aspectRatio(contentMode: .fill)
                 
             }
             Text(formatDistance(distance))

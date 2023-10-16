@@ -55,7 +55,7 @@ struct FriendsMapView: View {
                     // 친구 위치 표시
                     ForEach(locationStore.locationParticipantDatas.filter { $0.location.participantId != AuthStore.shared.currentUser?.id ?? "" } ) { annotation in
                         Annotation(annotation.nickname, coordinate: annotation.location.currentCoordinate, anchor: .center) {
-                            AsyncImage(url: URL(string: annotation.imageString), content: { image in
+                            /*AsyncImage(url: URL(string: annotation.imageString), content: { image in
                                 image
                                     .resizable()
                                     .frame(width: 25, height: 25) // 크기 조절
@@ -65,7 +65,11 @@ struct FriendsMapView: View {
                                     .resizable()
                                     .frame(width: 25, height: 25) // 크기 조절
                                     .aspectRatio(contentMode: .fill)
-                            }
+                            }*/
+                            Image(.dothez)
+                                .resizable()
+                                .frame(width: 25, height: 25) // 크기 조절
+                                .aspectRatio(contentMode: .fill)
                         }
                     }
                     // 경로 그리기
