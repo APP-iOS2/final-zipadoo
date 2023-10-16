@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
+import MessageUI
 
 struct SettingView: View {
     
     @State private var isOnAlarm: Bool = true
     @State private var isOnGPS: Bool = true
-    
     @State private var isLogoutAlert: Bool = false
+    @State private var emailAddress = "example@email.com"
+    private let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "버전 정보를 불러올 수 없습니다"
     
     var body: some View {
-        
         Form {
             Section {
                 Toggle("알림 설정", isOn: $isOnAlarm)
@@ -28,7 +29,6 @@ struct SettingView: View {
                     
                 } label: {
                     Text("회원정보 수정")
-                    
                 }
                 
                 NavigationLink {
@@ -39,17 +39,38 @@ struct SettingView: View {
                 
                 NavigationLink {
                     List {
-                        Button(action: {}, label: {
+                        Button(action: {
+                            let url = URL(string: "https://open.kakao.com/o/s2WMpYMf")!
+                            UIApplication.shared.open(url)
+                        }, label: {
                             Text("오픈카톡으로 연락하기")
                         })
-                        Button(action: {}, label: {
+                        Button(action: {
+                            EmailController.shared.sendEmail(subject: "제목을 입력해주세요", body: "문의 내용을 입력해주세요", to: "someday0307@gmail.com")
+                        }, label: {
                             Text("이메일로 연락하기")
                         })
                     }
-                    .navigationTitle("개발자에게 연락하기")
-                    
+                    .navigationTitle("1:1 문의하기")
                 } label: {
-                    Text("건의 사항")
+                    Text("1:1 문의하기")
+                }
+                
+                NavigationLink {
+                    AppInfoView()
+                } label: {
+                    HStack {
+                        Text("앱 정보")
+                        Spacer()
+                        Text("\(appVersion)")
+                            .foregroundColor(.gray)
+                    }
+                }
+                
+                NavigationLink {
+                    OpenSourceView()
+                } label: {
+                    Text("오픈소스 라이선스")
                 }
             }
             
@@ -74,13 +95,44 @@ struct SettingView: View {
                                 try await AuthStore.shared.logOut()
                             }
                         })
-                        
                     )
                 }
             }
         }
-//        .listStyle(.plain)
         .navigationTitle("설정")
+    }
+}
+
+struct OpenSourceView: View {
+    var body: some View {
+        Text("오픈 소스 리스트")
+    }
+}
+
+class EmailController: NSObject, MFMailComposeViewControllerDelegate {
+    public static let shared = EmailController()
+    private override init() { }
+    
+    func sendEmail(subject: String, body: String, to: String) {
+        if !MFMailComposeViewController.canSendMail() {
+            print("메일 앱이 없어 보낼 수 없음")
+            return
+        }
+        let mailComposer = MFMailComposeViewController()
+        mailComposer.mailComposeDelegate = self
+        mailComposer.setToRecipients([to])
+        mailComposer.setSubject(subject)
+        mailComposer.setMessageBody(body, isHTML: false)
+        EmailController.getRootViewController()?.present(mailComposer, animated: true, completion: nil)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        EmailController.getRootViewController()?.dismiss(animated: true, completion: nil)
+    }
+    
+    static func getRootViewController() -> UIViewController? {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        return windowScene?.windows.first?.rootViewController
     }
 }
 
