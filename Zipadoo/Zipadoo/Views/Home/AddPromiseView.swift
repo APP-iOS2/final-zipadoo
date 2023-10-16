@@ -103,7 +103,6 @@ struct AddPromiseView: View {
                         .bold()
                         .padding(.top, 40)
                     
-                    HStack {
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
                         NavigationLink {
                             AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $promiseViewModel.destination, address: $promiseViewModel.address, coordX: $promiseViewModel.coordX, coordY: $promiseViewModel.coordY, promiseLocation: $promiseViewModel.promiseLocation)
@@ -142,8 +141,7 @@ struct AddPromiseView: View {
                                 }
                             }
                         }
-                        Spacer()
-                    }
+                        
                     // MARK: - 지각비 구현
                     /*
                      지각비 구현 초기안

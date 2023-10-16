@@ -52,7 +52,7 @@ struct PromiseEditView: View {
                 
                 HStack {
                     NavigationLink {
-                        AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, promiseLocation: $promiseLocation)
+                        MapView(destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, isClickedPlace: $isClickedPlace, promiseLocation: $promiseLocation)
                     } label: {
                         Text("지역검색")
                             .foregroundColor(.blue)
@@ -82,7 +82,6 @@ struct PromiseEditView: View {
                     
                     Button {
                         addFriendsSheet.toggle()
-                        print("친구 추가")
                     } label: {
                         Label("추가하기", systemImage: "plus")
                             .foregroundColor(.black)
@@ -101,10 +100,9 @@ struct PromiseEditView: View {
                                     HStack {
                                         ForEach(editSelectedFriends, id: \.self) { friendId in
                                             if let friend = userStore.userFetchArray.first(where: { $0.id == friendId }) {
-                                                FriendSellView(selectedFriends: $selectedFriends, friend: friend)
+                                                EditFriendSellView(selectedFriends: $selectedFriends, friend: friend)
                                                     .padding()
                                                     .padding(.trailing, -50)
-
                                             }
                                         }
                                     }
@@ -126,36 +124,8 @@ struct PromiseEditView: View {
                             .scrollIndicators(.hidden)
                         }
                     }
-                
-                List(friendsStore.friendsFetchArray) { friend in
-                    Button {
-                        if !selectedFriends.contains(friend) {
-                            selectedFriends.append(friend)
-                            editSelectedFriends.append(friend.id)
-                        } else {
-                            showAlert = true
-                            alertMessage = "\(friend.nickName)님은 이미 존재합니다."
-                        }
-                    } label: {
-                        HStack {
-                            ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
-                            
-                            Text(friend.nickName)
-                        }
-                    }
-                    .alert(isPresented: $showAlert) {
-                        Alert(
-                            title: Text("알림"),
-                            message: Text(alertMessage),
-                            dismissButton: .default(Text("확인")) {
-                            }
-                        )
-                    }
-                }
-
             }
             .onAppear {
-                userStore.fetchAllUsers()
                 editedPromiseTitle = promise.promiseTitle
                 editedDestination = promise.destination
                 editedPromiseDate = Date(timeIntervalSince1970: promise.promiseDate)
@@ -163,7 +133,6 @@ struct PromiseEditView: View {
                 Task {
                     try await friendsStore.fetchFriends()
                 }
-                
             }
             .navigationBarItems(
                 leading: Button("취소") {
@@ -188,8 +157,9 @@ struct PromiseEditView: View {
         let updatedData: [String: Any] = [
             "promiseTitle": editedPromiseTitle,
             "promiseDate": editedPromiseDate.timeIntervalSince1970,
-            "destination": editedDestination,
-            "participantIdArray": editSelectedFriends
+            "destination": destination,
+            //            "participantIdArray": editSelectedFriends
+            "participantIdArray": selectedFriends.map { $0.id }
         ]
         
         promiseRef.updateData(updatedData) { error in
@@ -232,7 +202,7 @@ struct EditFriendsListVIew: View {
                                             FriendSellView(selectedFriends: $selectedFriends, friend: friend)
                                                 .padding()
                                                 .padding(.trailing, -50)
-
+                                            
                                         }
                                     }
                                 }
