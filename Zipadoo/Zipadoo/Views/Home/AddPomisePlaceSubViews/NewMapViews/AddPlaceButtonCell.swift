@@ -43,7 +43,7 @@ struct AddPlaceButtonCell: View {
                                             .foregroundStyle(.white, .red)
                                     }
                                     .shadow(radius: 5)
-                                    .padding(.top, 5)
+                                    .padding(.top, 2)
                                     .padding(.trailing, 6)
                                 }
                                 Spacer()

@@ -112,18 +112,21 @@ struct OneMapView: View {
                     AddPlaceButtonCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, promiseLocation: $promiseLocation)
                 } else if selectedPlace == true {
                     OneAddLocation(destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, placeOfText: $placeOfText, selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace, promiseLocation: $promiseLocation)
+                } else {
+                    
                 }
             }
             .onTapGesture {
                 hideKeyboard()
             }
-            .safeAreaInset(edge: .bottom) {
-                HStack {
-                    Spacer()
-                    SearchBarCell(selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, selectedPlacePosition: $selectedPlacePosition, promiseLocation: $promiseLocation)
-                    Spacer()
+            .onMapCameraChange(frequency: .onEnd) {
+                // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
+                if isClickedPlace == true {
+                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 3500))
                 }
-                .background(.ultraThinMaterial)
+//                else {
+//                    //                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 3500))
+//                }
             }
             .overlay(alignment: .topTrailing) {
                 VStack {
@@ -139,17 +142,16 @@ struct OneMapView: View {
                 .padding(.top, 5)
             }
             .mapScope(mapScope)
+            .safeAreaInset(edge: .bottom) {
+                HStack {
+                    Spacer()
+                    SearchBarCell(selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, selectedPlacePosition: $selectedPlacePosition, promiseLocation: $promiseLocation)
+                    Spacer()
+                }
+                .background(.ultraThinMaterial)
+            }
             .onChange(of: placePosition) {
                     cameraPosition = placePosition
-            }
-            .onMapCameraChange(frequency: .onEnd) {
-                // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
-                if isClickedPlace == true {
-                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 3500))
-                }
-//                else {
-//                    //                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 3500))
-//                }
             }
         }
         .onAppear {
