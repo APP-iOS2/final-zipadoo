@@ -26,7 +26,8 @@ struct FriendsView: View {
                 // MARK: - 변경 SlidingTab
                 SlidingTabView(selection: $tabIndex, tabs:
                                 ["친구 목록", "요청 목록"], animation: .easeInOut,
-                               activeAccentColor: .zipadoo, selectionBarColor: . zipadoo)
+                               activeAccentColor: .zipadoo, inactiveAccentColor: .zipadoo, selectionBarColor: .
+                               zipadoo)
                 Spacer()
                 if tabIndex == 0 {
                     friendListView

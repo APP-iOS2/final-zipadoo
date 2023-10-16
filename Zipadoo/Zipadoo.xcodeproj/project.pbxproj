@@ -39,6 +39,7 @@
 		8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */; };
 		8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */; };
 		9A10ADFB2AD83D0900AF37A3 /* SlidingTabView in Frameworks */ = {isa = PBXBuildFile; productRef = 9A10ADFA2AD83D0900AF37A3 /* SlidingTabView */; };
+		9AB63BB02ADCBFAF00A383A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9AB63BAF2ADCBFAF00A383A2 /* GoogleService-Info.plist */; };
 		9B8FE8272ACE377B00C1EEFC /* MyLocationAndInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */; };
 		C02790B82ACD297100BBDCCA /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02790B72ACD297100BBDCCA /* WidgetKit.framework */; };
 		C02790BA2ACD297100BBDCCA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02790B92ACD297100BBDCCA /* SwiftUI.framework */; };
@@ -178,6 +179,7 @@
 		8BD44EC92AC1401E00A4694C /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
 		8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilView.swift; sourceTree = "<group>"; };
+		9AB63BAF2ADCBFAF00A383A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAndInfo.swift; sourceTree = "<group>"; };
 		9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationAndInfoView.swift; sourceTree = "<group>"; };
 		C02790B52ACD297100BBDCCA /* ZipadooWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ZipadooWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -557,6 +559,7 @@
 			isa = PBXGroup;
 			children = (
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
+				9AB63BAF2ADCBFAF00A383A2 /* GoogleService-Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				1B9346E62AD7E8E400696C73 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
@@ -746,6 +749,7 @@
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 				1B9346E72AD7E8E400696C73 /* GoogleService-Info.plist in Resources */,
+				9AB63BB02ADCBFAF00A383A2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
