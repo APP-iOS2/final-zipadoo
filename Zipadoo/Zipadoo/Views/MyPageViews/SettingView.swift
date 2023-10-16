@@ -26,7 +26,6 @@ struct SettingView: View {
             Section {
                 NavigationLink {
                     EditProfileView()
-                    
                 } label: {
                     Text("회원정보 수정")
                 }
@@ -43,35 +42,53 @@ struct SettingView: View {
                             let url = URL(string: "https://open.kakao.com/o/s2WMpYMf")!
                             UIApplication.shared.open(url)
                         }, label: {
-                            Text("오픈카톡으로 연락하기")
+                            HStack {
+                                Text("오픈카톡으로 연락하기💬")
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                            }
                         })
                         Button(action: {
                             EmailController.shared.sendEmail(subject: "제목을 입력해주세요", body: "문의 내용을 입력해주세요", to: "someday0307@gmail.com")
                         }, label: {
-                            Text("이메일로 연락하기")
+                            HStack {
+                                Text("이메일로 연락하기✉️")
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundColor(.gray)
+                            }
                         })
                     }
+                    .foregroundColor(.primary)
                     .navigationTitle("1:1 문의하기")
+                    .navigationBarTitleDisplayMode(.inline)
                 } label: {
                     Text("1:1 문의하기")
                 }
-                
-                NavigationLink {
-                    AppInfoView()
-                } label: {
-                    HStack {
-                        Text("앱 정보")
-                        Spacer()
-                        Text("\(appVersion)")
-                            .foregroundColor(.gray)
-                    }
+            }
+            
+            NavigationLink {
+                AppInfoView()
+            } label: {
+                HStack {
+                    Text("앱 정보")
+                    Spacer()
+                    Text("\(appVersion)")
+                        .foregroundColor(.gray)
                 }
-                
-                NavigationLink {
-                    OpenSourceView()
-                } label: {
-                    Text("오픈소스 라이선스")
-                }
+            }
+            
+            NavigationLink {
+                OpenSourceView()
+            } label: {
+                Text("오픈소스 라이선스")
+            }
+            
+            NavigationLink {
+                DeveloperProfileView()
+            } label: {
+                Text("개발자")
             }
             
             // 로그아웃
@@ -106,6 +123,8 @@ struct SettingView: View {
 struct OpenSourceView: View {
     var body: some View {
         Text("오픈 소스 리스트")
+            .navigationTitle("오픈소스 라이선스")
+            .navigationBarTitleDisplayMode(.inline)
     }
 }
 
