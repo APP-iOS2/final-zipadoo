@@ -14,7 +14,7 @@ struct AnnotationMarker: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 40, height: 40)
-                .shadow(radius: 10)
+                .shadow(radius: 3)
                 .foregroundStyle(.blue)
             
 //            Image(systemName: "arrowtriangle.down.fill")

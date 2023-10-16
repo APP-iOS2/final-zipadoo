@@ -7,9 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		042625812AD9244C002C52E0 /* NewMapsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 042625802AD9244C002C52E0 /* NewMapsView.swift */; };
-		047127952AD7BE4F00767E9C /* TestingMaps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127942AD7BE4F00767E9C /* TestingMaps.swift */; };
-		047127972AD7C7A800767E9C /* TestingsAddLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127962AD7C7A800767E9C /* TestingsAddLocation.swift */; };
+		047127952AD7BE4F00767E9C /* OneMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127942AD7BE4F00767E9C /* OneMapView.swift */; };
+		047127972AD7C7A800767E9C /* OneAddLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127962AD7C7A800767E9C /* OneAddLocation.swift */; };
 		04C7A85A2AC94889001B2AF8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04C7A8592AC94889001B2AF8 /* Alamofire */; };
 		08BC9AF22ACF973A0003AE32 /* EditPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC9AF12ACF973A0003AE32 /* EditPasswordView.swift */; };
 		08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B42ABC1BE0005D231D /* MyPageView.swift */; };
@@ -145,10 +144,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		042625802AD9244C002C52E0 /* NewMapsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMapsView.swift; sourceTree = "<group>"; };
 		043E689C2ACC0E33007B7395 /* PlaceInfoWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoWebView.swift; sourceTree = "<group>"; };
-		047127942AD7BE4F00767E9C /* TestingMaps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingMaps.swift; sourceTree = "<group>"; };
-		047127962AD7C7A800767E9C /* TestingsAddLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingsAddLocation.swift; sourceTree = "<group>"; };
+		047127942AD7BE4F00767E9C /* OneMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMapView.swift; sourceTree = "<group>"; };
+		047127962AD7C7A800767E9C /* OneAddLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneAddLocation.swift; sourceTree = "<group>"; };
 		04C7A84C2AC9405B001B2AF8 /* NewMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMapView.swift; sourceTree = "<group>"; };
 		04C7A8522AC94752001B2AF8 /* SearchbarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchbarCell.swift; sourceTree = "<group>"; };
 		04C7A8542AC94776001B2AF8 /* AnnotationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCell.swift; sourceTree = "<group>"; };
@@ -414,8 +412,8 @@
 				FAD257D92AD65F4B0017D16C /* AnnotationMarker.swift */,
 				FAD257E12AD65F4B0017D16C /* PreviewPlaceOnMap.swift */,
 				FA2473F52ACD4BDB00D4C821 /* AddLocationDatas.swift */,
-				047127942AD7BE4F00767E9C /* TestingMaps.swift */,
-				047127962AD7C7A800767E9C /* TestingsAddLocation.swift */,
+				047127942AD7BE4F00767E9C /* OneMapView.swift */,
+				047127962AD7C7A800767E9C /* OneAddLocation.swift */,
 			);
 			path = AddPomisePlaceSubViews;
 			sourceTree = "<group>";
@@ -434,7 +432,6 @@
 			children = (
 				FA2473F32ACD4BDB00D4C821 /* PlaceMarkerCell.swift */,
 				FA2473F42ACD4BDB00D4C821 /* MapView.swift */,
-				042625802AD9244C002C52E0 /* NewMapsView.swift */,
 			);
 			path = BasicMapViews;
 			sourceTree = "<group>";
@@ -811,7 +808,6 @@
 				FA2474462ACD4D6E00D4C821 /* FriendsLocationMapViewModel.swift in Sources */,
 				08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */,
 				FAD257E72AD65F4B0017D16C /* AnnotationMarker.swift in Sources */,
-				042625812AD9244C002C52E0 /* NewMapsView.swift in Sources */,
 				FA2474252ACD4BDB00D4C821 /* AddPromiseTitleCell.swift in Sources */,
 				FA2474472ACD4D6E00D4C821 /* MapViewContainer.swift in Sources */,
 				FAD257EE2AD65F4B0017D16C /* PreviewPlaceOnMap.swift in Sources */,
@@ -837,7 +833,7 @@
 				FAD257E92AD65F4B0017D16C /* NewMapView.swift in Sources */,
 				FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */,
 				FA2474542ACD4D6E00D4C821 /* AuthStore.swift in Sources */,
-				047127972AD7C7A800767E9C /* TestingsAddLocation.swift in Sources */,
+				047127972AD7C7A800767E9C /* OneAddLocation.swift in Sources */,
 				FA24741D2ACD4BDB00D4C821 /* HomeMainView.swift in Sources */,
 				FA2474182ACD4BDB00D4C821 /* FriendsLocationStatusView.swift in Sources */,
 				8B973A352AC5930D00C67B5F /* LoginEmailCheckView.swift in Sources */,
@@ -870,7 +866,7 @@
 				8B973A372AC5930D00C67B5F /* SigninByEmail2View.swift in Sources */,
 				8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */,
 				FA24744D2ACD4D6E00D4C821 /* EditProfileViewModel.swift in Sources */,
-				047127952AD7BE4F00767E9C /* TestingMaps.swift in Sources */,
+				047127952AD7BE4F00767E9C /* OneMapView.swift in Sources */,
 				8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */,
 				C02790CE2ACD29DF00BBDCCA /* UserDefaults.swift in Sources */,
 				C02790F02ACE776500BBDCCA /* WidgetModel.swift in Sources */,

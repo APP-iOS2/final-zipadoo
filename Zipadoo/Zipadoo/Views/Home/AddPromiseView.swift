@@ -38,8 +38,8 @@ struct AddPromiseView: View {
     
     @State private var mapViewSheet: Bool = false
     @State var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) // 장소에 대한 정보 값
-    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
-    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
+//    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
+//    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
     @State private var showingConfirmAlert: Bool = false
     @State private var showingCancelAlert: Bool = false
     @State private var showingPenalty: Bool = false
@@ -114,8 +114,8 @@ struct AddPromiseView: View {
                     HStack {
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
                         NavigationLink {
-                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
-//                            TestingMaps(destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, promiseLocation: $promiseLocation)
+//                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
+                            OneMapView(destination: $destination, address: $address, promiseLocation: $promiseLocation)
                         } label: {
                             Label("지역검색", systemImage: "mappin")
                                 .foregroundColor(.white)
