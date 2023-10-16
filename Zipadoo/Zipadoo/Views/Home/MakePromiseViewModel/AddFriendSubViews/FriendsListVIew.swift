@@ -80,7 +80,6 @@ struct FriendsListVIew: View {
                 Task {
                     try await friendsStore.fetchFriends()
                 }
-                
             }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {

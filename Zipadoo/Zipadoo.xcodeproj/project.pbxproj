@@ -18,6 +18,7 @@
 		08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BC2ABC1E1C005D231D /* PayingView.swift */; };
 		08EFA1242AD63C8500B203FD /* FriendsMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08EFA1232AD63C8500B203FD /* FriendsMapView.swift */; };
 		1B6C11C32AD6825D00770D43 /* PromiseEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B6C11C22AD6825D00770D43 /* PromiseEditView.swift */; };
+		1B9346E72AD7E8E400696C73 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1B9346E62AD7E8E400696C73 /* GoogleService-Info.plist */; };
 		1BB3B0752AD535170000D91A /* ArrivalResultTempView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB3B0742AD535170000D91A /* ArrivalResultTempView.swift */; };
 		1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BD72ABD16B800DE635D /* TossPayView.swift */; };
 		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
@@ -159,6 +160,7 @@
 		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
 		08EFA1232AD63C8500B203FD /* FriendsMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsMapView.swift; sourceTree = "<group>"; };
 		1B6C11C22AD6825D00770D43 /* PromiseEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseEditView.swift; sourceTree = "<group>"; };
+		1B9346E62AD7E8E400696C73 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		1BB3B0742AD535170000D91A /* ArrivalResultTempView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalResultTempView.swift; sourceTree = "<group>"; };
 		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
@@ -559,6 +561,7 @@
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				9AB63BAF2ADCBFAF00A383A2 /* GoogleService-Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
+				1B9346E62AD7E8E400696C73 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -745,6 +748,7 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
+				1B9346E72AD7E8E400696C73 /* GoogleService-Info.plist in Resources */,
 				9AB63BB02ADCBFAF00A383A2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
