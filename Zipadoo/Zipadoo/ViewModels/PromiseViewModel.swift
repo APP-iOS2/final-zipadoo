@@ -109,7 +109,7 @@ class PromiseViewModel: ObservableObject {
                     /// 약속시간
                     let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
                     /// 약속시간에서 3시간 후 시각
-                    let afterPromise = Calendar.current.date(byAdding: .hour, value: 3, to: promiseDate) ?? promiseDate // 3시간은 3600*3
+                    let afterPromise = Calendar.current.date(byAdding: .hour, value: 3, to: promiseDate) ?? promiseDate // 3시간 뒤
                     
                     if Calendar.current.dateComponents([.second], from: currentDate, to: promiseDate).second ?? 0 > 0 {
                         // 현재 시간이 아직 안됐을때
