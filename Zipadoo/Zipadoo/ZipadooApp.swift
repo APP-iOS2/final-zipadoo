@@ -57,7 +57,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct ZipadooApp: App {
-    
+    @StateObject var alertStore: AlertStore = AlertStore()
     /*
     init() {
         // Kakao SDK 초기화
@@ -70,6 +70,7 @@ struct ZipadooApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(alertStore)
 //                .onOpenURL(perform: { url in
 //                    if AuthApi.isKakaoTalkLoginUrl(url) {
 //                        AuthController.handleOpenUrl(url: url)

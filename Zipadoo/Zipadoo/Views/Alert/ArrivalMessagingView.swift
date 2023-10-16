@@ -9,36 +9,26 @@ import SwiftUI
 
 enum ArrivalType: String {
     case early = "일찍"
-    case last = "늦게"
-    case onTime = "딱 맞춰"
+    case late = "늦게"
+    case onTime = "에 딱 맞춰"
 }
 
 struct ArrivalMessagingView: View {
-    // MARK: - Properties
     @Binding var isPresented: Bool
-    /// 사용자 이름
-    let name: String
-    /// 사용자 이미지
-    let profileImgString: String
-    /// 사용자 도착 순위
-    let rank: Int
-    /// 약속시간 - 사용자가 도착한 시간
-    let arrivarDifference: Double
-    /// 지각시 차감될 감자 수
-    let potato: Int
+    var arrival: ArrivalMsgModel
     
     var timeDifference: String {
-        let timeDiff = abs(arrivarDifference)
+        let timeDiff = abs(arrival.arrivarDifference)
         switch timeDiff {
         case 0:
             return ""
         case 0..<3600:
             let minute = timeDiff / 60
-            return "\(Int(minute))분 "
+            return "보다 \(Int(minute))분 "
         case 3600..<86400:
             let hours = timeDiff / (60 * 60)
             let minute = Int(timeDiff) % (60 * 60) / 60
-            var message = "\(Int(hours))시간 "
+            var message = "보다 \(Int(hours))시간 "
             message += minute == 0 ? "" : "\(minute)분 "
             return message
         default:
@@ -47,10 +37,10 @@ struct ArrivalMessagingView: View {
     }
     
     var arrivalType: ArrivalType {
-        if arrivarDifference > 0 {
+        if arrival.arrivarDifference > 0 {
             .early
-        } else if arrivarDifference < 0 {
-            .last
+        } else if arrival.arrivarDifference < 0 {
+            .late
         } else {
             .onTime
         }
@@ -59,13 +49,16 @@ struct ArrivalMessagingView: View {
     // MARK: - body
     var body: some View {
         VStack {
-            ProfileImageView(imageString: profileImgString, size: .regular)
-            Text("\(name)님, \(rank)등으로 도착하셨습니다!")
-            Text("약속시간 보다 " + timeDifference + arrivalType.rawValue + " 오셨어요.")
+            ProfileImageView(imageString: arrival.profileImgString, size: .regular)
+                .padding(.vertical, 12)
             
-            if arrivalType == .last {
+            Text("\(arrival.name)님, \(arrival.rank)등으로 도착하셨습니다!")
+            
+            Text("약속 시간\(timeDifference)\(arrivalType.rawValue) 오셨어요.")
+            
+            if arrivalType == .late {
                 Text("다음부턴 조금 더 일찍 출발해보세요!")
-                Text("\(potato)감자가 차감 될 예정입니다.")
+                Text("\(arrival.potato)감자가 차감 될 예정입니다.")
                     .font(.caption).bold()
                     .foregroundColor(.secondary)
                     .padding(.vertical, 12)
@@ -73,6 +66,7 @@ struct ArrivalMessagingView: View {
             
             Button {
                 isPresented = false
+                print("Button clicked: \(isPresented)")
             } label: {
                 Text("확인")
                     .bold()
@@ -81,6 +75,7 @@ struct ArrivalMessagingView: View {
             }
             .buttonStyle(.borderedProminent)
             .padding([.horizontal, .vertical], 12)
+            .tint(arrivalType == .late ? .red : .blue)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 18)
@@ -99,16 +94,7 @@ struct ArrivalMessagingView: View {
 
 struct ArrivalMessagingModifier: ViewModifier {
     @Binding var isPresented: Bool
-    /// 사용자 이름
-    let name: String
-    /// 사용자 이미지
-    let profileImgString: String
-    /// 사용자 도착 순위
-    let rank: Int
-    /// 약속시간 - 사용자가 도착한 시간
-    let arrivarDifference: Double
-    /// 지각시 차감될 감자 수
-    let potato: Int
+    var arrival: ArrivalMsgModel
     
     func body(content: Content) -> some View {
         ZStack {
@@ -123,8 +109,7 @@ struct ArrivalMessagingModifier: ViewModifier {
                         self.isPresented = false
                     }
                 
-                ArrivalMessagingView(isPresented: self.$isPresented, name: self.name, profileImgString: self.profileImgString, rank: self.rank, arrivarDifference: self.arrivarDifference, potato: self.potato
-                )
+                ArrivalMessagingView(isPresented: $isPresented, arrival: arrival)
                 .transition(.move(edge: .bottom).combined(with: .opacity))
             }
         }
@@ -140,12 +125,11 @@ struct ArrivalMessagingModifier: ViewModifier {
 #Preview {
     Text("약속 장소 도착 Alert")
       .modifier(
-        ArrivalMessagingModifier(
-            isPresented: .constant(true),
+        ArrivalMessagingModifier(isPresented: .constant(true), arrival: ArrivalMsgModel(
             name: "아라",
             profileImgString: "https://cdn.discordapp.com/emojis/1154686109234774058.webp?size=240&quality=lossless",
             rank: 2,
             arrivarDifference: 720.3641,
-            potato: 500)
+            potato: 500))
       )
 }
