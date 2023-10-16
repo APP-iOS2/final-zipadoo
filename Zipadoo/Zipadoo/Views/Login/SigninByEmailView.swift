@@ -31,15 +31,12 @@ struct SigninByEmailView: View {
     
     var body: some View {
         ZStack {
-            Color.primary.ignoresSafeArea(.all) // 배경색
-            
             VStack(alignment: .leading) {
                 
-                Rectangle().frame(height: 50) // Spacer() 공간
+                Spacer().frame(height: 50) // Spacer() 공간
                 // MARK: - 입력 안내 메세지
                 Text("계정이 없습니다. \n가입할 이름과 휴대폰 번호를 입력해 주세요.")
                     .foregroundColor(.primary)
-                    .colorInvert()
                     .font(.title2)
                     .fontWeight(.semibold)
                 
@@ -52,7 +49,6 @@ struct SigninByEmailView: View {
                     HStack {
                         TextField("닉네임", text: $emailLoginStore.nickName, prompt: Text("닉네임").foregroundColor(.secondary.opacity(0.7)))
                             .foregroundColor(Color.primary)
-                            .colorInvert()
                             .opacity(0.9)
                             .font(.title3)
                             .fontWeight(.semibold)
@@ -66,11 +62,8 @@ struct SigninByEmailView: View {
                             Image(systemName: "x.circle.fill")
                         }
                         .foregroundColor(Color.primary.opacity(0.4))
-                        .colorInvert()
                     }
-                  
-                 
-                    
+
                     Rectangle().frame(height: 1)
                         .foregroundStyle(Color.secondary)
                         .padding(.bottom, 5)
@@ -80,7 +73,6 @@ struct SigninByEmailView: View {
                         Text("2~6자로 입력해주세요. 프로필 수정에서 변경 가능합니다.")
                             .font(.subheadline)
                             .foregroundStyle(Color.primary.opacity(0.7))
-                            .colorInvert()
                         Spacer()
                     }
                     if isPresentedMessage {
@@ -100,7 +92,6 @@ struct SigninByEmailView: View {
                         HStack {
                             TextField("휴대폰 번호", text: $emailLoginStore.phoneNumber, prompt: Text("휴대폰 번호").foregroundColor(.secondary.opacity(0.7)))
                                 .foregroundColor(Color.primary)
-                                .colorInvert()
                                 .opacity(0.9)
                                 .font(.title3)
                                 .fontWeight(.semibold)
@@ -115,11 +106,8 @@ struct SigninByEmailView: View {
                                 Image(systemName: "x.circle.fill")
                             }
                             .foregroundColor(Color.primary.opacity(0.4))
-                                .colorInvert()
                         }
-                    
-             
-                        
+
                         // 텍스트필드 줄
                         Rectangle().frame(height: 1)
                             .foregroundStyle(Color.secondary)
@@ -129,7 +117,6 @@ struct SigninByEmailView: View {
                             Text("-를 제외하고 입력해주세요")
                                 .font(.subheadline)
                                 .foregroundStyle(Color.primary.opacity(0.7))
-                                .colorInvert()
                 
                             Spacer()
                         }
@@ -142,7 +129,6 @@ struct SigninByEmailView: View {
                         HStack {
                             SecureField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
                                 .foregroundColor(Color.primary)
-                                .colorInvert()
                                 .opacity(0.9)
                                 .font(.title3)
                                 .fontWeight(.semibold)
@@ -155,7 +141,6 @@ struct SigninByEmailView: View {
                                 Image(systemName: "x.circle.fill")
                             }
                             .foregroundColor(Color.primary.opacity(0.4))
-                            .colorInvert()
                         }
                      
                         Rectangle().frame(height: 1)
@@ -166,9 +151,7 @@ struct SigninByEmailView: View {
                         HStack {
                             Text("6자리 이상 입력해주세요.")
                                 .font(.subheadline)
-                                .foregroundStyle(Color.primary.opacity(0.7))
-                                .colorInvert()
-                            
+                                .foregroundStyle(Color.primary.opacity(0.7))                
                         }
                         
                         Spacer()
@@ -176,7 +159,7 @@ struct SigninByEmailView: View {
                     } // 비밀번호 Group
                     Spacer()
                 } // 모든 입력 Group
-                .background(Color.primary)
+//                .background(Color.primary)
             }
             .padding([.leading, .trailing])
             // MARK: - 상단 다음 넘어가기 버튼
@@ -197,6 +180,7 @@ struct SigninByEmailView: View {
                 SigninByEmail2View(emailLoginStore: emailLoginStore)
             }
         }
+
     }
     
     /// 유효성 검사

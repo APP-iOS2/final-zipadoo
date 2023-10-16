@@ -14,7 +14,7 @@ struct AddPromiseView: View {
     // 환경변수
     @Environment(\.dismiss) private var dismiss
     
-    var promiseViewModel: PromiseViewModel = PromiseViewModel()
+    @StateObject var promiseViewModel: PromiseViewModel
     //    var user: User
     
     // 저장될 변수
@@ -23,18 +23,18 @@ struct AddPromiseView: View {
     @State private var date = Date()
     @State private var destination: String = "" // 약속 장소 이름
     @State private var address = "" // 약속장소 주소
-    
-    // 지각비 변수 및 상수 값
-    @State private var selectedValue: Int = 0
+
+    // 지각비관련 변수
     let minValue: Int = 0
     let maxValue: Int = 5000
     let step: Int = 100
-    
+
+    // 지각비 변수 및 상수 값
+    @State private var selectedValue: Int = 0
+    private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
+
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var addFriendSheet: Bool = false
-    
-    /// 약속에 참여할 친구배열
-    @State private var selectedFriends: [User] = []
     
     @State private var mapViewSheet: Bool = false
     @State var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) // 장소에 대한 정보 값
@@ -45,14 +45,11 @@ struct AddPromiseView: View {
     @State private var showingPenalty: Bool = false
     
     var isAllWrite: Bool {
-        return !promiseTitle.isEmpty &&
-        Calendar.current.startOfDay(for: date) != today &&
-        !promiseLocation.address.isEmpty
+        return !promiseViewModel.promiseTitle.isEmpty &&
+        Calendar.current.startOfDay(for: promiseViewModel.date) != today &&
+        !promiseViewModel.promiseLocation.address.isEmpty
     }
     
-    @State private var addPromise: Promise = Promise()
-    
-    @StateObject private var promise: PromiseViewModel = PromiseViewModel()
     @StateObject private var authUser: AuthStore = AuthStore()
     
     var body: some View {
@@ -67,15 +64,15 @@ struct AddPromiseView: View {
                         .padding(.top, 15)
                     
                     HStack {
-                        TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
+                        TextField("약속 이름을 입력해주세요.", text: $promiseViewModel.promiseTitle)
                         
-                            .onChange(of: promiseTitle) {
-                                if promiseTitle.count > 15 {
-                                    promiseTitle = String(promiseTitle.prefix(15))
+                            .onChange(of: promiseViewModel.promiseTitle) {
+                                if promiseViewModel.promiseTitle.count > 15 {
+                                    promiseViewModel.promiseTitle = String(promiseViewModel.promiseTitle.prefix(15))
                                 }
                             }
                         
-                        Text("\(promiseTitle.count)")
+                        Text("\(promiseViewModel.promiseTitle.count)")
                             .foregroundColor(.gray)
                             .padding(.trailing, -7)
                         Text("/15")
@@ -98,12 +95,10 @@ struct AddPromiseView: View {
                         .foregroundColor(.secondary)
                         .font(.subheadline)
                     
-                    DatePicker("날짜/시간", selection: $date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
+                    DatePicker("날짜/시간", selection: $promiseViewModel.date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
                         .datePickerStyle(.compact)
                         .labelsHidden()
                         .padding(.top, 10)
-                    
-                    
                     
                     // MARK: - 약속 장소 구현
                     Text("약속 장소")
@@ -111,7 +106,6 @@ struct AddPromiseView: View {
                         .bold()
                         .padding(.top, 40)
                     
-                    HStack {
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
                         NavigationLink {
 //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
@@ -124,12 +118,12 @@ struct AddPromiseView: View {
                         
                         Spacer()
                         
-                        if !promiseLocation.destination.isEmpty {
+                        if !promiseViewModel.promiseLocation.destination.isEmpty {
                             Button {
                                 mapViewSheet = true
                             } label: {
                                 HStack {
-                                    Text("\(promiseLocation.destination)")
+                                    Text("\(promiseViewModel.promiseLocation.destination)")
                                         .font(.callout)
                                     Image(systemName: "chevron.forward")
                                         .resizable()
@@ -145,14 +139,13 @@ struct AddPromiseView: View {
                                         .foregroundStyle(Color.gray)
                                         .padding(.top, 10)
                                     
-                                    PreviewPlaceOnMap(promiseLocation: $promiseLocation)
+                                    PreviewPlaceOnMap(promiseLocation: $promiseViewModel.promiseLocation)
                                         .presentationDetents([.height(700)])
                                         .padding(.top, 15)
                                 }
                             }
                         }
-                        Spacer()
-                    }
+                        
                     // MARK: - 지각비 구현
                     /*
                      지각비 구현 초기안
@@ -177,7 +170,7 @@ struct AddPromiseView: View {
                         .font(.title2)
                         .bold()
                         .padding(.top, 40)
-                    Text("100 단위로 선택 가능합니다.")
+                    Text("500 단위로 선택 가능합니다.")
                         .foregroundColor(.gray)
                     
                     HStack {
@@ -190,14 +183,14 @@ struct AddPromiseView: View {
                         
                         Spacer()
                         
-                        Text("\(selectedValue)개")
+                        Text("\(promiseViewModel.selectedValue)개")
                             .font(.title3)
                             .padding(.leading, 100)
                     }
                     .padding(.top, 10)
                     
                     // MARK: - 약속 친구 추가 구현
-                    AddFriendCellView(selectedFriends: $selectedFriends)
+                    AddFriendCellView(selectedFriends: $promiseViewModel.selectedFriends)
                 }
                 .padding(.horizontal, 15)
             }
@@ -222,19 +215,15 @@ struct AddPromiseView: View {
                             dismissButton:
                                     .default(Text("확인"),
                                              action: {
-                                                 dismiss()
-                                                 promiseViewModel.addPromiseData(promise: Promise(
-                                                    id: UUID().uuidString,
-                                                    makingUserID: authUser.currentUser?.id ?? "not ID",
-                                                    promiseTitle: promiseTitle,
-                                                    promiseDate: date.timeIntervalSince1970, // 날짜 및 시간을 TimeInterval로 변환
-                                                    destination: promiseLocation.destination,
-                                                    address: promiseLocation.address,
-                                                    latitude: promiseLocation.latitude,
-                                                    longitude: promiseLocation.longitude,
-                                                    participantIdArray: selectedFriends.map { $0.id },
-                                                    checkDoublePromise: false, // 원하는 값으로 설정
-                                                    locationIdArray: []))
+                                                 Task {
+                                                     do {
+                                                         try await promiseViewModel.addPromiseData()
+                                                         
+                                                         dismiss()                       
+                                                     } catch {
+                                                         print("등록 실패")
+                                                     }
+                                                 }
                                              })
                         )
                     }
@@ -273,10 +262,11 @@ struct AddPromiseView: View {
                 }
                 .padding(.horizontal, 15)
                 
-                Picker(selection: $selectedValue, label: Text("지각비")) {
-                    ForEach((minValue...maxValue).filter { $0 % step == 0 }, id: \.self, content: { value in
+                Picker("지각비", selection: $selectedValue) {
+                    ForEach(availableValues, id: \.self) { value in
+
                         Text("\(value)").tag(value)
-                    })
+                    }
                 }
                 .pickerStyle(WheelPickerStyle())
                 .frame(maxWidth: .infinity)
@@ -292,6 +282,6 @@ struct AddPromiseView: View {
     }
 }
 
-//#Preview {
-//    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
-//}
+#Preview {
+    AddPromiseView(promiseViewModel: PromiseViewModel()/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
+}

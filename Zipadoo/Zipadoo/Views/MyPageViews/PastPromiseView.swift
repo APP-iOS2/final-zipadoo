@@ -16,11 +16,11 @@ struct PastPromiseView: View {
         NavigationStack {
             ScrollView {
                 // 약속 배열 값 존재하는지 확인.
-                if promise.promiseViewModel.isEmpty {
+                if promise.fetchPromiseData.isEmpty {
                     Text("지난 약속 내역이 없습니다.")
                 } else {
                     VStack {
-                        ForEach(promise.promiseViewModel, id: \.self) { promise in
+                        ForEach(promise.fetchPromiseData, id: \.self) { promise in
                             NavigationLink {
                                 PromiseDetailView(promise: promise)
                             } label: {
@@ -34,13 +34,14 @@ struct PastPromiseView: View {
                                         
                                         Image(systemName: "map.fill")
                                             .fontWeight(.bold)
-                                            .foregroundStyle(Color.white)
+                                            .foregroundStyle(Color.primary)
+                                            .colorInvert()
                                             .padding(8)
-                                            .background(Color.black)
+                                            .background(Color.primary)
                                             .clipShape(RoundedRectangle(cornerRadius: 10))
                                             .overlay(
                                                 RoundedRectangle(cornerRadius: 10)
-                                                    .shadow(color: .black, radius: 1, x: 1, y: 1)
+                                                    .shadow(color: .primary, radius: 1, x: 1, y: 1)
                                                     .opacity(0.3)
                                                 //
                                             )
@@ -50,7 +51,7 @@ struct PastPromiseView: View {
                                     Group {
                                         HStack {
                                             Image(systemName: "pin")
-                                            Text("장소 \(promise.destination)")
+                                            Text("\(promise.destination)")
                                         }
                                         
                                         /// 저장된 promiseDate값을 Date 타입으로 변환
@@ -58,7 +59,7 @@ struct PastPromiseView: View {
                                         
                                         HStack {
                                             Image(systemName: "clock")
-                                            Text("\(promise.promiseDate)")
+                                            Text("\(formatDate(date: datePromise))")
                                         }
                                         .padding(.bottom, 20)
                                         
@@ -75,19 +76,20 @@ struct PastPromiseView: View {
                                     }
                                     .font(.callout)
                                     .fontWeight(.semibold)
-                                    .foregroundStyle(.black).opacity(0.5)
+                                    .foregroundStyle(.primary).opacity(0.5)
                                     // 참여자의 ID를 통해 참여자 정보 가져오기
                                 }
                                 .padding()
                                 .overlay(
                                     ZStack {
                                         RoundedRectangle(cornerRadius: 10)
-                                            .shadow(color: .black, radius: 15, x: 10, y: 10)
-                                            .opacity(0.1)
-                                        //                                        .stroke(Color.black, lineWidth: 0.3)
+                                            .foregroundColor(.zipadoo)
+                                            .opacity(0.05)
+                                            .shadow(color: .zipadoo, radius: 10, x: 5, y: 5)
                                     }
+                              
                                 )
-                                .foregroundStyle(Color.black)
+                                .foregroundStyle(Color.primary)
                             }
                             .padding()
                             
@@ -95,18 +97,18 @@ struct PastPromiseView: View {
                     }
                     .padding()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .toolbar {
-                        ToolbarItem(placement: .topBarTrailing) {
-                            Button {
-                                // 삭제 코드 추가
-                            } label: {
-                                Text("삭제")
-                            }
-                            .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                                AddPromiseView()
-                            })
-                        }
-                    }
+//                    .toolbar {
+//                        ToolbarItem(placement: .topBarTrailing) {
+//                            Button {
+//                                // 삭제 코드 추가
+//                            } label: {
+//                               //
+//                            }
+//                            .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+//                                AddPromiseView()
+//                            })
+//                        }
+//                    }
                     .onAppear {
                         print(Date().timeIntervalSince1970)
                         var calendar = Calendar.current
@@ -115,7 +117,7 @@ struct PastPromiseView: View {
                         
                         var widgetDatas: [WidgetData] = []
                         
-                        for promise in promise.promiseViewModel {
+                        for promise in promise.fetchPromiseData {
                             let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
                             let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
                             let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())

@@ -19,7 +19,7 @@ struct ContentView: View {
         } else {
             TabView {
                 // 홈
-                HomeMainView()
+                HomeMainView(user: viewModel.currentUser)
                     .tabItem {
                         Image(systemName: "house.fill")
                         Text("홈")

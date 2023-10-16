@@ -5,8 +5,9 @@
 //  Created by 남현정 on 2023/10/10.
 //
 
+import SwiftUI
 import Firebase
- import SwiftUI
+import FirebaseFirestore
 
  /// 친구등록, 친구불러오기
  final class FriendsStore: ObservableObject {
@@ -33,6 +34,7 @@ import Firebase
              guard let userId = currentUser?.id else {
                  return
              }
+             print("친구 유저정보 가져오기 성공")
              let user = try await UserStore.fetchUser(userId: userId)
              friendsIdArray = user?.friendsIdArray ?? []
              print("fetchFriends : \(friendsIdArray)")
@@ -287,4 +289,8 @@ import Firebase
             print("파이어베이스 업데이트 실패")
         }
     }
+}
+
+extension FriendsStore {
+    static let sampleData: User = .init(id: "12345", name: "홍길동", nickName: "길동이", phoneNumber: "0101234", profileImageString: "https://img.newspim.com/news/2017/01/31/1701311632536400.jpg", crustDepth: 3, friendsIdArray: [], friendsIdRequestArray: [])
 }

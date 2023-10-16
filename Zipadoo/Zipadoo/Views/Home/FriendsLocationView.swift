@@ -14,15 +14,14 @@ struct FriendsLocationView: View {
     
     var body: some View {
         NavigationStack {
-            FriendsLocationMapView(
-            )
+            FriendsLocationMapView()
             Spacer()
             Button {
                 isShowingFriendSheet.toggle()
             } label: {
                 Text("어디까지 왔나")
             }
-
+            
         }
         .sheet(isPresented: $isShowingFriendSheet) {
             
