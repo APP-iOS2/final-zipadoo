@@ -21,12 +21,7 @@ import CoreLocation
 struct FriendsMapView: View {
     @StateObject private var locationStore = LocationStore()
     @StateObject private var gpsStore = GPSStore()
-    // 로케이션 데이터 분기를 위한 프로퍼티
-    @State private var firstUploadLocation: Bool = true
     // 프로필 이미지 (유저 프로필 이미지가 없을 때)
-    let profileImages: [String] = [
-        "bear", "dragon", "elephant", "lion", "owl", "rabbit", "seahorse", "snake", "wolf"
-    ]
     // 맵뷰 카메라 세팅
     @State private var region: MapCameraPosition = .userLocation(fallback: .automatic)
     // 현황 뷰 띄우기
@@ -40,9 +35,10 @@ struct FriendsMapView: View {
     @State private var routeDisplaying = false
     @State private var route: MKRoute?
     @State private var routeDestination: MKMapItem?
-    // Location배열 패치를 위한 id배열
     // 받아야할 값들
     var promise: Promise
+    // 파베 갱신 시간
+    let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
     
     // Marker는 시각적, Anntation은 정보 포함
     var body: some View {
@@ -57,7 +53,7 @@ struct FriendsMapView: View {
                             .foregroundColor(.brown)
                     }
                     // 친구 위치 표시
-                    ForEach(locationStore.locationParticipantDatas) { annotation in
+                    ForEach(locationStore.locationParticipantDatas.filter { $0.location.participantId != AuthStore.shared.currentUser?.id ?? "" } ) { annotation in
                         Annotation(annotation.nickname, coordinate: annotation.location.currentCoordinate, anchor: .center) {
                             AsyncImage(url: URL(string: annotation.imageString), content: { image in
                                 image
@@ -65,7 +61,7 @@ struct FriendsMapView: View {
                                     .frame(width: 25, height: 25) // 크기 조절
                                     .aspectRatio(contentMode: .fill)
                             }) {
-                                Image(profileImages.randomElement() ?? "bear")
+                                Image(.dothez)
                                     .resizable()
                                     .frame(width: 25, height: 25) // 크기 조절
                                     .aspectRatio(contentMode: .fill)
@@ -77,7 +73,6 @@ struct FriendsMapView: View {
                         MapPolyline(route.polyline)
                             .stroke(Color(.blue), lineWidth: 6)
                     }
-                    
                 }
                 .mapControls {
                     MapCompass()
@@ -115,48 +110,36 @@ struct FriendsMapView: View {
                 }
             }
             .sheet(isPresented: $isShowingFriendSheet) {
-                FriendsMapSubView(locationStore: locationStore, isShowingFriendSheet: $isShowingFriendSheet, region: $region, myLocation: $locationStore.myLocation, destinationCoordinate: promise.coordinate, promise: promise)
+                FriendsMapSubView(locationStore: locationStore, isShowingFriendSheet: $isShowingFriendSheet, region: $region, destinationCoordinate: promise.coordinate, promise: promise)
                     .presentationDetents([.medium, .large])
                     .presentationCompactAdaptation(.none)
             }
         }
         .task {
-            firstUploadLocation = false
+            // myLocation 초기화
+            locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: 0, departureLongitude: 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
             // 패치해주는 코드
             do {
                 try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
                 print("파베 패치 완료")
+                print("나의 위치데이터는 : \(locationStore.myLocation)")
             } catch {
                 print("파이어베이스 에러")
             }
         }
-        .onAppear {
-            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
-                print("5초 지남")
-                locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: locationStore.myLocation.currentLatitude, newLongtitude: locationStore.myLocation.currentLongitude)
-                
-                Task {
-                    do {
-                        try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
-                        print("파베 패치 완료")
-                        
-//                        테스트를 위해 친구 위도값 계속 변경
-//                        if friendsAnnotation.isEmpty {
-//                            print("friendsAnnotation이 없습니다.")
-//                        } else {
-//                            friendsAnnotation[0].currentLatitude -= 0.001
-//                            locationStore.updateCurrentLocation(locationId: friendsAnnotation[0].id, newLatitude: friendsAnnotation[0].currentLatitude, newLongtitude: friendsAnnotation[0].currentLongitude)
-//                        }
-                    } catch {
-                        print("파이어베이스 에러: \(error)")
-                    }
+        .onReceive(timer, perform: { _ in
+            print("5초 지남")
+            locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: locationStore.myLocation.currentLatitude, newLongtitude: locationStore.myLocation.currentLongitude)
+            Task {
+                do {
+                    try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
                 }
             }
-            RunLoop.current.add(timer, forMode: .default)
-        }
+        })
         .onChange(of: isShowingRoute) {
             if isShowingRoute {
                 fetchRoute(startCoordinate: CLLocationCoordinate2D(latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0), destinationCoordinate: promise.coordinate)
+                print("루트 실행 후 gpsStore값은 : \(String(describing: gpsStore.lastSeenLocation?.coordinate))")
             } else {
                 route = nil
             }

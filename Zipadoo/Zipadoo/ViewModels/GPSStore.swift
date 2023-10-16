@@ -27,6 +27,7 @@ final class GPSStore: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
+        print("GPSStore 초기화 완료 \(String(describing: lastSeenLocation?.coordinate))")
     }
     // 위치 공유 동의 확인 메서드
     func requestPermission() {

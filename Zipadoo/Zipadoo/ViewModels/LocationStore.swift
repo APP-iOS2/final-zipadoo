@@ -18,8 +18,9 @@ struct LocationAndParticipant: Identifiable {
 }
 
 class LocationStore: ObservableObject {
+//    let gpsStore: GPSStore = GPSStore()
     /// 나의 Location 저장
-    @Published var myLocation: Location = Location(participantId: "", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0)
+    @Published var myLocation: Location = Location(participantId: "", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
     /// 참여자들의 Location 저장
     @Published var locationDatas: [Location] = []
     /// 참여자들의 Location과 닉네임을 저장
@@ -28,6 +29,11 @@ class LocationStore: ObservableObject {
     var myid: String = AuthStore.shared.currentUser?.id ?? ""
     
     let dbRef = Firestore.firestore()
+    
+//    init() {
+//        myLocation = Location(participantId: myid, departureLatitude: 0, departureLongitude: 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+//        print("myLocation 초기화 완료: \(myLocation)")
+//    }
     
     /// locationIdArray로 Location배열 패치
     @MainActor
@@ -47,13 +53,12 @@ class LocationStore: ObservableObject {
                     let nickname = try await fetchUserNickname(participantId: locationData.participantId)
                     // 이미지 가져오기
                     let imageString = try await fetchUserImageString(participantId: locationData.participantId)
-                    
-                    if locationData.participantId == myid {
-                        myLocation = locationData
-                    } else {
-                        // LocationAndNickname으로도 저장
-                        locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: nickname, imageString: imageString))
-                    }
+                    // myLocation에 자기 데이터 저장
+//                    if locationData.participantId == myid {
+//                        myLocation = locationData
+//                    }
+                    // LocationAndNickname으로도 나 포함하여 다 저장
+                    locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: nickname, imageString: imageString))
                     // locatioonDatas는 나 포함하여 다 저장
                     temp.append(locationData)
                 }
@@ -133,4 +138,3 @@ class LocationStore: ObservableObject {
         }
     }
 }
-
