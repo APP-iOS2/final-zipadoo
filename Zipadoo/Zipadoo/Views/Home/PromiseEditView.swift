@@ -52,7 +52,7 @@ struct PromiseEditView: View {
                 
                 HStack {
                     NavigationLink {
-                        MapView(destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, isClickedPlace: $isClickedPlace, promiseLocation: $promiseLocation)
+//                        MapView(destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, isClickedPlace: $isClickedPlace, promiseLocation: $promiseLocation)
                     } label: {
                         Text("지역검색")
                             .foregroundColor(.blue)

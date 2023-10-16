@@ -25,28 +25,34 @@ struct SearchBarCell: View {
     @State private var placeURL: String?
     /// 검색 결과 리스트의 i 버튼 클릭 값
     @State private var clickedPlaceInfo: Bool = false
+    @State private var textFieldText: String = "키워드를 입력하세요."
     
     var locationManager: LocationManager = LocationManager()
-    
+    @Binding var selectedPlace: Bool
     @Binding var isClickedPlace: Bool
     @Binding var destination: String
     @Binding var address: String
-    @Binding var coordX: Double
-    @Binding var coordY: Double
+    @Binding var coordXXX: Double
+    @Binding var coordYYY: Double
     @Binding var selectedPlacePosition: CLLocationCoordinate2D?
     @Binding var promiseLocation: PromiseLocation
     
     var body: some View {
         VStack {
             HStack {
-                TextField("키워드를 입력하세요", text: $searchText)
+                TextField(textFieldText, text: $searchText)
                     .textFieldStyle(.roundedBorder)
                 Button {
-                    searching = true
-                    isClickedPlace = false
-                    searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: String(locationManager.location?.coordinate.latitude ?? 0.0), currentPoiY: String(locationManager.location?.coordinate.longitude ?? 0.0), radius: radius, sort: sort)
-                    print("현재 사용자 위도(장소검색): \(locationManager.location?.coordinate.latitude ?? 0.0)")
-                    print("현재 사용자 경도(장소검색): \(locationManager.location?.coordinate.longitude ?? 0.0)")
+                    if searchText != "" {
+                        searching = true
+                        isClickedPlace = false
+                        selectedPlace = false
+                        searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: String(locationManager.location?.coordinate.latitude ?? 0.0), currentPoiY: String(locationManager.location?.coordinate.longitude ?? 0.0), radius: radius, sort: sort)
+                        print("현재 사용자 위도(장소검색): \(locationManager.location?.coordinate.latitude ?? 0.0)")
+                        print("현재 사용자 경도(장소검색): \(locationManager.location?.coordinate.longitude ?? 0.0)")
+                    } else {
+                        textFieldText = "한 글자 이상 입력해주세요."
+                    }
                 } label: {
                     ZStack {
                         Color.blue
@@ -66,9 +72,9 @@ struct SearchBarCell: View {
                         Button {
                             /// 클릭한 장소에 대한 위도경도 값을 변환하여 검색기능 맵뷰에 사용되는 promiseLocation 및 selectedPlacePosition 에 반영시킴
                             if let xValue = Double(result.y), let yValue = Double(result.x) {
-                                coordX = xValue
-                                coordY = yValue
-                                selectedPlacePosition = CLLocationCoordinate2D(latitude: coordX, longitude: coordY)
+                                coordXXX = xValue
+                                coordYYY = yValue
+                                selectedPlacePosition = CLLocationCoordinate2D(latitude: coordXXX, longitude: coordYYY)
                             } else {
                                 print("변환 실패")
                             }
@@ -84,12 +90,16 @@ struct SearchBarCell: View {
                             }
                             
                             print("장소 이름: \(destination)")
+                            print("카테고리: \(result.category_name)")
                             print("주소: \(address)")
                             print("장소 위도: \(selectedPlacePosition?.latitude ?? 0.0)")
                             print("장소 경도: \(selectedPlacePosition?.longitude ?? 0.0)")
                             print("거리: \(result.distance)")
                             
                             isClickedPlace = true
+                            searchText = ""
+                            textFieldText = "키워드를 입력하세요."
+                            selectedPlace = false
                             searching = false
                             hideKeyboard()
                         } label: {
@@ -102,7 +112,7 @@ struct SearchBarCell: View {
                                                 .foregroundColor(.black)
                                             Text(result.category_group_name)
                                                 .font(.caption).bold()
-                                                .foregroundColor(.gray)
+                                                .foregroundColor(.blue)
                                             Spacer()
                                         }
                                         .padding(.bottom, 5)
@@ -135,15 +145,18 @@ struct SearchBarCell: View {
                         }
                     }
                 }
+                .listStyle(.plain)
                 .navigationBarBackButtonHidden(true)
             }
         }
     }
 }
 
-//#Preview {
-//    SearchBarCell(isClickedPlace: .constant(false), destination: .constant("장소명"), address: .constant("주소"), coordX: .constant(0.0), coordY: .constant(0.0), selectedPlacePosition: .constant(CLLocationCoordinate2D(latitude: 37.39570088983171, longitude: 127.1104335101161)), promiseLocation: .constant( PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
-//}
+#Preview {
+    SearchBarCell(selectedPlace: .constant(false), isClickedPlace: .constant(false), destination: .constant("장소명"), address: .constant("주소"), coordXXX: .constant(0.0), coordYYY: .constant(0.0),
+        selectedPlacePosition: .constant(CLLocationCoordinate2D(latitude: 37.39570088983171, longitude: 127.1104335101161)),
+        promiseLocation: .constant(PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
+}
 
 extension String: Identifiable {
     public var id: String { self }

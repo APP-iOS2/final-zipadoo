@@ -16,6 +16,13 @@ struct AddPromiseView: View {
     
     @StateObject var promiseViewModel: PromiseViewModel
     //    var user: User
+    
+    // 저장될 변수
+    @State private var id: String = ""
+    @State private var promiseTitle: String = ""
+    @State private var date = Date()
+    @State private var destination: String = "" // 약속 장소 이름
+    @State private var address = "" // 약속장소 주소
 
     // 지각비관련 변수
     let minValue: Int = 0
@@ -30,8 +37,9 @@ struct AddPromiseView: View {
     @State private var addFriendSheet: Bool = false
     
     @State private var mapViewSheet: Bool = false
-    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
-    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
+    @State var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) // 장소에 대한 정보 값
+//    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
+//    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
     @State private var showingConfirmAlert: Bool = false
     @State private var showingCancelAlert: Bool = false
     @State private var showingPenalty: Bool = false
@@ -100,7 +108,8 @@ struct AddPromiseView: View {
                     
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
                         NavigationLink {
-                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $promiseViewModel.destination, address: $promiseViewModel.address, coordX: $promiseViewModel.coordX, coordY: $promiseViewModel.coordY, promiseLocation: $promiseViewModel.promiseLocation)
+//                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
+                            OneMapView(destination: $destination, address: $address, promiseLocation: $promiseLocation)
                         } label: {
                             Label("지역검색", systemImage: "mappin")
                                 .foregroundColor(.white)
