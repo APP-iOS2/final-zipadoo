@@ -130,7 +130,8 @@ class PromiseViewModel: ObservableObject {
                 // 오름차순 정렬
                 tempPromiseArray.sort(by: {$0.promiseDate < $1.promiseDate})
                 tempPromiseTracking.sort(by: {$0.promiseDate < $1.promiseDate})
-                tempPastPromise.sort(by: {$0.promiseDate < $1.promiseDate})
+                // 내림차순 정렬
+                tempPastPromise.sort(by: {$0.promiseDate > $1.promiseDate})
                 
                 self.fetchPromiseData = tempPromiseArray
                 self.fetchTrackingPromiseData = tempPromiseTracking
