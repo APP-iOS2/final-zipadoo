@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		047127952AD7BE4F00767E9C /* OneMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127942AD7BE4F00767E9C /* OneMapView.swift */; };
+		047127972AD7C7A800767E9C /* OneAddLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127962AD7C7A800767E9C /* OneAddLocation.swift */; };
 		04C7A85A2AC94889001B2AF8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04C7A8592AC94889001B2AF8 /* Alamofire */; };
 		088A0F242AD78EAD00BC6EF5 /* FriendsMapSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A0F232AD78EAD00BC6EF5 /* FriendsMapSubView.swift */; };
 		088F7D402AD4DED40094B9B4 /* ReceivingLocationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F7D3F2AD4DED40094B9B4 /* ReceivingLocationTestView.swift */; };
@@ -101,6 +103,8 @@
 		FA24745C2ACE39AC00D4C821 /* DateChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745B2ACE39AC00D4C821 /* DateChanger.swift */; };
 		FA24745E2ACE3B8200D4C821 /* MyPagePromiseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */; };
 		FA2474602ACE3BC000D4C821 /* PastPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */; };
+		FA43C5602ADCFB99005BFBF7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA43C55F2ADCFB99005BFBF7 /* GoogleService-Info.plist */; };
+		FA43C5622ADCFC01005BFBF7 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA43C5612ADCFC01005BFBF7 /* LaunchScreen.swift */; };
 		FAB58B882ABD1879006B9E11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B872ABD1879006B9E11 /* FirebaseAuth */; };
 		FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8D2ABD1879006B9E11 /* FirebaseDatabase */; };
 		FAB58B902ABD1879006B9E11 /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8F2ABD1879006B9E11 /* FirebaseDatabaseSwift */; };
@@ -149,6 +153,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		047127942AD7BE4F00767E9C /* OneMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMapView.swift; sourceTree = "<group>"; };
+		047127962AD7C7A800767E9C /* OneAddLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneAddLocation.swift; sourceTree = "<group>"; };
 		088A0F232AD78EAD00BC6EF5 /* FriendsMapSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsMapSubView.swift; sourceTree = "<group>"; };
 		088F7D3F2AD4DED40094B9B4 /* ReceivingLocationTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceivingLocationTestView.swift; sourceTree = "<group>"; };
 		088F7D412AD4EAB50094B9B4 /* GPSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSStore.swift; sourceTree = "<group>"; };
@@ -178,7 +184,6 @@
 		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
 		8BEA8B9C2ADB0C640083D488 /* PromiseTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTrackingView.swift; sourceTree = "<group>"; };
 		8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilView.swift; sourceTree = "<group>"; };
-		9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAndInfo.swift; sourceTree = "<group>"; };
 		9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationAndInfoView.swift; sourceTree = "<group>"; };
 		C02790B52ACD297100BBDCCA /* ZipadooWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ZipadooWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C02790B72ACD297100BBDCCA /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
@@ -242,6 +247,8 @@
 		FA24745B2ACE39AC00D4C821 /* DateChanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateChanger.swift; sourceTree = "<group>"; };
 		FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPagePromiseStore.swift; sourceTree = "<group>"; };
 		FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastPromiseView.swift; sourceTree = "<group>"; };
+		FA43C55F2ADCFB99005BFBF7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		FA43C5612ADCFC01005BFBF7 /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		FAD257D92AD65F4B0017D16C /* AnnotationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationMarker.swift; sourceTree = "<group>"; };
 		FAD257DB2AD65F4B0017D16C /* PlaceInfoWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceInfoWebView.swift; sourceTree = "<group>"; };
 		FAD257DC2AD65F4B0017D16C /* NewMapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewMapView.swift; sourceTree = "<group>"; };
@@ -258,7 +265,6 @@
 		FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FAD7EE552ABD54690042A55A /* PromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseModel.swift; sourceTree = "<group>"; };
-		FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -362,8 +368,6 @@
 		C02790F32ACFC72100BBDCCA /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				9B6268382ABC2D6800B309E8 /* LocationAndInfo.swift */,
-				FAD7EE572ABD57C50042A55A /* PromiseViewModel.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -416,6 +420,8 @@
 				FAD257D92AD65F4B0017D16C /* AnnotationMarker.swift */,
 				FAD257E12AD65F4B0017D16C /* PreviewPlaceOnMap.swift */,
 				FA2473F52ACD4BDB00D4C821 /* AddLocationDatas.swift */,
+				047127942AD7BE4F00767E9C /* OneMapView.swift */,
+				047127962AD7C7A800767E9C /* OneAddLocation.swift */,
 			);
 			path = AddPomisePlaceSubViews;
 			sourceTree = "<group>";
@@ -559,6 +565,7 @@
 			children = (
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
+				FA43C55F2ADCFB99005BFBF7 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -584,6 +591,7 @@
 		FAD5FE4A2ABBD3F900E05E6E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				FA43C5612ADCFC01005BFBF7 /* LaunchScreen.swift */,
 				FA24742C2ACD4C0B00D4C821 /* ContentView.swift */,
 				8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */,
 				FA2474292ACD4C0B00D4C821 /* ShareView.swift */,
@@ -745,6 +753,8 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
+				9AB63BB02ADCBFAF00A383A2 /* GoogleService-Info.plist in Resources */,
+				FA43C5602ADCFB99005BFBF7 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -842,8 +852,10 @@
 				FAD257E92AD65F4B0017D16C /* NewMapView.swift in Sources */,
 				FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */,
 				FA2474542ACD4D6E00D4C821 /* AuthStore.swift in Sources */,
+				047127972AD7C7A800767E9C /* OneAddLocation.swift in Sources */,
 				FA24741D2ACD4BDB00D4C821 /* HomeMainView.swift in Sources */,
 				FA2474182ACD4BDB00D4C821 /* FriendsLocationStatusView.swift in Sources */,
+				FA43C5622ADCFC01005BFBF7 /* LaunchScreen.swift in Sources */,
 				8B973A352AC5930D00C67B5F /* LoginEmailCheckView.swift in Sources */,
 				8B973A342AC5930D00C67B5F /* LoginByEmailPWView.swift in Sources */,
 				FA24740F2ACD4BDB00D4C821 /* MapOptionSelectView.swift in Sources */,
@@ -875,6 +887,7 @@
 				8B973A372AC5930D00C67B5F /* SigninByEmail2View.swift in Sources */,
 				8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */,
 				FA24744D2ACD4D6E00D4C821 /* EditProfileViewModel.swift in Sources */,
+				047127952AD7BE4F00767E9C /* OneMapView.swift in Sources */,
 				8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */,
 				C02790CE2ACD29DF00BBDCCA /* UserDefaults.swift in Sources */,
 				C02790F02ACE776500BBDCCA /* WidgetModel.swift in Sources */,

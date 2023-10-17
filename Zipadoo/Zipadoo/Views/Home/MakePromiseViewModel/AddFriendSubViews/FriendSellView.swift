@@ -48,6 +48,30 @@ struct FriendSellView: View {
     }
 }
 
+struct EditFriendSellView: View {
+    @Binding var selectedFriends: [User]
+    
+    var friend: User
+    
+    var body: some View {
+        VStack {
+            ZStack {
+                ProfileImageView(imageString: friend.profileImageString, size: .small)
+            }
+            
+            Text(friend.nickName)
+                .font(.callout)
+        }
+        .frame(width: 85, height: 85)
+        //        }
+    }
+    func deleteFriend(_ item: User) {
+        if let index = selectedFriends.firstIndex(of: item) {
+            selectedFriends.remove(at: index)
+        }
+    }
+}
+
 #Preview {
     FriendSellView(selectedFriends: .constant([dummyUser]), friend: dummyUser)
 }

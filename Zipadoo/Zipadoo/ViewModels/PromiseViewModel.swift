@@ -209,21 +209,21 @@ class PromiseViewModel: ObservableObject {
            address: promiseLocation.address,
            latitude: promiseLocation.latitude,
            longitude: promiseLocation.longitude,
-           participantIdArray: selectedFriends.map { $0.id },
+           participantIdArray: [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id },
            checkDoublePromise: false, // 원하는 값으로 설정
            locationIdArray: [])
         
         do {
-            
+            // 친구도 동일하게 저장
             // locationIdArray에 친구Location객체 id저장
             for id in promise.participantIdArray {
                 // Location객체 생성
                 let friendLocation = Location(participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
-                promise.locationIdArray.append(friendLocation.id) // promise.locationIdArray에 저장
+                promise.locationIdArray.append(friendLocation.id)
                 
                 LocationStore.addLocationData(location: friendLocation) // 파베에 Location저장
             }
-        
+            
             try dbRef.document(promise.id)
                 .setData(from: promise)
             // 약속 추가후 다시 패치
@@ -242,7 +242,7 @@ class PromiseViewModel: ObservableObject {
             selectedValue = 0
             /// 선택된 친구 초기화
             selectedFriends = []
-            
+
         } catch {
             print("약속 등록")
         }

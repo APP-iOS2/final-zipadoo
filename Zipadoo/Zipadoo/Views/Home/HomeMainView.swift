@@ -26,13 +26,13 @@ struct HomeMainView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                
                 // 예정된 약속 리스트
                 ScrollView {
                     if let loginUserID = user?.id {
                         // 내가만든 약속 또는 참여하는 약속 불러오기
                         let filteredPromises = promise.fetchPromiseData.filter { promise in
                             return loginUserID == promise.makingUserID || promise.participantIdArray.contains(loginUserID)
+
                         }
                         let filteredTrackingPromises = promise.fetchTrackingPromiseData.filter { promise in
                             return loginUserID == promise.makingUserID || promise.participantIdArray.contains(loginUserID)
@@ -62,6 +62,7 @@ struct HomeMainView: View {
                                     VStack(alignment: .leading) {
                                         
                                         // MARK: - 약속 제목, 맵 버튼
+
                                         HStack {
                                             Text(promise.promiseTitle)
                                                 .font(.title)
