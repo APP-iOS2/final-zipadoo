@@ -28,7 +28,6 @@
 		3FF033052ADD30C800FF13A5 /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF033042ADD30C800FF13A5 /* AppInfoView.swift */; };
 		3FF033072ADD30F700FF13A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FF033062ADD30F700FF13A5 /* GoogleService-Info.plist */; };
 		3FF033092ADD318300FF13A5 /* DeveloperProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF033082ADD318300FF13A5 /* DeveloperProfileView.swift */; };
-		3FF0330B2ADD647100FF13A5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FF0330A2ADD647100FF13A5 /* GoogleService-Info.plist */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */; };
 		8B91DBC32ACEA6A7005B2582 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B91DBC22ACEA6A7005B2582 /* Validation.swift */; };
@@ -173,9 +172,8 @@
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		3F5B9A1F2AD6BACE00CDD52D /* FriendProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		3FF033042ADD30C800FF13A5 /* AppInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
-		3FF033062ADD30F700FF13A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3FF033062ADD30F700FF13A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3FF033082ADD318300FF13A5 /* DeveloperProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperProfileView.swift; sourceTree = "<group>"; };
-		3FF0330A2ADD647100FF13A5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyle.swift; sourceTree = "<group>"; };
 		8B91DBC22ACEA6A7005B2582 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
@@ -575,7 +573,6 @@
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				3FF033062ADD30F700FF13A5 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
-				3FF0330A2ADD647100FF13A5 /* GoogleService-Info.plist */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
 				FAD5FE4A2ABBD3F900E05E6E /* Views */,
@@ -763,8 +760,6 @@
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
 				3FF033072ADD30F700FF13A5 /* GoogleService-Info.plist in Resources */,
-				3FF0330B2ADD647100FF13A5 /* GoogleService-Info.plist in Resources */,
-				9A10ADEB2AD7C7DF00AF37A3 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

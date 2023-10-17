@@ -11,7 +11,7 @@ import MapKit
 /// 장소검색 옵션(직접설정, 장소검색)을 하나의 맵뷰를 통해 동작하는 맵뷰
 struct OneMapView: View {
     @Environment(\.dismiss) private var dismiss
-    
+    @ObservedObject var promiseViewModel: PromiseViewModel
     /// 연관된 값들을 한 공간에 이름을 지어 모아둔 공간, mapControls를 사용하기 위해 호출함
     @Namespace var mapScope
     /// 카카오 로컬 장소검색을 위한 클래스
@@ -26,7 +26,7 @@ struct OneMapView: View {
     )
     /// 클릭한 장소에 대한 위치 값
     @State private var pinLocation: CLLocationCoordinate2D? = nil
-    /// 직접 클릭한 장소명에 대해 사용자가 설정할 수 있는 값
+    /// 직접 클릭한 장소명에 대해 사용자가 입력할 수 있는 값
     @State private var placeOfText: String = ""
 
     /// 약속장소 장소명 값
@@ -46,7 +46,7 @@ struct OneMapView: View {
     /// 장소 검색을 사용한 후 장소 추가 버튼을 입력한 값
     @State private var addLocationButton: Bool = false
     
-    @Binding var promiseLocation: PromiseLocation
+//    @Binding var promiseLocation: PromiseLocation
     
     /// 클릭한 장소에 대한 위치 값을 약속장소로 지정하기 위해 사용하는 클래스
     var addLocationStore: AddLocationStore = AddLocationStore()
@@ -110,9 +110,10 @@ struct OneMapView: View {
                     })
                 }
                 if isClickedPlace == true { // 화면을 클릭해서 장소를 선택한 값이 true일 경우, 해당 옵션의 장소선택 결정뷰를 띄워줌
-                    AddPlaceButtonCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, promiseLocation: $promiseLocation)
+                    AddPlaceButtonCell(promiseViewModel: promiseViewModel, isClickedPlace: $isClickedPlace, placeOfText: $placeOfText, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
+//                    AddPlaceButtonCell(isClickedPlace: $isClickedPlace, placeOfText: $placeOfText, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, promiseLocation: $promiseLocation)
                 } else if selectedPlace == true {// 화면을 클릭해서 장소를 선택한 값이 true일 경우, 해당 옵션의 장소선택 결정뷰를 띄워줌
-                    OneAddLocation(destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, placeOfText: $placeOfText, selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace, promiseLocation: $promiseLocation)
+                    OneAddLocation(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, placeOfText: $placeOfText, selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace)
                 } else {
                     
                 }
@@ -148,7 +149,7 @@ struct OneMapView: View {
             .safeAreaInset(edge: .bottom) {
                 HStack {
                     Spacer()
-                    SearchBarCell(selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, selectedPlacePosition: $selectedPlacePosition, promiseLocation: $promiseLocation)
+                    SearchBarCell(promiseViewModel: promiseViewModel, selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, selectedPlacePosition: $selectedPlacePosition)
                     Spacer()
                 }
                 .background(.ultraThinMaterial)
@@ -170,5 +171,5 @@ struct OneMapView: View {
 }
 
 #Preview {
-    OneMapView(destination: .constant(""), address: .constant(""), promiseLocation: .constant(PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
+    OneMapView(promiseViewModel: PromiseViewModel(), destination: .constant(""), address: .constant(""))
 }

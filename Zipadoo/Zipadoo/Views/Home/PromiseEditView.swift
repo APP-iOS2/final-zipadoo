@@ -22,7 +22,7 @@ struct PromiseEditView: View {
     @State private var showAlert: Bool = false
     @State private var alertMessage = ""
     @State private var editSelectedFriends: [String] = []
-    @State var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
+    @State private var editPromiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
     @StateObject var editPromise: PromiseViewModel = PromiseViewModel()
     @StateObject private var authUser: AuthStore = AuthStore()
     @StateObject var friendsStore: FriendsStore = FriendsStore()
@@ -44,15 +44,15 @@ struct PromiseEditView: View {
                     .font(.title2)
                     .bold()
                 
-                if promiseLocation.destination.isEmpty {
+                if editPromiseLocation.destination.isEmpty {
                     Text("\(editedDestination)")
                 } else {
-                    Text("\(promiseLocation.destination)")
+                    Text("\(editPromiseLocation.destination)")
                 }
                 
                 HStack {
                     NavigationLink {
-                        OneMapView(destination: $destination, address: $address, promiseLocation: $promiseLocation)
+                        OneMapView(promiseViewModel: editPromise, destination: $destination, address: $address)
 //                        MapView(destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, isClickedPlace: $isClickedPlace, promiseLocation: $promiseLocation)
                     } label: {
                         Text("지역검색")

@@ -37,7 +37,7 @@ struct AddPromiseView: View {
     @State private var addFriendSheet: Bool = false
     
     @State private var mapViewSheet: Bool = false
-    @State var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) // 장소에 대한 정보 값
+//    @State private var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) // 장소에 대한 정보 값
 //    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
 //    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
     @State private var showingConfirmAlert: Bool = false
@@ -47,7 +47,7 @@ struct AddPromiseView: View {
     var isAllWrite: Bool {
         return !promiseViewModel.promiseTitle.isEmpty &&
         Calendar.current.startOfDay(for: promiseViewModel.date) != today &&
-        !promiseLocation.address.isEmpty
+        !promiseViewModel.address.isEmpty
     }
     
     @StateObject private var authUser: AuthStore = AuthStore()
@@ -110,7 +110,7 @@ struct AddPromiseView: View {
                     HStack {
                         NavigationLink {
                             //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
-                            OneMapView(destination: $destination, address: $address, promiseLocation: $promiseLocation)
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
                         } label: {
                             Label("지역검색", systemImage: "mappin")
                                 .foregroundColor(.white)
@@ -119,12 +119,12 @@ struct AddPromiseView: View {
                         
                         Spacer()
                         // MARK: promiseViewModel.promiseLocation.destination로 장소등록을 할 때 장소명이 나오지 않아서 promiseLocation.destination으로 수정
-                        if !promiseLocation.destination.isEmpty {
+                        if !promiseViewModel.destination.isEmpty {
                             Button {
                                 mapViewSheet = true
                             } label: {
                                 HStack {
-                                    Text("\(promiseLocation.destination)")
+                                    Text("\(promiseViewModel.destination)")
                                         .font(.callout)
                                     Image(systemName: "chevron.forward")
                                         .resizable()
@@ -140,7 +140,7 @@ struct AddPromiseView: View {
                                         .foregroundStyle(Color.gray)
                                         .padding(.top, 10)
                                     
-                                    PreviewPlaceOnMap(promiseLocation: $promiseLocation)
+                                    PreviewPlaceOnMap(promiseViewModel: promiseViewModel)
                                         .presentationDetents([.height(700)])
                                         .padding(.top, 15)
                                 }
@@ -250,8 +250,8 @@ struct AddPromiseView: View {
                                 promiseViewModel.date = Date()
                                 promiseViewModel.destination = "" // 약속 장소 이름
                                 promiseViewModel.address = "" // 약속장소 주소
-                                promiseViewModel.coordX = 0.0 // 약속장소 위도
-                                promiseViewModel.coordY = 0.0 // 약속장소 경도
+                                promiseViewModel.coordXXX = 0.0 // 약속장소 위도
+                                promiseViewModel.coordYYY = 0.0 // 약속장소 경도
                                 /// 장소에 대한 정보 값
                                 promiseViewModel.promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
                                 /// 지각비 변수 및 상수 값
