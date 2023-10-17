@@ -10,10 +10,17 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseCore
 
-@MainActor
 class PromiseViewModel: ObservableObject {
-    @Published var promiseViewModel: [Promise] = []
-    
+    /// 예정인 약속 저장
+    @Published var fetchPromiseData: [Promise] = []
+    /// 추적중인 약속 저장
+    @Published var fetchTrackingPromiseData: [Promise] = []
+    /// 지난 약속 저장
+    @Published var fetchPastPromiseData: [Promise] = []
+    /*
+    /// 로그인중인 유저
+    var currentUser: User?
+     */
     // 저장될 변수
     @Published var id: String = ""
     @Published var promiseTitle: String = ""
@@ -84,28 +91,82 @@ class PromiseViewModel: ObservableObject {
     //            print("Error getting documents: \(error)")
     //        }
     //    }
-    
+    @MainActor
     func fetchData() async throws {
         do {
-            dbRef.getDocuments { (snapshot, error) in
-                guard error == nil else {
-                    print("오류: \(error!)")
-                    return
-                }
-                var temp: [Promise] = []
-                if let snapshot = snapshot {
-                    for document in snapshot.documents {
-                        if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
-                           let promise = try? JSONDecoder().decode(Promise.self, from: jsonData) {
-                            temp.append(promise)
-                        }
+            let snapshot = try await dbRef.getDocuments()
+            
+            var tempPromiseArray: [Promise] = []
+            var tempPromiseTracking: [Promise] = []
+            var tempPastPromise: [Promise] = []
+            
+            /// 현재 시각
+            let currentDate = Date()
+            
+            for document in snapshot.documents {
+                if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
+                   let promise = try? JSONDecoder().decode(Promise.self, from: jsonData) {
+                    /// 약속시간
+                    let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+                    /// 약속시간에서 3시간 후 시각
+                    let afterPromise = Calendar.current.date(byAdding: .hour, value: 3, to: promiseDate) ?? promiseDate // 3시간 뒤
+                    /// 약속시간에서 30분 전
+                    let beforePromise = Calendar.current.date(byAdding: .minute, value: -30, to: promiseDate) ?? promiseDate // 3시간 뒤
+
+                    if Calendar.current.dateComponents([.second], from: currentDate, to: beforePromise).second ?? 0 > 0 {
+                        // 추적시간 아직 안됐을때
+                        tempPromiseArray.append(promise)
+                        
+                    } else if Calendar.current.dateComponents([.second], from: currentDate, to: afterPromise).second ?? 0 > 0 {
+                        // 추적중일떄
+                        tempPromiseTracking.append(promise)
+                    } else {
+                        // 지난 약속
+                        tempPastPromise.append(promise)
                     }
-                    self.promiseViewModel = temp
-                    print(self.promiseViewModel)
                 }
             }
+            DispatchQueue.main.async {
+                // 오름차순 정렬
+                tempPromiseArray.sort(by: {$0.promiseDate < $1.promiseDate})
+                tempPromiseTracking.sort(by: {$0.promiseDate < $1.promiseDate})
+                // 내림차순 정렬
+                tempPastPromise.sort(by: {$0.promiseDate > $1.promiseDate})
+                
+                self.fetchPromiseData = tempPromiseArray
+                self.fetchTrackingPromiseData = tempPromiseTracking
+                self.fetchPastPromiseData = tempPastPromise
+            }
+        } catch {
+            print("fetchPromiseData failed")
         }
     }
+    /*
+     do {
+         // 로그인한 유저 id 못 받아오면 return
+         guard let loginUserID = AuthStore.shared.currentUser?.id else {
+             return
+         }
+         let snapshot = try await dbRef.getDocuments()
+
+         var temp: [Promise] = []
+         
+         for document in snapshot.documents {
+             if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
+                let promise = try? JSONDecoder().decode(Promise.self, from: jsonData) {
+                 
+                 // 내가 만든 또는 참여하는 약속만 배열에 넣기
+                 if loginUserID == promise.makingUserID || promise.participantIdArray.contains(loginUserID) {
+                     temp.append(promise)
+                 }
+             }
+         }
+         self.fetchPromiseData = temp
+
+     } catch {
+         print("fetchPromiseData failed")
+     }
+     */
     
     // PromiseId로 Promise객체 가져오기
     static func fetchPromise(promiseId: String) async throws -> Promise {
@@ -137,6 +198,7 @@ class PromiseViewModel: ObservableObject {
     //        }
     //    }
     
+    @MainActor
     func addPromiseData() async throws {
         // Promise객체 생성
         var promise = Promise(
@@ -148,22 +210,25 @@ class PromiseViewModel: ObservableObject {
            address: promiseLocation.address,
            latitude: promiseLocation.latitude,
            longitude: promiseLocation.longitude,
-           participantIdArray: selectedFriends.map { $0.id },
+           participantIdArray: [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id },
            checkDoublePromise: false, // 원하는 값으로 설정
            locationIdArray: [])
         
         do {
+            // 친구도 동일하게 저장
             // locationIdArray에 친구Location객체 id저장
             for id in promise.participantIdArray {
                 // Location객체 생성
-                let friendLocation = Location(id: UUID().uuidString, participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0)
-                promise.locationIdArray.append(friendLocation.id) // promise.locationIdArray에 저장
+                let friendLocation = Location(participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
+                promise.locationIdArray.append(friendLocation.id)
                 
                 LocationStore.addLocationData(location: friendLocation) // 파베에 Location저장
             }
-        
+            
             try dbRef.document(promise.id)
                 .setData(from: promise)
+            // 약속 추가후 다시 패치
+            try await fetchData()
             
             id = ""
             promiseTitle = ""
@@ -176,6 +241,9 @@ class PromiseViewModel: ObservableObject {
             promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
             /// 지각비 변수 및 상수 값
             selectedValue = 0
+            /// 선택된 친구 초기화
+            selectedFriends = []
+
         } catch {
             print("약속 등록")
         }
@@ -229,6 +297,7 @@ class PromiseViewModel: ObservableObject {
             try await LocationStore.deleteLocationData(locationId: locationId)
         }
         try await dbRef.document(promiseId).delete()
-        
+        // 다시패치
+        try await fetchData()
     }
 }
