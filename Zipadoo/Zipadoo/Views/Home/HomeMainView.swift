@@ -168,6 +168,7 @@ struct HomeMainView: View {
         }
         
     }
+    
     func promiseListCell(promise: Promise, color: Color) -> some View {
         VStack(alignment: .leading) {
             
@@ -196,7 +197,7 @@ struct HomeMainView: View {
             }
             .padding(.vertical, 15)
             // MARK: - 장소, 시간
-            VStack {
+            VStack(alignment: .leading) {
                 HStack {
                     Image(systemName: "pin")
                     Text("\(promise.destination)")
