@@ -173,45 +173,50 @@ class PromiseViewModel: ObservableObject {
         dbRef.document(promiseId).delete()
     }
     
+    /// 약속 30분 전 위치 공유 알림 등록 메서드
     func addSharingNotification(imminent: Promise) {
         let notificationCenter = UNUserNotificationCenter.current()
 
+        // 가장 가까운 약속 날짜
         let imminentDate = Date(timeIntervalSince1970: imminent.promiseDate)
-        
-        let upcomingAppointmentDate: Date = imminentDate
-        
-        let triggerDate = Calendar.current.date(byAdding: .minute, value: -30, to: upcomingAppointmentDate)!
-        
+        // 약속시간 30분 계산
+        let triggerDate = Calendar.current.date(byAdding: .minute, value: -30, to: imminentDate)!
+        // 계산 후 시간을 local에 맞게 수정
         let localTriggerDate = Calendar.current.date(bySettingHour: Calendar.current.component(.hour, from: triggerDate),
                                                      minute: Calendar.current.component(.minute, from: triggerDate),
                                                      second: 0,
                                                      of: Date())!
-        
+        // 알림이 울릴 시간 설정. 초단위는 0으로
         var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: localTriggerDate)
         dateComponents.second = 0
+        
+        // 알림 메세지 설정
         let content = UNMutableNotificationContent()
         content.title = "\(imminent.promiseTitle) 30분 전입니다"
         content.body = "친구들의 위치 현황을 확인해보세요!"
 
+        // 알림이 울릴 trigger 설정
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
 
+        // Notification에 등록할 identifier 설정
         let requestIdentifier = "LocationSharing"
         
-        
+        // 등록
         let request = UNNotificationRequest(identifier: requestIdentifier,
                                             content: content,
                                             trigger: trigger)
-
+        
         notificationCenter.add(request) { (error) in
             if error != nil {
                 print("에러 \(requestIdentifier)")
             }
         }
         
-        notificationCenter.getPendingNotificationRequests { (requests) in
-            for request in requests {
-                print("\(request.identifier) will be delivered at \(request.trigger)")
-            }
-        }
+        // 현재 등록된 알림 확인하는 코드
+//        notificationCenter.getPendingNotificationRequests { (requests) in
+//            for request in requests {
+//                print("\(request.identifier) will be delivered at \(request.trigger)")
+//            }
+//        }
     }
 }
