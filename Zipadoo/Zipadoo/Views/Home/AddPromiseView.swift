@@ -244,6 +244,20 @@ struct AddPromiseView: View {
                             message: Text("작성 중인 내용은 저장되지 않습니다."),
                             primaryButton: .destructive(Text("등록 취소"), action: {
                                 dismiss()
+                                
+                                promiseViewModel.id = ""
+                                promiseViewModel.promiseTitle = ""
+                                promiseViewModel.date = Date()
+                                promiseViewModel.destination = "" // 약속 장소 이름
+                                promiseViewModel.address = "" // 약속장소 주소
+                                promiseViewModel.coordX = 0.0 // 약속장소 위도
+                                promiseViewModel.coordY = 0.0 // 약속장소 경도
+                                /// 장소에 대한 정보 값
+                                promiseViewModel.promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
+                                /// 지각비 변수 및 상수 값
+                                promiseViewModel.selectedValue = 0
+                                /// 선택된 친구 초기화
+                                promiseViewModel.selectedFriends = []
                             }),
                             secondaryButton: .default(Text("계속 작성"), action: {
                                 
