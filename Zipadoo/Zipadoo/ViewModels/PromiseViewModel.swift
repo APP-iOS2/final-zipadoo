@@ -110,11 +110,14 @@ class PromiseViewModel: ObservableObject {
                     let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
                     /// 약속시간에서 3시간 후 시각
                     let afterPromise = Calendar.current.date(byAdding: .hour, value: 3, to: promiseDate) ?? promiseDate // 3시간 뒤
-                    
-                    if Calendar.current.dateComponents([.second], from: currentDate, to: promiseDate).second ?? 0 > 0 {
-                        // 현재 시간이 아직 안됐을때
+                    /// 약속시간에서 30분 전
+                    let beforePromise = Calendar.current.date(byAdding: .minute, value: -30, to: promiseDate) ?? promiseDate // 3시간 뒤
+
+                    if Calendar.current.dateComponents([.second], from: currentDate, to: beforePromise).second ?? 0 > 0 {
+                        // 추적시간 아직 안됐을때
                         tempPromiseArray.append(promise)
-                    } else if Calendar.current.dateComponents([.hour], from: currentDate, to: afterPromise).hour ?? 0 > 0 {
+                        
+                    } else if Calendar.current.dateComponents([.second], from: currentDate, to: afterPromise).second ?? 0 > 0 {
                         // 추적중일떄
                         tempPromiseTracking.append(promise)
                     } else {
@@ -124,6 +127,11 @@ class PromiseViewModel: ObservableObject {
                 }
             }
             DispatchQueue.main.async {
+                // 오름차순 정렬
+                tempPromiseArray.sort(by: {$0.promiseDate < $1.promiseDate})
+                tempPromiseTracking.sort(by: {$0.promiseDate < $1.promiseDate})
+                tempPastPromise.sort(by: {$0.promiseDate < $1.promiseDate})
+                
                 self.fetchPromiseData = tempPromiseArray
                 self.fetchTrackingPromiseData = tempPromiseTracking
                 self.fetchPastPromiseData = tempPastPromise

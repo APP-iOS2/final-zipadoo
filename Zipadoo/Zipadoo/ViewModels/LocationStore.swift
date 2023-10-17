@@ -52,7 +52,7 @@ class LocationStore: ObservableObject {
                    self.locationParticipantDatas = locationParticipantTemp
                }
            
-               print(self.locationDatas)
+//               print(self.locationDatas)
                
            } catch {
                print("fetch locationData failed")
