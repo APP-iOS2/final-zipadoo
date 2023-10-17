@@ -15,6 +15,10 @@ struct LocationAndParticipant: Identifiable {
     var location: Location
     var nickname: String
     var imageString: String
+    var randomImageString: [String] = ["doo1","doo2","doo3","doo4","doo5","doo6","doo7","doo8","doo9"]
+    var sampleImageString: String {
+        randomImageString.randomElement() ?? "doo1"
+    }
 }
 
 class LocationStore: ObservableObject {

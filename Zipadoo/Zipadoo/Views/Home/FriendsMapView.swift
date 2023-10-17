@@ -39,6 +39,8 @@ struct FriendsMapView: View {
     var promise: Promise
     // 파베 갱신 시간
     let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
+    // 토스트 bool값
+    @State private var isArrived: Bool = false
     
     // Marker는 시각적, Anntation은 정보 포함
     var body: some View {
@@ -52,6 +54,10 @@ struct FriendsMapView: View {
                         Image(systemName: "figure.2.arms.open")
                             .foregroundColor(.brown)
                     }
+                    // 도착 반경 표시
+                    MapCircle(center: promise.coordinate, radius: 200)
+                        .foregroundStyle(.blue.opacity(0.3))
+                        .stroke(.blue, lineWidth: 2)
                     // 친구 위치 표시
                     ForEach(locationStore.locationParticipantDatas.filter { $0.location.participantId != AuthStore.shared.currentUser?.id ?? "" } ) { annotation in
                         Annotation(annotation.nickname, coordinate: annotation.location.currentCoordinate, anchor: .center) {
@@ -66,10 +72,12 @@ struct FriendsMapView: View {
                                     .frame(width: 25, height: 25) // 크기 조절
                                     .aspectRatio(contentMode: .fill)
                             }*/
-                            Image(.dothez)
+                            Image(annotation.sampleImageString)
                                 .resizable()
                                 .frame(width: 25, height: 25) // 크기 조절
                                 .aspectRatio(contentMode: .fill)
+                                .border(.white, width: 2)
+                                .shadow(radius: 5)
                         }
                     }
                     // 경로 그리기
@@ -143,7 +151,13 @@ struct FriendsMapView: View {
         }
         .onReceive(timer, perform: { _ in
             print("5초 지남")
-            locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+            // 위치 도착 위치 비교
+            if !isArrived {
+                isArrived = didYouArrive(currentCoordinate: CLLocation(latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0), arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effetiveDistance: 200)
+                // 위치 업데이트
+                locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+            }
+            // 유저들 위치 패치
             Task {
                 do {
                     try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
@@ -160,14 +174,25 @@ struct FriendsMapView: View {
                 route = nil
             }
         }
+        // 도착할때 실행
+        .onChange(of: isArrived) {
+            // 도착시간 저장
+            locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
+            locationStore.updateArriveTime(locationId: locationStore.myLocation.id, newValue: locationStore.myLocation.arriveTime ?? 0)
+        }
     }
 }
 
 #Preview {
-    FriendsMapView(promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 0, longitude: 0, participantIdArray: [], checkDoublePromise: false, locationIdArray: []))
+    FriendsMapView(promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 37.2325443502025, longitude: 127.21076196328842, participantIdArray: [], checkDoublePromise: false, locationIdArray: []))
 }
 
 extension FriendsMapView {
+    // 나의 위치 거리를 받아서, 도착지점 원과 비교하여 Bool값으로 출력
+    // 도착 Bool값이 true일때, 흐음... 도착시간 저장 -> 토스트 띄움
+    func didYouArrive(currentCoordinate: CLLocation, arrivalCoordinate: CLLocation, effetiveDistance: Double) -> Bool {
+        return currentCoordinate.distance(from: arrivalCoordinate) < effetiveDistance
+    }
     func fetchRoute(startCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
         let request = MKDirections.Request()
         request.source = MKMapItem(placemark: .init(coordinate: startCoordinate))

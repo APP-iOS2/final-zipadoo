@@ -48,7 +48,7 @@ struct FriendsMapSubView: View {
                             region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                         } label: {
                             InfoView(name: annotation.nickname,
-                                     imageString: annotation.imageString,
+                                     imageString: annotation.sampleImageString,
                                      destinationLatitude: destinationCoordinate.latitude,
                                      destinationLongitude: destinationCoordinate.longitude,
                                      currentLatitude: locationStore.myLocation.currentLatitude,
@@ -59,7 +59,7 @@ struct FriendsMapSubView: View {
                             region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                         } label: {
                             InfoView(name: annotation.nickname,
-                                     imageString: annotation.imageString,
+                                     imageString: annotation.sampleImageString,
                                      destinationLatitude: destinationCoordinate.latitude,
                                      destinationLongitude: destinationCoordinate.longitude,
                                      currentLatitude: annotation.location.currentLatitude,
@@ -119,11 +119,12 @@ struct InfoView: View {
                         .scaledToFit()
                         .frame(width: 50)
                 }*/
-                Image(.dothez)
+                Image(imageString)
                     .resizable()
                     .frame(width: 25, height: 25) // 크기 조절
                     .aspectRatio(contentMode: .fill)
-                
+                    .border(.white, width: 2)
+                    .shadow(radius: 5)
             }
             Text(formatDistance(distance))
         }
