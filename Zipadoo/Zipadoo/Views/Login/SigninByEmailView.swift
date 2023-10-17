@@ -63,7 +63,7 @@ struct SigninByEmailView: View {
                         }
                         .foregroundColor(Color.primary.opacity(0.4))
                     }
-                  
+
                     Rectangle().frame(height: 1)
                         .foregroundStyle(Color.secondary)
                         .padding(.bottom, 5)
@@ -107,8 +107,7 @@ struct SigninByEmailView: View {
                             }
                             .foregroundColor(Color.primary.opacity(0.4))
                         }
-                    
-                 
+
                         // 텍스트필드 줄
                         Rectangle().frame(height: 1)
                             .foregroundStyle(Color.secondary)

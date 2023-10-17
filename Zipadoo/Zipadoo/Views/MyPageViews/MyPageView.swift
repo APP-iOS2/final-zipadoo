@@ -9,7 +9,7 @@ import SwiftUI
 import WidgetKit
 
 struct MyPageView: View {
-    
+    @EnvironmentObject private var promiseViewModel: PromiseViewModel
     /// 현재 로그인된 유저(옵셔널)
     let currentUser: User? = AuthStore.shared.currentUser
     /// 유저가 있으면 유저프로필 String저장
@@ -69,18 +69,7 @@ struct MyPageView: View {
                                     .padding(.bottom, 10)
                                     
                                     HStack {
-                                        
-//                                        Text("지각생")
-//                                            .font(.subheadline)
-//                                            .foregroundStyle(.secondary)
-//                                        Text("위치")
-//                                            .font(.subheadline)
-//                                            .foregroundStyle(.secondary)
-//                                        
-                                        
-//                                        Text("지하 \(currentUser?.crustDepth ?? 100)km")
-//                                            .font(.subheadline)
-//                                            .foregroundColor(.primary)
+                                    
                                         Spacer()
                                     }
                                     
@@ -250,6 +239,7 @@ struct MyPageView: View {
                     VStack {
                         NavigationLink {
                             PastPromiseView()
+                                .environmentObject(promiseViewModel)
                         } label: {
                             HStack {
                                 Text("지난 약속")
@@ -297,59 +287,6 @@ struct MyPageView: View {
                                 Spacer()
                             }
                         }
-                        
-                        /*
-                         Group {
-                         
-                         HStack {
-                         Image(systemName: "person.2")
-                         .frame(width: 15)
-                         .font(.title3)
-                         Text("4")
-                         .font(.footnote)
-                         .frame(width: 30)
-                         Text("약속 진짜 안지켜요")
-                         .padding(.horizontal, 5)
-                         .padding(10)
-                         .background(.zipadoo.opacity(0.1))
-                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                         }
-                         
-                         HStack {
-                         Image(systemName: "person.2")
-                         .frame(width: 15)
-                         .font(.title3)
-                         Text("3")
-                         .font(.footnote)
-                         .frame(width: 30)
-                         Text("진짜 지각만해서 지각에 묻어버리고 싶어요")
-                         .padding(.horizontal, 5)
-                         .padding(10)
-                         .background(.zipadoo.opacity(0.1))
-                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                         }
-                         
-                         HStack {
-                         Image(systemName: "person.2")
-                         .frame(width: 15)
-                         .font(.title3)
-                         Text("123")
-                         .font(.footnote)
-                         .frame(width: 30)
-                         Text("한 20분 정도 늦어요")
-                         .padding(.horizontal, 5)
-                         .padding(10)
-                         .background(.zipadoo.opacity(0.1))
-                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                         
-                         }
-                         
-                         }
-                         .padding(.leading, 10)
-                         .font(.subheadline)
-                         
-                         */ // 당근마켓 매너평가
-                        
                         Spacer()
                     }
                     .padding()
@@ -384,6 +321,7 @@ struct MyPageView: View {
 
 #Preview {
     MyPageView()
+        .environmentObject(PromiseViewModel())
 }
 
 struct MyPageProgressBar: View {
@@ -408,14 +346,11 @@ struct MyPageProgressBar: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 30)
-                            .rotationEffect(Angle(degrees: 90))
+//                            .rotationEffect(Angle(degrees: 90))
                             .shadow(radius: 10, x: 1, y: 1)
                     }
-                    Text("  지각횟수 0회")
-                        .bold()
                 }
             }
         }
     }
 }
-  
