@@ -135,19 +135,23 @@ struct HomeMainView: View {
                                         
                                         Spacer()
                                         
-                                        Image(systemName: "map.fill")
-                                            .fontWeight(.bold)
-                                            .foregroundStyle(Color.primary)
-                                            .colorInvert()
-                                            .padding(8)
-                                            .background(Color.primary)
-                                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                                            .overlay(
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .shadow(color: .primary, radius: 1, x: 1, y: 1)
-                                                    .opacity(0.3)
-                                                //
-                                            )
+                                        NavigationLink {
+                                            FriendsMapView(promise: promise)
+                                        } label: {
+                                            Image(systemName: "map.fill")
+                                                .fontWeight(.bold)
+                                                .foregroundStyle(Color.primary)
+                                                .colorInvert()
+                                                .padding(8)
+                                                .background(Color.primary)
+                                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .shadow(color: .primary, radius: 1, x: 1, y: 1)
+                                                        .opacity(0.3)
+                                                    //
+                                                )
+                                        }
                                     }
                                     .padding(.vertical, 15)
                                     // MARK: - 장소, 시간

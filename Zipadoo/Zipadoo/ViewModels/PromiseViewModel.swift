@@ -171,16 +171,16 @@ final class PromiseViewModel: ObservableObject {
            address: promiseLocation.address,
            latitude: promiseLocation.latitude,
            longitude: promiseLocation.longitude,
-           participantIdArray: selectedFriends.map { $0.id },
+           participantIdArray: [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id },
            checkDoublePromise: false, // 원하는 값으로 설정
            locationIdArray: [])
         
         do {
             // 생성자의 Location객체 id locationIdArray에 저장
-            let myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? " - no id - ", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
-            
-            promise.locationIdArray.append(myLocation.id) // promise.locationIdArray에 저장
-            LocationStore.addLocationData(location: myLocation) // 파베에 Location
+//            let myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? " - no id - ", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
+//            
+//            promise.locationIdArray.append(myLocation.id) // promise.locationIdArray에 저장
+//            LocationStore.addLocationData(location: myLocation) // 파베에 Location
             
             // 친구도 동일하게 저장
             // locationIdArray에 친구Location객체 id저장
