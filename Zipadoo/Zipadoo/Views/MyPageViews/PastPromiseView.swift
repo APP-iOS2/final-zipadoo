@@ -34,7 +34,7 @@ struct PastPromiseView: View {
                                 NavigationLink {
 //                                    PromiseDetailView(promise: promise)
                                     // 도착정보 보여주기
-                                    ArriveResultView()
+                                    ArriveResultView(promise: promise)
                                 } label: {
                                     VStack(alignment: .leading) {
                                         HStack {
