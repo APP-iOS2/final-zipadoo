@@ -65,11 +65,25 @@ struct ZipadooApp: App {
      */
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @State private var showMainView = false
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(alertStore)
+            ZStack {
+                if showMainView {
+                    ContentView()
+                        .environmentObject(alertStore)
+                } else {
+                    LaunchScreen()
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                withAnimation {
+                                    showMainView = true
+                                }
+                            }
+                        }
+                }
+            }
 //                .onOpenURL(perform: { url in
 //                    if AuthApi.isKakaoTalkLoginUrl(url) {
 //                        AuthController.handleOpenUrl(url: url)

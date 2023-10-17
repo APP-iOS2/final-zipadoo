@@ -69,13 +69,15 @@ struct PromiseDetailView: View {
                 title: Text("약속 내역을 삭제합니다."),
                 message: Text("해당 작업은 복구되지 않습니다."),
                 primaryButton: .destructive(Text("삭제하기"), action: {
-                    Task {
-                        do {
-                            try await deletePromise.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
-                           
-                            dismiss()
-                        } catch {
-                            print("실패")
+                    if let loginUserID = loginUser.currentUser?.id {
+                        Task {
+                            do {
+                                try await deletePromise.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
+                                
+                                dismiss()
+                            } catch {
+                                print("실패")
+                            }
                         }
                     }
                 }),
@@ -105,7 +107,7 @@ struct PromiseDetailView: View {
 //            PromiseEditView(promise: .constant(promise))
 //        }
         .sheet(isPresented: $isShowingEditSheet,
-               content: { PromiseEditView(promise: .constant(promise))
+               content: { PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
         })
         .sheet(
             isPresented: $isShowingShareSheet,

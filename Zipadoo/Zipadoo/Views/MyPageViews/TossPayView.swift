@@ -57,10 +57,17 @@ struct TossPayView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     HStack {
+                        Image("potato")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 23, height: 20)
+                        
                         Text(potatos)
                             .bold()
                             .font(.title3)
+                        
                         Spacer()
+                        
                         Text("\(myPotato)개")
                     }
                     .padding(.top, 20)
@@ -87,6 +94,11 @@ struct TossPayView: View {
                     
                     ForEach(payButtonArray, id: \.payCount) { payButton in
                         HStack {
+                            Image("potato")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 23, height: 20)
+                            
                             Text("\(payButton.payCount)")
                             
                             Spacer()
