@@ -188,8 +188,7 @@ extension AppleLoginViewModel {
     func updateDisplayName(for user: FirebaseAuth.User, with appleIDCredential: ASAuthorizationAppleIDCredential, force: Bool = false) async {
         if let currentDisplayName = Auth.auth().currentUser?.displayName, !currentDisplayName.isEmpty {
             
-        }
-        else {
+        } else {
             let changeRequest = user.createProfileChangeRequest()
             changeRequest.displayName = appleIDCredential.displayName()
             do {

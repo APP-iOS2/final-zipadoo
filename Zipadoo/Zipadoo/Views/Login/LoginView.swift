@@ -86,7 +86,7 @@ struct LoginView: View {
                               appleLoginViewModel.handleSignInWithAppleCompletion(result)
                             }
 //                            .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
-                            .frame(width: UIScreen.main.bounds.width * 0.9, height: 50)
+                            .frame(width: UIScreen.main.bounds.width * 0.9, height: 45)
                             .signInWithAppleButtonStyle(.white)
                             
                             ZStack {
