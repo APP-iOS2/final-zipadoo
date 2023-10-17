@@ -28,6 +28,8 @@ class LocationStore: ObservableObject {
     
     var myid: String = AuthStore.shared.currentUser?.id ?? ""
     
+    var myLocationId: String = ""
+    
     let dbRef = Firestore.firestore()
     
 //    init() {
@@ -54,9 +56,10 @@ class LocationStore: ObservableObject {
                     // 이미지 가져오기
                     let imageString = try await fetchUserImageString(participantId: locationData.participantId)
                     // myLocation에 자기 데이터 저장
-//                    if locationData.participantId == myid {
-//                        myLocation = locationData
-//                    }
+                    if locationData.participantId == myid {
+                        myLocationId = locationData.id
+                        myLocation.id = myLocationId
+                    }
                     // LocationAndNickname으로도 나 포함하여 다 저장
                     locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: nickname, imageString: imageString))
                     // locatioonDatas는 나 포함하여 다 저장

@@ -119,6 +119,16 @@ struct FriendsMapView: View {
                     .presentationCompactAdaptation(.none)
             }
         }
+        .onAppear {
+            locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+            Task {
+                do {
+                    try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
+                } catch {
+                    print("파이어베이스 에러")
+                }
+            }
+        }
         .task {
             // myLocation 초기화
             locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: 0, departureLongitude: 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
@@ -133,10 +143,12 @@ struct FriendsMapView: View {
         }
         .onReceive(timer, perform: { _ in
             print("5초 지남")
-            locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: locationStore.myLocation.currentLatitude, newLongtitude: locationStore.myLocation.currentLongitude)
+            locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
             Task {
                 do {
                     try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
+                } catch {
+                    print("파이어베이스 에러")
                 }
             }
         })
