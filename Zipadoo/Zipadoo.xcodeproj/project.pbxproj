@@ -35,7 +35,6 @@
 		8B973A382AC5930D00C67B5F /* SigninByEmailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B973A332AC5930D00C67B5F /* SigninByEmailView.swift */; };
 		8B973A3A2AC593DE00C67B5F /* KakaoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B973A392AC593DE00C67B5F /* KakaoTest.swift */; };
 		8BA14B1A2AD44EF800DEB733 /* FriendsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BA14B192AD44EF800DEB733 /* FriendsStore.swift */; };
-		8BCAE78C2ADE6FFD00E3AA4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8BCAE78B2ADE6FFD00E3AA4A /* GoogleService-Info.plist */; };
 		8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */; };
 		8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC92AC1401E00A4694C /* UserModel.swift */; };
 		8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */; };
@@ -179,7 +178,6 @@
 		8B973A332AC5930D00C67B5F /* SigninByEmailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SigninByEmailView.swift; sourceTree = "<group>"; };
 		8B973A392AC593DE00C67B5F /* KakaoTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KakaoTest.swift; sourceTree = "<group>"; };
 		8BA14B192AD44EF800DEB733 /* FriendsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsStore.swift; sourceTree = "<group>"; };
-		8BCAE78B2ADE6FFD00E3AA4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		8BD44EC92AC1401E00A4694C /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
@@ -563,7 +561,6 @@
 		FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */ = {
 			isa = PBXGroup;
 			children = (
-				8BCAE78B2ADE6FFD00E3AA4A /* GoogleService-Info.plist */,
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
@@ -753,7 +750,6 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-				8BCAE78C2ADE6FFD00E3AA4A /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
