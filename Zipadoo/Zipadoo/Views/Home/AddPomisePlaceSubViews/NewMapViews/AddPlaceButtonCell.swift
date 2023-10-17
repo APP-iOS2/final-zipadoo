@@ -34,6 +34,7 @@ struct AddPlaceButtonCell: View {
                             VStack {
                                 HStack {
                                     Spacer()
+                                    // X 버튼을 클릭 시 해당 장소에 대한 데이터 값들이 초기화됨
                                     Button {
                                         isClickedPlace = false
                                         destination = ""
@@ -43,7 +44,7 @@ struct AddPlaceButtonCell: View {
                                             .foregroundStyle(.white, .red)
                                     }
                                     .shadow(radius: 5)
-                                    .padding(.top, 5)
+                                    .padding(.top, 2)
                                     .padding(.trailing, 6)
                                 }
                                 Spacer()
@@ -56,10 +57,10 @@ struct AddPlaceButtonCell: View {
                                     .font(.title3)
                                     .padding(.top)
                                     .padding(.horizontal)
-                                //                                .foregroundStyle(.primary)
                                 
                                 Spacer()
                                 
+                                // 클릭한 장소에 대해 선택하기 버튼을 클릭하면 해당 장소에 대한 값들을 promiseLocation에 입력시킴
                                 Button {
                                     promiseLocation = addLocationStore.setLocation(destination: destination, address: address, latitude: coordXXX, longitude: coordYYY)
                                     addLocationButton = true
@@ -79,6 +80,7 @@ struct AddPlaceButtonCell: View {
                         }
                     }
             }
+            // AddPlaceButtonCell이 보여지지 않을 시, 위치값들을 초기화 시킴
             .onDisappear {
                 coordXXX = 0.0
                 coordYYY = 0.0

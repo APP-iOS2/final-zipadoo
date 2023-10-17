@@ -5,9 +5,8 @@
 //  Created by 김상규 on 10/1/23.
 //
 
-import SwiftUI
-
-// MARK: - 상단탭바 뷰 모델
+//import SwiftUI
+// MARK: - 상단탭바 뷰 모델, 사용하지 않음(옵션보여주기에 대해 이슈 발생시 예비용)
 /// 상단탭바 뷰 모델
 //struct MapOptionSelectView: View {
 //    var mapOptions: MapOption

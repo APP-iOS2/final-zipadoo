@@ -5,7 +5,7 @@
 //  Created by 김상규 on 10/1/23.
 //
 
-// MARK: - 상단탭바 뷰모델
+// MARK: - 상단탭바 뷰모델, 사용하지 않음(옵션보여주기에 대해 이슈 발생시 예비용)
 /// 참고 : https://velog.io/@high_sky8320/SwiftUI-상단탭바-구현하기
 //import SwiftUI
 //
@@ -14,10 +14,10 @@
 //    case search = "장소 검색"
 //}
 //
-//// MARK: - 상단탭바 뷰모델
-///// 상단탭바 뷰모델
-///// 1) 직접 마커를 이동시켜 자세히 위치를 설정하는 옵션
-///// 2) 검색기능을 활용한 옵션으로 장소설정 기능 옵션
+// MARK: - 상단탭바 뷰모델, 사용하지 않음(옵션보여주기에 대해 이슈 발생시 예비용)
+/// 상단탭바 뷰모델
+/// 1) 직접 마커를 이동시켜 자세히 위치를 설정하는 옵션
+/// 2) 검색기능을 활용한 옵션으로 장소설정 기능 옵션
 //struct AddPlaceOptionCell: View {
 //    @State private var selectMapOption: MapOption = .click /// 상단 탭바 초기설정값
 //    @Namespace private var animation
