@@ -15,7 +15,7 @@ struct ContentView: View {
         
         // 로그인이 되어있지 않은 상태면 로그인 뷰로,
         if viewModel.userSession == nil {
-            LoginView()
+            LoginView(appleLoginViewModel: AppleLoginViewModel())
         } else {
             TabView {
                 // 홈

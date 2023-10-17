@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AuthenticationServices
 // import KakaoSDKCommon
 // import KakaoSDKAuth
 // import KakaoSDKUser
@@ -15,7 +16,7 @@ import SwiftUI
 struct LoginView: View {
     
     //    @StateObject var kakaoStore: KakaoStore = KakaoStore()
-    
+    @StateObject var appleLoginViewModel: AppleLoginViewModel
     @State private var spaceHeight: CGFloat = 500 // 두더지 머리 위에 공간 높이
     
     let dothezColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
@@ -27,7 +28,6 @@ struct LoginView: View {
                 NavigationView {
                     ZStack {
                         VStack {
-                            
                             // MARK: -두더지 이미지
                             Spacer(minLength: spaceHeight)
                             Image("Dothez")
@@ -80,15 +80,14 @@ struct LoginView: View {
                             .disabled(true)
                             
                             // MARK: - 애플 로그인 버튼
-                            Button {
-                                print("apple login")
-                            } label: {
-                                Image("apple_login")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: UIScreen.main.bounds.width * 0.9)
-                                    .cornerRadius(5)
+                            SignInWithAppleButton(.signIn) { request in
+                              appleLoginViewModel.handleSignInWithAppleRequest(request)
+                            } onCompletion: { result in
+                              appleLoginViewModel.handleSignInWithAppleCompletion(result)
                             }
+//                            .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
+                            .frame(width: UIScreen.main.bounds.width * 0.9, height: 50)
+                            .signInWithAppleButtonStyle(.white)
                             
                             ZStack {
                                 // 두더지 몸통
@@ -109,5 +108,5 @@ struct LoginView: View {
 } // struct
 
 #Preview {
-    LoginView()
+    LoginView(appleLoginViewModel: AppleLoginViewModel())
 }

@@ -69,8 +69,6 @@ struct SigninByEmailView: View {
                         .colorInvert()
                     }
                   
-                 
-                    
                     Rectangle().frame(height: 1)
                         .foregroundStyle(Color.secondary)
                         .padding(.bottom, 5)
@@ -118,8 +116,6 @@ struct SigninByEmailView: View {
                                 .colorInvert()
                         }
                     
-             
-                        
                         // 텍스트필드 줄
                         Rectangle().frame(height: 1)
                             .foregroundStyle(Color.secondary)
