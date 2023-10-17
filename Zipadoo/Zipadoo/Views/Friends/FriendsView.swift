@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SlidingTabView
 
 struct FriendsView: View {
     
@@ -16,26 +17,40 @@ struct FriendsView: View {
     @State private var selectedSegmentIndex: Int = 0
     /// 삭제버튼 눌렸을 때 선택된 친구
     @State private var selectedFriendId: String = ""
+    /// 상단 탭바 인덱스
+    @State private var tabIndex = 0
     
     var body: some View {
         NavigationStack {
             VStack {
-                Picker("option", selection: $selectedSegmentIndex) {
-                    Text("친구 목록").tag(0)
-                    Text("요청 목록").tag(1)
+                // MARK: - 변경 SlidingTab
+                SlidingTabView(selection: $tabIndex, tabs:
+                                ["친구 목록", "요청 목록"], animation: .easeInOut,
+                               activeAccentColor: .zipadoo, selectionBarColor: . zipadoo)
+                Spacer()
+                if tabIndex == 0 {
+                    friendListView
+                } else if tabIndex == 1 {
+                    friendRequestView
                 }
-                .padding()
-                
-                VStack {
-                    switch selectedSegmentIndex {
-                    case 0:
-                        friendListView
-                    case 1:
-                        friendRequestView
-                    default:
-                        friendListView
-                    }
-                }
+                Spacer()
+                // MARK: - 기존 SegmentedPickerStyle
+//                Picker("option", selection: $selectedSegmentIndex) {
+//                    Text("친구 목록").tag(0)
+//                    Text("요청 목록").tag(1)
+//                }
+//                .padding()
+//                
+//                VStack {
+//                    switch selectedSegmentIndex {
+//                    case 0:
+//                        friendListView
+//                    case 1:
+//                        friendRequestView
+//                    default:
+//                        friendListView
+//                    }
+//                }
             }
             .pickerStyle(SegmentedPickerStyle())
             .navigationTitle("친구 관리")
