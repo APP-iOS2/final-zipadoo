@@ -22,8 +22,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         FirebaseApp.configure()
         
-        UNUserNotificationCenter.current().delegate = self
+        Messaging.messaging().delegate = self
+        Messaging.messaging().isAutoInitEnabled = true
         
+        UNUserNotificationCenter.current().delegate = self
         let authOption: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(
             options: authOption,
@@ -31,16 +33,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         application.registerForRemoteNotifications()
         
-        Messaging.messaging().delegate = self
-                
-        UNUserNotificationCenter.current().delegate = self
-        
         print("파이어베이스 초기화 할거야!!!!!")
         return true
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
+        Messaging.messaging().isAutoInitEnabled = true
     }
     
     /*
@@ -97,8 +96,7 @@ extension AppDelegate: MessagingDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-    
-    // 푸시 메세지가 앱이 켜져있을 때 나올떄
+    // 앱 running 중 push알림 받을 때
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions)
@@ -106,25 +104,25 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         let userInfo = notification.request.content.userInfo
         
+        Messaging.messaging().appDidReceiveMessage(userInfo)
         
-        // Do Something With MSG Data...
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
         
-        
         print(userInfo)
         
-        completionHandler([[.banner, .badge, .sound]])
+        completionHandler([[.banner, .list, .sound]])
     }
     
-    // 푸시메세지를 받았을 떄
+    // 푸시메세지를 받았을 때 유저의 액션
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         let userInfo = response.notification.request.content.userInfo
         
-        // Do Something With MSG Data...
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+        
         if let messageID = userInfo[gcmMessageIDKey] {
             print("Message ID: \(messageID)")
         }
@@ -134,4 +132,10 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler()
     }
     
+    // 백그라운드로 오는 알림 처리 메소드
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+        
+        completionHandler(UIBackgroundFetchResult.newData)
+    }
 }

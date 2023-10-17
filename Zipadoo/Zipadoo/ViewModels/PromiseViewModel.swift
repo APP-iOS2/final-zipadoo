@@ -12,14 +12,13 @@ import FirebaseCore
 
 @MainActor
 class PromiseViewModel: ObservableObject {
-    @Published var promiseViewModel: [Promise] = []
+    @Published var promiseViewModel: [Promise]
+    @Published var isLoading: Bool = true
     
     private let dbRef = Firestore.firestore().collection("Promise")
     
     init() {
-        Task {
-            try await fetchData()
-        }
+        promiseViewModel = []
     }
     
     // MARK: - 약속 패치 함수
@@ -69,11 +68,13 @@ class PromiseViewModel: ObservableObject {
     //        }
     //    }
     
-    func fetchData() async throws {
+    func fetchData(userId: String) async throws {
+        self.isLoading = true
         do {
             dbRef.getDocuments { (snapshot, error) in
                 guard error == nil else {
                     print("오류: \(error!)")
+                    self.isLoading = false
                     return
                 }
                 var temp: [Promise] = []
@@ -81,11 +82,17 @@ class PromiseViewModel: ObservableObject {
                     for document in snapshot.documents {
                         if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
                            let promise = try? JSONDecoder().decode(Promise.self, from: jsonData) {
-                            temp.append(promise)
+                            if promise.makingUserID == userId || promise.participantIdArray.contains(userId) {
+                                temp.append(promise)
+                            }
                         }
                     }
                     self.promiseViewModel = temp
+                    if let imminent = self.promiseViewModel.first {
+                        self.addSharingNotification(imminent: imminent)
+                    }
                     print(self.promiseViewModel)
+                    self.isLoading = false
                 }
             }
         }
@@ -164,5 +171,47 @@ class PromiseViewModel: ObservableObject {
     
     func deletePromiseData(promiseId: String) {
         dbRef.document(promiseId).delete()
+    }
+    
+    func addSharingNotification(imminent: Promise) {
+        let notificationCenter = UNUserNotificationCenter.current()
+
+        let imminentDate = Date(timeIntervalSince1970: imminent.promiseDate)
+        
+        let upcomingAppointmentDate: Date = imminentDate
+        
+        let triggerDate = Calendar.current.date(byAdding: .minute, value: -30, to: upcomingAppointmentDate)!
+        
+        let localTriggerDate = Calendar.current.date(bySettingHour: Calendar.current.component(.hour, from: triggerDate),
+                                                     minute: Calendar.current.component(.minute, from: triggerDate),
+                                                     second: 0,
+                                                     of: Date())!
+        
+        var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: localTriggerDate)
+        dateComponents.second = 0
+        let content = UNMutableNotificationContent()
+        content.title = "\(imminent.promiseTitle) 30분 전입니다"
+        content.body = "친구들의 위치 현황을 확인해보세요!"
+
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+
+        let requestIdentifier = "LocationSharing"
+        
+        
+        let request = UNNotificationRequest(identifier: requestIdentifier,
+                                            content: content,
+                                            trigger: trigger)
+
+        notificationCenter.add(request) { (error) in
+            if error != nil {
+                print("에러 \(requestIdentifier)")
+            }
+        }
+        
+        notificationCenter.getPendingNotificationRequests { (requests) in
+            for request in requests {
+                print("\(request.identifier) will be delivered at \(request.trigger)")
+            }
+        }
     }
 }

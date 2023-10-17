@@ -2,7 +2,7 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>&quot;KAKAO_API_KEY&quot;</key>
+	<key>"KAKAO_API_KEY"</key>
 	<string>191dedb3f0609fe5aab6a6dae502cee1</string>
 	<key>CFBundleURLTypes</key>
 	<array>
@@ -15,6 +15,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>FirebaseMessagingAutoInitEnabled</key>
+	<false/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
