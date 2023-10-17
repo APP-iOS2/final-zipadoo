@@ -18,7 +18,7 @@ struct PromiseDetailView: View {
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
     @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
     @StateObject var loginUser: UserStore = UserStore()
-  
+    
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
@@ -26,9 +26,9 @@ struct PromiseDetailView: View {
     @State private var isShowingShareSheet: Bool = false
     @StateObject var deletePromise: PromiseViewModel = PromiseViewModel()
     @State private var isShowingDeleteAlert: Bool = false
-    let promise: Promise
-    let activeColor: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
-    let disabledColor: UIColor = #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
+    @State var promise: Promise
+    let activeColor: UIColor =  #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+    let disabledColor: UIColor =  #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
     
     // MARK: - Properties
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -72,7 +72,7 @@ struct PromiseDetailView: View {
                     Task {
                         do {
                             try await deletePromise.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
-                           
+                            
                             dismiss()
                         } catch {
                             print("실패")
@@ -101,9 +101,9 @@ struct PromiseDetailView: View {
                 try await promiseViewModel.fetchData()
             }
         }
-//        .navigationDestination(isPresented: $isShowingEditSheet) {
-//            PromiseEditView(promise: .constant(promise))
-//        }
+        //        .navigationDestination(isPresented: $isShowingEditSheet) {
+        //            PromiseEditView(promise: .constant(promise))
+        //        }
         .sheet(isPresented: $isShowingEditSheet,
                content: { PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
         })
@@ -130,17 +130,31 @@ struct PromiseDetailView: View {
                     } label: {
                         Text("수정")
                     }
-                } else {
+                } else if promise.participantIdArray.contains(loginUser.currentUser?.id ?? "") {
                     Button {
-                        
+                        if let userId = loginUser.currentUser?.id {
+                            // 현재 로그인한 사용자 아이디 가져오기
+                            
+                            if let index = promise.participantIdArray.firstIndex(of: userId) {
+                                // 배열에서 ID 위치 확인
+                                // 해당 ID 배열에서 제거
+                                promise.participantIdArray.remove(at: index)
+                            }
+                            
+                            // 약속 업데이트
+                            promiseViewModel.editPromise(promise)
+                        }
                     } label: {
                         Text("나가기")
                     }
                 }
-                Button {
-                    isShowingDeleteAlert.toggle()
-                } label: {
-                    Text("삭제")
+                
+                if loginUser.currentUser?.id == promise.makingUserID {
+                    Button {
+                        isShowingDeleteAlert.toggle()
+                    } label: {
+                        Text("삭제")
+                    }
                 }
             } label: {
                 Label("More", systemImage: "ellipsis")
@@ -214,7 +228,7 @@ struct PromiseDetailView: View {
     //        let promiseDate = postPromise.promiseDate
     //        remainingTime = promiseDate - currentDate
     //    }
-  
+    
     private func calculateDate(date: Double) -> String {
         let date = Date(timeIntervalSince1970: date)
         let dateFormatter = DateFormatter()

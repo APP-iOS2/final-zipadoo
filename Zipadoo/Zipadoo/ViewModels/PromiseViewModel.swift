@@ -227,9 +227,6 @@ final class PromiseViewModel: ObservableObject {
     /// 약속 수정 함수
     func editPromise(_ promise: Promise) {
         let updatedData: [String: Any] = [
-            "promiseTitle": "\(promise.promiseTitle)",
-            "promiseDate": "\(promise.promiseDate)",
-            "destination": "\(promise.destination)",
             "participantIdArray": "\(promise.participantIdArray)"
         ]
         
