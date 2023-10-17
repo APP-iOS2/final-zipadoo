@@ -17,8 +17,7 @@ struct HomeMainView: View {
     @StateObject var promise: PromiseViewModel = PromiseViewModel()
     
     @State private var isShownFullScreenCover: Bool = false
-    /// 약속후 3시간동안 트랙킹하는 약속을 보여주는 시트
-    @State private var isShowingTracking: Bool = false
+
     // 약속의 갯수 확인
 //    @State private var userPromiseArray: [Promise] = []
     // 상단 탭바 인덱스
@@ -243,7 +242,6 @@ struct HomeMainView: View {
         )
         .foregroundStyle(Color.primary)
 
-        
     }
     
 }
