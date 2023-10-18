@@ -9,7 +9,7 @@ import SwiftUI
 import WidgetKit
 
 struct MyPageView: View {
-    
+    @EnvironmentObject private var promiseViewModel: PromiseViewModel
     /// 현재 로그인된 유저(옵셔널)
     let currentUser: User? = AuthStore.shared.currentUser
     /// 유저가 있으면 유저프로필 String저장
@@ -239,6 +239,7 @@ struct MyPageView: View {
                     VStack {
                         NavigationLink {
                             PastPromiseView()
+                                .environmentObject(promiseViewModel)
                         } label: {
                             HStack {
                                 Text("지난 약속")
@@ -320,6 +321,7 @@ struct MyPageView: View {
 
 #Preview {
     MyPageView()
+        .environmentObject(PromiseViewModel())
 }
 
 struct MyPageProgressBar: View {
