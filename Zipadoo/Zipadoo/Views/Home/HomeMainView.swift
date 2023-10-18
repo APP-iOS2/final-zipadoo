@@ -196,7 +196,7 @@ struct HomeMainView: View {
        
              // 카드 배경색
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .frame(width: 330, height: 330)
+                        .frame(width: 300, height: 400)
                         .foregroundColor(.lusciousRed)
                         .shadow(radius: 0.5, x: 1.5, y: 1.5)
 //            RoundedRectangle(cornerRadius: 20, style: .continuous)
@@ -332,7 +332,7 @@ struct HomeMainView: View {
                 // 참여자의 ID를 통해 참여자 정보 가져오기
             }
             .padding(.horizontal, 20)
-            .frame(width: 330, height: 330)
+            .frame(width: 300, height: 400)
         }
 //        .opacity(isTracking ? 1 : 0.5)
         .padding(20)
