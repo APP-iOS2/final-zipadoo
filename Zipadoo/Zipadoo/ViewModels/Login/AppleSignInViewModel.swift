@@ -24,7 +24,7 @@ class AppleSignInViewModel: ObservableObject {
     @Published var name: String = ""
     @Published var phoneNumber: String = ""
     @Published var selectedImage: UIImage?
-        
+    
     let dbRef = Firestore.firestore().collection("Users")
     
     /// 유저 회원가입
@@ -102,10 +102,10 @@ class AppleSignInViewModel: ObservableObject {
             Task {
                 do {
                     try await Auth.auth().signIn(with: credwtion)
-                    //                    let userRef = dbRef.document(FirebaseAuth.Auth.auth().currentUser!.uid)
-                    //                    try await userRef.setData([
-                    //                        "displayName": FirebaseAuth.Auth.auth().currentUser?.displayName ?? "Unknown",
-                    //                        "email": FirebaseAuth.Auth.auth().currentUser?.email ?? "
+                    let userRef = dbRef.document(FirebaseAuth.Auth.auth().currentUser!.uid)
+                    try await userRef.setData([
+                        "phoneNumber": FirebaseAuth.Auth.auth().currentUser?.phoneNumber ?? "Unknown",
+                        "email": FirebaseAuth.Auth.auth().currentUser?.email ?? ""])
                     
                     DispatchQueue.main.async {
                         self.logState = true

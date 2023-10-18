@@ -100,40 +100,46 @@ struct LoginView: View {
                                 
                             } onCompletion: { result in
                                 print("result")
+                                singinViewModel.SinginWithAppleCompletion(result)
                                 Task {
                                     do {
-                                       try await singinViewModel.SinginWithAppleCompletion(result)
-                                        if isCorrectEmail(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown") {
-                                            print("emailCheck")
-                                            print(FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown")
-                                            // 여기에 데이터를 파이어베이스로 보내고 중복 체크를 수행하는 코드를 추가합니다.
-                                            singinViewModel.emailCheck(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown") { isUnique in
-                                                uniqueEmail = isUnique // 중복 체크 결과를 업데이트합니다.
-                                                if isUnique {
-                                                    // 중복이 없으면 회원가입 뷰로 이동
-                                                    self.uniqueEmail = true
-                                                    self.isSigninLinkActive = true
-                                                } else {
-                                                    // 이메일이 중복이 있을 때 홈 뷰로 이동
-                                                    Task {
-                                                        do {
-                                                            let emailLoginResult: Bool = try await singinViewModel.login()
-                                                            
-                                                            print(loginResult)
-                                                            loginResult = emailLoginResult
-                                                            print(loginResult)
-                                                        } catch {
-                                                            print("로그인 실패")
-                                                        }
-                                                    }
-                                                    
-                                                }
-                                            }
-                                        }
-                                    } catch {
-                                        print("로그인 실패")
+                                        try await singinViewModel.createUser()
+                                        
                                     }
                                 }
+//                                Task {
+//                                    do {
+//                                        if isCorrectEmail(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown") {
+//                                            print("emailCheck")
+//                                            print(FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown")
+//                                            // 여기에 데이터를 파이어베이스로 보내고 중복 체크를 수행하는 코드를 추가합니다.
+//                                            singinViewModel.emailCheck(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown") { isUnique in
+//                                                uniqueEmail = isUnique // 중복 체크 결과를 업데이트합니다.
+//                                                if isUnique {
+//                                                    // 중복이 없으면 회원가입 뷰로 이동
+//                                                    self.uniqueEmail = true
+//                                                    self.isSigninLinkActive = true
+//                                                } else {
+//                                                    // 이메일이 중복이 있을 때 홈 뷰로 이동
+//                                                    Task {
+//                                                        do {
+//                                                            let emailLoginResult: Bool = try await singinViewModel.login()
+//                                                            
+//                                                            print(loginResult)
+//                                                            loginResult = emailLoginResult
+//                                                            print(loginResult)
+//                                                        } catch {
+//                                                            print("로그인 실패")
+//                                                        }
+//                                                    }
+//                                                    
+//                                                }
+//                                            }
+//                                        }
+//                                    } catch {
+//                                        print("로그인 실패")
+//                                    }
+//                                }
                                 
                             }
                             .frame(width: UIScreen.main.bounds.width * 0.9, height: 50)
