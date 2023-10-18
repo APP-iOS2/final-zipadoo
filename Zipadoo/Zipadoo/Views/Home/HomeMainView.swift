@@ -11,6 +11,7 @@ import WidgetKit
 
 struct HomeMainView: View {
     @EnvironmentObject var promise: PromiseViewModel
+    @EnvironmentObject var alertStore: AlertStore
     let user: User?
     
     @State private var isShownFullScreenCover: Bool = false
@@ -108,6 +109,7 @@ struct HomeMainView: View {
                 
                 NavigationLink {
                     FriendsMapView(promise: promise)
+                        .environmentObject(alertStore)
                 } label: {
                     Image(systemName: "map.fill")
                         .fontWeight(.bold)
