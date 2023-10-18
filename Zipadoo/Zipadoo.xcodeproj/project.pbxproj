@@ -10,6 +10,7 @@
 		047127952AD7BE4F00767E9C /* OneMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127942AD7BE4F00767E9C /* OneMapView.swift */; };
 		047127972AD7C7A800767E9C /* OneAddLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127962AD7C7A800767E9C /* OneAddLocation.swift */; };
 		04C7A85A2AC94889001B2AF8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04C7A8592AC94889001B2AF8 /* Alamofire */; };
+		083DD12C2ADF93D500B7EB10 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 083DD12B2ADF93D500B7EB10 /* GoogleService-Info.plist */; };
 		088A0F242AD78EAD00BC6EF5 /* FriendsMapSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A0F232AD78EAD00BC6EF5 /* FriendsMapSubView.swift */; };
 		088F7D402AD4DED40094B9B4 /* ReceivingLocationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F7D3F2AD4DED40094B9B4 /* ReceivingLocationTestView.swift */; };
 		088F7D422AD4EAB50094B9B4 /* GPSStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F7D412AD4EAB50094B9B4 /* GPSStore.swift */; };
@@ -25,6 +26,8 @@
 		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
 		3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */; };
 		3F5B9A202AD6BACE00CDD52D /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B9A1F2AD6BACE00CDD52D /* FriendProfileView.swift */; };
+		3FF033052ADD30C800FF13A5 /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF033042ADD30C800FF13A5 /* AppInfoView.swift */; };
+		3FF033092ADD318300FF13A5 /* DeveloperProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF033082ADD318300FF13A5 /* DeveloperProfileView.swift */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
 		8B85B7322ABCB0FB007A1120 /* TextFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */; };
 		8B91DBC32ACEA6A7005B2582 /* Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B91DBC22ACEA6A7005B2582 /* Validation.swift */; };
@@ -38,6 +41,7 @@
 		8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */; };
 		8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD44EC92AC1401E00A4694C /* UserModel.swift */; };
 		8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */; };
+		8BEA8B9D2ADB0C640083D488 /* PromiseTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEA8B9C2ADB0C640083D488 /* PromiseTrackingView.swift */; };
 		8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */; };
 		9A10ADFB2AD83D0900AF37A3 /* SlidingTabView in Frameworks */ = {isa = PBXBuildFile; productRef = 9A10ADFA2AD83D0900AF37A3 /* SlidingTabView */; };
 		9B8FE8272ACE377B00C1EEFC /* MyLocationAndInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */; };
@@ -153,6 +157,7 @@
 /* Begin PBXFileReference section */
 		047127942AD7BE4F00767E9C /* OneMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMapView.swift; sourceTree = "<group>"; };
 		047127962AD7C7A800767E9C /* OneAddLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneAddLocation.swift; sourceTree = "<group>"; };
+		083DD12B2ADF93D500B7EB10 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		088A0F232AD78EAD00BC6EF5 /* FriendsMapSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsMapSubView.swift; sourceTree = "<group>"; };
 		088F7D3F2AD4DED40094B9B4 /* ReceivingLocationTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceivingLocationTestView.swift; sourceTree = "<group>"; };
 		088F7D412AD4EAB50094B9B4 /* GPSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSStore.swift; sourceTree = "<group>"; };
@@ -168,6 +173,8 @@
 		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
 		3F5B9A1F2AD6BACE00CDD52D /* FriendProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
+		3FF033042ADD30C800FF13A5 /* AppInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
+		3FF033082ADD318300FF13A5 /* DeveloperProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperProfileView.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8B85B7312ABCB0FB007A1120 /* TextFieldStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldStyle.swift; sourceTree = "<group>"; };
 		8B91DBC22ACEA6A7005B2582 /* Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validation.swift; sourceTree = "<group>"; };
@@ -181,6 +188,7 @@
 		8BD44EC52AC13FD900A4694C /* ProfileImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileImageView.swift; sourceTree = "<group>"; };
 		8BD44EC92AC1401E00A4694C /* UserModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
+		8BEA8B9C2ADB0C640083D488 /* PromiseTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTrackingView.swift; sourceTree = "<group>"; };
 		8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilView.swift; sourceTree = "<group>"; };
 		9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationAndInfoView.swift; sourceTree = "<group>"; };
 		C02790B52ACD297100BBDCCA /* ZipadooWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ZipadooWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -305,6 +313,8 @@
 				08C6F0BA2ABC1DA2005D231D /* SettingView.swift */,
 				08C6F0BC2ABC1E1C005D231D /* PayingView.swift */,
 				8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */,
+				3FF033042ADD30C800FF13A5 /* AppInfoView.swift */,
+				3FF033082ADD318300FF13A5 /* DeveloperProfileView.swift */,
 			);
 			path = MyPageViews;
 			sourceTree = "<group>";
@@ -394,6 +404,7 @@
 				9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */,
 				FA2473FA2ACD4BDB00D4C821 /* ArriveResultView.swift */,
 				FA2473FB2ACD4BDB00D4C821 /* HomeMainView.swift */,
+				8BEA8B9C2ADB0C640083D488 /* PromiseTrackingView.swift */,
 				FA2473FC2ACD4BDB00D4C821 /* MakePromiseView.swift */,
 				FA2473FD2ACD4BDB00D4C821 /* PromiseDetailView.swift */,
 				1B6C11C22AD6825D00770D43 /* PromiseEditView.swift */,
@@ -563,6 +574,7 @@
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
+				083DD12B2ADF93D500B7EB10 /* GoogleService-Info.plist */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
 				FAD5FE4A2ABBD3F900E05E6E /* Views */,
@@ -749,6 +761,7 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
+				083DD12C2ADF93D500B7EB10 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -845,6 +858,7 @@
 				FA2474222ACD4BDB00D4C821 /* FriendSellView.swift in Sources */,
 				FAD257E92AD65F4B0017D16C /* NewMapView.swift in Sources */,
 				FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */,
+				3FF033052ADD30C800FF13A5 /* AppInfoView.swift in Sources */,
 				FA2474542ACD4D6E00D4C821 /* AuthStore.swift in Sources */,
 				047127972AD7C7A800767E9C /* OneAddLocation.swift in Sources */,
 				FA24741D2ACD4BDB00D4C821 /* HomeMainView.swift in Sources */,
@@ -860,6 +874,7 @@
 				FA2474282ACD4BDB00D4C821 /* AddPromisePlaceCell.swift in Sources */,
 				FA24744E2ACD4D6E00D4C821 /* PromiseViewModel.swift in Sources */,
 				8B973A362AC5930D00C67B5F /* LoginView.swift in Sources */,
+				8BEA8B9D2ADB0C640083D488 /* PromiseTrackingView.swift in Sources */,
 				C04BCDC32ABD545A0024B487 /* LocationModel.swift in Sources */,
 				FA2474262ACD4BDB00D4C821 /* AddPenaltyCell.swift in Sources */,
 				FA24740D2ACD4BDB00D4C821 /* SearchInKakaoLocal.swift in Sources */,
@@ -871,6 +886,7 @@
 				8B973A382AC5930D00C67B5F /* SigninByEmailView.swift in Sources */,
 				FA2474302ACD4C0B00D4C821 /* ContentView.swift in Sources */,
 				FAD257ED2AD65F4B0017D16C /* TestingView.swift in Sources */,
+				3FF033092ADD318300FF13A5 /* DeveloperProfileView.swift in Sources */,
 				FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */,
 				FA24744C2ACD4D6E00D4C821 /* LocationStore.swift in Sources */,
 				FAD257EA2AD65F4B0017D16C /* SearchbarCell.swift in Sources */,
