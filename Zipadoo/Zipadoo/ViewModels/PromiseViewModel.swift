@@ -141,6 +141,12 @@ class PromiseViewModel: ObservableObject {
                     self.fetchTrackingPromiseData = tempPromiseTracking
                     self.fetchPastPromiseData = tempPastPromise
                     
+                    if let imminent = self.fetchTrackingPromiseData.first {
+                        self.addSharingNotification(imminent: imminent)
+                    } else if let imminent = self.fetchPromiseData.first {
+                        self.addSharingNotification(imminent: imminent)
+                    }
+                    
                     self.isLoading = false
                 }
             }
