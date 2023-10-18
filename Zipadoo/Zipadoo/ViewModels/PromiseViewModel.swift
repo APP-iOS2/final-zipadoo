@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 import FirebaseCore
+import WidgetKit
 
 class PromiseViewModel: ObservableObject {
     //@Published var promiseViewModel: [Promise]
@@ -357,5 +358,42 @@ class PromiseViewModel: ObservableObject {
 //                print("\(request.identifier) will be delivered at \(request.trigger)")
 //            }
 //        }
+    }
+    
+    func addTodayPromisesToUserDefaults() {
+        var calendar = Calendar.current
+        calendar.timeZone = NSTimeZone.local
+        let encoder = JSONEncoder()
+        
+        // 위젯에 나타낼 데이터
+        var widgetDatas: [WidgetData] = []
+        
+        let entryPromises = fetchTrackingPromiseData + fetchPromiseData
+        
+        for promise in entryPromises {
+            let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+            let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
+            let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+            
+            if promiseDateComponents == todayComponents {
+                //let arrivalMemCount = promise.lo
+                let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
+                widgetDatas.append(data)
+            } else {
+                // 오름차순 정렬인데 해당 약속이 오늘이 아니라면 이 후 약속은 볼 필요 없음
+                break
+            }
+        }
+        
+        do {
+            let encodedData = try encoder.encode(widgetDatas)
+            
+            UserDefaults.shared.set(encodedData, forKey: "todayPromises")
+            
+            WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
+        } catch {
+            print("Failed to encode Promise:", error)
+            
+        }
     }
 }

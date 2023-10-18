@@ -82,6 +82,7 @@ struct HomeMainView: View {
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity) // 스크롤을 최대한 바깥으로 하기 위함
                 .onAppear {
+                    promise.addTodayPromisesToUserDefaults()
                     Task {
                         try await promise.fetchData(userId: loginUserID)
                     }
