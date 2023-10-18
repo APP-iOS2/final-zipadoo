@@ -15,10 +15,7 @@ struct LocationAndParticipant: Identifiable {
     var location: Location
     var nickname: String
     var imageString: String
-    var randomImageString: [String] = ["doo1","doo2","doo3","doo4","doo5","doo6","doo7","doo8","doo9"]
-    var sampleImageString: String {
-        randomImageString.randomElement() ?? "doo1"
-    }
+    var sampleImageString: String = "doo1"
 }
 
 class LocationStore: ObservableObject {
@@ -35,6 +32,8 @@ class LocationStore: ObservableObject {
     var myLocationId: String = ""
     
     let dbRef = Firestore.firestore()
+    
+    var randomImageString: [String] = ["doo1","doo2","doo3","doo4","doo5","doo6","doo7","doo8","doo9"]
     
 //    init() {
 //        myLocation = Location(participantId: myid, departureLatitude: 0, departureLongitude: 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
@@ -73,6 +72,8 @@ class LocationStore: ObservableObject {
                 DispatchQueue.main.async {
                     self.locationDatas = temp
                     self.locationParticipantDatas = locationParticipantTemp
+                    // *이슈 패치받을때 마다 한번 불러와야할 이미지값을 계속 반복해서 받고 있음. (깜빡거림이 있을 수 있고, 불필요한 명령 반복)
+                    self.fetchSampleProfileImage()
                 }
                 
                 print(self.locationDatas)
@@ -82,6 +83,16 @@ class LocationStore: ObservableObject {
             }
         } else {
             print("LocationStore에서 유저 id 못가져옴")
+        }
+    }
+    // FriendsMapView에서 사용할 프로필 이미지 배열을 셔플 (.task에서 한번 실행)
+    func shuffleSampleProfileImage() {
+        randomImageString.shuffle()
+    }
+    // FriendsMapView에서 사용할 프로필 이미지를 인덱스 번호에 맞춰 패치해줌 (fetchData안에 들어있음)
+    func fetchSampleProfileImage() {
+        for index in locationParticipantDatas.indices {
+            locationParticipantDatas[index].sampleImageString = randomImageString[index]
         }
     }
     

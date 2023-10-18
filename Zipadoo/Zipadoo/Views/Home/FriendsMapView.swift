@@ -41,6 +41,8 @@ struct FriendsMapView: View {
     let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
     // 토스트 bool값
     @State private var isArrived: Bool = false
+    // 도착 위치 버튼 bool값
+    @State private var moveDestination: Bool = false
     
     // Marker는 시각적, Anntation은 정보 포함
     var body: some View {
@@ -51,33 +53,37 @@ struct FriendsMapView: View {
                     UserAnnotation(anchor: .center)
                     // 도착 위치 표시
                     Annotation("약속 위치", coordinate: promise.coordinate, anchor: .bottom) {
-                        Image(systemName: "figure.2.arms.open")
-                            .foregroundColor(.brown)
+                        Image(systemName: "mappin")
+                            .font(.title)
+                            .foregroundColor(.blue)
                     }
                     // 도착 반경 표시
                     MapCircle(center: promise.coordinate, radius: 200)
                         .foregroundStyle(.blue.opacity(0.3))
                         .stroke(.blue, lineWidth: 2)
                     // 친구 위치 표시
-                    ForEach(locationStore.locationParticipantDatas.filter { $0.location.participantId != AuthStore.shared.currentUser?.id ?? "" } ) { annotation in
+                    ForEach(locationStore.locationParticipantDatas.filter {
+                        $0.location.participantId != AuthStore.shared.currentUser?.id ?? ""
+                    }) { annotation in
                         Annotation(annotation.nickname, coordinate: annotation.location.currentCoordinate, anchor: .center) {
                             /*AsyncImage(url: URL(string: annotation.imageString), content: { image in
-                                image
-                                    .resizable()
-                                    .frame(width: 25, height: 25) // 크기 조절
-                                    .aspectRatio(contentMode: .fill)
-                            }) {
-                                Image(.dothez)
-                                    .resizable()
-                                    .frame(width: 25, height: 25) // 크기 조절
-                                    .aspectRatio(contentMode: .fill)
-                            }*/
+                             image
+                             .resizable()
+                             .frame(width: 25, height: 25) // 크기 조절
+                             .aspectRatio(contentMode: .fill)
+                             }) {
+                             Image(.dothez)
+                             .resizable()
+                             .frame(width: 25, height: 25) // 크기 조절
+                             .aspectRatio(contentMode: .fill)
+                             }*/
                             Image(annotation.sampleImageString)
                                 .resizable()
                                 .frame(width: 25, height: 25) // 크기 조절
                                 .aspectRatio(contentMode: .fill)
-                                .border(.white, width: 2)
-                                .shadow(radius: 5)
+                                .overlay(
+                                    Circle().stroke(Color.white, lineWidth: 2))
+                                .shadow(radius: 10)
                         }
                     }
                     // 경로 그리기
@@ -94,7 +100,7 @@ struct FriendsMapView: View {
                 // 맵뷰 탭바같은거
                 .overlay(alignment: .topLeading) {
                     VStack(alignment: .leading) {
-                        Menu {
+                        /* Menu {
                             Button {
                                 withAnimation(.easeIn(duration: 1)) {
                                     region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
@@ -110,15 +116,66 @@ struct FriendsMapView: View {
                                 .background(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
                                 .padding(4)
+                        } */
+                        Button {
+                            withAnimation(.easeIn(duration: 1)) {
+                                region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                            }
+                            moveDestination = true
+                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                                moveDestination = false
+                            }
+                            // 맵 화면을 약속 위치로 움직여주는 버튼 기능
+                        } label: {
+                            if moveDestination {
+                                Image(systemName: "flag.fill")
+                                    .foregroundColor(.blue)
+                                    .frame(width: 45, height: 45)
+                                    .background(.white)
+                                    .clipShape(RoundedRectangle(cornerRadius: 9))
+                                    .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
+                                    .shadow(color: .gray.opacity(0.3), radius: 5)
+                            } else {
+                                withAnimation(.linear(duration: 1)) {
+                                    Image(systemName: "flag")
+                                        .foregroundColor(.blue)
+                                        .frame(width: 45, height: 45)
+                                        .background(.white)
+                                        .clipShape(RoundedRectangle(cornerRadius: 9))
+                                        .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
+                                        .shadow(color: .gray.opacity(0.3), radius: 5)
+                                }
+                            }
                         }
+                        Button {
+                            isShowingRoute.toggle()
+                        } label: {
+                            Text("Route")
+                                .font(.caption)
+                                .bold()
+                                .foregroundColor(isShowingRoute ? .white : .blue)
+                                .frame(width: 45, height: 45)
+                                .background(isShowingRoute ? .blue.opacity(0.8) : .white)
+                                .clipShape(RoundedRectangle(cornerRadius: 9))
+                                .padding(EdgeInsets(top: 1, leading: 5, bottom: 0, trailing: 5))
+                                .shadow(color: .gray.opacity(0.3), radius: 5)
+                        }
+                        // 토글 버튼 ON/OFF 간단 버튼으로 변경할까? 원에 글 색만 바뀌게
                     }
                 }
-                Button {
-                    isShowingFriendSheet = true
-                } label: {
-                    Text("친구현황보기")
-                        .font(.title3)
-                        .padding()
+                .overlay(alignment: .bottom) {
+                    Button {
+                        isShowingFriendSheet = true
+                    } label: {
+                        Text("친구 현황 보기")
+                            .font(.headline)
+                            .bold()
+                            .foregroundStyle(.white)
+                            .padding(EdgeInsets(top: 9, leading: 20, bottom: 9, trailing: 20))
+                            .background(Capsule().fill(.blue).stroke(Color.white, lineWidth: 2))
+                            .padding()
+                            .shadow(color: .gray.opacity(0.3), radius: 5)
+                    }
                 }
             }
             .sheet(isPresented: $isShowingFriendSheet) {
@@ -138,6 +195,8 @@ struct FriendsMapView: View {
             }
         }
         .task {
+            // sample profile 이미지 변경
+            locationStore.shuffleSampleProfileImage()
             // myLocation 초기화
             locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: 0, departureLongitude: 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
             // 패치해주는 코드
@@ -153,7 +212,10 @@ struct FriendsMapView: View {
             print("5초 지남")
             // 위치 도착 위치 비교
             if !isArrived {
-                isArrived = didYouArrive(currentCoordinate: CLLocation(latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0), arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effetiveDistance: 200)
+                isArrived = didYouArrive(currentCoordinate:
+                                            CLLocation( latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0,
+                                                longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0),
+                                         arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effetiveDistance: 200)
                 // 위치 업데이트
                 locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
             }

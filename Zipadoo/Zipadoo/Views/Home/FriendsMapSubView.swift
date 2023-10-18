@@ -103,29 +103,13 @@ struct InfoView: View {
         VStack {
             Text(name)
                 .font(.subheadline)
-            ZStack {
-                Circle()
-                    .frame(width: 60)
-                    .foregroundColor(Color(.blue))
-                /*AsyncImage(url: URL(string: imageString), content: {
-                    image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50)
-                }) {
-                    Image(.dothez)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50)
-                }*/
-                Image(imageString)
-                    .resizable()
-                    .frame(width: 25, height: 25) // 크기 조절
-                    .aspectRatio(contentMode: .fill)
-                    .border(.white, width: 2)
-                    .shadow(radius: 5)
-            }
+            Image(imageString)
+                .resizable()
+                .frame(width: 50, height: 50) // 크기 조절
+                .aspectRatio(contentMode: .fill)
+                .overlay(
+                    Circle().stroke(Color.white, lineWidth: 2))
+                .shadow(radius: 5)
             Text(formatDistance(distance))
         }
         .padding()
