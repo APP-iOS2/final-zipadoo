@@ -21,7 +21,7 @@ final class EmailLoginStore: ObservableObject {
     @Published var selectedImage: UIImage?
     
     let dbRef = Firestore.firestore().collection("Users")
-
+    
     /// 유저 회원가입
     func createUser() async throws {
         
@@ -57,25 +57,25 @@ final class EmailLoginStore: ObservableObject {
             }
         }
         
-         /*
-        // signInMethods가 계속 nil로 받아와짐..
-        Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethods, error) in
-            if let error = error {
-                print("이메일중복 확인 중 오류")
-                completion(false)
-                return
-            } else if let result = signInMethods {
-                if result.isEmpty {
-                    print("이메일 데이터 중복 없음, 회원 가입 뷰로 진행")
-                    completion(true)
-                } else {
-                    print("이메일 데이터 중복 있음, 로그인 뷰로 진행")
-                    completion(false)
-                }
-            }
-            completion(true)
-            print("nil, nil반환")
-        }
+        /*
+         // signInMethods가 계속 nil로 받아와짐..
+         Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethods, error) in
+         if let error = error {
+         print("이메일중복 확인 중 오류")
+         completion(false)
+         return
+         } else if let result = signInMethods {
+         if result.isEmpty {
+         print("이메일 데이터 중복 없음, 회원 가입 뷰로 진행")
+         completion(true)
+         } else {
+         print("이메일 데이터 중복 있음, 로그인 뷰로 진행")
+         completion(false)
+         }
+         }
+         completion(true)
+         print("nil, nil반환")
+         }
          */
     }
     

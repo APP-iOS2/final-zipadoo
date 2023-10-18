@@ -15,10 +15,13 @@ import AuthenticationServices
 
 struct LoginView: View {
     
+    @State private var isSigninLinkActive: Bool = false // uniqueEmail = false일 경우 회원가입뷰 버튼으로 활성화
+    @State private var isLoginLinkActive: Bool = false // uniqueEmail = true일 경우 로그인뷰 버튼으로 활성화
+    @State private var isLoggedIn = false
     //    @StateObject var kakaoStore: KakaoStore = KakaoStore()
-    @StateObject var appleLoginViewModel: AppleLoginViewModel
+    @ObservedObject var appleLoginViewModel: AppleLoginViewModel
+    @ObservedObject var emailLoginStore: EmailLoginStore
     @State private var spaceHeight: CGFloat = 500 // 두더지 머리 위에 공간 높이
-    
     let dothezColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     
     var body: some View {
@@ -41,7 +44,7 @@ struct LoginView: View {
                                 }
                             Spacer(minLength: 50)
                         }
-
+                        
                         VStack {
                             Spacer(minLength: 5)
                             
@@ -80,15 +83,28 @@ struct LoginView: View {
                             .disabled(true)
                             
                             // MARK: - 애플 로그인 버튼
-                            SignInWithAppleButton(.signIn) { request in
-                              appleLoginViewModel.handleSignInWithAppleRequest(request)
-                            } onCompletion: { result in
-                              appleLoginViewModel.handleSignInWithAppleCompletion(result)
+                            NavigationLink(destination: SigninByAppleIDView(appleLoginViewModel: appleLoginViewModel), isActive: $isLoggedIn) {
+                                EmptyView() // 빈 뷰를 사용하여 링크 트리거를 활성화합니다.
                             }
-//                            .signInWithAppleButtonStyle(colorScheme == .light ? .black : .white)
+                            .hidden() // 빈
+                            
+                            SignInWithAppleButton(.signIn) { request in
+                                appleLoginViewModel.handleSignInWithAppleRequest(request)
+                            } onCompletion: { result in
+                                Task {
+                                    do {
+                                        try await appleLoginViewModel.handleSignInWithAppleCompletion(result)
+                                        
+                                        print("애플 로그인 성공!")
+                                        isLoggedIn = true
+                                    } catch {
+                                        
+                                    }
+                                }
+                            }
                             .frame(width: UIScreen.main.bounds.width * 0.9, height: 45)
                             .signInWithAppleButtonStyle(.white)
-                            
+
                             ZStack {
                                 // 두더지 몸통
                                 Rectangle()
@@ -96,7 +112,7 @@ struct LoginView: View {
                                     .foregroundColor(Color(dothezColor))
                             }
                         }
-
+                        
                     } // ScrollView
                     .frame(maxWidth: UIScreen.main.bounds.width)
                     .background(Color.black, ignoresSafeAreaEdges: .all)
@@ -108,5 +124,5 @@ struct LoginView: View {
 } // struct
 
 #Preview {
-    LoginView(appleLoginViewModel: AppleLoginViewModel())
+    LoginView(appleLoginViewModel: AppleLoginViewModel(), emailLoginStore: EmailLoginStore())
 }

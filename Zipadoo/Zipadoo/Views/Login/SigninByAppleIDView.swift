@@ -1,16 +1,16 @@
 //
-//  SigninByEmailView.swift
+//  SigninByAppleIDView.swift
 //  Zipadoo
 //
-//  Created by 임병구 on 2023/09/26.
+//  Created by 장여훈 on 10/18/23.
 //
 
 import SwiftUI
 
-struct SigninByEmailView: View {
-    @ObservedObject var emailLoginStore: EmailLoginStore
+struct SigninByAppleIDView: View {
+    @ObservedObject var appleLoginViewModel: AppleLoginViewModel
     
-    @State private var isPasswordVisible = false // 비밀번호 보이기
+//    @State private var isPasswordVisible = false // 비밀번호 보이기
     
     /// 형식 유효메세지
     @State private var validMessage = " "
@@ -24,7 +24,7 @@ struct SigninByEmailView: View {
     @State private var isOverlapNickname = false
     /// 모든 형식이 유효한지
     private var isValid: Bool {
-        isCorrectNickname(nickname: emailLoginStore.nickName) && isCorrectPhoneNumber(phonenumber: emailLoginStore.phoneNumber) && isCorrectPassword(password: emailLoginStore.password)
+        isCorrectNickname(nickname: appleLoginViewModel.nickName) && isCorrectPhoneNumber(phonenumber: appleLoginViewModel.phoneNumber)
     }
     /// 조건에 맞으면 true, 다음페이지로 넘어가기
     @State private var readyToNavigate: Bool = false
@@ -50,7 +50,7 @@ struct SigninByEmailView: View {
                 Group {
                     // MARK: - 이름 입력
                     HStack {
-                        TextField("닉네임", text: $emailLoginStore.nickName, prompt: Text("닉네임").foregroundColor(.secondary.opacity(0.7)))
+                        TextField("닉네임", text: $appleLoginViewModel.nickName, prompt: Text("닉네임").foregroundColor(.secondary.opacity(0.7)))
                             .foregroundColor(Color.primary)
                             .colorInvert()
                             .opacity(0.9)
@@ -61,7 +61,7 @@ struct SigninByEmailView: View {
                         
                         // 입력한 내용 지우기 버튼
                         Button {
-                            emailLoginStore.nickName = ""
+                            appleLoginViewModel.nickName = ""
                         } label: {
                             Image(systemName: "x.circle.fill")
                         }
@@ -96,7 +96,7 @@ struct SigninByEmailView: View {
                     
                     Group {
                         HStack {
-                            TextField("휴대폰 번호", text: $emailLoginStore.phoneNumber, prompt: Text("휴대폰 번호").foregroundColor(.secondary.opacity(0.7)))
+                            TextField("휴대폰 번호", text: $appleLoginViewModel.phoneNumber, prompt: Text("휴대폰 번호").foregroundColor(.secondary.opacity(0.7)))
                                 .foregroundColor(Color.primary)
                                 .colorInvert()
                                 .opacity(0.9)
@@ -108,7 +108,7 @@ struct SigninByEmailView: View {
                             
                             // 입력한 내용 지우기 버튼
                             Button {
-                                emailLoginStore.phoneNumber = ""
+                                appleLoginViewModel.phoneNumber = ""
                             } label: {
                                 Image(systemName: "x.circle.fill")
                             }
@@ -134,42 +134,42 @@ struct SigninByEmailView: View {
                     Spacer()
                         .frame(height: 20)// 공간용
                     // MARK: - 비밀번호 입력
-                    Group {
-                        HStack {
-                            SecureField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
-                                .foregroundColor(Color.primary)
-                                .colorInvert()
-                                .opacity(0.9)
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .autocapitalization(.none)
-                                .frame(height: 35)
-                            // 입력한 내용 지우기 버튼
-                            Button {
-                                emailLoginStore.password = ""
-                            } label: {
-                                Image(systemName: "x.circle.fill")
-                            }
-                            .foregroundColor(Color.primary.opacity(0.4))
-                            .colorInvert()
-                        }
-                     
-                        Rectangle().frame(height: 1)
-                            .foregroundStyle(Color.secondary)
-                            .padding(.bottom, 5)
-                        
-                        // 하단 안내 문구
-                        HStack {
-                            Text("6자리 이상 입력해주세요.")
-                                .font(.subheadline)
-                                .foregroundStyle(Color.primary.opacity(0.7))
-                                .colorInvert()
-                            
-                        }
-                        
-                        Spacer()
-
-                    } // 비밀번호 Group
+//                    Group {
+//                        HStack {
+//                            SecureField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
+//                                .foregroundColor(Color.primary)
+//                                .colorInvert()
+//                                .opacity(0.9)
+//                                .font(.title3)
+//                                .fontWeight(.semibold)
+//                                .autocapitalization(.none)
+//                                .frame(height: 35)
+//                            // 입력한 내용 지우기 버튼
+//                            Button {
+//                                emailLoginStore.password = ""
+//                            } label: {
+//                                Image(systemName: "x.circle.fill")
+//                            }
+//                            .foregroundColor(Color.primary.opacity(0.4))
+//                            .colorInvert()
+//                        }
+//                     
+//                        Rectangle().frame(height: 1)
+//                            .foregroundStyle(Color.secondary)
+//                            .padding(.bottom, 5)
+//                        
+//                        // 하단 안내 문구
+//                        HStack {
+//                            Text("6자리 이상 입력해주세요.")
+//                                .font(.subheadline)
+//                                .foregroundStyle(Color.primary.opacity(0.7))
+//                                .colorInvert()
+//                            
+//                        }
+//                        
+//                        Spacer()
+//
+//                    } // 비밀번호 Group
                     Spacer()
                 } // 모든 입력 Group
                 .background(Color.primary)
@@ -190,7 +190,7 @@ struct SigninByEmailView: View {
                 }
             }
             .navigationDestination(isPresented: $readyToNavigate) {
-                SigninByEmail2View(emailLoginStore: emailLoginStore, appleLoginViewModel: AppleLoginViewModel())
+                SigninByAppleProfileView(appleLoginViewModel: appleLoginViewModel)
             }
         }
     }
@@ -200,7 +200,7 @@ struct SigninByEmailView: View {
         
         // 파베 중복확인 : 중복시 true
         Task {
-            emailLoginStore.nicknameCheck { overlap in
+            appleLoginViewModel.nicknameCheck { overlap in
                 isOverlapNickname = overlap
                 
                 if isValid && !isOverlapNickname {
@@ -217,7 +217,7 @@ struct SigninByEmailView: View {
                         nicknameMessageColor = .red
                         nicknameOverlapMessage = "이미 존재하는 닉네임입니다"
                         isPresentedMessage = true
-                    } else if isCorrectNickname(nickname: emailLoginStore.nickName) {
+                    } else if isCorrectNickname(nickname: appleLoginViewModel.nickName) {
                         nicknameMessageColor = .green
                         nicknameOverlapMessage = "사용가능한 닉네임입니다"
                         isPresentedMessage = true

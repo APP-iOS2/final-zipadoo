@@ -6,7 +6,9 @@
 //
 
 import SwiftUI
+import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 import AuthenticationServices
 import CryptoKit
 
@@ -35,6 +37,16 @@ class AppleLoginViewModel: ObservableObject {
     @Published var user: FirebaseAuth.User?
     @Published var displayName = ""
     
+    @Published var nickName: String = ""
+    @Published var name: String = ""
+    @Published var phoneNumber: String = ""
+    @Published var selectedImage: UIImage?
+    
+    @Published var userSession: FirebaseAuth.User?
+    @Published var currentUser: User?
+    
+    let dbRef = Firestore.firestore().collection("Users")
+    
     private var currentNonce: String?
     
     init() {
@@ -49,6 +61,28 @@ class AppleLoginViewModel: ObservableObject {
                 : !(email.isEmpty || password.isEmpty || confirmPassword.isEmpty)
             }
             .assign(to: &$isValid)
+        
+        Task {
+            try await loadUserData()
+        }
+    }
+    @MainActor
+    func loadUserData() async throws {
+        do {
+            // 현재 로그인한 사용자 가져오기
+            self.userSession = Auth.auth().currentUser
+            
+            guard let currentUid = userSession?.uid else { return }
+            
+            // 토큰의 유저 id로 User찾은 후 currentUser에 저장
+            self.currentUser = try await UserStore.fetchUser(userId: currentUid)
+            
+            print("loadUserData 성공")
+            
+        } catch {
+            print("loadUserData()실패 : 토큰 가져오기 실패!")
+        }
+        
     }
     
     private var authStateHandler: AuthStateDidChangeListenerHandle?
@@ -73,8 +107,7 @@ class AppleLoginViewModel: ObservableObject {
             print("Wait")
             try await Task.sleep(nanoseconds: 1_000_000_000)
             print("Done")
-        }
-        catch {
+        } catch {
             print(error.localizedDescription)
         }
     }
@@ -108,8 +141,7 @@ extension AppleLoginViewModel {
         do  {
             try await Auth.auth().createUser(withEmail: email, password: password)
             return true
-        }
-        catch {
+        } catch {
             print(error)
             errorMessage = error.localizedDescription
             authenticationState = .unauthenticated
@@ -120,8 +152,7 @@ extension AppleLoginViewModel {
     func signOut() {
         do {
             try Auth.auth().signOut()
-        }
-        catch {
+        } catch {
             print(error)
             errorMessage = error.localizedDescription
         }
@@ -131,8 +162,7 @@ extension AppleLoginViewModel {
         do {
             try await user?.delete()
             return true
-        }
-        catch {
+        } catch {
             errorMessage = error.localizedDescription
             return false
         }
@@ -151,34 +181,39 @@ extension AppleLoginViewModel {
     }
     
     // 애플 로그인 요청의 결과를 처리하는 함수
-    func handleSignInWithAppleCompletion(_ result: Result<ASAuthorization, Error>) {
+    func handleSignInWithAppleCompletion(_ result: Result<ASAuthorization, Error>) async throws {
         if case .failure(let failure) = result {
             errorMessage = failure.localizedDescription
-        }
-        else if case .success(let authorization) = result {
+        } else if case .success(let authorization) = result {
             if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
                 guard let nonce = currentNonce else {
                     fatalError("Invalid state: a login callback was received, but no login request was sent.")
                 }
                 guard let appleIDToken = appleIDCredential.identityToken else {
-                    print("Unable to fetdch identify token.")
+                    print("Unable to fetch identity token.")
                     return
                 }
                 guard let idTokenString = String(data: appleIDToken, encoding: .utf8) else {
-                    print("Unable to serialise token string from data: \(appleIDToken.debugDescription)")
+                    print("Unable to serialize token string from data: \(appleIDToken.debugDescription)")
                     return
                 }
-                
+
                 let credential = OAuthProvider.credential(withProviderID: "apple.com",
                                                           idToken: idTokenString,
                                                           rawNonce: nonce)
-                Task {
-                    do {
-                        let result = try await Auth.auth().signIn(with: credential)
-                        await updateDisplayName(for: result.user, with: appleIDCredential)
-                    } catch {
-                        print("Error authenticating: \(error.localizedDescription)")
-                    }
+                
+                do {
+                    let authResult = try await Auth.auth().signIn(with: credential)
+                    let appleID = appleIDCredential.user
+                    let email = appleIDCredential.email ?? "" // You might want to use the email if available
+
+                    // Save the user to Firebase's Users collection
+                    try await createUser()
+
+                    // Perform any additional actions after successful login
+                    await updateDisplayName(for: authResult.user, with: appleIDCredential)
+                } catch {
+                    print("Error authenticating: \(error.localizedDescription)")
                 }
             }
         }
@@ -199,6 +234,64 @@ extension AppleLoginViewModel {
                 errorMessage = error.localizedDescription
             }
         }
+    }
+    
+    // 닉네임 중복체크
+    func nicknameCheck(completion: @escaping (Bool) -> Void) {
+        dbRef.whereField("nickName", isEqualTo: nickName).getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("데이터베이스 조회 중 오류 발생: \(error.localizedDescription)")
+                completion(false) // 오류 발생 시 false를 반환
+                return
+            }
+            // 중복된 닉네임이 없으면 querySnapshot은 비어 있을 것입니다.
+            if querySnapshot?.isEmpty == true {
+                print("중복되는 닉네임 없음")
+                completion(false) // 중복된 이메일이 없을 경우 false를 반환
+            } else {
+                print("중복되는 닉네임 있음")
+                completion(true) // 중복된 이메일이 있을 경우 true를 반환
+            }
+        }
+    }
+    func createUser() async throws {
+        
+        try await AuthStore.shared.createUser(email: email, password: password, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImage: selectedImage)
+        
+    }
+    
+//    // Users에 데이터 넣기
+//    func createUser(id: String, email: String, appleID: String, nickname: String, phoneNumber: String) async throws {
+//        // Firebase's Users collection reference
+//        let usersRef = Firestore.firestore().collection("Users")
+//        
+//        // Create a document with the user's Apple ID as the document ID
+//        try await usersRef.document(appleID).setData([
+//            "id": appleID, "email": email, "nickname": nickname, "phoneNumber": phoneNumber// You can add more user data fields here
+//        ])
+//    }
+    
+    /// 로그인 스토어 데이터를 받아서 파이어베이스에 보내기 (email, 카카오, 애플)
+    func addUserData(id: String, name: String, nickName: String, phoneNumber: String, profileImageString: String) async throws {
+        do {
+            let user = User(id: id, name: name, nickName: nickName, phoneNumber: phoneNumber, potato: 0, profileImageString: profileImageString, crustDepth: 0, tardyCount: 0, friendsIdArray: [], friendsIdRequestArray: [])
+            try dbRef.document(id).setData(from: user)
+            
+        } catch {
+            print("User 등록 실패")
+        }
+    }
+    
+    func login(email: String, password: String) async throws -> Bool {
+
+        // 로그인한 유저 userSession에 저장
+        self.userSession = try await Auth.auth().signIn(withEmail: email, password: password).user
+        
+        try await loadUserData()
+        print("로그인 성공!")
+  
+        // 로그인 성공 여부 반환 필요
+        return true
     }
     
     func verifySignInWithAppleAuthenticationState() {

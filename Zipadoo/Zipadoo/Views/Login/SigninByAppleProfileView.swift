@@ -1,15 +1,14 @@
 //
-//  SwiftUIView.swift
+//  SigninByAppleProfileView.swift
 //  Zipadoo
 //
-//  Created by 임병구 on 2023/09/25.
+//  Created by 장여훈 on 10/18/23.
 //
 
 import SwiftUI
 
-struct SigninByEmail2View: View {
+struct SigninByAppleProfileView: View {
     
-    @ObservedObject var emailLoginStore: EmailLoginStore
     @ObservedObject var appleLoginViewModel: AppleLoginViewModel
     @State private var isShowingImagePicker = false
     /// 상단 안내 문구
@@ -48,7 +47,7 @@ struct SigninByEmail2View: View {
                         } label: {
                             // 프로필 사진 선택할 경우 프로필 사진으로 표시, 아닐 경우 기본 이미지를 보이도록 함
                             VStack {
-                                if let profileImage = emailLoginStore.selectedImage {
+                                if let profileImage = appleLoginViewModel.selectedImage {
                                     Image(uiImage: profileImage)
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
@@ -68,12 +67,10 @@ struct SigninByEmail2View: View {
                             }
                         }
                         .sheet(isPresented: $isShowingImagePicker) {
-                            ImagePicker(selectedImage: $emailLoginStore.selectedImage)
+                            ImagePicker(selectedImage: $appleLoginViewModel.selectedImage)
                                 .ignoresSafeArea(.all)
-                            
                         } // ZStack
                     }
-                    
                     Spacer()
                 }
                 
@@ -88,21 +85,20 @@ struct SigninByEmail2View: View {
                     
                     Button {
                         Task {
-                            try await emailLoginStore.createUser()
+                            try await appleLoginViewModel.createUser()
                         }
                     } label: {
                         Text("회원가입")
                             .fontWeight(.semibold)
                             .padding(.trailing, 5)
                             .font(.headline)
-
                     }
                 }
             }
         }
     }
 }
-    
+
 #Preview {
     SigninByEmail2View(emailLoginStore: EmailLoginStore(), appleLoginViewModel: AppleLoginViewModel())
 }

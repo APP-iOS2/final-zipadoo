@@ -1,8 +1,8 @@
 //
-//  AuthStore.swift
+//  AppleAuthStore.swift
 //  Zipadoo
 //
-//  Created by 이재승 on 2023/09/26.
+//  Created by 장여훈 on 10/18/23.
 //
 
 import Firebase
@@ -11,7 +11,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import SwiftUI
 
-final class AuthStore: ObservableObject {
+final class AppleAuthStore: ObservableObject {
     
     /// 파베 토큰 저장
     @Published var userSession: FirebaseAuth.User?
@@ -20,7 +20,7 @@ final class AuthStore: ObservableObject {
     @Published var currentUser: User?
     
     /// 싱글톤
-    static let shared = AuthStore()
+    static let shared = AppleAuthStore()
     
     let dbRef = Firestore.firestore().collection("Users")
     
