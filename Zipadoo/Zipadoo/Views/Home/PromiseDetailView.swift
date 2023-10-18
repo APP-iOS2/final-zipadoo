@@ -57,7 +57,7 @@ struct PromiseDetailView: View {
                     memberStatusView
                 }
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 15)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     zipadooToolbarView
@@ -149,32 +149,32 @@ struct PromiseDetailView: View {
         .foregroundColor(.secondary)
     }
     
-    private var titleView: some View {
-        Text(promise.promiseTitle)
-            .font(.title2).bold()
-            .padding(.bottom, 1)
-    }
-    
-    private var dateView: some View {
-        Text(("일시 : \(calculateDate(date: promise.promiseDate))"))
-            .padding(.vertical, 3)
-    }
-    
-    private var destinationView: some View {
-        Text("장소 : \(promise.destination)")
-    }
-    
-    private var remainingTimeView: some View {
-        Text(formatRemainingTime())
-            .foregroundStyle(.white)
-            .font(.title).bold()
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 15)
-            .background(statusColor)
-            .clipShape(RoundedRectangle(cornerRadius: 28))
-            .padding(.vertical, 12)
-            .opacity(0.8)
-    }
+//    private var titleView: some View {
+//        Text(promise.promiseTitle)
+//            .font(.title2).bold()
+//            .padding(.bottom, 1)
+//    }
+//    
+//    private var dateView: some View {
+//        Text(("일시 : \(calculateDate(date: promise.promiseDate))"))
+//            .padding(.vertical, 3)
+//    }
+//    
+//    private var destinationView: some View {
+//        Text("장소 : \(promise.destination)")
+//    }
+//    
+//    private var remainingTimeView: some View {
+//        Text(formatRemainingTime())
+//            .foregroundStyle(.white)
+//            .font(.title).bold()
+//            .frame(maxWidth: .infinity)
+//            .padding(.vertical, 15)
+//            .background(statusColor)
+//            .clipShape(RoundedRectangle(cornerRadius: 28))
+//            .padding(.vertical, 12)
+//            .opacity(0.8)
+//    }
     
     private var memberStatusView: some View {
         VStack(alignment: .leading) {
@@ -266,6 +266,36 @@ struct PromiseDetailView: View {
         }
         
         return -1
+    }
+}
+// ArriveResult뷰에서 재사용 위해 extension으로 분리
+extension PromiseDetailView {
+    
+    var titleView: some View {
+        Text(promise.promiseTitle)
+            .font(.title2).bold()
+            .padding(.bottom, 1)
+    }
+    
+    var dateView: some View {
+        Text(("일시 : \(calculateDate(date: promise.promiseDate))"))
+            .padding(.vertical, 3)
+    }
+    
+    var destinationView: some View {
+        Text("장소 : \(promise.destination)")
+    }
+    
+    var remainingTimeView: some View {
+        Text(formatRemainingTime())
+            .foregroundStyle(.white)
+            .font(.title).bold()
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 15)
+            .background(statusColor)
+            .clipShape(RoundedRectangle(cornerRadius: 28))
+            .padding(.vertical, 12)
+            .opacity(0.8)
     }
 }
 

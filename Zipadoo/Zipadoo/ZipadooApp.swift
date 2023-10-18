@@ -49,7 +49,7 @@ struct ZipadooApp: App {
         WindowGroup {
             ZStack {
                 if showMainView {
-                    ContentView()
+                    ContentView()   
                 } else {
                     LaunchScreen()
                         .onAppear {

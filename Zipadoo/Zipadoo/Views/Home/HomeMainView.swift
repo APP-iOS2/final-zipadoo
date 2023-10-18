@@ -26,7 +26,7 @@ struct HomeMainView: View {
         NavigationStack {
             VStack {
                 // 예정된 약속 리스트
-                ScrollView {
+                ScrollView(showsIndicators: false) {
                     if let loginUserID = user?.id {
                         // 내가만든 약속 또는 참여하는 약속 불러오기
                         let filteredPromises = promise.fetchPromiseData.filter { promise in
@@ -60,7 +60,7 @@ struct HomeMainView: View {
                                 } label: {
                                     promiseListCell(promise: promise, color: .red)
                                 }
-                 
+                                
                             }
                             ForEach(filteredPromises) { promise in
                                 NavigationLink {

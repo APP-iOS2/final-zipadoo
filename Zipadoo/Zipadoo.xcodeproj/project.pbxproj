@@ -304,6 +304,7 @@
 			children = (
 				08BC9AF12ACF973A0003AE32 /* EditPasswordView.swift */,
 				FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */,
+				1BB3B0742AD535170000D91A /* ArrivalResultTempView.swift */,
 				FA2473FA2ACD4BDB00D4C821 /* ArriveResultView.swift */,
 				08C6F0B42ABC1BE0005D231D /* MyPageView.swift */,
 				1BF69BD72ABD16B800DE635D /* TossPayView.swift */,
@@ -397,7 +398,6 @@
 				FA2473F62ACD4BDB00D4C821 /* FriendsLocationStatusView.swift */,
 				FA2473F72ACD4BDB00D4C821 /* FriendsLocationMapView.swift */,
 				FA2473F82ACD4BDB00D4C821 /* AddPromiseView.swift */,
-				1BB3B0742AD535170000D91A /* ArrivalResultTempView.swift */,
 				FA2473F92ACD4BDB00D4C821 /* FriendsLocationAndInfoView.swift */,
 				9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */,
 				FA2473FB2ACD4BDB00D4C821 /* HomeMainView.swift */,

@@ -7,16 +7,13 @@
 
 import SwiftUI
 
-/// 지각 안한 사람 닉네임
-var dummyPercentage = ["닉넴1", "닉넴2", "닉넴3", "닉넴4", "닉넴4", "닉넴4", "닉넴4"]
-/// 지각자 닉네임
-var lateCommer = ["지각자1", "지각자2", "지각자3"]
-
 struct ArriveResultView: View {
     /// 약속 받아오기
     let promise: Promise
+    // 정렬된 사람 결과
+    @State var filteredLocation: [LocationAndParticipant] = []
     
-    @StateObject private var locationStore = LocationStore()
+    @ObservedObject private var locationStore = LocationStore()
     
     // 참여자의 순위나 지각여부등의 결과를 알려주는 텍스트
     var resultMessage: String = ""
@@ -28,14 +25,78 @@ struct ArriveResultView: View {
                 .padding()
             
             ScrollView {
-                ForEach(locationStore.locationParticipantDatas) { participant in
+                // 약속 정보뷰
+                HStack {
+                    VStack(alignment: .leading) {
+                        PromiseDetailView(promise: promise).titleView
+                        
+                        PromiseDetailView(promise: promise).dateView
+                        
+                        PromiseDetailView(promise: promise).destinationView
+                    }
+                    Spacer()
+                }
+                .padding(.bottom, 10)
+                
+                Divider()
+                    .padding(.bottom, 10)
+                
+                // 깃발
+                HStack {
+                    Image(systemName: "flag")
+                        .padding(.leading, 18)
                     
-                    arrivedDataCell(participant: participant)
-                        .padding(.bottom, 12)
+                    Spacer()
+                }
+                // 참석자 결과 뷰
+                ZStack {
+                    // 선
+                    HStack {
+                        Rectangle()
+                            .border(.secondary)
+                            .frame(width: 2, height: 54 * CGFloat(locationStore.locationParticipantDatas.count))
+                            .padding(.leading, 19)
+                        Spacer()
+                    }
+                    
+                    // 이미지쪽 원
+//                    HStack {
+//                        VStack {
+//                            Spacer()
+//                            ForEach(locationStore.locationParticipantDatas) { _ in
+//                                
+//                                Circle()
+//                                    .fill(.orange)
+//                                    .frame(width: 38, height: 38)
+//                                    .border(.green)
+////                                    .padding(.top, 1)
+//                                    .padding(.bottom, 15)
+//                                    
+//                                    
+//                            }
+//                        }
+//                        Spacer()
+//                    }
+//                    .padding(.leading, 6)
+
+                    // 정보 행row
+                    VStack {
+                        Spacer()
+                        
+                        ForEach(locationStore.locationParticipantDatas) { participant in
+                            
+                            arrivedDataCell(participant: participant)
+//                                .border(.red)
+                                .padding(.bottom, 12)
+                
+                        }
+                    }
+                    .padding(.leading, 6)
                 }
             }
             .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-            
+
+            /*
             // 지각자
             ZStack {
                 
@@ -56,13 +117,14 @@ struct ArriveResultView: View {
                 
             }
             .frame(height: UIScreen.main.bounds.size.height * 0.35)
-
+             */
         }
         .onAppear {
             Task {
                 // Location정보 패치
                 try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
             }
+            
         }
     }
     
@@ -71,11 +133,13 @@ struct ArriveResultView: View {
         HStack {
             // 이미지
             ProfileImageView(imageString: participant.imageString, size: .xSmall)
-            
+                .clipShape(Circle())
+                
             VStack(alignment: .leading) {
                 
                 Text(participant.nickname)
                     .fontWeight(.semibold)
+                
                 // -> ?뭘넣지
                 Text("Comment")
                     .font(.footnote)
@@ -84,7 +148,6 @@ struct ArriveResultView: View {
             
             Spacer()
             
-            // 순위와 지각을 알려주는 함수로 메세지 결정
             Text(caculateResult(location: participant.location))
                 .padding(3)
                 .background(.yellow) // 임시 색
@@ -93,6 +156,7 @@ struct ArriveResultView: View {
         }
     }
     
+    /// 순위와 지각을 알려주는 함수로 메세지 결정
     private func caculateResult(location: Location) -> String {
         var message = ""
         /// 도착시간
@@ -100,15 +164,29 @@ struct ArriveResultView: View {
         /// 약속시간
         let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
         
+//        filteredLocation.map{ locationAndParticipant in
+//            if locationAndParticipant.location.arriveTime != 0 && Calendar.current.dateComponents([.second], from: arriveDate, to: promiseDate).second ?? 0 >= 0 {
+//                return location
+//            }
+//        }
         if location.arriveTime == 0 {
             message = "도착못함.."
         } else if Calendar.current.dateComponents([.second], from: arriveDate, to: promiseDate).second ?? 0 >= 0 {
+            
             message = "도착"
         } else {
             message = "지각"
         }
         return message
     }
+    
+//    private func sortResult(participantArray: [LocationAndParticipant]) -> [LocationAndParticipant] {
+//        if participantArray.location.arriveTime != 0 && Calendar.current.dateComponents([.second], from: arriveDate, to: promiseDate).second ?? 0 >= 0 {
+//            return location
+//        }
+//        
+//        return filteredLocation
+//    }
 }
 
 #Preview {
