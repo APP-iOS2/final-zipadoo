@@ -59,6 +59,8 @@ struct HomeMainView: View {
                                     
                                 } label: {
                                     promiseListCell(promise: promise, color: .red)
+                                        // 추적중인 약속에 맵 아이콘만 펄스이펙트 반복
+                                        .symbolEffect(.pulse.byLayer, options: .repeating)
                                 }
                  
                             }
@@ -192,7 +194,7 @@ struct HomeMainView: View {
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
                                 .shadow(color: .primary, radius: 1, x: 1, y: 1)
-                                .opacity(0.3)
+                                .opacity(0.3)            
                             //
                         )
                 }

@@ -46,6 +46,7 @@ struct AddPromiseView: View {
     
     var isAllWrite: Bool {
         return !promiseViewModel.promiseTitle.isEmpty &&
+        // 당일 약속도 등록가능해야 함
         Calendar.current.startOfDay(for: promiseViewModel.date) != today &&
         !promiseLocation.address.isEmpty
     }
