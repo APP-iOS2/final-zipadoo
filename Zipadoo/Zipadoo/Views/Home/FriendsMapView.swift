@@ -21,6 +21,7 @@ import CoreLocation
 struct FriendsMapView: View {
     @StateObject private var locationStore = LocationStore()
     @StateObject private var gpsStore = GPSStore()
+    @EnvironmentObject var alertStore: AlertStore
     // 프로필 이미지 (유저 프로필 이미지가 없을 때)
     // 맵뷰 카메라 세팅
     @State private var region: MapCameraPosition = .userLocation(fallback: .automatic)
@@ -43,6 +44,8 @@ struct FriendsMapView: View {
     @State private var isArrived: Bool = false
     // 도착 위치 버튼 bool값
     @State private var moveDestination: Bool = false
+    // 도착 위치 반경
+    let arrivalCheckRadius: Double = 150
     
     // Marker는 시각적, Anntation은 정보 포함
     var body: some View {
@@ -58,7 +61,7 @@ struct FriendsMapView: View {
                             .foregroundColor(.blue)
                     }
                     // 도착 반경 표시
-                    MapCircle(center: promise.coordinate, radius: 200)
+                    MapCircle(center: promise.coordinate, radius: arrivalCheckRadius)
                         .foregroundStyle(.blue.opacity(0.3))
                         .stroke(.blue, lineWidth: 2)
                     // 친구 위치 표시
@@ -185,6 +188,42 @@ struct FriendsMapView: View {
             }
         }
         .onAppear {
+            // 5초마다 반복, 전역에서 사라지지 않고 실행됨
+            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
+                print("나는 맵에서 만들어짐! ! 5초 지남")
+                // 위치 도착 위치 비교
+                if !isArrived {
+                    // 도착 체크 함수
+                    isArrived = didYouArrive(currentCoordinate:
+                                                CLLocation( latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0,
+                                                    longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0),
+                                             arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effetiveDistance: arrivalCheckRadius)
+                    // 위치 업데이트
+                    locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+                } else { // 도착했을때
+                    // 한번만 실행되고 그 뒤에는 실행되면 안됨, 그런데 5초 루프문에 넣어야지 백그라운드에서 실행가능
+                    if locationStore.myLocation.arriveTime == 0 {
+                        // 도착시간 저장
+                        var rank = locationStore.calculateRank()
+                        locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
+                        locationStore.updateArriveTime(locationId: locationStore.myLocation.id, arriveTime: locationStore.myLocation.arriveTime, rank: rank)
+                        // 도착 알림 실행
+                        alertStore.arrivalMsgAlert = ArrivalMsgModel(name: AuthStore.shared.currentUser?.nickName ?? "이름없음", profileImgString: AuthStore.shared.currentUser?.profileImageString ?? "doo1", rank: rank, arrivarDifference: promise.promiseDate - locationStore.myLocation.arriveTime, potato: 0)
+                        alertStore.isPresentedArrival.toggle()
+                    }
+                }
+                // 유저들 위치 패치
+                Task {
+                    do {
+                        try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
+                    } catch {
+                        print("파이어베이스 에러")
+                    }
+                }
+            }
+            RunLoop.current.add(timer, forMode: .default)
+                
+            print("promise 데이터 확인 : \(promise)")
             locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
             Task {
                 do {
@@ -194,7 +233,7 @@ struct FriendsMapView: View {
                 }
             }
         }
-        .task {
+        .task { // 초기화 코드
             // sample profile 이미지 변경
             locationStore.shuffleSampleProfileImage()
             // myLocation 초기화
@@ -208,14 +247,14 @@ struct FriendsMapView: View {
                 print("파이어베이스 에러")
             }
         }
-        .onReceive(timer, perform: { _ in
+        /* .onReceive(timer, perform: { _ in
             print("5초 지남")
             // 위치 도착 위치 비교
             if !isArrived {
                 isArrived = didYouArrive(currentCoordinate:
                                             CLLocation( latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0,
                                                 longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0),
-                                         arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effetiveDistance: 200)
+                                         arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effetiveDistance: arrivalCheckRadius)
                 // 위치 업데이트
                 locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
             }
@@ -227,7 +266,7 @@ struct FriendsMapView: View {
                     print("파이어베이스 에러")
                 }
             }
-        })
+        }) */
         .onChange(of: isShowingRoute) {
             if isShowingRoute {
                 fetchRoute(startCoordinate: CLLocationCoordinate2D(latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0), destinationCoordinate: promise.coordinate)
@@ -237,16 +276,20 @@ struct FriendsMapView: View {
             }
         }
         // 도착할때 실행
-        .onChange(of: isArrived) {
+        /*.onChange(of: isArrived) {
             // 도착시간 저장
             locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
-            locationStore.updateArriveTime(locationId: locationStore.myLocation.id, newValue: locationStore.myLocation.arriveTime ?? 0)
-        }
+            locationStore.updateArriveTime(locationId: locationStore.myLocation.id, newValue: locationStore.myLocation.arriveTime)
+            // 도착 알림 실행
+            alertStore.arrivalMsgAlert = ArrivalMsgModel(name: AuthStore.shared.currentUser?.nickName ?? "이름없음", profileImgString: AuthStore.shared.currentUser?.profileImageString ?? "doo1", rank: locationStore.calculateRank(), arrivarDifference: promise.promiseDate - locationStore.myLocation.arriveTime, potato: 0)
+            alertStore.isPresentedArrival.toggle()
+        } */
     }
 }
 
 #Preview {
     FriendsMapView(promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 37.2325443502025, longitude: 127.21076196328842, participantIdArray: [], checkDoublePromise: false, locationIdArray: []))
+        .environmentObject(AlertStore())
 }
 
 extension FriendsMapView {

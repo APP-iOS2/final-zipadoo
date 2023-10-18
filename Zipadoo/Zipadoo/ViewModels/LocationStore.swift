@@ -85,6 +85,16 @@ class LocationStore: ObservableObject {
             print("LocationStore에서 유저 id 못가져옴")
         }
     }
+    func calculateRank() -> Int {
+        var count: Int = 0
+        for locationData in locationDatas {
+            if locationData.arriveTime != 0 {
+                count += 1
+            }
+        }
+        return count
+    }
+    
     // FriendsMapView에서 사용할 프로필 이미지 배열을 셔플 (.task에서 한번 실행)
     func shuffleSampleProfileImage() {
         randomImageString.shuffle()
@@ -142,10 +152,12 @@ class LocationStore: ObservableObject {
         dbRef.collection("Location").document(locationId).updateData(updateData1)
         dbRef.collection("Location").document(locationId).updateData(updateData2)
     }
-    
-    func updateArriveTime(locationId: String, newValue arriveTime: Double) {
+    // Rank 추가하기
+    func updateArriveTime(locationId: String, arriveTime: Double, rank: Int) {
         let updateData: [String: Any] = ["arriveTime": arriveTime]
         dbRef.collection("Location").document(locationId).updateData(updateData)
+        let updateData2: [String: Any] = ["rank": rank]
+        dbRef.collection("Location").document(locationId).updateData(updateData2)
     }
     
     static func deleteLocationData(locationId: String) async throws {
