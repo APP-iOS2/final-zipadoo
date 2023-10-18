@@ -21,7 +21,7 @@ struct OneMapView: View {
     /// 장소 검색에서 나온 리스트에서 클릭한 장소에 대한 카메라 포지션 값
     @State private var placePosition: MapCameraPosition = .camera(MapCamera(
         centerCoordinate: CLLocationCoordinate2D(latitude: CLLocationManager().location?.coordinate.latitude ?? 36.5665, longitude: CLLocationManager().location?.coordinate.longitude ?? 126.9880),
-        distance: 3700
+        distance: 2500
         )
     )
     /// 클릭한 장소에 대한 위치 값
@@ -46,6 +46,8 @@ struct OneMapView: View {
     /// 장소 검색을 사용한 후 장소 추가 버튼을 입력한 값
     @State private var addLocationButton: Bool = false
     
+    @Binding var sheetTitle: String
+    
 //    @Binding var promiseLocation: PromiseLocation
     
     /// 클릭한 장소에 대한 위치 값을 약속장소로 지정하기 위해 사용하는 클래스
@@ -62,7 +64,7 @@ struct OneMapView: View {
                         if isClickedPlace == true {
                             Annotation(destination, coordinate: CLLocationCoordinate2D(latitude: coordXXX, longitude: coordYYY)) {
                                 AnnotationCell()
-                                    .offset(x: 0, y: -20)
+                                    .offset(x: 0, y: -10)
                             }
                         } else { // 장소검색 이후 장소를 선택한 값이 false일 경우
                             if selectedPlace == true { // 화면을 클릭해서 장소를 선택한 값이 true일 경우 해당 장소 위치에 해당장소의 주소가 포함된 Annotation을 보여줌
@@ -118,6 +120,8 @@ struct OneMapView: View {
                     
                 }
             }
+            .navigationTitle(sheetTitle)
+            .navigationBarTitleDisplayMode(.inline)
             // 기본적으로 키보드를 보여지지 않게 함
             .onTapGesture {
                 hideKeyboard()
@@ -126,7 +130,7 @@ struct OneMapView: View {
             .onMapCameraChange(frequency: .onEnd) {
                 // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
                 if isClickedPlace == true {
-                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 3700))
+                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 2500))
                 }
             }
             // 맵컨트롤 버튼들을 우츨 상단에 위치시킴
@@ -171,5 +175,5 @@ struct OneMapView: View {
 }
 
 #Preview {
-    OneMapView(promiseViewModel: PromiseViewModel(), destination: .constant(""), address: .constant(""))
+    OneMapView(promiseViewModel: PromiseViewModel(), destination: .constant(""), address: .constant(""), sheetTitle: .constant(""))
 }

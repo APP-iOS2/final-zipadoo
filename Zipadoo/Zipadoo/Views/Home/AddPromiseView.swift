@@ -36,13 +36,15 @@ struct AddPromiseView: View {
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var addFriendSheet: Bool = false
     
-    @State private var mapViewSheet: Bool = false
+    @State private var addPlaceMapSheet: Bool = false // 장소 검색 버튼 클릭값
+    @State private var previewPlaceSheet: Bool = false // 프리뷰 버튼 클릭값
 //    @State private var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) // 장소에 대한 정보 값
 //    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
 //    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
     @State private var showingConfirmAlert: Bool = false
     @State private var showingCancelAlert: Bool = false
     @State private var showingPenalty: Bool = false
+    @State private var sheetTitle: String = "약속 장소 선택"
     
     var isAllWrite: Bool {
         return !promiseViewModel.promiseTitle.isEmpty &&
@@ -108,20 +110,23 @@ struct AddPromiseView: View {
                     
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
                     HStack {
-                        NavigationLink {
+                        Button {
+                            addPlaceMapSheet = true
                             //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
-                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
+//                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
                         } label: {
-                            Label("지역검색", systemImage: "mappin")
+                            Label("장소 검색", systemImage: "mappin")
                                 .foregroundColor(.white)
                         }
                         .buttonStyle(.borderedProminent)
+                        .sheet(isPresented: $addPlaceMapSheet) {
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address, sheetTitle: $sheetTitle)
+                        }
                         
                         Spacer()
-                        // MARK: promiseViewModel.promiseLocation.destination로 장소등록을 할 때 장소명이 나오지 않아서 promiseLocation.destination으로 수정
                         if !promiseViewModel.destination.isEmpty {
                             Button {
-                                mapViewSheet = true
+                                previewPlaceSheet = true
                             } label: {
                                 HStack {
                                     Text("\(promiseViewModel.destination)")
@@ -133,7 +138,7 @@ struct AddPromiseView: View {
                                         .padding(.leading, -5)
                                 }
                             }
-                            .sheet(isPresented: $mapViewSheet) {
+                            .sheet(isPresented: $previewPlaceSheet) {
                                 VStack {
                                     RoundedRectangle(cornerRadius: 8)
                                         .frame(width: 50, height: 5)
