@@ -71,7 +71,7 @@ struct PromiseDetailView: View {
                 primaryButton: .destructive(Text("삭제하기"), action: {
                     Task {
                         do {
-                            try await deletePromise.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
+                            try await promiseViewModel.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
                             
                             dismiss()
                         } catch {
@@ -138,11 +138,14 @@ struct PromiseDetailView: View {
                             if let index = promise.participantIdArray.firstIndex(of: userId) {
                                 // 배열에서 ID 위치 확인
                                 // 해당 ID 배열에서 제거
+                                let locationIndex = index + 1
                                 promise.participantIdArray.remove(at: index)
+                                promise.locationIdArray.remove(at: locationIndex)
                             }
                             
-                            // 약속 업데이트
-                            promiseViewModel.editPromise(promise)
+                            Task {
+                                try await deletePromise.exitPromise(promise, locationId: userId)
+                            }
                         }
                     } label: {
                         Text("나가기")
