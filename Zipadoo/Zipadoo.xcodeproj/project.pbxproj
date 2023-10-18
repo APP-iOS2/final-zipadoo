@@ -25,6 +25,8 @@
 		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
 		3F094E7A2ADFCE7700A6F86A /* AppleSignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F094E792ADFCE7700A6F86A /* AppleSignInViewModel.swift */; };
 		3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */; };
+		3F5B11BC2AE0157F00C266DF /* AppleSignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B11BB2AE0157F00C266DF /* AppleSignInView.swift */; };
+		3F5B11BE2AE016E500C266DF /* AppleSignInProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B11BD2AE016E500C266DF /* AppleSignInProfileView.swift */; };
 		3F5B9A202AD6BACE00CDD52D /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B9A1F2AD6BACE00CDD52D /* FriendProfileView.swift */; };
 		3FF033052ADD30C800FF13A5 /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF033042ADD30C800FF13A5 /* AppInfoView.swift */; };
 		3FF033092ADD318300FF13A5 /* DeveloperProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF033082ADD318300FF13A5 /* DeveloperProfileView.swift */; };
@@ -172,6 +174,8 @@
 		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
 		3F094E792ADFCE7700A6F86A /* AppleSignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInViewModel.swift; sourceTree = "<group>"; };
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
+		3F5B11BB2AE0157F00C266DF /* AppleSignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInView.swift; sourceTree = "<group>"; };
+		3F5B11BD2AE016E500C266DF /* AppleSignInProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleSignInProfileView.swift; sourceTree = "<group>"; };
 		3F5B9A1F2AD6BACE00CDD52D /* FriendProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		3FF033042ADD30C800FF13A5 /* AppInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		3FF033082ADD318300FF13A5 /* DeveloperProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperProfileView.swift; sourceTree = "<group>"; };
@@ -329,6 +333,8 @@
 				8B973A332AC5930D00C67B5F /* SigninByEmailView.swift */,
 				8B973A322AC5930D00C67B5F /* SigninByEmail2View.swift */,
 				8B973A392AC593DE00C67B5F /* KakaoTest.swift */,
+				3F5B11BB2AE0157F00C266DF /* AppleSignInView.swift */,
+				3F5B11BD2AE016E500C266DF /* AppleSignInProfileView.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -860,6 +866,7 @@
 				FAD257E92AD65F4B0017D16C /* NewMapView.swift in Sources */,
 				FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */,
 				3FF033052ADD30C800FF13A5 /* AppInfoView.swift in Sources */,
+				3F5B11BE2AE016E500C266DF /* AppleSignInProfileView.swift in Sources */,
 				FA2474542ACD4D6E00D4C821 /* AuthStore.swift in Sources */,
 				047127972AD7C7A800767E9C /* OneAddLocation.swift in Sources */,
 				FA24741D2ACD4BDB00D4C821 /* HomeMainView.swift in Sources */,
@@ -897,6 +904,7 @@
 				8B973A372AC5930D00C67B5F /* SigninByEmail2View.swift in Sources */,
 				8BD44EC62AC13FD900A4694C /* ProfileImageView.swift in Sources */,
 				FA24744D2ACD4D6E00D4C821 /* EditProfileViewModel.swift in Sources */,
+				3F5B11BC2AE0157F00C266DF /* AppleSignInView.swift in Sources */,
 				047127952AD7BE4F00767E9C /* OneMapView.swift in Sources */,
 				8BD44ECA2AC1401E00A4694C /* UserModel.swift in Sources */,
 				C02790CE2ACD29DF00BBDCCA /* UserDefaults.swift in Sources */,

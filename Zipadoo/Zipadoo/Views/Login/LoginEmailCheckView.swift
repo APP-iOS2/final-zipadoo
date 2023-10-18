@@ -90,7 +90,6 @@ struct LoginEmailCheckView: View {
                     Spacer()
                 } // Group
               
-                
                 // MARK: - "다음" 버튼
                 .navigationBarItems(trailing:
                                         Button("다음") {

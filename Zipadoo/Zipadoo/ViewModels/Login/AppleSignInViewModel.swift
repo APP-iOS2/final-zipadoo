@@ -102,14 +102,15 @@ class AppleSignInViewModel: ObservableObject {
             Task {
                 do {
                     try await Auth.auth().signIn(with: credwtion)
-                    let userRef = dbRef.document(FirebaseAuth.Auth.auth().currentUser!.uid)
-                    try await userRef.setData([
-                        "displayName": FirebaseAuth.Auth.auth().currentUser?.displayName ?? "Unknown",
-                        "email": FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown"
-                    ])
+                    //                    let userRef = dbRef.document(FirebaseAuth.Auth.auth().currentUser!.uid)
+                    //                    try await userRef.setData([
+                    //                        "displayName": FirebaseAuth.Auth.auth().currentUser?.displayName ?? "Unknown",
+                    //                        "email": FirebaseAuth.Auth.auth().currentUser?.email ?? "
+                    
                     DispatchQueue.main.async {
                         self.logState = true
                     }
+                    
                 } catch {
                     print("error 46")
                 }
@@ -118,8 +119,13 @@ class AppleSignInViewModel: ObservableObject {
             print(failure.localizedDescription)
         }
     }
+    
+    /// 유저 로그인
+    func login() async throws -> Bool {
+        try await AuthStore.shared.login(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown", password: nonce)
+    }
+    
 }
-
 func randomNonceString(length: Int = 32) -> String {
     precondition(length > 0)
     var randomBytes = [UInt8](repeating: 0, count: length)
