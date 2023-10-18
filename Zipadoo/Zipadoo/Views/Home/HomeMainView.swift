@@ -22,6 +22,11 @@ struct HomeMainView: View {
 //    @State private var userPromiseArray: [Promise] = []
     // 상단 탭바 인덱스
     @State private var tabIndex = 0
+    
+    // 약속 카드 테두리 색 모션회전
+    @State var rotation: CGFloat = 0.0
+    
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -58,11 +63,16 @@ struct HomeMainView: View {
                                     PromiseDetailView(promise: promise)
                                     
                                 } label: {
-                                    promiseListCell(promise: promise, color: .red)
+                                   
+                                        promiseListCell(promise: promise, color: .red)
                                         // 추적중인 약속에 맵 아이콘만 펄스이펙트 반복
-                                        .symbolEffect(.pulse.byLayer, options: .repeating)
+                                            .symbolEffect(.pulse.byLayer, options: .repeating)
+                              
+//
+                                          
+                          
                                 }
-                 
+     
                             }
                             ForEach(filteredPromises) { promise in
                                 NavigationLink {
@@ -70,9 +80,7 @@ struct HomeMainView: View {
                                 } label: {
                                     promiseListCell(promise: promise, color: .primary)
                                 }
-                                
-                                .padding()
-                                
+                     
                             }
                         }
                         
@@ -80,8 +88,9 @@ struct HomeMainView: View {
                     
                 } // VStack
             }
+         
             // MARK: - 약속 추가 버튼
-            .padding()
+    
             .frame(maxWidth: .infinity, maxHeight: .infinity) // 스크롤을 최대한 바깥으로 하기 위함
             // toolbar
             .onAppear {
@@ -171,81 +180,107 @@ struct HomeMainView: View {
     }
     
     func promiseListCell(promise: Promise, color: Color) -> some View {
-        VStack(alignment: .leading) {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .frame(width: 340, height: 260)
+                .foregroundColor(.black)
+//                .shadow(color: .black.opacity(0.5), radius: 10, x:0, y:0)
+              
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .frame(width: 450, height: 200)
+//                .foregroundStyle(LinearGradient(gradient: Gradient(colors:[.red,.orange,.yellow,.green,.blue,.purple,.pink]), startPoint: .top, endPoint: .bottom))
+                .foregroundStyle(LinearGradient(gradient: Gradient(colors:[.orange.opacity(0.4),.yellow,.yellow,.yellow.opacity(0.4)]), startPoint: .top, endPoint: .bottom))
+                .rotationEffect(.degrees(rotation))
+                .mask {
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .stroke(lineWidth: 4) // 라인 두께
+                        .frame(width: 338, height: 258)
+                }
             
-            // MARK: - 약속 제목, 맵 버튼
-            HStack {
-                Text(promise.promiseTitle)
-                    .font(.title)
-                    .fontWeight(.bold)
+            VStack(alignment: .leading) {
                 
-                Spacer()
-                
-                NavigationLink {
-                    FriendsMapView(promise: promise)
-                } label: {
-                    Image(systemName: "map.fill")
+                // MARK: - 약속 제목, 맵 버튼
+                HStack {
+                    Text(promise.promiseTitle)
+                        .font(.title)
                         .fontWeight(.bold)
-                        .foregroundStyle(Color.primary)
-                        .colorInvert()
-                        .padding(8)
-                        .background(Color.primary)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .shadow(color: .primary, radius: 1, x: 1, y: 1)
-                                .opacity(0.3)            
-                            //
-                        )
-                }
-            }
-            .padding(.vertical, 15)
-            // MARK: - 장소, 시간
-            Group {
-                HStack {
-                    Image(systemName: "pin")
-                    Text("\(promise.destination)")
-                }
-                .padding(.bottom, 5)
-                
-                /// 저장된 promiseDate값을 Date 타입으로 변환
-                let datePromise = Date(timeIntervalSince1970: promise.promiseDate)
-                
-                HStack {
-                    Image(systemName: "clock")
-                    Text("\(formatDate(date: datePromise))")
-                }
-                .padding(.bottom, 25)
-                
-                // MARK: - 도착지까지 거리, 벌금
-                HStack {
-                    Text("6km")
                     Spacer()
+                              NavigationLink {
+                                            FriendsMapView(promise: promise)
+                                        } label: {
+                                            Image(systemName: "map.fill")
+                                                .fontWeight(.bold)
+                                                .foregroundStyle(Color.primary)
+                                                .colorInvert()
+                                                .padding(8)
+                                                .background(Color.primary)
+                                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                                .overlay(
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .shadow(color: .primary, radius: 1, x: 1, y: 1)
+                                                        .opacity(0.3)
+                                                    //
+                                                )
+                                        }
+                                    }
+                                    .padding(.vertical, 15)
+                                    // MARK: - 장소, 시간
+                                    Group {
+                                        HStack {
+                                            Image(systemName: "pin")
+                                            Text("\(promise.destination)")
+                                        }
+                                        .padding(.bottom, 5)
                     
-                    Text("5,000원")
-                        .fontWeight(.semibold)
-                        .font(.title3)
-                }
-                .padding(.vertical, 10)
+                                        /// 저장된 promiseDate값을 Date 타입으로 변환
+                                        let datePromise = Date(timeIntervalSince1970: promise.promiseDate)
+                    
+                                        HStack {
+                                            Image(systemName: "clock")
+                                            Text("\(formatDate(date: datePromise))")
+                                        }
+                                        .padding(.bottom, 25)
+                    
+                                        // MARK: - 도착지까지 거리, 벌금
+                                        HStack {
+                                            Text("6km")
+                                            Spacer()
+                    
+                                            Text("5,000원")
+                                                .fontWeight(.semibold)
+                                                .font(.title3)
+                                        }
+                                        .padding(.vertical, 10)
+                    
+                                    }
+                                    .font(.callout)
+                                    .fontWeight(.semibold)
+                                    .foregroundStyle(Color.primary).opacity(0.5)
+                                    // 참여자의 ID를 통해 참여자 정보 가져오기
                 
             }
-            .font(.callout)
-            .fontWeight(.semibold)
-            .foregroundStyle(Color.primary).opacity(0.5)
-            // 참여자의 ID를 통해 참여자 정보 가져오기
-        }
-        // MARK: - 약속 테두리
-        .padding()
-        .overlay(
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .foregroundColor(color)
-                    .opacity(0.05)
-                    .shadow(color: .primary, radius: 10, x: 5, y: 5)
-            }
+            .frame(width: 300, height: 340)
+            .colorInvert()
             
-        )
-        .foregroundStyle(Color.primary)
+        }
+            
+            
+            
+           
+        
+        // MARK: - 약속 테두리
+        .onAppear {
+            withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
+                rotation = 360
+            }
+        }
+       
+      
+            
+            
+       
+            
+    
     }
     
 }
