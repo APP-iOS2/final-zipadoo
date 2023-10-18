@@ -14,7 +14,7 @@ struct AddPromiseView: View {
     // 환경변수
     @Environment(\.dismiss) private var dismiss
     
-    @StateObject var promiseViewModel: PromiseViewModel
+    @EnvironmentObject var promiseViewModel: PromiseViewModel
     //    var user: User
     
     // 저장될 변수
@@ -299,5 +299,6 @@ struct AddPromiseView: View {
 }
 
 #Preview {
-    AddPromiseView(promiseViewModel: PromiseViewModel()/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
+    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
+        .environmentObject(PromiseViewModel())
 }
