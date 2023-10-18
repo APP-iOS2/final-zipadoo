@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import Firebase
+import FirebaseAuth
+import AuthenticationServices
 // import KakaoSDKCommon
 // import KakaoSDKAuth
 // import KakaoSDKUser
@@ -13,9 +16,9 @@ import SwiftUI
 // 로그인 뷰 모델
 
 struct LoginView: View {
-    
     //    @StateObject var kakaoStore: KakaoStore = KakaoStore()
-    
+    @StateObject var singinViewModel = AppleSignInViewModel()
+    @AppStorage ("logState") var logState = false
     @State private var spaceHeight: CGFloat = 500 // 두더지 머리 위에 공간 높이
     @Environment(\.colorScheme) var colorScheme // 다크모드일 때 컬러 변경
     
@@ -82,27 +85,34 @@ struct LoginView: View {
                             .disabled(true)
                             
                             // MARK: - 애플 로그인 버튼
-                            Button {
-                                print("apple login")
-                            } label: {
-                                if colorScheme == .dark {
-                                    Image("apple_login")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: UIScreen.main.bounds.width * 0.9)
-                                        .cornerRadius(5)
-                                    
-                                } else {
-                                    Image("apple_login")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: UIScreen.main.bounds.width * 0.9)
-                                        .cornerRadius(5)
-                                        .colorInvert()
-                                }
-                                //
-                                
+                            SignInWithAppleButton { request in
+                                singinViewModel.SigninWithAppleRequest(request)
+                            } onCompletion: { result in
+                                singinViewModel.SinginWithAppleCompletion(result)
                             }
+                            .frame(width: UIScreen.main.bounds.width * 0.9, height: 50)
+                            .cornerRadius(5)
+                            //                            Button {
+                            //
+                            //                            } label: {
+                            //                                if colorScheme == .dark {
+                            //                                    Image("apple_login")
+                            //                                        .resizable()
+                            //                                        .aspectRatio(contentMode: .fit)
+                            //                                        .frame(width: UIScreen.main.bounds.width * 0.9)
+                            //                                        .cornerRadius(5)
+                            //
+                            //                                } else {
+                            //                                    Image("apple_login")
+                            //                                        .resizable()
+                            //                                        .aspectRatio(contentMode: .fit)
+                            //                                        .frame(width: UIScreen.main.bounds.width * 0.9)
+                            //                                        .cornerRadius(5)
+                            //                                        .colorInvert()
+                            //                                }
+                            //                                //
+                            //
+                            //                            }
                             
                             ZStack {
                                 // 두더지 몸통
@@ -117,8 +127,8 @@ struct LoginView: View {
                     } // ScrollView
                     .frame(maxWidth: UIScreen.main.bounds.width)
                     
-                    } // NavigationView
-               
+                } // NavigationView
+                
             } // ZStack
         } // NavigationStack
     } // body
