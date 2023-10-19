@@ -25,8 +25,6 @@ struct ArriveResultView: View {
     
     /// 약속시간
     var promiseDate: Date {
-//        let date = Date(timeIntervalSince1970: promise.promiseDate)
-//        return Calendar.current.date(byAdding: .hour, value: 9, to: date) ?? date
         return Date(timeIntervalSince1970: promise.promiseDate)
     }
     /// 시간표시 형식 지정
@@ -73,11 +71,11 @@ struct ArriveResultView: View {
                 }
 
                 ZStack {
-                    // 선
+                    // 세로선
                     HStack {
                         Rectangle()
                             .foregroundStyle(.secondary)
-                            .frame(width: 2, height: 54 * CGFloat(locationStore.locationParticipantDatas.count))
+                            .frame(width: 2, height: 58 * CGFloat(locationStore.locationParticipantDatas.count))
                             .padding(.leading, 16)
                         Spacer()
                     }
@@ -89,8 +87,7 @@ struct ArriveResultView: View {
                         ForEach(locationStore.sortResult(resultArray: locationStore.locationParticipantDatas)) { participant in
                             
                             arrivedDataCell(participant: participant)
-                                .padding(.bottom, 12)
-          
+                                .padding(.top, 12)
                         }
                     }
 //                    .padding(.leading, 6)
@@ -113,8 +110,6 @@ struct ArriveResultView: View {
     /// 약속 멤버 도착정보 행(row)
     private func arrivedDataCell(participant: LocationAndParticipant) -> some View {
         var resultEnum: Result = .notArrive
-        /// 참여자 도착시간
-        let arriveDate = Date(timeIntervalSince1970: participant.location.arriveTime)
         /// 등수/지각 표시메세지
         var resultMessage = ""
         /// 등수/지각에 따른 텍스트 색
@@ -173,7 +168,7 @@ struct ArriveResultView: View {
                     .frame(width: 36, height: 36)
                 
                 ProfileImageView(imageString: participant.imageString, size: .xSmall)
-                    .clipShape(Circle())  
+                    .clipShape(Circle())
             }
             
             VStack(alignment: .leading) {
