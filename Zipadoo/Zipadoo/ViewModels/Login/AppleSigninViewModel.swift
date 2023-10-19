@@ -18,7 +18,6 @@ class AppleSigninViewModel: ObservableObject {
     @AppStorage ("logState") var logState = false
     @Published var nonce = ""
     
-    @Published var id: String = ""
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var nickName: String = ""

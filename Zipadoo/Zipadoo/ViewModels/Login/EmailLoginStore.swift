@@ -24,9 +24,7 @@ final class EmailLoginStore: ObservableObject {
 
     /// 유저 회원가입
     func createUser() async throws {
-        
         try await AuthStore.shared.createUser(email: email, password: password, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImage: selectedImage)
-        
     }
     
     /// 유저 로그인
