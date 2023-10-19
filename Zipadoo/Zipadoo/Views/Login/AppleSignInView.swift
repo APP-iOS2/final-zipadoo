@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AppleSignInView: View {
-    @ObservedObject var signInViewModel: AppleSignInViewModel
+    @ObservedObject var signInViewModel: AppleSigninViewModel
     
     @State private var isPasswordVisible = false // 비밀번호 보이기
     
@@ -63,7 +63,6 @@ struct AppleSignInView: View {
                         }
                         .foregroundColor(Color.primary.opacity(0.4))
                     }
-
                     Rectangle().frame(height: 1)
                         .foregroundStyle(Color.secondary)
                         .padding(.bottom, 5)
@@ -75,6 +74,7 @@ struct AppleSignInView: View {
                             .foregroundStyle(Color.primary.opacity(0.7))
                         Spacer()
                     }
+                    
                     if isPresentedMessage {
                         HStack {
                             Text(nicknameOverlapMessage)
@@ -107,7 +107,7 @@ struct AppleSignInView: View {
                             }
                             .foregroundColor(Color.primary.opacity(0.4))
                         }
-
+                        
                         // 텍스트필드 줄
                         Rectangle().frame(height: 1)
                             .foregroundStyle(Color.secondary)
@@ -117,7 +117,7 @@ struct AppleSignInView: View {
                             Text("-를 제외하고 입력해주세요")
                                 .font(.subheadline)
                                 .foregroundStyle(Color.primary.opacity(0.7))
-                
+                            
                             Spacer()
                         }
                     }
@@ -125,48 +125,48 @@ struct AppleSignInView: View {
                     Spacer()
                         .frame(height: 20)// 공간용
                     // MARK: - 비밀번호 입력
-//                    Group {
-//                        HStack {
-//                            SecureField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
-//                                .foregroundColor(Color.primary)
-//                                .opacity(0.9)
-//                                .font(.title3)
-//                                .fontWeight(.semibold)
-//                                .autocapitalization(.none)
-//                                .frame(height: 35)
-//                            // 입력한 내용 지우기 버튼
-//                            Button {
-//                                emailLoginStore.password = ""
-//                            } label: {
-//                                Image(systemName: "x.circle.fill")
-//                            }
-//                            .foregroundColor(Color.primary.opacity(0.4))
-//                        }
-//                     
-//                        Rectangle().frame(height: 1)
-//                            .foregroundStyle(Color.secondary)
-//                            .padding(.bottom, 5)
-//                        
-//                        // 하단 안내 문구
-//                        HStack {
-//                            Text("6자리 이상 입력해주세요.")
-//                                .font(.subheadline)
-//                                .foregroundStyle(Color.primary.opacity(0.7))
-//                        }
-//                        
-//                        Spacer()
-//
-//                    } // 비밀번호 Group
+                    //                    Group {
+                    //                        HStack {
+                    //                            SecureField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
+                    //                                .foregroundColor(Color.primary)
+                    //                                .opacity(0.9)
+                    //                                .font(.title3)
+                    //                                .fontWeight(.semibold)
+                    //                                .autocapitalization(.none)
+                    //                                .frame(height: 35)
+                    //                            // 입력한 내용 지우기 버튼
+                    //                            Button {
+                    //                                emailLoginStore.password = ""
+                    //                            } label: {
+                    //                                Image(systemName: "x.circle.fill")
+                    //                            }
+                    //                            .foregroundColor(Color.primary.opacity(0.4))
+                    //                        }
+                    //
+                    //                        Rectangle().frame(height: 1)
+                    //                            .foregroundStyle(Color.secondary)
+                    //                            .padding(.bottom, 5)
+                    //
+                    //                        // 하단 안내 문구
+                    //                        HStack {
+                    //                            Text("6자리 이상 입력해주세요.")
+                    //                                .font(.subheadline)
+                    //                                .foregroundStyle(Color.primary.opacity(0.7))
+                    //                        }
+                    //
+                    //                        Spacer()
+                    //
+                    //                    } // 비밀번호 Group
                     Spacer()
                 } // 모든 입력 Group
-//                .background(Color.primary)
+                //                .background(Color.primary)
             }
             .padding([.leading, .trailing])
             // MARK: - 상단 다음 넘어가기 버튼
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                       checkValid()
+                        checkValid()
                         
                     } label: {
                         Text("다음")
@@ -177,15 +177,13 @@ struct AppleSignInView: View {
                 }
             }
             .navigationDestination(isPresented: $readyToNavigate) {
-                AppleSignInProfileView(signinViewModel: AppleSignInViewModel())
+                AppleSignInProfileView(signinViewModel: AppleSigninViewModel())
             }
         }
-
     }
     
     /// 유효성 검사
     func checkValid() {
-        
         // 파베 중복확인 : 중복시 true
         Task {
             signInViewModel.nicknameCheck { overlap in
@@ -198,7 +196,7 @@ struct AppleSignInView: View {
                     nicknameMessageColor = .green
                     nicknameOverlapMessage = "사용가능한 닉네임입니다"
                     isPresentedMessage = true
-     
+                    
                 } else {
                     if isOverlapNickname {
                         // 닉네임 중복이라면
@@ -219,37 +217,14 @@ struct AppleSignInView: View {
                         validMessage = " "
                     }
                 }
-
-            }
-        }
-        
-        /*
-        if !isOverlapNickname && isGoNext {
-           // 닉네임 중복하지않고 형식에 모두 맞으면 화면전환
-            readyToNavigate.toggle()
-            nickNameValidMessage = "2~6자로 입력해주세요. 프로필 수정에서 변경 가능합니다"
-            phoneValidMessage = "-를 제외하고 입력해주세요"
-            passwordValidMessage = "6자리 이상 입력해주세요"
-            
-        } else {
-            if !isCorrectNickname(nickname: emailLoginStore.nickName) {
-
-                nickNameValidMessage = "닉네임을 형식에 맞게 입력해주세요"
                 
-            } else if isOverlapNickname {
-                // 닉네임중복
-                nickNameValidMessage = "이미 있는 닉네임입니다"
-            } else if !isCorrectPhoneNumber(phonenumber: emailLoginStore.phoneNumber) {
-                phoneValidMessage = "휴대폰 번호를 형식에 맞게 입력해주세요"
-            } else if !isCorrectPassword(password: emailLoginStore.password) {
-                passwordValidMessage = "비밀번호를 형식에 맞게 입력해주세요"
             }
         }
-         */
     }
 }
+
 #Preview {
     NavigationStack {
-        AppleSignInView(signInViewModel: AppleSignInViewModel())
+        AppleSignInView(signInViewModel: AppleSigninViewModel())
     }
 }

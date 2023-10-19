@@ -17,7 +17,7 @@ import AuthenticationServices
 
 struct LoginView: View {
     //    @StateObject var kakaoStore: KakaoStore = KakaoStore()
-    @StateObject var singinViewModel = AppleSignInViewModel()
+    @StateObject var singinViewModel = AppleSigninViewModel()
     @AppStorage ("logState") var logState = false
     @State private var spaceHeight: CGFloat = 500 // 두더지 머리 위에 공간 높이
     @Environment(\.colorScheme) var colorScheme // 다크모드일 때 컬러 변경
@@ -47,7 +47,6 @@ struct LoginView: View {
                                         spaceHeight = 200// 애니메이션 최종 높이
                                     }
                                 }
-                            
                             Spacer(minLength: 50)
                         }
                         
@@ -88,22 +87,17 @@ struct LoginView: View {
                             }
                             .disabled(true)
                             
-                            NavigationLink(destination: AppleSignInView(signInViewModel: singinViewModel), isActive: $isSigninLinkActive) {
-                                EmptyView() // 빈 뷰를 사용하여 링크 트리거를 활성화합니다.
-                            }
-                            .hidden() // 빈
-                            
                             // MARK: - 애플 로그인 버튼
                             SignInWithAppleButton { request in
                                 print("request")
                                 singinViewModel.SigninWithAppleRequest(request)
-                                
                             } onCompletion: { result in
                                 Task {
                                     do {
                                         print("result")
-                                        isSigninLinkActive = true
                                         singinViewModel.SinginWithAppleCompletion(result)
+                                        isSigninLinkActive = true
+                                        print("result 끝")
                                     } catch {
                                         print("error")
                                     }
@@ -111,30 +105,11 @@ struct LoginView: View {
                             }
                             .frame(width: UIScreen.main.bounds.width * 0.9, height: 50)
                             .cornerRadius(5)
-                            .fullScreenCover(isPresented: $loginResult, content: {
-                                ContentView()
-                            })
-                            //                            Button {
-                            //
-                            //                            } label: {
-                            //                                if colorScheme == .dark {
-                            //                                    Image("apple_login")
-                            //                                        .resizable()
-                            //                                        .aspectRatio(contentMode: .fit)
-                            //                                        .frame(width: UIScreen.main.bounds.width * 0.9)
-                            //                                        .cornerRadius(5)
-                            //
-                            //                                } else {
-                            //                                    Image("apple_login")
-                            //                                        .resizable()
-                            //                                        .aspectRatio(contentMode: .fit)
-                            //                                        .frame(width: UIScreen.main.bounds.width * 0.9)
-                            //                                        .cornerRadius(5)
-                            //                                        .colorInvert()
-                            //                                }
-                            //                                //
-                            //
-                            //                            }
+                            
+                            NavigationLink(destination: AppleSignInView(signInViewModel: singinViewModel), isActive: $isSigninLinkActive) {
+                                EmptyView() // 빈 뷰를 사용하여 링크 트리거를 활성화합니다.
+                            }
+                            .hidden() // 빈
                             
                             ZStack {
                                 // 두더지 몸통
@@ -142,16 +117,15 @@ struct LoginView: View {
                                     .frame(width: UIScreen.main.bounds.width * 0.9, height: 100)
                                     .foregroundColor(Color.primary)
                                     .colorInvert()
-                                
                             }
                         }
-                        
                     } // ScrollView
                     .frame(maxWidth: UIScreen.main.bounds.width)
-                    
                 } // NavigationView
-                
             } // ZStack
+            .fullScreenCover(isPresented: $loginResult, content: {
+                ContentView()
+            })
         } // NavigationStack
     } // body
 } // struct

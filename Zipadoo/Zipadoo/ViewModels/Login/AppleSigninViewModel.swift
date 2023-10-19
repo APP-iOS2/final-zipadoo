@@ -13,7 +13,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import AuthenticationServices
 
-class AppleSignInViewModel: ObservableObject {
+class AppleSigninViewModel: ObservableObject {
     /// 로그인 상태
     @AppStorage ("logState") var logState = false
     @Published var nonce = ""
@@ -35,7 +35,7 @@ class AppleSignInViewModel: ObservableObject {
     /// 유저 회원가입
     func createUser() async throws {
         
-        try await AuthStore.shared.createUser(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown", password: nonce, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImage: selectedImage)
+        try await AppleSigninStore.shared.createUser(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown", password: FirebaseAuth.Auth.auth().currentUser?.uid ?? "Unknown uid", name: name, nickName: nickName, phoneNumber: phoneNumber, profileImage: selectedImage)
         
     }
     
@@ -45,7 +45,7 @@ class AppleSignInViewModel: ObservableObject {
         let userDB = Firestore.firestore().collection("User email")
         
         // 입력한 이메일이 있는지 확인하는 쿼리
-        userDB.whereField("email", isEqualTo: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown").getDocuments { (querySnapshot, error) in
+        userDB.whereField("email", isEqualTo: email).getDocuments { (querySnapshot, error) in
             if let error = error {
                 print("데이터베이스 조회 중 오류 발생: \(error.localizedDescription)")
                 completion(false) // 오류 발생 시 false를 반환
@@ -149,7 +149,7 @@ class AppleSignInViewModel: ObservableObject {
     
     /// 유저 로그인
     func login() async throws -> Bool {
-        try await AuthStore.shared.login(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown", password: nonce)
+        try await AppleSigninStore.shared.login(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown", password: FirebaseAuth.Auth.auth().currentUser?.uid ?? "Unknown")
     }
     
 }

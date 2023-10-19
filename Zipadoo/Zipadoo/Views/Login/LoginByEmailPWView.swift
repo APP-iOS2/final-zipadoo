@@ -87,7 +87,7 @@ struct LoginByEmailPWView: View {
                         .font(.subheadline)
                         .foregroundStyle(Color.primary.opacity(0.7))
                 }
-                      
+                
                 Spacer()
             }
             .padding([.leading, .trailing])
@@ -95,7 +95,6 @@ struct LoginByEmailPWView: View {
             // MARK: - 상단 네비게이션 바 "로그인" 버튼
             .navigationBarItems(trailing:
                                     Button(action: {
-                
                 Task {
                     do {
                         let emailLoginResult: Bool = try await emailLoginStore.login()

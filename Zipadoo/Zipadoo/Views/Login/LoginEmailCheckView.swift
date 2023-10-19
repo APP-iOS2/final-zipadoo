@@ -37,7 +37,6 @@ struct LoginEmailCheckView: View {
                     .font(.subheadline)
                     .foregroundStyle(Color.primary.opacity(0.7))
 
-      
                 // MARK: - 이메일 중복 체크 하여 각 경우에 따라 네비게이션 링크 버튼 활성화 됨
                 HStack {
                     NavigationLink(destination: SigninByEmailView(emailLoginStore: emailLoginStore), isActive: $isSigninLinkActive) {

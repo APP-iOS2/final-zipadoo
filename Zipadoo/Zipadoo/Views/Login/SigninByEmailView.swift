@@ -63,7 +63,7 @@ struct SigninByEmailView: View {
                         }
                         .foregroundColor(Color.primary.opacity(0.4))
                     }
-
+                    
                     Rectangle().frame(height: 1)
                         .foregroundStyle(Color.secondary)
                         .padding(.bottom, 5)
@@ -107,7 +107,7 @@ struct SigninByEmailView: View {
                             }
                             .foregroundColor(Color.primary.opacity(0.4))
                         }
-
+                        
                         // 텍스트필드 줄
                         Rectangle().frame(height: 1)
                             .foregroundStyle(Color.secondary)
@@ -117,7 +117,7 @@ struct SigninByEmailView: View {
                             Text("-를 제외하고 입력해주세요")
                                 .font(.subheadline)
                                 .foregroundStyle(Color.primary.opacity(0.7))
-                
+                            
                             Spacer()
                         }
                     }
@@ -142,7 +142,7 @@ struct SigninByEmailView: View {
                             }
                             .foregroundColor(Color.primary.opacity(0.4))
                         }
-                     
+                        
                         Rectangle().frame(height: 1)
                             .foregroundStyle(Color.secondary)
                             .padding(.bottom, 5)
@@ -151,22 +151,22 @@ struct SigninByEmailView: View {
                         HStack {
                             Text("6자리 이상 입력해주세요.")
                                 .font(.subheadline)
-                                .foregroundStyle(Color.primary.opacity(0.7))                
+                                .foregroundStyle(Color.primary.opacity(0.7))
                         }
                         
                         Spacer()
-
+                        
                     } // 비밀번호 Group
                     Spacer()
                 } // 모든 입력 Group
-//                .background(Color.primary)
+                //                .background(Color.primary)
             }
             .padding([.leading, .trailing])
             // MARK: - 상단 다음 넘어가기 버튼
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                       checkValid()
+                        checkValid()
                         
                     } label: {
                         Text("다음")
@@ -180,7 +180,7 @@ struct SigninByEmailView: View {
                 SigninByEmail2View(emailLoginStore: emailLoginStore)
             }
         }
-
+        
     }
     
     /// 유효성 검사
@@ -198,7 +198,7 @@ struct SigninByEmailView: View {
                     nicknameMessageColor = .green
                     nicknameOverlapMessage = "사용가능한 닉네임입니다"
                     isPresentedMessage = true
-     
+                    
                 } else {
                     if isOverlapNickname {
                         // 닉네임 중복이라면
@@ -219,32 +219,32 @@ struct SigninByEmailView: View {
                         validMessage = " "
                     }
                 }
-
+                
             }
         }
         
         /*
-        if !isOverlapNickname && isGoNext {
-           // 닉네임 중복하지않고 형식에 모두 맞으면 화면전환
-            readyToNavigate.toggle()
-            nickNameValidMessage = "2~6자로 입력해주세요. 프로필 수정에서 변경 가능합니다"
-            phoneValidMessage = "-를 제외하고 입력해주세요"
-            passwordValidMessage = "6자리 이상 입력해주세요"
-            
-        } else {
-            if !isCorrectNickname(nickname: emailLoginStore.nickName) {
-
-                nickNameValidMessage = "닉네임을 형식에 맞게 입력해주세요"
-                
-            } else if isOverlapNickname {
-                // 닉네임중복
-                nickNameValidMessage = "이미 있는 닉네임입니다"
-            } else if !isCorrectPhoneNumber(phonenumber: emailLoginStore.phoneNumber) {
-                phoneValidMessage = "휴대폰 번호를 형식에 맞게 입력해주세요"
-            } else if !isCorrectPassword(password: emailLoginStore.password) {
-                passwordValidMessage = "비밀번호를 형식에 맞게 입력해주세요"
-            }
-        }
+         if !isOverlapNickname && isGoNext {
+         // 닉네임 중복하지않고 형식에 모두 맞으면 화면전환
+         readyToNavigate.toggle()
+         nickNameValidMessage = "2~6자로 입력해주세요. 프로필 수정에서 변경 가능합니다"
+         phoneValidMessage = "-를 제외하고 입력해주세요"
+         passwordValidMessage = "6자리 이상 입력해주세요"
+         
+         } else {
+         if !isCorrectNickname(nickname: emailLoginStore.nickName) {
+         
+         nickNameValidMessage = "닉네임을 형식에 맞게 입력해주세요"
+         
+         } else if isOverlapNickname {
+         // 닉네임중복
+         nickNameValidMessage = "이미 있는 닉네임입니다"
+         } else if !isCorrectPhoneNumber(phonenumber: emailLoginStore.phoneNumber) {
+         phoneValidMessage = "휴대폰 번호를 형식에 맞게 입력해주세요"
+         } else if !isCorrectPassword(password: emailLoginStore.password) {
+         passwordValidMessage = "비밀번호를 형식에 맞게 입력해주세요"
+         }
+         }
          */
     }
 }

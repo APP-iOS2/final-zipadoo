@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppleSignInProfileView: View {
     
-    @ObservedObject var signinViewModel: AppleSignInViewModel
+    @ObservedObject var signinViewModel: AppleSigninViewModel
     @State private var isShowingImagePicker = false
     /// 상단 안내 문구
     @State private var adminMessage = "\n프로필 사진을 등록해주세요."
@@ -95,5 +95,5 @@ struct AppleSignInProfileView: View {
 }
 
 #Preview {
-    AppleSignInProfileView(signinViewModel: AppleSignInViewModel())
+    AppleSignInProfileView(signinViewModel: AppleSigninViewModel())
 }
