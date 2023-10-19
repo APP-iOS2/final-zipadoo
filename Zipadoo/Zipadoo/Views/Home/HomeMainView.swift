@@ -251,7 +251,11 @@ struct HomeMainView: View {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                         .frame(width: 300, height: 400)
+=======
+                        .frame(width: 330, height: 330)
+>>>>>>> parent of 0a44b3a ([DESIGN] 세로 모양 버전_#218)
                         .foregroundColor(.lusciousRed)
                         .shadow(radius: 0.5, x: 1.5, y: 1.5)
 //            RoundedRectangle(cornerRadius: 20, style: .continuous)
@@ -378,7 +382,7 @@ struct HomeMainView: View {
 <<<<<<< HEAD
 <<<<<<< HEAD
             .padding(.horizontal, 20)
-            .frame(width: 300, height: 400)
+            .frame(width: 330, height: 330)
         }
 //        .opacity(isTracking ? 1 : 0.5)
         .padding(20)
