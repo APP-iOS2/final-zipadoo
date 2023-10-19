@@ -9,31 +9,24 @@ import SwiftUI
 import WidgetKit
 
 struct PastPromiseView: View {
-    @StateObject private var promise: PromiseViewModel = PromiseViewModel()
+    @EnvironmentObject var promise: PromiseViewModel
     @State private var isShownFullScreenCover: Bool = false
     
     let currentUser = AuthStore.shared.currentUser
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-
-                if let loginUserID = currentUser?.id {
-                    // 내가만든 약속 또는 참여하는 약속 불러오기
-                    let filteredPromises = promise.fetchPastPromiseData.filter { promise in
-                        return loginUserID == promise.makingUserID || promise.participantIdArray.contains(loginUserID)
-                    }
-
+            if let loginUserID = currentUser?.id {
+                ScrollView {
                     // 약속 배열 값 존재하는지 확인.
-                    if filteredPromises.isEmpty {
+                    if promise.fetchPastPromiseData.isEmpty {
                         Text("지난 약속 내역이 없습니다.")
                         
-                    } else {
+                    }
+                    else {
                         VStack {
-                            ForEach(filteredPromises) { promise in
+                            ForEach(promise.fetchPastPromiseData) { promise in
                                 NavigationLink {
-//                                    PromiseDetailView(promise: promise)
-                                    // 도착정보 보여주기
                                     ArriveResultView()
                                 } label: {
                                     VStack(alignment: .leading) {
@@ -109,50 +102,59 @@ struct PastPromiseView: View {
                         }
                     }
                 }
-                //            .ignoresSafeArea(.all)
-            }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                    .toolbar {
-//                        ToolbarItem(placement: .topBarTrailing) {
-//                            Button {
-//                                // 삭제 코드 추가
-//                            } label: {
-//                               //
-//                            }
-//                            .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-//                                AddPromiseView()
-//                            })
-//                        }
-//                    }
-            .onAppear {
-                print(Date().timeIntervalSince1970)
-                var calendar = Calendar.current
-                calendar.timeZone = NSTimeZone.local
-                let encoder = JSONEncoder()
-                
-                var widgetDatas: [WidgetData] = []
-                
-                for promise in promise.fetchPromiseData {
-                    let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
-                    let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
-                    let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-                    
-                    if promiseDateComponents == todayComponents {
-                        // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
-                        let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
-                        widgetDatas.append(data)
+                .onAppear {
+                    Task {
+                        try await promise.fetchData(userId: loginUserID)
                     }
                 }
-                
-                do {
-                    let encodedData = try encoder.encode(widgetDatas)
+                .refreshable {
+                    Task {
+                        try await promise.fetchData(userId: loginUserID)
+                    }
+                }
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                //                    .toolbar {
+                //                        ToolbarItem(placement: .topBarTrailing) {
+                //                            Button {
+                //                                // 삭제 코드 추가
+                //                            } label: {
+                //                               //
+                //                            }
+                //                            .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+                //                                AddPromiseView()
+                //                            })
+                //                        }
+                //                    }
+                .onAppear {
+                    print(Date().timeIntervalSince1970)
+                    var calendar = Calendar.current
+                    calendar.timeZone = NSTimeZone.local
+                    let encoder = JSONEncoder()
                     
-                    UserDefaults.shared.set(encodedData, forKey: "todayPromises")
+                    var widgetDatas: [WidgetData] = []
                     
-                    WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
-                } catch {
-                    print("Failed to encode Promise:", error)
+                    for promise in promise.fetchPromiseData {
+                        let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+                        let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
+                        let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+                        
+                        if promiseDateComponents == todayComponents {
+                            // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
+                            let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
+                            widgetDatas.append(data)
+                        }
+                    }
+                    
+                    do {
+                        let encodedData = try encoder.encode(widgetDatas)
+                        
+                        UserDefaults.shared.set(encodedData, forKey: "todayPromises")
+                        
+                        WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
+                    } catch {
+                        print("Failed to encode Promise:", error)
+                    }
                 }
             }
         }
@@ -162,5 +164,6 @@ struct PastPromiseView: View {
 #Preview {
     NavigationStack {
         PastPromiseView()
+            .environmentObject(PromiseViewModel())
     }
 }

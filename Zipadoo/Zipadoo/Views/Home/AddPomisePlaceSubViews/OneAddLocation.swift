@@ -10,6 +10,7 @@ import SwiftUI
 /// 직접 장소 설정 시 띄워지는 장소 선택뷰
 struct OneAddLocation: View {
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject var promiseViewModel: PromiseViewModel
     
     @Binding var destination: String
     @Binding var address: String
@@ -18,7 +19,7 @@ struct OneAddLocation: View {
     @Binding var placeOfText: String
     @Binding var selectedPlace: Bool
     @Binding var isClickedPlace: Bool
-    @Binding var promiseLocation: PromiseLocation
+//    @Binding var promiseLocation: PromiseLocation
     
     var addLocationStore: AddLocationStore = AddLocationStore()
     
@@ -41,7 +42,7 @@ struct OneAddLocation: View {
                                     .frame(height: 30)
                             // MARK: - 화면을 클릭해서 장소를 선택한 값이 false라면 "약속 장소를 선택해 주세요" 텍스트를 표시함
                             } else {
-                                Text("약속 장소를 선택해 주세요")
+                                Text("약속 장소를 클릭해 주세요")
                                     .font(.title3)
                                     .foregroundStyle(.gray)
                             }
@@ -59,7 +60,11 @@ struct OneAddLocation: View {
                                 isClickedPlace = false
                                 
                                 // MARK: - '장소 선택하기' 버튼을 클릭하면 위의 데이터값 + 위치(위,경도)값을 promiseLoaction 값으로 저장함
-                                promiseLocation = addLocationStore.setLocation(destination: destination, address: address, latitude: coordXXX, longitude: coordYYY)
+                                promiseViewModel.destination = destination
+                                promiseViewModel.address = address
+                                promiseViewModel.coordXXX = coordXXX
+                                promiseViewModel.coordYYY = coordYYY
+//                                promiseLocation = addLocationStore.setLocation(destination: destination, address: address, latitude: coordXXX, longitude: coordYYY)
                                 print(destination)
                                 print(address)
                                 print(coordXXX)
@@ -80,5 +85,5 @@ struct OneAddLocation: View {
 }
 
 #Preview {
-    OneAddLocation(destination: .constant(""), address: .constant(""), coordXXX: .constant(0.0), coordYYY: .constant(0.0), placeOfText: .constant("placeOfText"), selectedPlace: .constant(false), isClickedPlace: .constant(false), promiseLocation: .constant(PromiseLocation(destination: "서울시청", address: "", latitude: 37.5665, longitude: 126.9780)))
+    OneAddLocation(promiseViewModel: PromiseViewModel(), destination: .constant(""), address: .constant(""), coordXXX: .constant(0.0), coordYYY: .constant(0.0), placeOfText: .constant("placeOfText"), selectedPlace: .constant(false), isClickedPlace: .constant(false))
 }

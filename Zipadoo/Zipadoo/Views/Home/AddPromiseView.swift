@@ -14,7 +14,7 @@ struct AddPromiseView: View {
     // 환경변수
     @Environment(\.dismiss) private var dismiss
     
-    @StateObject var promiseViewModel: PromiseViewModel
+    @EnvironmentObject var promiseViewModel: PromiseViewModel
     //    var user: User
     
     // 저장될 변수
@@ -36,19 +36,18 @@ struct AddPromiseView: View {
     private let today = Calendar.current.startOfDay(for: Date())
     @State private var addFriendSheet: Bool = false
     
-    @State private var mapViewSheet: Bool = false
-    @State var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) // 장소에 대한 정보 값
+    @State private var addPlaceMapSheet: Bool = false // 장소 검색 버튼 클릭값
+    @State private var previewPlaceSheet: Bool = false // 프리뷰 버튼 클릭값
+//    @State private var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) // 장소에 대한 정보 값
 //    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
 //    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
     @State private var showingConfirmAlert: Bool = false
     @State private var showingCancelAlert: Bool = false
     @State private var showingPenalty: Bool = false
+    @State private var sheetTitle: String = "약속 장소 선택"
     
     var isAllWrite: Bool {
-        return !promiseViewModel.promiseTitle.isEmpty &&
-        // 당일 약속도 등록가능해야 함
-//        Calendar.current.startOfDay(for: promiseViewModel.date) != today &&
-        !promiseLocation.address.isEmpty
+        return !promiseViewModel.promiseTitle.isEmpty && Calendar.current.startOfDay(for: promiseViewModel.date) != today && !promiseViewModel.address.isEmpty
     }
     
     @StateObject private var authUser: AuthStore = AuthStore()
@@ -160,35 +159,42 @@ struct AddPromiseView: View {
                     
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
                     HStack {
-                        // MARK: promiseViewModel.promiseLocation.destination로 장소등록을 할 때 장소명이 나오지 않아서 promiseLocation.destination으로 수정
-                        if !promiseLocation.destination.isEmpty {
-                           
-                            // 버튼
+                        Button {
+                            addPlaceMapSheet = true
+                            //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
+//                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
+                        } label: {
+                            Label("장소 검색", systemImage: "mappin")
+                                .foregroundColor(.white)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .sheet(isPresented: $addPlaceMapSheet) {
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address, sheetTitle: $sheetTitle)
+                        }
+                        
+                        Spacer()
+                        if !promiseViewModel.destination.isEmpty {
+                            Button {
+                                previewPlaceSheet = true
+                            } label: {
                                 HStack {
-                                    Text("\(promiseLocation.destination)")
-                                        .foregroundColor(.primary)
-                                        .fontWeight(.semibold)
-//                                        .font(.callout)
-                                        .symbolEffect(.bounce, value: animate2)
-                                        .onTapGesture {
-                                            animate2.toggle()
-                                            mapViewSheet = true
-                                        }
-//                                    Image(systemName: "chevron.forward")
-//                                        .resizable()
-//                                        .scaledToFit()
-//                                        .frame(width: 6)
-//                                        .padding(.leading, -5)
+                                    Text("\(promiseViewModel.destination)")
+                                        .font(.callout)
+                                    Image(systemName: "chevron.forward")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 6)
+                                        .padding(.leading, -5)
                                 }
-                            
-                            .sheet(isPresented: $mapViewSheet) {
+                            }
+                            .sheet(isPresented: $previewPlaceSheet) {
                                 VStack {
                                     RoundedRectangle(cornerRadius: 8)
                                         .frame(width: 50, height: 5)
                                         .foregroundStyle(Color.gray)
                                         .padding(.top, 10)
                                     
-                                    PreviewPlaceOnMap(promiseLocation: $promiseLocation)
+                                    PreviewPlaceOnMap(promiseViewModel: promiseViewModel)
                                         .presentationDetents([.height(700)])
                                         .padding(.top, 15)
                                 }
@@ -310,8 +316,8 @@ struct AddPromiseView: View {
                                 promiseViewModel.date = Date()
                                 promiseViewModel.destination = "" // 약속 장소 이름
                                 promiseViewModel.address = "" // 약속장소 주소
-                                promiseViewModel.coordX = 0.0 // 약속장소 위도
-                                promiseViewModel.coordY = 0.0 // 약속장소 경도
+                                promiseViewModel.coordXXX = 0.0 // 약속장소 위도
+                                promiseViewModel.coordYYY = 0.0 // 약속장소 경도
                                 /// 장소에 대한 정보 값
                                 promiseViewModel.promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
                                 /// 지각비 변수 및 상수 값
@@ -400,5 +406,6 @@ struct CustomDatePicker: View {
 }
 
 #Preview {
-    AddPromiseView(promiseViewModel: PromiseViewModel()/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
+    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
+        .environmentObject(PromiseViewModel())
 }

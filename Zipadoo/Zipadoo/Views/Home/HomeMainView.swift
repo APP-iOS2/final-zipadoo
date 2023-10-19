@@ -87,6 +87,7 @@ struct HomeMainView: View {
                                     PromiseDetailView(promise: promise)
                                 } label: {
                                     promiseListCell(promise: promise, color: .primary, isTracking: false)
+                                      
                                 }
 //                                .offset(y: CGFloat(index) * -50) // 이 값 조정
                             }
@@ -198,7 +199,6 @@ struct HomeMainView: View {
                         .frame(width: 300, height: 400)
                         .foregroundColor(.card3)
                         .shadow(radius: 0.5, x: 1.5, y: 1.5)
-
 //            // MARK: - 테두리
             if isTracking {
                 Group {
