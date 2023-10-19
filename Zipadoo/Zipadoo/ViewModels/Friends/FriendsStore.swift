@@ -292,5 +292,5 @@ final class FriendsStore: ObservableObject {
 }
 
 extension FriendsStore {
-    static let sampleData: User = .init(id: "12345", name: "홍길동", nickName: "길동이", phoneNumber: "0101234", profileImageString: "https://img.newspim.com/news/2017/01/31/1701311632536400.jpg", crustDepth: 3, friendsIdArray: [], friendsIdRequestArray: [])
+    static let sampleData: User = .init(id: "12345", name: "홍길동", nickName: "길동이", phoneNumber: "0101234", profileImageString: "https://img.newspim.com/news/2017/01/31/1701311632536400.jpg", crustDepth: 3, friendsIdArray: [], friendsIdRequestArray: [], moleImageString: "doo1") 
 }
