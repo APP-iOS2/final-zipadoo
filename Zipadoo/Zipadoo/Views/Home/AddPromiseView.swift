@@ -47,13 +47,19 @@ struct AddPromiseView: View {
     @State private var sheetTitle: String = "약속 장소 선택"
     
     var isAllWrite: Bool {
-        return !promiseViewModel.promiseTitle.isEmpty &&
-        Calendar.current.startOfDay(for: promiseViewModel.date) != today &&
-        !promiseViewModel.address.isEmpty
+        return !promiseViewModel.promiseTitle.isEmpty && Calendar.current.startOfDay(for: promiseViewModel.date) != today && !promiseViewModel.address.isEmpty
     }
     
     @StateObject private var authUser: AuthStore = AuthStore()
     
+    // 데이트피커
+    @State private var showDatePicker = false
+    
+    // 심볼 이펙트
+    @State  private  var animate1 =  false
+    @State  private  var animate2 =  false
+    @State  private  var animate3 =  false
+ 
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
@@ -61,12 +67,18 @@ struct AddPromiseView: View {
                 // MARK: - 약속 이름 작성 구현
                 VStack(alignment: .leading) {
                     Text("약속 이름")
-                        .font(.title2)
-                        .bold()
-                        .padding(.top, 15)
+                        .font(.title3)
+                        .foregroundColor(.secondary)
+                        .fontWeight(.semibold)
+                        .padding(.top, 25)
+                    Text("")
+                        .foregroundColor(.secondary)
+                        .font(.footnote)
                     
                     HStack {
+                     
                         TextField("약속 이름을 입력해주세요.", text: $promiseViewModel.promiseTitle)
+                            .fontWeight(.semibold)
                         
                             .onChange(of: promiseViewModel.promiseTitle) {
                                 if promiseViewModel.promiseTitle.count > 15 {
@@ -79,6 +91,7 @@ struct AddPromiseView: View {
                             .padding(.trailing, -7)
                         Text("/15")
                             .foregroundColor(.secondary)
+                     
                     }
                     .padding(.top, 10)
                     
@@ -90,23 +103,59 @@ struct AddPromiseView: View {
                     
                     // MARK: - 약속 날짜/시간 선택 구현
                     Text("약속 날짜/시간")
-                        .font(.title2)
-                        .bold()
-                        .padding(.top, 40)
-                    Text("약속시간 1시간 전부터 위치공유가 시작됩니다.")
+                        .font(.title3)
                         .foregroundColor(.secondary)
-                        .font(.subheadline)
+                        .fontWeight(.semibold)
+                        .padding(.top, 25)
+                    Text("약속 시간 30분 전부터 위치공유가 시작됩니다.")
                     
-                    DatePicker("날짜/시간", selection: $promiseViewModel.date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
-                        .datePickerStyle(.compact)
-                        .labelsHidden()
-                        .padding(.top, 10)
+                        .foregroundColor(.red.opacity(0.8))
+                        .font(.footnote)
+                  
+                    HStack {
+                        let time = promiseViewModel.date.formatted(date: .omitted, time: .shortened)
+                        
+                        let date = promiseViewModel.date.formatted(date: .abbreviated, time: .omitted)
+                        
+                        Text("\(time), \(date)")
+                            .fontWeight(.semibold)
+               
+                        Spacer()
+                        
+                        // 버튼
+                            Image(systemName: "calendar")
+                                .foregroundColor(.primary)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .symbolEffect(.bounce, value: animate1)
+                                .onTapGesture {
+                                    animate1.toggle()
+                                    showDatePicker.toggle()
+                                }
+                      
+    
+//                        DatePicker("날짜/시간", selection: $promiseViewModel.date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
+//                            .datePickerStyle(.compact)
+//                            .labelsHidden()
+//.padding(.top, 10)
+                    }
+                    .padding(.top, 10)
+        
+                    Divider()
+                        .frame(maxWidth: .infinity)
+                        .overlay {
+                            Color.secondary
+                        }
                     
                     // MARK: - 약속 장소 구현
                     Text("약속 장소")
-                        .font(.title2)
-                        .bold()
-                        .padding(.top, 40)
+                        .font(.title3)
+                        .foregroundColor(.secondary)
+                        .fontWeight(.semibold)
+                        .padding(.top, 25)
+                    Text("") // 안내문구
+                        .foregroundColor(.secondary)
+                        .font(.footnote)
                     
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
                     HStack {
@@ -151,51 +200,63 @@ struct AddPromiseView: View {
                                 }
                             }
                         }
+                        
                         Spacer()
-                    }
-                    // MARK: - 지각비 구현
-                    /*
-                     지각비 구현 초기안
-                     Text("지각비")
-                     .font(.title2)
-                     .bold()
-                     .padding(.top, 40)
-                     Text("100 단위로 입력 가능합니다.")
-                     .foregroundColor(.gray)
-                     
-                     HStack {
-                     TextField("지각 시 제출 할 감자수를 입력해주세요", text: $penaltyString, axis: .horizontal)
-                     .frame(maxWidth: .infinity)
-                     .textFieldStyle(.roundedBorder)
-                     .keyboardType(.numberPad)
-                     .multilineTextAlignment(.trailing)
-                     Text("개")
-                     }
-                     */
-                    
-                    Text("지각비")
-                        .font(.title2)
-                        .bold()
-                        .padding(.top, 40)
-                    Text("500 단위로 선택 가능합니다.")
-                        .foregroundColor(.gray)
-                    
-                    HStack {
-                        Button {
-                            showingPenalty.toggle()
+                        
+                        NavigationLink {
+                            //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
+                            OneMapView(destination: $destination, address: $address, promiseLocation: $promiseLocation)
                         } label: {
-                            Text("지각비를 선택해주세요.")
+                            Image(systemName: "location.magnifyingglass")
+                                .foregroundColor(.primary)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+ 
                         }
-                        .buttonStyle(.borderedProminent)
-                        
-                        Spacer()
-                        
-                        Text("\(selectedValue)개")
-                            .font(.title3)
-                            .padding(.leading, 100)
+     
                     }
                     .padding(.top, 10)
-                    
+                    Divider()
+                        .frame(maxWidth: .infinity)
+                        .overlay {
+                            Color.secondary
+                        }
+                    // MARK: - 지각비 구현
+                    Text("지각비")
+                        .font(.title3)
+                        .foregroundColor(.secondary)
+                        .fontWeight(.semibold)
+                        .padding(.top, 25)
+                    Text("")
+                        .foregroundColor(.secondary)
+                        .font(.footnote)
+        
+                    HStack {
+                        Text("\(selectedValue)원")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
+                            
+                        Spacer()
+                   // 버튼
+                            Image(systemName: "wonsign.circle")
+                                .foregroundColor(.primary)
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                                .symbolEffect(.bounce, value: animate3)
+                                .onTapGesture {
+                                    animate3.toggle()
+                                    showingPenalty.toggle()
+                                }
+                        
+     
+                    }
+                    .padding(.top, 10)
+                    Divider()
+                        .frame(maxWidth: .infinity)
+                        .overlay {
+                            Color.secondary
+                        }
+        
                     // MARK: - 약속 친구 추가 구현
                     AddFriendCellView(selectedFriends: $promiseViewModel.selectedFriends)
                 }
@@ -226,7 +287,7 @@ struct AddPromiseView: View {
                                                      do {
                                                          try await promiseViewModel.addPromiseData()
                                                          
-                                                         dismiss()                       
+                                                         dismiss()
                                                      } catch {
                                                          print("등록 실패")
                                                      }
@@ -293,13 +354,54 @@ struct AddPromiseView: View {
                 .frame(maxWidth: .infinity)
                 .presentationDetents([.height(300)])
             })
-            //            .sheet(isPresented: $addFriendSheet) {
-            //                FriendsListVIew(isShowingSheet: $addFriendSheet, selectedFriends: $selectedFriends)
-            //            }
+
             .onTapGesture {
                 hideKeyboard()
             }
         }
+        .sheet(isPresented: $showDatePicker) {
+            CustomDatePicker(promiseViewModel: promiseViewModel, date: $promiseViewModel.date, showPicker: $showDatePicker)
+                .presentationDetents([.fraction(0.7)])
+        }
+    }
+}
+
+// Custom Date Picker...
+struct CustomDatePicker: View {
+    @StateObject var promiseViewModel: PromiseViewModel
+    private let today = Calendar.current.startOfDay(for: Date())
+    @Binding var date: Date
+    @Binding var showPicker: Bool
+    
+    var body: some View {
+        
+        ZStack {
+            Text("")
+            // Blur Effect...
+            Rectangle()
+                .fill(.ultraThinMaterial)
+                .ignoresSafeArea()
+            DatePicker("", selection: $promiseViewModel.date ,in: self.today..., displayedComponents: [.date, .hourAndMinute])
+                .datePickerStyle(.graphical)
+                .labelsHidden()
+            
+            // Close Button...
+            Button {
+                
+                withAnimation {
+                    showPicker.toggle()
+                }
+                
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundColor(.primary)
+            
+            }
+            .padding(10)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+
+        }
+        .opacity(showPicker ? 1 : 0)
     }
 }
 
