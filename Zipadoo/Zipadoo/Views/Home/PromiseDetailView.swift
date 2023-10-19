@@ -24,7 +24,6 @@ struct PromiseDetailView: View {
     @State private var remainingTime: Double = 0.0
     @State private var isShowingEditSheet: Bool = false
     @State private var isShowingShareSheet: Bool = false
-    @StateObject var deletePromise: PromiseViewModel = PromiseViewModel()
     @State private var isShowingDeleteAlert: Bool = false
     @State var promise: Promise
     let activeColor: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
@@ -160,11 +159,11 @@ struct PromiseDetailView: View {
                             }
                             
                             Task {
-                                try await deletePromise.exitPromise(promise, locationId: userId)
+                                try await promiseViewModel.exitPromise(promise, locationId: userId)
                             }
                         }
                     } label: {
-                        Text("나가기")
+                        Text("약속나가기")
                     }
                 }
                 
