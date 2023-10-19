@@ -288,7 +288,7 @@ struct FriendsMapView: View {
 }
 
 #Preview {
-    FriendsMapView(promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 37.2325443502025, longitude: 127.21076196328842, participantIdArray: [], checkDoublePromise: false, locationIdArray: []))
+    FriendsMapView(promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 37.2325443502025, longitude: 127.21076196328842, participantIdArray: [], checkDoublePromise: false, locationIdArray: [], penalty: 10))
         .environmentObject(AlertStore())
 }
 

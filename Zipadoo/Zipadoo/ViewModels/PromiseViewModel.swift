@@ -36,8 +36,8 @@ class PromiseViewModel: ObservableObject {
     /// 장소에 대한 정보 값
     @Published var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
     /// 지각비 변수 및 상수 값
-    @Published var selectedValue: Int = 0
-    
+    @Published var penalty: Int = 0
+
     /// 약속에 참여할 친구배열
     @Published var selectedFriends: [User] = []
     
@@ -225,7 +225,8 @@ class PromiseViewModel: ObservableObject {
            longitude: coordYYY,
            participantIdArray: [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id },
            checkDoublePromise: false, // 원하는 값으로 설정
-           locationIdArray: [])
+           locationIdArray: [],
+           penalty: penalty)
         
         do {
             // 친구도 동일하게 저장
@@ -254,10 +255,10 @@ class PromiseViewModel: ObservableObject {
             coordYYY = 0.0 // 약속장소 경도
             /// 장소에 대한 정보 값
             promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
-            /// 지각비 변수 및 상수 값
-            selectedValue = 0
             /// 선택된 친구 초기화
             selectedFriends = []
+            /// 지각비 변수 및 상수 값
+            penalty = 0
 
         } catch {
             print("약속 등록")

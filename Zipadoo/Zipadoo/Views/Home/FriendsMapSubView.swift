@@ -88,7 +88,7 @@ struct FriendsMapSubView: View {
     FriendsMapSubView(locationStore: LocationStore(), isShowingFriendSheet: .constant(true),
                       region: .constant(.automatic),
                       destinationCoordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323),
-                      promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 0, longitude: 0, participantIdArray: [], checkDoublePromise: true, locationIdArray: []))
+                      promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 0, longitude: 0, participantIdArray: [], checkDoublePromise: true, locationIdArray: [], penalty: 0))
 }
 
 struct InfoView: View {

@@ -35,8 +35,10 @@ struct Promise: Hashable, Identifiable, Codable {
     var checkDoublePromise: Bool
     /// 밑에 Percentage모델 id 배열
     var locationIdArray: [String]
+    /// 지각비
+    var penalty: Int
     
-    init(id: String, makingUserID: String, promiseTitle: String, promiseDate: Double, destination: String, address: String, latitude: Double, longitude: Double, participantIdArray: [String], checkDoublePromise: Bool, locationIdArray: [String]) {
+    init(id: String, makingUserID: String, promiseTitle: String, promiseDate: Double, destination: String, address: String, latitude: Double, longitude: Double, participantIdArray: [String], checkDoublePromise: Bool, locationIdArray: [String], penalty: Int) {
         self.id = id
         self.makingUserID = makingUserID
         self.promiseTitle = promiseTitle
@@ -48,6 +50,7 @@ struct Promise: Hashable, Identifiable, Codable {
         self.participantIdArray = participantIdArray
         self.checkDoublePromise = checkDoublePromise
         self.locationIdArray = locationIdArray
+        self.penalty = penalty
     }
     
     init() {
@@ -62,5 +65,6 @@ struct Promise: Hashable, Identifiable, Codable {
         self.participantIdArray = ["1", "2"]
         self.checkDoublePromise = false
         self.locationIdArray = ["1", "2"]
+        self.penalty = 0
     }
 }
