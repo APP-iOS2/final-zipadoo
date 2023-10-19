@@ -32,7 +32,6 @@ struct HomeMainView: View {
     // 약속등록 버튼 바운스
     @State private var animate = false
     
-    // 참여유저 프로필 이미지
     var userImageString: String {
             user?.profileImageString ?? "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
         }
@@ -196,35 +195,31 @@ struct HomeMainView: View {
        
              // 카드 배경색
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .frame(width: 330, height: 330)
-                        .foregroundColor(.lusciousRed)
+                        .frame(width: 300, height: 400)
+                        .foregroundColor(.card3)
                         .shadow(radius: 0.5, x: 1.5, y: 1.5)
-//            RoundedRectangle(cornerRadius: 20, style: .continuous)
-//                .foregroundColor(.white)
-//                .blur(radius: 50)
-//                .frame(width: 330, height: 330)
 
 //            // MARK: - 테두리
-//            if isTracking {
-//                Group {
-//                    RoundedRectangle(cornerRadius: 20, style: .continuous)
-//                        .frame(width: 420, height: 200)
-//                    //                .foregroundStyle(LinearGradient(gradient: Gradient(colors:[.red,.orange,.yellow,.green,.blue,.purple,.pink]), startPoint: .top, endPoint: .bottom))
-//                        .foregroundStyle(LinearGradient(gradient: Gradient(colors:[.cardFrame.opacity(1),.cardFrame,.cardFrame,.cardFrame.opacity(1)]), startPoint: .top, endPoint: .bottom))
-//                        .rotationEffect(.degrees(rotation))
-//                        .mask {
-//                            RoundedRectangle(cornerRadius: 20, style: .continuous)
-//                                .stroke(lineWidth: 6) // 라인 두께
-//                                .frame(width: 338, height: 258)
-//                        }
-//                }
-//                // MARK: - 약속 테두리
-//                .onAppear {
-//                    withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
-//                        rotation = 360
-//                    }
-//                }
-//            }
+            if isTracking {
+                Group {
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .frame(width: 200, height: 490)
+                    //                .foregroundStyle(LinearGradient(gradient: Gradient(colors:[.red,.orange,.yellow,.green,.blue,.purple,.pink]), startPoint: .top, endPoint: .bottom))
+                        .foregroundStyle(LinearGradient(gradient: Gradient(colors:[.sand.opacity(0.4),.frame3,.frame3,.frame3.opacity(0.4)]), startPoint: .top, endPoint: .bottom))
+                        .rotationEffect(.degrees(rotation))
+                        .mask {
+                            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                                .stroke(lineWidth: 3) // 라인 두께
+                                .frame(width: 298, height: 398)
+                        }
+                }
+                // MARK: - 약속 테두리
+                .onAppear {
+                    withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
+                        rotation = 360
+                    }
+                }
+            }
             VStack(alignment: .leading) {
                 // MARK: - 약속 제목, 맵 버튼
                 HStack {
@@ -242,25 +237,6 @@ struct HomeMainView: View {
                                 .frame(width: 40, height: 40)
                                 .foregroundColor(.primary)
                             // 맵 아이콘 태두리
-                            if isTracking {
-                                Group {
-                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                        .frame(width: 30, height: 40)
-                                        .foregroundStyle(LinearGradient(gradient: Gradient(colors:[.nickel.opacity(0.5), .primaryInvert,.silver, .primaryInvert.opacity(1)]), startPoint: .top, endPoint: .bottom))
-                                        .rotationEffect(.degrees(rotation))
-                                        .mask {
-                                            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                                .stroke(lineWidth: 1) // 라인 두께
-                                                .frame(width: 39, height: 39)
-                                        }
-                                }
-                                .onAppear {
-                                    withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
-                                        rotation = 360
-                                    }
-                                }
-                            }
-// 맵 아이콘 색
                             Image(systemName: "map.fill")
                                 .fontWeight(.bold)
                                 .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -332,10 +308,10 @@ struct HomeMainView: View {
                 // 참여자의 ID를 통해 참여자 정보 가져오기
             }
             .padding(.horizontal, 20)
-            .frame(width: 330, height: 330)
+            .frame(width: 300, height: 400)
         }
 //        .opacity(isTracking ? 1 : 0.5)
-        .padding(20)
+       
         .onAppear {
             Task {
                 try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
