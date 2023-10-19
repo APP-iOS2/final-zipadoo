@@ -15,6 +15,7 @@ struct LocationAndParticipant: Identifiable {
     var location: Location
     var nickname: String
     var imageString: String
+    var sampleImageString: String = "doo1"
 }
 
 class LocationStore: ObservableObject {
@@ -31,6 +32,8 @@ class LocationStore: ObservableObject {
     var myLocationId: String = ""
     
     let dbRef = Firestore.firestore()
+    
+    var randomImageString: [String] = ["doo1","doo2","doo3","doo4","doo5","doo6","doo7","doo8","doo9"]
     
 //    init() {
 //        myLocation = Location(participantId: myid, departureLatitude: 0, departureLongitude: 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
@@ -69,6 +72,8 @@ class LocationStore: ObservableObject {
                 DispatchQueue.main.async {
                     self.locationDatas = temp
                     self.locationParticipantDatas = locationParticipantTemp
+                    // *이슈 패치받을때 마다 한번 불러와야할 이미지값을 계속 반복해서 받고 있음. (깜빡거림이 있을 수 있고, 불필요한 명령 반복)
+                    self.fetchSampleProfileImage()
                 }
                 
                 print(self.locationDatas)
@@ -78,6 +83,26 @@ class LocationStore: ObservableObject {
             }
         } else {
             print("LocationStore에서 유저 id 못가져옴")
+        }
+    }
+    func calculateRank() -> Int {
+        var count: Int = 0
+        for locationData in locationDatas {
+            if locationData.arriveTime != 0 {
+                count += 1
+            }
+        }
+        return count
+    }
+    
+    // FriendsMapView에서 사용할 프로필 이미지 배열을 셔플 (.task에서 한번 실행)
+    func shuffleSampleProfileImage() {
+        randomImageString.shuffle()
+    }
+    // FriendsMapView에서 사용할 프로필 이미지를 인덱스 번호에 맞춰 패치해줌 (fetchData안에 들어있음)
+    func fetchSampleProfileImage() {
+        for index in locationParticipantDatas.indices {
+            locationParticipantDatas[index].sampleImageString = randomImageString[index]
         }
     }
     
@@ -93,7 +118,7 @@ class LocationStore: ObservableObject {
         return nickname
     }
     
-    /// locationData의 participantId로 유저의 닉네임만 가져오기
+    /// locationData의 participantId로 유저의 이미지만 가져오기
     func fetchUserImageString(participantId: String) async throws -> String {
         var imageString = " - "
         do {
@@ -127,10 +152,12 @@ class LocationStore: ObservableObject {
         dbRef.collection("Location").document(locationId).updateData(updateData1)
         dbRef.collection("Location").document(locationId).updateData(updateData2)
     }
-    
-    func updateArriveTime(locationId: String, newValue arriveTime: Double) {
+    // Rank 추가하기
+    func updateArriveTime(locationId: String, arriveTime: Double, rank: Int) {
         let updateData: [String: Any] = ["arriveTime": arriveTime]
         dbRef.collection("Location").document(locationId).updateData(updateData)
+        let updateData2: [String: Any] = ["rank": rank]
+        dbRef.collection("Location").document(locationId).updateData(updateData2)
     }
     
     static func deleteLocationData(locationId: String) async throws {
@@ -139,5 +166,13 @@ class LocationStore: ObservableObject {
         } catch {
             print("deleteLocationData failed")
         }
+    }
+    
+    /// 받아온 locationAndParticipants 배열을 순위에 따라 정렬
+    func sortResult(resultArray: [LocationAndParticipant]) -> [LocationAndParticipant] {
+        let arriveArray = resultArray.filter({$0.location.rank != 0})
+        let tempArray: [LocationAndParticipant] = arriveArray.sorted(by: {$0.location.rank < $1.location.rank})
+        let notArriveArray = resultArray.filter({$0.location.rank == 0})
+        return tempArray + notArriveArray // 빨리도착한 사람 순으로 정렬
     }
 }
