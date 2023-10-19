@@ -26,8 +26,8 @@ struct PromiseDetailView: View {
     @State private var isShowingShareSheet: Bool = false
     @State private var isShowingDeleteAlert: Bool = false
     @State var promise: Promise
-    let activeColor: UIColor =  #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
-    let disabledColor: UIColor =  #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
+    let activeColor: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+    let disabledColor: UIColor = #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
     
     // MARK: - Properties
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -56,7 +56,7 @@ struct PromiseDetailView: View {
                     memberStatusView
                 }
             }
-            .padding(.horizontal, 20)
+            .padding(.horizontal, 15)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     zipadooToolbarView
@@ -92,12 +92,12 @@ struct PromiseDetailView: View {
         })
         .onAppear {
             Task {
-                try await promiseViewModel.fetchData()
+                try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
             }
         }
         .refreshable {
             Task {
-                try await promiseViewModel.fetchData()
+                try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
             }
         }
         //        .navigationDestination(isPresented: $isShowingEditSheet) {
@@ -137,8 +137,11 @@ struct PromiseDetailView: View {
             
             Menu {
                 if loginUser.currentUser?.id == promise.makingUserID {
-                    Button {
-                        isShowingEditSheet.toggle()
+//                    Button {
+//                        isShowingEditSheet.toggle()
+//                    } 
+                    NavigationLink {
+                        PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
                     } label: {
                         Text("수정")
                     }
@@ -178,32 +181,32 @@ struct PromiseDetailView: View {
         .foregroundColor(.secondary)
     }
     
-    private var titleView: some View {
-        Text(promise.promiseTitle)
-            .font(.title2).bold()
-            .padding(.bottom, 1)
-    }
-    
-    private var dateView: some View {
-        Text(("일시 : \(calculateDate(date: promise.promiseDate))"))
-            .padding(.vertical, 3)
-    }
-    
-    private var destinationView: some View {
-        Text("장소 : \(promise.destination)")
-    }
-    
-    private var remainingTimeView: some View {
-        Text(formatRemainingTime())
-            .foregroundStyle(.white)
-            .font(.title).bold()
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 15)
-            .background(statusColor)
-            .clipShape(RoundedRectangle(cornerRadius: 28))
-            .padding(.vertical, 12)
-            .opacity(0.8)
-    }
+//    private var titleView: some View {
+//        Text(promise.promiseTitle)
+//            .font(.title2).bold()
+//            .padding(.bottom, 1)
+//    }
+//    
+//    private var dateView: some View {
+//        Text(("일시 : \(calculateDate(date: promise.promiseDate))"))
+//            .padding(.vertical, 3)
+//    }
+//    
+//    private var destinationView: some View {
+//        Text("장소 : \(promise.destination)")
+//    }
+//    
+//    private var remainingTimeView: some View {
+//        Text(formatRemainingTime())
+//            .foregroundStyle(.white)
+//            .font(.title).bold()
+//            .frame(maxWidth: .infinity)
+//            .padding(.vertical, 15)
+//            .background(statusColor)
+//            .clipShape(RoundedRectangle(cornerRadius: 28))
+//            .padding(.vertical, 12)
+//            .opacity(0.8)
+//    }
     
     private var memberStatusView: some View {
         VStack(alignment: .leading) {
@@ -295,6 +298,36 @@ struct PromiseDetailView: View {
         }
         
         return -1
+    }
+}
+// ArriveResult뷰에서 재사용 위해 extension으로 분리
+extension PromiseDetailView {
+    
+    var titleView: some View {
+        Text(promise.promiseTitle)
+            .font(.title2).bold()
+            .padding(.bottom, 1)
+    }
+    
+    var dateView: some View {
+        Text(("일시 : \(calculateDate(date: promise.promiseDate))"))
+            .padding(.vertical, 3)
+    }
+    
+    var destinationView: some View {
+        Text("장소 : \(promise.destination)")
+    }
+    
+    var remainingTimeView: some View {
+        Text(formatRemainingTime())
+            .foregroundStyle(.white)
+            .font(.title).bold()
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 15)
+            .background(statusColor)
+            .clipShape(RoundedRectangle(cornerRadius: 28))
+            .padding(.vertical, 12)
+            .opacity(0.8)
     }
 }
 
