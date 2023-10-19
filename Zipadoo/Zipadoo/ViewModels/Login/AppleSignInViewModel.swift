@@ -18,12 +18,17 @@ class AppleSignInViewModel: ObservableObject {
     @AppStorage ("logState") var logState = false
     @Published var nonce = ""
     
+    @Published var id: String = ""
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var nickName: String = ""
     @Published var name: String = ""
     @Published var phoneNumber: String = ""
     @Published var selectedImage: UIImage?
+    
+    @State var loginResult: Bool = false // 로그인 성공 시 풀스크린 판별한 Bool 값
+    @State var uniqueEmail: Bool = false // 이메일 중복 체크
+    @State var isSigninLinkActive: Bool = false // uniqueEmail = false일 경우 회원가입뷰 버튼으로 활성화
     
     let dbRef = Firestore.firestore().collection("Users")
     
@@ -101,16 +106,38 @@ class AppleSignInViewModel: ObservableObject {
             let credwtion = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
             Task {
                 do {
-                    try await Auth.auth().signIn(with: credwtion)
-                    let userRef = dbRef.document(FirebaseAuth.Auth.auth().currentUser!.uid)
-                    try await userRef.setData([
-                        "phoneNumber": FirebaseAuth.Auth.auth().currentUser?.phoneNumber ?? "Unknown",
-                        "email": FirebaseAuth.Auth.auth().currentUser?.email ?? ""])
+//                    let userRef = dbRef.document(FirebaseAuth.Auth.auth().currentUser!.uid)
+//                    try await userRef.setData([
+//                        "phoneNumber": FirebaseAuth.Auth.auth().currentUser?.phoneNumber ?? "Unknown",
+//                        "email": FirebaseAuth.Auth.auth().currentUser?.email ?? ""])
                     
                     DispatchQueue.main.async {
                         self.logState = true
+                        if isCorrectEmail(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown") {
+                            print("emailCheck")
+                            print(FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown")
+                            // 여기에 데이터를 파이어베이스로 보내고 중복 체크를 수행하는 코드를 추가합니다.
+                            self.emailCheck(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown") { isUnique in
+                                self.uniqueEmail = isUnique // 중복 체크 결과를 업데이트합니다.
+                                if isUnique {
+                                    // 중복이 없으면 회원가입 뷰로 이동
+                                    self.uniqueEmail = true
+                                    self.isSigninLinkActive = true
+                                } else {
+                                    // 이메일이 중복이 있을 때 홈 뷰로 이동
+                                    Task {
+                                        do {
+                                            let emailLoginResult: Bool = try await self.login()
+                                            self.loginResult = emailLoginResult
+                                        } catch {
+                                            print("로그인 실패")
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                    
+                    try await Auth.auth().signIn(with: credwtion)
                 } catch {
                     print("error 46")
                 }
@@ -154,5 +181,3 @@ private func sha256(_ input: String) -> String {
     
     return hashString
 }
-
-
