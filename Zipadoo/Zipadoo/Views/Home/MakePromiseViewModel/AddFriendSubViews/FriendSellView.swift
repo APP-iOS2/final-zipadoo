@@ -28,11 +28,11 @@ struct FriendSellView: View {
                     Image(systemName: "minus.circle.fill")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 20)
+                        .frame(width: 25)
                 }
-                .offset(x: 23, y: -22)
+                .offset(x: 25, y: -24)
             }
-//            .shadow(radius: 1)
+            .shadow(radius: 1)
             .tint(.red)
             
             Text(friend.nickName)

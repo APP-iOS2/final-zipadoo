@@ -5,6 +5,7 @@
         "color-space" : "srgb",
         "components" : {
           "alpha" : "1.000",
+<<<<<<< HEAD:Zipadoo/Zipadoo/Assets.xcassets/Color/asparagus.colorset/Contents.json
 <<<<<<<< Updated upstream:Zipadoo/Zipadoo/Assets.xcassets/Color/asparagus.colorset/Contents.json
           "blue" : "0.000",
           "green" : "0.566",
@@ -14,6 +15,11 @@
           "green" : "1.000",
           "red" : "1.000"
 >>>>>>>> Stashed changes:Zipadoo/Zipadoo/Assets.xcassets/Color/primaryInvert.colorset/Contents.json
+=======
+          "blue" : "0.521",
+          "green" : "0.307",
+          "red" : "1.000"
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218):Zipadoo/Zipadoo/Assets.xcassets/Color/c.colorset/Contents.json
         }
       },
       "idiom" : "universal"
