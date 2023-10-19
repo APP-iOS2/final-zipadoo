@@ -5,9 +5,15 @@
         "color-space" : "srgb",
         "components" : {
           "alpha" : "1.000",
+<<<<<<<< Updated upstream:Zipadoo/Zipadoo/Assets.xcassets/Color/asparagus.colorset/Contents.json
           "blue" : "0.000",
           "green" : "0.566",
           "red" : "0.574"
+========
+          "blue" : "1.000",
+          "green" : "1.000",
+          "red" : "1.000"
+>>>>>>>> Stashed changes:Zipadoo/Zipadoo/Assets.xcassets/Color/primaryInvert.colorset/Contents.json
         }
       },
       "idiom" : "universal"
@@ -23,9 +29,9 @@
         "color-space" : "srgb",
         "components" : {
           "alpha" : "1.000",
-          "blue" : "1.000",
-          "green" : "1.000",
-          "red" : "1.000"
+          "blue" : "0.000",
+          "green" : "0.000",
+          "red" : "0.000"
         }
       },
       "idiom" : "universal"

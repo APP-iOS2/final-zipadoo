@@ -2,12 +2,18 @@
   "colors" : [
     {
       "color" : {
-        "color-space" : "srgb",
+        "color-space" : "display-p3",
         "components" : {
           "alpha" : "1.000",
+<<<<<<<< Updated upstream:Zipadoo/Zipadoo/Assets.xcassets/Color/Mocha.colorset/Contents.json
           "blue" : "0.000",
           "green" : "0.322",
           "red" : "0.579"
+========
+          "blue" : "0.430",
+          "green" : "0.311",
+          "red" : "0.877"
+>>>>>>>> Stashed changes:Zipadoo/Zipadoo/Assets.xcassets/Color/card.colorset/Contents.json
         }
       },
       "idiom" : "universal"

@@ -110,7 +110,9 @@ struct AddPromiseView: View {
                         .padding(.top, 25)
                     Text("약속 시간 30분 전부터 위치공유가 시작됩니다.")
                     
-                        .foregroundColor(.red.opacity(0.8))
+
+                        .foregroundColor(.red.opacity(0.7))
+
                         .font(.footnote)
                   
                     HStack {
@@ -355,7 +357,9 @@ struct AddPromiseView: View {
         }
         .sheet(isPresented: $showDatePicker) {
             CustomDatePicker(promiseViewModel: promiseViewModel, date: $promiseViewModel.date, showPicker: $showDatePicker)
+
                 .presentationDetents([.fraction(0.7)])
+
         }
     }
 }
@@ -370,7 +374,9 @@ struct CustomDatePicker: View {
     var body: some View {
         
         ZStack {
+
             Text("")
+
             // Blur Effect...
             Rectangle()
                 .fill(.ultraThinMaterial)

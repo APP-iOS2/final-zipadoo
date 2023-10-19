@@ -13,7 +13,9 @@ import SlidingTabView
 struct HomeMainView: View {
     
     let user: User?
+
     //    @StateObject private var loginUser: UserStore = UserStore()
+
     
     @ObservedObject private var locationStore: LocationStore = LocationStore()
     
@@ -36,10 +38,12 @@ struct HomeMainView: View {
     var userImageString: String {
             user?.profileImageString ?? "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
         }
+
     
     // 기기별 화면크기 선언
     let screenWidth = UIScreen.main.bounds.size.width
     let screenHeight = UIScreen.main.bounds.size.height
+
     
     var body: some View {
         NavigationStack {
@@ -77,7 +81,9 @@ struct HomeMainView: View {
                                 NavigationLink {
                                     PromiseDetailView(promise: promise)
                                 } label: {
+
                                     promiseListCell(promise: promise, color: .red, isTracking: true)
+
                                 }
 //                                .offset(y: CGFloat(index) * -50) // 이 값 조정
                             }
@@ -145,15 +151,17 @@ struct HomeMainView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    // 약속 추가 버튼
+
                         Image(systemName: "calendar.badge.plus")
                             .foregroundColor(.primary)
                             .fontWeight(.semibold)
+                            .symbolEffect(.bounce, value: animate)
+
                             .onTapGesture {
                                 animate.toggle()
                                 isShownFullScreenCover.toggle()
                             }
-              
+
                     .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
                         AddPromiseView(promiseViewModel: promise)
                     })
@@ -189,6 +197,7 @@ struct HomeMainView: View {
         }
         
     }
+
     func promiseListCell(promise: Promise, color: Color, isTracking: Bool) -> some View {
         // MARK: - 카드 배경 이미지, 테두리
         ZStack {
@@ -225,14 +234,16 @@ struct HomeMainView: View {
 //                    }
 //                }
 //            }
+
             VStack(alignment: .leading) {
                 // MARK: - 약속 제목, 맵 버튼
                 HStack {
                     Text(promise.promiseTitle)
                         .font(.title)
                         .fontWeight(.bold)
-                        .foregroundColor(.primaryInvert)
+                        .foregroundColor(.withe)
                     Spacer()
+
                     NavigationLink {
                         FriendsMapView(promise: promise)
                     } label: {
