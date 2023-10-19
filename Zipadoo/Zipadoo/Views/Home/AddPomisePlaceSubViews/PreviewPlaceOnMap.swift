@@ -12,11 +12,12 @@ import MapKit
 struct PreviewPlaceOnMap: View {
     /// 선택한 약속장소에 대한 카메라 포지션 값
     @State private var position: MapCameraPosition = MapCameraPosition.automatic
-    @Binding var promiseLocation: PromiseLocation
+    @ObservedObject var promiseViewModel: PromiseViewModel
+//    @Binding var promiseLocation: PromiseLocation
     var body: some View {
         Map(position: $position, bounds: MapCameraBounds(maximumDistance: 2000)) {
             UserAnnotation()
-            Annotation("", coordinate: CLLocationCoordinate2D(latitude: promiseLocation.latitude, longitude: promiseLocation.longitude)) {
+            Annotation("", coordinate: CLLocationCoordinate2D(latitude: promiseViewModel.coordXXX, longitude: promiseViewModel.coordYYY)) {
                 VStack {
                     ZStack {
                         RoundedRectangle(cornerRadius: 5)
@@ -25,7 +26,7 @@ struct PreviewPlaceOnMap: View {
                             .frame(width: 150, height: 35)
                             .foregroundStyle(.yellow)
                             .overlay {
-                                Text(promiseLocation.destination)
+                                Text(promiseViewModel.destination)
                                     .font(.footnote)
                                     .padding(.all, 12)
                                     .foregroundStyle(.black)
@@ -44,7 +45,7 @@ struct PreviewPlaceOnMap: View {
             }
         }
         .onAppear {
-            position = .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: promiseLocation.latitude, longitude: promiseLocation.longitude), latitudinalMeters: 2000, longitudinalMeters: 2000))
+            position = .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: promiseViewModel.coordXXX, longitude: promiseViewModel.coordYYY), latitudinalMeters: 2000, longitudinalMeters: 2000))
         }
         .mapControls {
             MapUserLocationButton()
@@ -56,5 +57,6 @@ struct PreviewPlaceOnMap: View {
 }
 
 #Preview {
-    PreviewPlaceOnMap(promiseLocation: .constant(PromiseLocation(destination: "서울시청", address: "", latitude: 37.5665, longitude: 126.9780)))
+    PreviewPlaceOnMap(promiseViewModel: PromiseViewModel())
+//    PreviewPlaceOnMap(promiseViewModel: .constant(PromiseLocation(destination: "서울시청", address: "", latitude: 37.5665, longitude: 126.9780)))
 }

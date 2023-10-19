@@ -26,9 +26,9 @@ struct PromiseDetailView: View {
     @State private var isShowingShareSheet: Bool = false
     @StateObject var deletePromise: PromiseViewModel = PromiseViewModel()
     @State private var isShowingDeleteAlert: Bool = false
-    @State var promise: Promise
-    let activeColor: UIColor =  #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
-    let disabledColor: UIColor =  #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
+    let promise: Promise
+    let activeColor: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+    let disabledColor: UIColor = #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
     
     // MARK: - Properties
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -138,8 +138,11 @@ struct PromiseDetailView: View {
             
             Menu {
                 if loginUser.currentUser?.id == promise.makingUserID {
-                    Button {
-                        isShowingEditSheet.toggle()
+//                    Button {
+//                        isShowingEditSheet.toggle()
+//                    } 
+                    NavigationLink {
+                        PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
                     } label: {
                         Text("수정")
                     }
