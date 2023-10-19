@@ -23,7 +23,7 @@ struct PromiseEditView: View {
     @State private var alertMessage = ""
     @State private var editSelectedFriends: [String] = []
     @State var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
-    @StateObject var editPromise: PromiseViewModel = PromiseViewModel()
+    @StateObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
     @StateObject private var authUser: AuthStore = AuthStore()
     @StateObject var friendsStore: FriendsStore = FriendsStore()
     @StateObject var userStore: UserStore = UserStore()
