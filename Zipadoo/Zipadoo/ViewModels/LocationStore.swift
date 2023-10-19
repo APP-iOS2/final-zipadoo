@@ -14,50 +14,97 @@ struct LocationAndParticipant: Identifiable {
     var id = UUID().uuidString
     var location: Location
     var nickname: String
+    var imageString: String
+    var sampleImageString: String = "doo1"
 }
 
 class LocationStore: ObservableObject {
+//    let gpsStore: GPSStore = GPSStore()
+    /// 나의 Location 저장
+    @Published var myLocation: Location = Location(participantId: "", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
     /// 참여자들의 Location 저장
     @Published var locationDatas: [Location] = []
     /// 참여자들의 Location과 닉네임을 저장
     @Published var locationParticipantDatas: [LocationAndParticipant] = []
     
+    var myid: String = AuthStore.shared.currentUser?.id ?? ""
+    
+    var myLocationId: String = ""
+    
     let dbRef = Firestore.firestore()
     
+    var randomImageString: [String] = ["doo1","doo2","doo3","doo4","doo5","doo6","doo7","doo8","doo9"]
+    
+//    init() {
+//        myLocation = Location(participantId: myid, departureLatitude: 0, departureLongitude: 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+//        print("myLocation 초기화 완료: \(myLocation)")
+//    }
+    
     /// locationIdArray로 Location배열 패치
-       @MainActor
-       func fetchData(locationIdArray: [String]) async throws {
-           do {
-//               locationDatas.removeAll()
-//               locationParticipantDatas.removeAll()
-               
-               var temp: [Location] = []
-               var locationParticipantTemp: [LocationAndParticipant] = []
-               
-               for locationId in locationIdArray {
-                   let snapshot = try await dbRef.collection("Location").document(locationId).getDocument()
-                   let locationData = try snapshot.data(as: Location.self)
-                   
-                   // 닉네임 가져오기
-                   let nickname = try await fetchUserNickname(participantId: locationData.participantId)
-                   
-                   temp.append(locationData)
-                   
-                   // LocationAndNickname으로도 저장
-                   locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: nickname))
-               }
-               
-               DispatchQueue.main.async {
-                   self.locationDatas = temp
-                   self.locationParticipantDatas = locationParticipantTemp
-               }
-           
-               print(self.locationDatas)
-               
-           } catch {
-               print("fetch locationData failed")
-           }
-       }
+    @MainActor
+    func fetchData(locationIdArray: [String]) async throws {
+        if let myid = AuthStore.shared.currentUser?.id {
+            do {
+                //               locationDatas.removeAll()
+                //               locationParticipantDatas.removeAll()
+                
+                var temp: [Location] = []
+                var locationParticipantTemp: [LocationAndParticipant] = []
+                
+                for locationId in locationIdArray {
+                    let snapshot = try await dbRef.collection("Location").document(locationId).getDocument()
+                    let locationData = try snapshot.data(as: Location.self)
+                    // 닉네임 가져오기
+                    let nickname = try await fetchUserNickname(participantId: locationData.participantId)
+                    // 이미지 가져오기
+                    let imageString = try await fetchUserImageString(participantId: locationData.participantId)
+                    // myLocation에 자기 데이터 저장
+                    if locationData.participantId == myid {
+                        myLocationId = locationData.id
+                        myLocation.id = myLocationId
+                    }
+                    // LocationAndNickname으로도 나 포함하여 다 저장
+                    locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: nickname, imageString: imageString))
+                    // locatioonDatas는 나 포함하여 다 저장
+                    temp.append(locationData)
+                }
+                
+                DispatchQueue.main.async {
+                    self.locationDatas = temp
+                    self.locationParticipantDatas = locationParticipantTemp
+                    // *이슈 패치받을때 마다 한번 불러와야할 이미지값을 계속 반복해서 받고 있음. (깜빡거림이 있을 수 있고, 불필요한 명령 반복)
+                    self.fetchSampleProfileImage()
+                }
+                
+                print(self.locationDatas)
+                
+            } catch {
+                print("fetch locationData failed")
+            }
+        } else {
+            print("LocationStore에서 유저 id 못가져옴")
+        }
+    }
+    func calculateRank() -> Int {
+        var count: Int = 0
+        for locationData in locationDatas {
+            if locationData.arriveTime != 0 {
+                count += 1
+            }
+        }
+        return count
+    }
+    
+    // FriendsMapView에서 사용할 프로필 이미지 배열을 셔플 (.task에서 한번 실행)
+    func shuffleSampleProfileImage() {
+        randomImageString.shuffle()
+    }
+    // FriendsMapView에서 사용할 프로필 이미지를 인덱스 번호에 맞춰 패치해줌 (fetchData안에 들어있음)
+    func fetchSampleProfileImage() {
+        for index in locationParticipantDatas.indices {
+            locationParticipantDatas[index].sampleImageString = randomImageString[index]
+        }
+    }
     
     /// locationData의 participantId로 유저의 닉네임만 가져오기
     func fetchUserNickname(participantId: String) async throws -> String {
@@ -69,6 +116,18 @@ class LocationStore: ObservableObject {
             print("fetchUserNickname failed")
         }
         return nickname
+    }
+    
+    /// locationData의 participantId로 유저의 닉네임만 가져오기
+    func fetchUserImageString(participantId: String) async throws -> String {
+        var imageString = " - "
+        do {
+            imageString = try await UserStore.fetchUser(userId: participantId)?.profileImageString ?? " - "
+            
+        } catch {
+            print("fetchUserImageString failed")
+        }
+        return imageString
     }
     
     static func addLocationData(location: Location) {
@@ -86,17 +145,19 @@ class LocationStore: ObservableObject {
         dbRef.collection("Location").document(locationId).updateData(updateData1)
         dbRef.collection("Location").document(locationId).updateData(updateData2)
     }
-
+    
     func updateCurrentLocation(locationId: String, newLatitude: Double, newLongtitude: Double) {
         let updateData1: [String: Any] = ["currentLatitude": newLatitude]
         let updateData2: [String: Any] = ["currentLongitude": newLongtitude]
         dbRef.collection("Location").document(locationId).updateData(updateData1)
         dbRef.collection("Location").document(locationId).updateData(updateData2)
     }
-    
-    func updateArriveTime(locationId: String, newValue arriveTime: Double) {
+    // Rank 추가하기
+    func updateArriveTime(locationId: String, arriveTime: Double, rank: Int) {
         let updateData: [String: Any] = ["arriveTime": arriveTime]
         dbRef.collection("Location").document(locationId).updateData(updateData)
+        let updateData2: [String: Any] = ["rank": rank]
+        dbRef.collection("Location").document(locationId).updateData(updateData2)
     }
     
     static func deleteLocationData(locationId: String) async throws {

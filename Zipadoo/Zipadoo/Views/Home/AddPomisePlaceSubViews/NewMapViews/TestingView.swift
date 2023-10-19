@@ -5,7 +5,7 @@
 //  Created by 김상규 on 10/9/23.
 //
 
-///테스트 완료 , 사용안함
+//MARK: - 테스트 완료 , 사용하지 않음
 //import SwiftUI
 //import Alamofire
 //

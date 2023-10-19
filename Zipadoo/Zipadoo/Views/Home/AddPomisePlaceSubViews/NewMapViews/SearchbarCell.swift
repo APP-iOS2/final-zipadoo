@@ -40,17 +40,21 @@ struct SearchBarCell: View {
     var body: some View {
         VStack {
             HStack {
+                // 장소(키워드) 입력창
                 TextField(textFieldText, text: $searchText)
                     .textFieldStyle(.roundedBorder)
+                // Search 버튼
                 Button {
-                    if searchText != "" {
+                    if searchText != "" { // searchText가 빈 값이 아닐 경우 searching값을 true로 지정
                         searching = true
                         isClickedPlace = false
                         selectedPlace = false
+                        // 카카오로컬 API를 활용하여 카카오로컬에 담긴 JSON파일과 통신하여 데이터를 불러옴
                         searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: String(locationManager.location?.coordinate.latitude ?? 0.0), currentPoiY: String(locationManager.location?.coordinate.longitude ?? 0.0), radius: radius, sort: sort)
                         print("현재 사용자 위도(장소검색): \(locationManager.location?.coordinate.latitude ?? 0.0)")
                         print("현재 사용자 경도(장소검색): \(locationManager.location?.coordinate.longitude ?? 0.0)")
-                    } else {
+                        
+                    } else { // searchText가 빈 값일 경우 해당 텍스트를 보여줌
                         textFieldText = "한 글자 이상 입력해주세요."
                     }
                 } label: {
