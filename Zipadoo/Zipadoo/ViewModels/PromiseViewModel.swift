@@ -276,20 +276,37 @@ class PromiseViewModel: ObservableObject {
     
     // MARK: - 약속 수정 함수
     /// 약속 수정 함수
-    func editPromise(_ promise: Promise) {
-        let updatedData: [String: Any] = [
-            "promiseTitle": "\(promise.promiseTitle)",
-            "promiseDate": "\(promise.promiseDate)",
-            "destination": "\(promise.destination)",
-            "participantIdArray": "\(promise.participantIdArray)"
-        ]
+//    func editPromise(_ promise: Promise) {
+//        let updatedData: [String: Any] = [
+//            "participantIdArray": "\(promise.participantIdArray)"
+//        ]
+//        
+//        dbRef.document(promise.id).updateData(updatedData) { error in
+//            if let error = error {
+//                print("Error updating document: \(error)")
+//            } else {
+//                print("Document successfully updated")
+//            }
+//        }
+//    }
+    
+    // 나가기 버튼 구현을 위해 기존 함수 주석처리
+    func exitPromise(_ promise: Promise, locationId: String) async throws {
         
-        dbRef.document(promise.id).updateData(updatedData) { error in
-            if let error = error {
-                print("Error updating document: \(error)")
-            } else {
-                print("Document successfully updated")
-            }
+        do {
+            let firestore = Firestore.firestore()
+            let promiseRef = firestore.collection("Promise").document(promise.id)
+            
+            let updateData: [String: Any] = [
+                "participantIdArray": promise.participantIdArray,
+                "locationIdArray": promise.locationIdArray
+            ]
+            
+            try await LocationStore.deleteLocationData(locationId: locationId)
+            
+            try await promiseRef.updateData(updateData)
+        } catch {
+            print("약속 업데이트 실패: \(error)")
         }
     }
     
