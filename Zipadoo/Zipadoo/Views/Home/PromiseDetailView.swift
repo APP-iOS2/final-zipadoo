@@ -18,7 +18,7 @@ struct PromiseDetailView: View {
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
     @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
     @StateObject var loginUser: UserStore = UserStore()
-  
+    
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
@@ -26,7 +26,7 @@ struct PromiseDetailView: View {
     @State private var isShowingShareSheet: Bool = false
     @StateObject var deletePromise: PromiseViewModel = PromiseViewModel()
     @State private var isShowingDeleteAlert: Bool = false
-    let promise: Promise
+    @State var promise: Promise
     let activeColor: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
     let disabledColor: UIColor = #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
     
@@ -69,15 +69,13 @@ struct PromiseDetailView: View {
                 title: Text("약속 내역을 삭제합니다."),
                 message: Text("해당 작업은 복구되지 않습니다."),
                 primaryButton: .destructive(Text("삭제하기"), action: {
-                    if let loginUserID = loginUser.currentUser?.id {
-                        Task {
-                            do {
-                                try await deletePromise.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
-                                
-                                dismiss()
-                            } catch {
-                                print("실패")
-                            }
+                    Task {
+                        do {
+                            try await promiseViewModel.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
+                            
+                            dismiss()
+                        } catch {
+                            print("실패")
                         }
                     }
                 }),
@@ -93,6 +91,19 @@ struct PromiseDetailView: View {
             currentDate = Date().timeIntervalSince1970
             formatRemainingTime()
         })
+        .onAppear {
+            Task {
+                try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
+            }
+        }
+        .refreshable {
+            Task {
+                try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
+            }
+        }
+        //        .navigationDestination(isPresented: $isShowingEditSheet) {
+        //            PromiseEditView(promise: .constant(promise))
+        //        }
 //        .onAppear {
 //            Task {
 //                try await promiseViewModel.fetchData()
@@ -127,22 +138,42 @@ struct PromiseDetailView: View {
             
             Menu {
                 if loginUser.currentUser?.id == promise.makingUserID {
-                    Button {
-                        isShowingEditSheet.toggle()
+//                    Button {
+//                        isShowingEditSheet.toggle()
+//                    } 
+                    NavigationLink {
+                        PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
                     } label: {
                         Text("수정")
                     }
-                } else {
+                } else if promise.participantIdArray.contains(loginUser.currentUser?.id ?? "") {
                     Button {
-                        
+                        if let userId = loginUser.currentUser?.id {
+                            // 현재 로그인한 사용자 아이디 가져오기
+                            
+                            if let index = promise.participantIdArray.firstIndex(of: userId) {
+                                // 배열에서 ID 위치 확인
+                                // 해당 ID 배열에서 제거
+                                let locationIndex = index + 1
+                                promise.participantIdArray.remove(at: index)
+                                promise.locationIdArray.remove(at: locationIndex)
+                            }
+                            
+                            Task {
+                                try await deletePromise.exitPromise(promise, locationId: userId)
+                            }
+                        }
                     } label: {
                         Text("나가기")
                     }
                 }
-                Button {
-                    isShowingDeleteAlert.toggle()
-                } label: {
-                    Text("삭제")
+                
+                if loginUser.currentUser?.id == promise.makingUserID {
+                    Button {
+                        isShowingDeleteAlert.toggle()
+                    } label: {
+                        Text("삭제")
+                    }
                 }
             } label: {
                 Label("More", systemImage: "ellipsis")
@@ -216,7 +247,7 @@ struct PromiseDetailView: View {
     //        let promiseDate = postPromise.promiseDate
     //        remainingTime = promiseDate - currentDate
     //    }
-  
+    
     private func calculateDate(date: Double) -> String {
         let date = Date(timeIntervalSince1970: date)
         let dateFormatter = DateFormatter()
