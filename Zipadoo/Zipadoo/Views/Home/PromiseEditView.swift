@@ -279,7 +279,8 @@ struct PromiseEditView: View {
             "latitude": editPromise.coordXXX,
             "longitude": editPromise.coordYYY,
             //            "participantIdArray": editSelectedFriends
-            "participantIdArray": selectedFriends.map { $0.id }
+            "participantIdArray": selectedFriends.map { $0.id },
+            "penalty": penalty
         ]
         
         promiseRef.updateData(updatedData) { error in
