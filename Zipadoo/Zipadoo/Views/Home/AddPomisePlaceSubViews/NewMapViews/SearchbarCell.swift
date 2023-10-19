@@ -12,6 +12,7 @@ import CoreLocation
 // MARK: - 장소검색 검색창 뷰모델
 /// 장소검색을 위한 검색창 뷰모델
 struct SearchBarCell: View {
+    @ObservedObject var promiseViewModel: PromiseViewModel
     @ObservedObject var searchOfKakaoLocal: SearchOfKakaoLocal = SearchOfKakaoLocal.sharedInstance
     /// 검색 키워드
     @State private var searchText: String = ""
@@ -35,7 +36,7 @@ struct SearchBarCell: View {
     @Binding var coordXXX: Double
     @Binding var coordYYY: Double
     @Binding var selectedPlacePosition: CLLocationCoordinate2D?
-    @Binding var promiseLocation: PromiseLocation
+//    @Binding var promiseLocation: PromiseLocation
     
     var body: some View {
         VStack {
@@ -157,9 +158,8 @@ struct SearchBarCell: View {
 }
 
 #Preview {
-    SearchBarCell(selectedPlace: .constant(false), isClickedPlace: .constant(false), destination: .constant("장소명"), address: .constant("주소"), coordXXX: .constant(0.0), coordYYY: .constant(0.0),
-        selectedPlacePosition: .constant(CLLocationCoordinate2D(latitude: 37.39570088983171, longitude: 127.1104335101161)),
-        promiseLocation: .constant(PromiseLocation(destination: "", address: "", latitude: 37.5665, longitude: 126.9780)))
+    SearchBarCell(promiseViewModel: PromiseViewModel(), selectedPlace: .constant(false), isClickedPlace: .constant(false), destination: .constant("장소명"), address: .constant("주소"), coordXXX: .constant(0.0), coordYYY: .constant(0.0),
+        selectedPlacePosition: .constant(CLLocationCoordinate2D(latitude: 37.39570088983171, longitude: 127.1104335101161)))
 }
 
 extension String: Identifiable {

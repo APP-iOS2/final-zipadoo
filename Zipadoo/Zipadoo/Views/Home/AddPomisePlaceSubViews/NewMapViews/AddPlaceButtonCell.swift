@@ -12,15 +12,16 @@ import MapKit
 /// 장소 검색 이후 장소 등록을 위한 뷰모델
 struct AddPlaceButtonCell: View {
     @Environment(\.dismiss) private var dismiss /// 이전 뷰(AddPromiseView)로 돌아가는 함수
-    
+    @ObservedObject var promiseViewModel: PromiseViewModel
     var addLocationStore: AddLocationStore = AddLocationStore()
     @Binding var isClickedPlace: Bool
+    @Binding var placeOfText: String
     @Binding var addLocationButton: Bool
     @Binding var destination: String
     @Binding var address: String
     @Binding var coordXXX: Double
     @Binding var coordYYY: Double
-    @Binding var promiseLocation: PromiseLocation
+//    @Binding var promiseLocation: PromiseLocation
     
     var body: some View {
         if isClickedPlace == true {
@@ -39,6 +40,7 @@ struct AddPlaceButtonCell: View {
                                         isClickedPlace = false
                                         destination = ""
                                         address = ""
+                                        placeOfText = ""
                                     } label: {
                                         Image(systemName: "xmark.circle.fill")
                                             .foregroundStyle(.white, .red)
@@ -62,12 +64,16 @@ struct AddPlaceButtonCell: View {
                                 
                                 // 클릭한 장소에 대해 선택하기 버튼을 클릭하면 해당 장소에 대한 값들을 promiseLocation에 입력시킴
                                 Button {
-                                    promiseLocation = addLocationStore.setLocation(destination: destination, address: address, latitude: coordXXX, longitude: coordYYY)
+                                    promiseViewModel.destination = destination
+                                    promiseViewModel.address = address
+                                    promiseViewModel.coordXXX = coordXXX
+                                    promiseViewModel.coordYYY = coordYYY
+                                    /*addLocationStore.setLocation(destination: destination, address: address, latitude: coordXXX, longitude: coordYYY)*/
                                     addLocationButton = true
-                                    print("확정 장소: \(promiseLocation.destination)")
-                                    print("확정 주소: \(promiseLocation.address)")
-                                    print("확정 위도: \(promiseLocation.latitude)")
-                                    print("확정 경도: \(promiseLocation.longitude)")
+                                    print("확정 장소: \(promiseViewModel.destination)")
+                                    print("확정 주소: \(promiseViewModel.address)")
+                                    print("확정 위도: \(promiseViewModel.coordXXX)")
+                                    print("확정 경도: \(promiseViewModel.coordYYY)")
                                     dismiss()
                                 } label: {
                                     Text("장소 선택하기")
