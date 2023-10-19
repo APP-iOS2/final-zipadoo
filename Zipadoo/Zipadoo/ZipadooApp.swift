@@ -66,6 +66,7 @@ struct ZipadooApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State private var showMainView = false
+    @State var linkActive = false
     
     var body: some Scene {
         WindowGroup {
@@ -83,6 +84,14 @@ struct ZipadooApp: App {
                             }
                         }
                 }
+            }
+            .onOpenURL { url in
+                guard url.scheme == "zipadoo" else { return }
+                let components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+                let promiseID = components?.queryItems?.first(where: { $0.name == "promiseID" })?.value
+                print(promiseID)
+                linkActive = true
+                
             }
 //                .onOpenURL(perform: { url in
 //                    if AuthApi.isKakaoTalkLoginUrl(url) {
