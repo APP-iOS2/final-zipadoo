@@ -19,14 +19,19 @@ final class EmailLoginStore: ObservableObject {
     @Published var phoneNumber: String = ""
     /// 선택한 프로필 이미지 UIImage
     @Published var selectedImage: UIImage?
+    /// 두더지 이미지 랜덤 초기화
+    @Published var moleImageString: String
     
     let dbRef = Firestore.firestore().collection("Users")
+    /// 두더지 이미지 랜덤 초기화
+    init() {
+        let randomMoleImageString: [String] = ["doo1", "doo2", "doo3", "doo4", "doo5", "doo6", "doo7", "doo8", "doo9"]
+        moleImageString = randomMoleImageString.randomElement() ?? "doo1"
+    }
 
     /// 유저 회원가입
     func createUser() async throws {
-        
-        try await AuthStore.shared.createUser(email: email, password: password, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImage: selectedImage)
-        
+        try await AuthStore.shared.createUser(email: email, password: password, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImage: selectedImage, moleImageString: moleImageString)
     }
     
     /// 유저 로그인

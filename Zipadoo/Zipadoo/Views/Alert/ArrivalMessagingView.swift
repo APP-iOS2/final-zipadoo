@@ -12,8 +12,29 @@ enum ArrivalType: String {
     case late = "늦게"
     case onTime = "에 딱 맞춰"
 }
+struct ExampleView: View {
+    @State var isShowingAlert: Bool = false
+    var body: some View {
+        VStack {
+            Button {
+                
+                isShowingAlert.toggle()
+            } label: {
+                Text("알람")
+            }
+            .modifier(ArrivalMessagingModifier(isPresented: $isShowingAlert, arrival: ArrivalMsgModel(
+                name: "아라",
+                profileImgString: "https://cdn.discordapp.com/emojis/1154686109234774058.webp?size=240&quality=lossless",
+                rank: 2,
+                arrivarDifference: 720.3641,
+                potato: 500)))
+
+        }
+    }
+}
 
 struct ArrivalMessagingView: View {
+    /// 확인버튼누른 후 창 닫기
     @Binding var isPresented: Bool
     var arrival: ArrivalMsgModel
     
@@ -46,39 +67,59 @@ struct ArrivalMessagingView: View {
         }
     }
     
+    var isRanking: Bool {
+        if arrival.rank < 4 {
+            return true
+        }
+        return false
+    }
     // MARK: - body
     var body: some View {
         VStack {
-            ProfileImageView(imageString: arrival.profileImgString, size: .regular)
-                .padding(.vertical, 12)
-            
-            Text("\(arrival.name)님, \(arrival.rank)등으로 도착하셨습니다!")
-            
-            Text("약속 시간\(timeDifference)\(arrivalType.rawValue) 오셨어요.")
-            
-            if arrivalType == .late {
-                Text("다음부턴 조금 더 일찍 출발해보세요!")
-                Text("\(arrival.potato)감자가 차감 될 예정입니다.")
-                    .font(.caption).bold()
-                    .foregroundColor(.secondary)
+            // MARK: - 도착정보
+            VStack {
+                ProfileImageView(imageString: arrival.profileImgString, size: .regular)
                     .padding(.vertical, 12)
+                
+                VStack {
+                    Text("\(arrival.name)님")
+                    
+                    Text("\(arrival.rank)등으로 도착하셨습니다!")
+                        .fontWeight(.semibold)
+                    
+                }
+                .padding(.bottom, 3)
+                
+                Text("약속 시간\(timeDifference)\(arrivalType.rawValue) 오셨네요")
+                
+//                if arrivalType == .late {
+                    Text("다음부턴 조금 더 일찍 출발해보세요!")
+                    Text("\(arrival.potato)감자가 차감 될 예정입니다")
+                        .font(.footnote).bold()
+                        .foregroundColor(.secondary)
+                        .padding(.vertical, 12)
+//                }
+                
             }
+            .padding(EdgeInsets(top: 18, leading: 12, bottom: 0, trailing: 12))
             
+            // MARK: - 확인 버튼
             Button {
                 isPresented = false
                 print("Button clicked: \(isPresented)")
             } label: {
                 Text("확인")
                     .bold()
-                    .padding(.vertical, 8)
+                    .padding(EdgeInsets(top: 12, leading: 0, bottom: 18, trailing: 0))
                     .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent)
-            .padding([.horizontal, .vertical], 12)
-            .tint(arrivalType == .late ? .red : .blue)
+            .background(.gray.opacity(0.1))
+            .border(.black.opacity(0.2))
+            .cornerRadius(40, corners: .bottomLeft)
+            .cornerRadius(40, corners: .bottomRight)
+            
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 18)
+        .drawingGroup()
         .frame(maxWidth: .infinity)
         .background(
             RoundedRectangle(cornerRadius: 30)
@@ -87,8 +128,13 @@ struct ArrivalMessagingView: View {
                     RoundedRectangle(cornerRadius: 30)
                         .fill(.white)
                 )
+                
         )
-        .padding(.horizontal, 28)
+        .overlay(
+            RoundedRectangle(cornerRadius: 30)
+                .stroke(.black.opacity(0.5), lineWidth: 1)
+        )
+        .padding(.horizontal, 40)
     }
 }
 
@@ -132,4 +178,5 @@ struct ArrivalMessagingModifier: ViewModifier {
             arrivarDifference: 720.3641,
             potato: 500))
       )
+//    ExampleView()
 }

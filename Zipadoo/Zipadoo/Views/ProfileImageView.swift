@@ -29,9 +29,7 @@ enum ProfileImageSize {
         }
     }
 }
-/*
-let dummyImageString: String = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSW47UEfYkQQFKwJfi2sD9SjB4uMYS6zC_RAw&usqp=CAU"
-*/
+
 struct ProfileImageView: View {
     
     /// 파베작업 후 받아올 유저의 프로필 이미지

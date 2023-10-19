@@ -70,6 +70,7 @@ struct HomeMainView: View {
                             }
                             
                         }
+                        // 예정된 약속
                         ForEach(promise.fetchPromiseData) { promise in
                             NavigationLink {
                                 PromiseDetailView(promise: promise)
@@ -210,25 +211,29 @@ struct HomeMainView: View {
                             .fontWeight(.bold)
                             .foregroundColor(.primaryInvert)
                         Spacer()
-                        NavigationLink {
-                            FriendsMapView(promise: promise)
-                        } label: {
-                            ZStack {
-                                // 맵 아이콘 배경색
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .frame(width: 40, height: 40)
-                                    .foregroundColor(.primary)
-                                // 맵 아이콘 태두리
-                                Image(systemName: "map.fill")
-                                    .fontWeight(.bold)
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                    .font(.title2)
-                                    .foregroundColor(.primaryInvert)
-                                
-                            } // ZStack
-                            //                        .offset(y: isTracking ? -40 : 0)
+                        
+                        // 추적중인 약속만 지도뷰 이동 가능
+                        if isTracking {
+                            NavigationLink {
+                                FriendsMapView(promise: promise)
+                            } label: {
+                                ZStack {
+                                    // 맵 아이콘 배경색
+                                    RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                        .frame(width: 40, height: 40)
+                                        .foregroundColor(.primary)
+                                    // 맵 아이콘 태두리
+                                    Image(systemName: "map.fill")
+                                        .fontWeight(.bold)
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .font(.title2)
+                                        .foregroundColor(.primaryInvert)
+                                    
+                                } // ZStack
+                                //                        .offset(y: isTracking ? -40 : 0)
+                            }
+                            .symbolEffect(.pulse.byLayer, options: .repeating, isActive: isTracking)
                         }
-                        .symbolEffect(.pulse.byLayer, options: .repeating, isActive: isTracking)
                     }
                     
                     .padding(.vertical, 30)
