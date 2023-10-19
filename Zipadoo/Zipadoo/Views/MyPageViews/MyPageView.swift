@@ -30,9 +30,31 @@ struct MyPageView: View {
     var tradyPercent: Int {
         return tradyCount/promiseCount*100
     }
+//    @State private var tradyPercent: Double = 0
     var promisePercent: Int {
         return 100 - tradyPercent
     }
+    
+    var dooAction: String {
+        if let moleImageString = currentUser?.moleImageString {
+            switch moleImageString {
+            case "doo1": return "doo1_1"
+            case "doo2": return "doo2_1"
+            case "doo3": return "doo3_1"
+            case "doo4": return "doo4_1"
+            case "doo5": return "doo5_1"
+            case "doo6": return "doo6_1"
+            case "doo7": return "doo7_1"
+            case "doo8": return "doo8_1"
+            case "doo9": return "doo9_1"
+            default:
+                return "doo1_1"
+            }
+        } else {
+            return "doo1_1"
+        }
+    }
+    
     var tradyMessage: String {
         switch promisePercent {
         case 0: "약속이 뭔말인지 몰라요?"
@@ -235,7 +257,7 @@ struct MyPageView: View {
                     
                     // MARK: - 지각깊이
                     
-                    VStack {
+                    VStack(alignment: .leading) {
                         HStack(alignment: .center) {
                             Text("지각 깊이")
                                 .font(.title3)
@@ -243,13 +265,19 @@ struct MyPageView: View {
                             Spacer()
                             Text(crustDepth)
                         }
-                        .padding(.vertical)
+                        Text("  \(tradyMessage)")
+                            .foregroundStyle(.gray)
+                            .padding(.top, 1)
                         ZStack {
                             Image(crustBackgroundImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .clipShape(RoundedRectangle(cornerRadius: 5).size(width: 330, height: 200))
+                                .clipShape(RoundedRectangle(cornerRadius: 5).size(width: 330, height: 230))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 5).size(width: 330, height: 230)
+                                        .stroke(Color.white, lineWidth: 5))
                         }
+                        
                     }
                     .padding()
                     .overlay(alignment: .trailing) {
@@ -262,21 +290,22 @@ struct MyPageView: View {
                                     .foregroundColor(.red)
                                 Text("지각횟수 \(tradyCount)회")
                                     .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                Text(tradyMessage)
-                                    .foregroundColor(.secondary)
-                                    .font(.caption)
-                                    .padding(.vertical, 5)
+                                    .foregroundColor(.black)
                             }
                         }
-                        .background(.white.opacity(0.5))
-                        .offset(x: -25, y: -27)
+                        .padding(3)
+                        .background(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .shadow(radius: 1.2)
+                        .offset(x: -25, y: -40)
                     }
                     .overlay(alignment: .leading) {
-                        Image(currentUser?.moleImageString ?? "doo1")
+                        // 두더지 이미지
+                        Image(dooAction)
                             .resizable()
-                            .frame(width: 110, height: 110)
-                            .offset(x: 33, y: 10)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 100)
+                            .offset(x: 33, y: 25)
                     }
                     
                     .overlay(
@@ -287,6 +316,8 @@ struct MyPageView: View {
                         
                     )
                     .padding(.top, 15)
+                    // test
+//                    Slider(value: $tradyPercent, in: 0...100)
                     
                     // MARK: - 지난 약속
                     VStack {

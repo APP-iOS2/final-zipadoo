@@ -48,7 +48,7 @@ struct FriendsMapSubView: View {
                             region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                         } label: {
                             InfoView(name: annotation.nickname,
-                                     imageString: annotation.sampleImageString,
+                                     imageString: AuthStore.shared.currentUser?.moleImageString ?? "",
                                      destinationLatitude: destinationCoordinate.latitude,
                                      destinationLongitude: destinationCoordinate.longitude,
                                      currentLatitude: locationStore.myLocation.currentLatitude,
