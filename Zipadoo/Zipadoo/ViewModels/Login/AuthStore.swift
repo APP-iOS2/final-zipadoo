@@ -56,7 +56,6 @@ final class AuthStore: ObservableObject {
         } catch {
             print("loadUserData()실패 : 토큰 가져오기 실패!")
         }
-        
     }
     
     /// email 회원가입

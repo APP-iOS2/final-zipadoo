@@ -87,6 +87,7 @@ class AppleSigninViewModel: ObservableObject {
         request.nonce = sha256(nonce)
     }
     
+    //@MainActor?
     func SinginWithAppleCompletion(_ result: Result <ASAuthorization, Error>) {
         switch result {
         case .success(let user):
@@ -137,6 +138,7 @@ class AppleSigninViewModel: ObservableObject {
                         }
                     }
                     try await Auth.auth().signIn(with: credwtion)
+                   
                 } catch {
                     print("error 46")
                 }
