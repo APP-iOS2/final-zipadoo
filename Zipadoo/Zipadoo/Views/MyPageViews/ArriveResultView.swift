@@ -15,8 +15,16 @@ struct ArriveResultView: View {
     
     @ObservedObject private var locationStore = LocationStore()
     
-    // 참여자의 순위나 지각여부등의 결과를 알려주는 텍스트
-    var resultMessage: String = ""
+    /// 약속시간
+    var promiseDate: Date {
+        Date(timeIntervalSince1970: promise.promiseDate)
+    }
+    /// 시간표시 형식 지정
+    let dateformat: DateFormatter = {
+          let formatter = DateFormatter()
+           formatter.dateFormat = "a h시 mm분 ss초"
+           return formatter
+       }()
 
     var body: some View {
         
@@ -83,7 +91,7 @@ struct ArriveResultView: View {
                     VStack {
                         Spacer()
                         
-                        ForEach(locationStore.locationParticipantDatas) { participant in
+                        ForEach(locationStore.sortResult(resultArray: locationStore.locationParticipantDatas)) { participant in
                             
                             arrivedDataCell(participant: participant)
 //                                .border(.red)
@@ -95,98 +103,79 @@ struct ArriveResultView: View {
                 }
             }
             .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-
-            /*
-            // 지각자
-            ZStack {
-                
-                // conerRadius 적용위해 ZStack사용 했습니다
-                Rectangle()
-                    .cornerRadius(15)
-                    .ignoresSafeArea()
-                    .foregroundColor(.gray) // 임시 색
-                    
-                ScrollView {
-                    ForEach(locationStore.locationParticipantDatas) { participant in
-                        
-                        arrivedDataCell(participant: participant)
-                            .padding(.bottom, 12)
-                    }
-                }
-                .padding()
-                
-            }
-            .frame(height: UIScreen.main.bounds.size.height * 0.35)
-             */
         }
         .onAppear {
             Task {
                 // Location정보 패치
                 try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
+                
             }
             
         }
     }
-    
     /// 약속 멤버 도착정보 행(row)
     private func arrivedDataCell(participant: LocationAndParticipant) -> some View {
-        HStack {
+        
+        /// 참여자 도착시간
+        let arriveDate = Date(timeIntervalSince1970: participant.location.arriveTime)
+        /// 등수/지각 표시메세지
+        var resultMessage = ""
+        /// 등수/지각에 따른 텍스트 색
+        var resultColor: Color = .primary
+        /// 도착시간 ~ 약속시간까지의 차이
+        var calculateDate = Calendar.current.dateComponents([.second], from: arriveDate, to: promiseDate).second ?? 0
+        
+        // 등수/지각여부 확인 분기문
+        if participant.location.rank == 0 {
+//            resultMessage = "도착못함"
+            resultColor = .secondary
+        } else {
+            if calculateDate < 0 {
+                resultMessage = "지각!"
+                resultColor = .red
+            } else {
+                resultMessage = "\(participant.location.rank)등"
+//                Label("\(participant.location.rank)등", systemImage: "crown")
+            }
+        }
+        
+        // 반환하는 View
+        return HStack {
             // 이미지
             ProfileImageView(imageString: participant.imageString, size: .xSmall)
                 .clipShape(Circle())
                 
             VStack(alignment: .leading) {
-                
+                // 닉네임
                 Text(participant.nickname)
                     .fontWeight(.semibold)
                 
-                // -> ?뭘넣지
-                Text("Comment")
-                    .font(.footnote)
-                
+                // 도착한 시간
+                if participant.location.arriveTime == 0 {
+                    Text("도착정보가 없어요")
+                        .font(.footnote)
+                        .foregroundStyle(resultColor)
+                    
+                } else {
+//                    Text(dateformat.string(from: Calendar.current.date(byAdding: .hour, value: 9, to: arriveDate) ?? promiseDate))
+                    Text("\(dateformat.string(from: arriveDate)) 도착")
+                        .font(.footnote)
+                        .foregroundStyle(resultColor)
+                }
             }
             
             Spacer()
             
-            Text(caculateResult(location: participant.location))
+            // 등수표기/지각 여부
+            Text(resultMessage)
                 .padding(3)
-                .background(.yellow) // 임시 색
-                .cornerRadius(5)
+                .foregroundColor(resultColor)
+//                .background(.yellow) // 임시 색
+//                .cornerRadius(5)
             
         }
     }
-    
-    /// 순위와 지각을 알려주는 함수로 메세지 결정
-    private func caculateResult(location: Location) -> String {
-        var message = ""
-        /// 도착시간
-        let arriveDate = Date(timeIntervalSince1970: location.arriveTime ?? 0)
-        /// 약속시간
-        let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
-        
-//        filteredLocation.map{ locationAndParticipant in
-//            if locationAndParticipant.location.arriveTime != 0 && Calendar.current.dateComponents([.second], from: arriveDate, to: promiseDate).second ?? 0 >= 0 {
-//                return location
-//            }
-//        }
-        if location.arriveTime == 0 {
-            message = "도착못함.."
-        } else if Calendar.current.dateComponents([.second], from: arriveDate, to: promiseDate).second ?? 0 >= 0 {
-            
-            message = "도착"
-        } else {
-            message = "지각"
-        }
-        return message
-    }
-    
-//    private func sortResult(participantArray: [LocationAndParticipant]) -> [LocationAndParticipant] {
-//        if participantArray.location.arriveTime != 0 && Calendar.current.dateComponents([.second], from: arriveDate, to: promiseDate).second ?? 0 >= 0 {
-//            return location
-//        }
-//        
-//        return filteredLocation
-//    }
+
 }
 
 #Preview {

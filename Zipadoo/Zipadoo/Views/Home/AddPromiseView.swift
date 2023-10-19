@@ -46,7 +46,7 @@ struct AddPromiseView: View {
     
     var isAllWrite: Bool {
         return !promiseViewModel.promiseTitle.isEmpty &&
-        Calendar.current.startOfDay(for: promiseViewModel.date) != today &&
+        /*Calendar.current.startOfDay(for: promiseViewModel.date) != today &&*/
         !promiseLocation.address.isEmpty
     }
     

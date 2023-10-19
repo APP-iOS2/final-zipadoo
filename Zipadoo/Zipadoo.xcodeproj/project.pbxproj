@@ -172,7 +172,6 @@
 		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
 		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
-		08D6DE262ADE431A00C4C6AC /* yonin_2.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = yonin_2.gpx; path = ../../../../../Downloads/yonin_2.gpx; sourceTree = "<group>"; };
 		08EFA1232AD63C8500B203FD /* FriendsMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsMapView.swift; sourceTree = "<group>"; };
 		1B6C11C22AD6825D00770D43 /* PromiseEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseEditView.swift; sourceTree = "<group>"; };
 		1BB3B0742AD535170000D91A /* ArrivalResultTempView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalResultTempView.swift; sourceTree = "<group>"; };
@@ -588,7 +587,6 @@
 		FAD5FE302ABBD3E700E05E6E = {
 			isa = PBXGroup;
 			children = (
-				08D6DE262ADE431A00C4C6AC /* yonin_2.gpx */,
 				C02790CC2ACD299600BBDCCA /* ZipadooWidgetExtension.entitlements */,
 				FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */,
 				C02790BB2ACD297100BBDCCA /* ZipadooWidget */,
