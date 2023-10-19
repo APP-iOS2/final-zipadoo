@@ -118,7 +118,7 @@ class LocationStore: ObservableObject {
         return nickname
     }
     
-    /// locationData의 participantId로 유저의 닉네임만 가져오기
+    /// locationData의 participantId로 유저의 이미지만 가져오기
     func fetchUserImageString(participantId: String) async throws -> String {
         var imageString = " - "
         do {
@@ -166,5 +166,13 @@ class LocationStore: ObservableObject {
         } catch {
             print("deleteLocationData failed")
         }
+    }
+    
+    /// 받아온 locationAndParticipants 배열을 순위에 따라 정렬
+    func sortResult(resultArray: [LocationAndParticipant]) -> [LocationAndParticipant] {
+        let arriveArray = resultArray.filter({$0.location.rank != 0})
+        let tempArray: [LocationAndParticipant] = arriveArray.sorted(by: {$0.location.rank < $1.location.rank})
+        let notArriveArray = resultArray.filter({$0.location.rank == 0})
+        return tempArray + notArriveArray // 빨리도착한 사람 순으로 정렬
     }
 }
