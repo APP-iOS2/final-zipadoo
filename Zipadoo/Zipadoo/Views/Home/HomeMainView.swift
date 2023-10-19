@@ -272,9 +272,8 @@ struct HomeMainView: View {
                             //                        .offset(x: -10, y: 0)
                             
                             Spacer()
-                            // TODO: - promise.selectdValue 데이터 연결
-                            Text("0원")
-                            //                    Text("\(promise.selectedValue)")
+                            // TODO: - promise.penalty 데이터 연결
+                            Text("\(promise.penalty)")
                                 .fontWeight(.semibold)
                                 .font(.title3)
                                 .foregroundStyle(Color.primaryInvert)
