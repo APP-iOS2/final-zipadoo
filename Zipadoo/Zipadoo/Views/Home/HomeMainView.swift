@@ -135,12 +135,12 @@ struct HomeMainView: View {
             }
             .onAppear {
                 Task {
-                    try await promise.fetchData()
+                    try await promise.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
                 }
             }
             .refreshable {
                 Task {
-                    try await promise.fetchData()
+                    try await promise.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
                 }
             }
             .toolbar {

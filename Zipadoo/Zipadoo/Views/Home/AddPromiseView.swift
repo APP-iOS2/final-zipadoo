@@ -14,7 +14,7 @@ struct AddPromiseView: View {
     // 환경변수
     @Environment(\.dismiss) private var dismiss
     
-    @EnvironmentObject var promiseViewModel: PromiseViewModel
+    @StateObject var promiseViewModel: PromiseViewModel
     //    var user: User
     
     // 저장될 변수
@@ -205,7 +205,7 @@ struct AddPromiseView: View {
                         
                         NavigationLink {
                             //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
-                            OneMapView(destination: $destination, address: $address, promiseLocation: $promiseLocation)
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address, sheetTitle: $sheetTitle)
                         } label: {
                             Image(systemName: "location.magnifyingglass")
                                 .foregroundColor(.primary)
@@ -405,7 +405,7 @@ struct CustomDatePicker: View {
     }
 }
 
-#Preview {
-    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
-        .environmentObject(PromiseViewModel())
-}
+//#Preview {
+//    AddPromiseView(/*user: User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "")*/)
+//        .environmentObject(PromiseViewModel())
+//}
