@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 struct Promise: Hashable, Identifiable, Codable {
     /// 약속 ID 값
@@ -24,6 +25,10 @@ struct Promise: Hashable, Identifiable, Codable {
     var latitude: Double
     /// 경도
     var longitude: Double
+    /// 위치값
+    var coordinate: CLLocationCoordinate2D { 
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
     /// 참여자 ID 값
     var participantIdArray: [String]
     /// 약속 중복 값 확인

@@ -30,8 +30,8 @@ struct PromiseEditView: View {
     @Binding var selectedFriends: [User]
     @State private var destination: String = "" // 약속 장소 이름
     @State private var address = "" // 약속장소 주소
-    @State private var coordX = 0.0 // 약속장소 위도
-    @State private var coordY = 0.0 // 약속장소 경도
+//    @State private var coordX = 0.0 // 약속장소 위도
+//    @State private var coordY = 0.0 // 약속장소 경도
     @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
     @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
     
@@ -52,6 +52,7 @@ struct PromiseEditView: View {
                 
                 HStack {
                     NavigationLink {
+                        OneMapView(destination: $destination, address: $address, promiseLocation: $promiseLocation)
 //                        MapView(destination: $destination, address: $address, coordX: $coordX, coordY: $coordY, isClickedPlace: $isClickedPlace, promiseLocation: $promiseLocation)
                     } label: {
                         Text("지역검색")

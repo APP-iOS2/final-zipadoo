@@ -9,9 +9,9 @@
 //import MapKit
 //import CoreLocation
 //
-//// MARK: - 직접 장소 설정할 수 있는 옵션의 맵뷰
-///// 현재 MapView와 NewMapView 간의 버전이 서로 다르기 때문에 우선 두가지 옵션을 선택할 수 있도록 구현
-///// 두가지 기능을 합칠 수 있는 방법을 찾을 경우 도입 시도해볼 예정
+// MARK: - 직접 장소 설정할 수 있는 옵션의 맵뷰, 사용하지 않음(옵션보여주기에 대해 이슈 발생시 예비용)
+/// 현재 MapView와 NewMapView 간의 버전이 서로 다르기 때문에 우선 두가지 옵션을 선택할 수 있도록 구현
+/// 두가지 기능을 합칠 수 있는 방법을 찾을 경우 도입 시도해볼 예정
 //struct MapView: View {
 //    @Namespace var mapScope
 //    @Environment(\.dismiss) private var dismiss

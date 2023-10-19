@@ -103,6 +103,19 @@ struct PromiseDetailView: View {
         //        .navigationDestination(isPresented: $isShowingEditSheet) {
         //            PromiseEditView(promise: .constant(promise))
         //        }
+//        .onAppear {
+//            Task {
+//                try await promiseViewModel.fetchData()
+//            }
+//        }
+//        .refreshable {
+//            Task {
+//                try await promiseViewModel.fetchData()
+//            }
+//        }
+//        .navigationDestination(isPresented: $isShowingEditSheet) {
+//            PromiseEditView(promise: .constant(promise))
+//        }
         .sheet(isPresented: $isShowingEditSheet,
                content: { PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
         })

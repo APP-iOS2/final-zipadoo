@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// PreviewPlaceOnMap 뷰에서 사용되는 Marker 뷰모델
 struct AnnotationMarker: View {
     var body: some View {
         ZStack {
