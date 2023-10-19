@@ -6,6 +6,7 @@
         "components" : {
           "alpha" : "1.000",
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:Zipadoo/Zipadoo/Assets.xcassets/Color/asparagus.colorset/Contents.json
 <<<<<<<< Updated upstream:Zipadoo/Zipadoo/Assets.xcassets/Color/asparagus.colorset/Contents.json
           "blue" : "0.000",
@@ -26,6 +27,11 @@
           "green" : "0.307",
           "red" : "1.000"
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
+=======
+          "blue" : "0.521",
+          "green" : "0.307",
+          "red" : "1.000"
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
         }
       },
       "idiom" : "universal"
@@ -41,9 +47,15 @@
         "color-space" : "srgb",
         "components" : {
           "alpha" : "1.000",
+<<<<<<< HEAD
           "blue" : "0.000",
           "green" : "0.000",
           "red" : "0.000"
+=======
+          "blue" : "1.000",
+          "green" : "1.000",
+          "red" : "1.000"
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
         }
       },
       "idiom" : "universal"

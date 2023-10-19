@@ -98,6 +98,7 @@ struct AddPromiseView: View {
                     
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                         .foregroundColor(.red.opacity(0.7))
 
@@ -140,11 +141,16 @@ struct AddPromiseView: View {
 =======
 =======
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
+=======
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
                     DatePicker("날짜/시간", selection: $promiseViewModel.date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
                         .datePickerStyle(.compact)
                         .labelsHidden()
                         .padding(.top, 10)
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
+=======
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
@@ -346,6 +352,7 @@ struct AddPromiseView: View {
         }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         .sheet(isPresented: $showDatePicker) {
             CustomDatePicker(promiseViewModel: promiseViewModel, date: $promiseViewModel.date, showPicker: $showDatePicker)
 
@@ -393,6 +400,8 @@ struct CustomDatePicker: View {
 
         }
         .opacity(showPicker ? 1 : 0)
+=======
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======

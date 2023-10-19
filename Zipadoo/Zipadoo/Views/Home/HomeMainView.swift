@@ -17,10 +17,13 @@ struct HomeMainView: View {
     //    @StateObject private var loginUser: UserStore = UserStore()
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     
     @ObservedObject private var locationStore: LocationStore = LocationStore()
     
+=======
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
@@ -39,6 +42,7 @@ struct HomeMainView: View {
     
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     // 약속등록 버튼 바운스
     @State private var animate = false
     
@@ -53,6 +57,8 @@ struct HomeMainView: View {
     let screenHeight = UIScreen.main.bounds.size.height
 
     
+=======
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
@@ -165,6 +171,7 @@ struct HomeMainView: View {
                 ToolbarItem(placement: .topBarTrailing) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                         Image(systemName: "calendar.badge.plus")
                             .foregroundColor(.primary)
@@ -176,6 +183,15 @@ struct HomeMainView: View {
                                 isShownFullScreenCover.toggle()
                             }
 
+=======
+                    Button {
+                        isShownFullScreenCover.toggle()
+                    } label: {
+                        Image(systemName: "calendar.badge.plus")
+                            .foregroundColor(.primary)
+                            .fontWeight(.semibold)
+                    }
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
                     Button {
                         isShownFullScreenCover.toggle()
@@ -231,7 +247,11 @@ struct HomeMainView: View {
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
     
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
@@ -249,6 +269,7 @@ struct HomeMainView: View {
             if isTracking {
                 Group {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -288,6 +309,8 @@ struct HomeMainView: View {
 =======
 =======
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
+=======
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
                         .frame(width: 340, height: 260)
                     //                .foregroundStyle(LinearGradient(gradient: Gradient(colors:[.red,.orange,.yellow,.green,.blue,.purple,.pink]), startPoint: .top, endPoint: .bottom))
                         .foregroundStyle(LinearGradient(gradient: Gradient(colors:[.orange.opacity(0.4),.yellow,.yellow,.yellow.opacity(0.4)]), startPoint: .top, endPoint: .bottom))
@@ -307,6 +330,9 @@ struct HomeMainView: View {
             }
             
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
+=======
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
@@ -318,7 +344,10 @@ struct HomeMainView: View {
                         .fontWeight(.bold)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                         .foregroundColor(.withe)
+=======
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
 >>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
@@ -381,6 +410,7 @@ struct HomeMainView: View {
             }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             .padding(.horizontal, 20)
             .frame(width: 330, height: 330)
         }
@@ -390,6 +420,11 @@ struct HomeMainView: View {
             Task {
                 try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
             }
+=======
+            .frame(width: 300, height: 340)
+            .colorInvert()
+            
+>>>>>>> parent of 1a63335 ([DESIGN] 홈뷰,약속등록 뷰 디자인 변경 #218)
 =======
             .frame(width: 300, height: 340)
             .colorInvert()
