@@ -38,7 +38,7 @@ struct ArriveResultView: View {
     /// 얼마나 빨리/늦게 도착했는지
     let cacluateDateformat: DateFormatter = {
         let formatter = DateFormatter()
-         formatter.dateFormat = "h시간 mm분 ss초"
+         formatter.dateFormat = "h시간 m분 s초"
          return formatter
      }()
 
@@ -119,8 +119,11 @@ struct ArriveResultView: View {
         var resultMessage = ""
         /// 등수/지각에 따른 텍스트 색
         var resultColor: Color = .primary
+        /*
         /// 도착시간 ~ 약속시간까지의 차이
-//        var calculateDate = Calendar.current.dateComponents([.second], from: arriveDate, to: promiseDate).second ?? 0
+        var calculateDate = Calendar.current.dateComponents([.second], from: arriveDate, to: promiseDate).second ?? 0
+         */
+        /// 시간차이
         var calculateDouble = promise.promiseDate - participant.location.arriveTime
         /// 3등안에 들면 왕관
         var isCrown: Bool = false
@@ -133,7 +136,7 @@ struct ArriveResultView: View {
             if calculateDouble < 0 {
                 resultMessage = "지각!"
                 resultColor = .red
-                
+                calculateDouble *= -1
                 resultEnum = .late
             } else {
                 resultMessage = "\(participant.location.rank)등"
