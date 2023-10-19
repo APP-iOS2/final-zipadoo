@@ -142,17 +142,19 @@ struct ZipadooWidgetEntryView: View {
             Text(entry.destination)
                 .font(.title2)
             
-            HStack(alignment: .lastTextBaseline) {
+            HStack() {
                 Text(entry.time)
                     .font(.largeTitle)
                 
                 Spacer()
-                
-                Text("도착")
-                    .font(.title2)
-                
-                Text("\(entry.arrivalMember)명")
-                    .font(.largeTitle)
+               
+                Link(destination: URL(string: "zipadoo://detailView?promiseID=F3C0842D-D626-4367-9346-EA308BD32827")!) {
+                    Text("도착 인원 확인")
+                        .padding([.vertical, .horizontal], 8)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(14)
+                }
             }
         }
         .bold()
