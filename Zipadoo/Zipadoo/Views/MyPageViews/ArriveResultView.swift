@@ -25,8 +25,6 @@ struct ArriveResultView: View {
     
     /// 약속시간
     var promiseDate: Date {
-//        let date = Date(timeIntervalSince1970: promise.promiseDate)
-//        return Calendar.current.date(byAdding: .hour, value: 9, to: date) ?? date
         return Date(timeIntervalSince1970: promise.promiseDate)
     }
     /// 시간표시 형식 지정
@@ -73,11 +71,11 @@ struct ArriveResultView: View {
                 }
 
                 ZStack {
-                    // 선
+                    // 세로선
                     HStack {
                         Rectangle()
                             .foregroundStyle(.secondary)
-                            .frame(width: 2, height: 54 * CGFloat(locationStore.locationParticipantDatas.count))
+                            .frame(width: 2, height: 58 * CGFloat(locationStore.locationParticipantDatas.count))
                             .padding(.leading, 16)
                         Spacer()
                     }
@@ -89,8 +87,7 @@ struct ArriveResultView: View {
                         ForEach(locationStore.sortResult(resultArray: locationStore.locationParticipantDatas)) { participant in
                             
                             arrivedDataCell(participant: participant)
-                                .padding(.bottom, 12)
-          
+                                .padding(.top, 12)
                         }
                     }
 //                    .padding(.leading, 6)
@@ -113,37 +110,51 @@ struct ArriveResultView: View {
     /// 약속 멤버 도착정보 행(row)
     private func arrivedDataCell(participant: LocationAndParticipant) -> some View {
         var resultEnum: Result = .notArrive
-        /// 참여자 도착시간
-        let arriveDate = Date(timeIntervalSince1970: participant.location.arriveTime)
         /// 등수/지각 표시메세지
         var resultMessage = ""
         /// 등수/지각에 따른 텍스트 색
         var resultColor: Color = .primary
-        /*
-        /// 도착시간 ~ 약속시간까지의 차이
-        var calculateDate = Calendar.current.dateComponents([.second], from: arriveDate, to: promiseDate).second ?? 0
-         */
         /// 시간차이
-        var calculateDouble = promise.promiseDate - participant.location.arriveTime
+        var calculateInt: Int = Int(promise.promiseDate - participant.location.arriveTime)
+        /// 시간차이를 시,분,초로 바꾸기
+        var calculateTimeString: String {
+
+            let hour = calculateInt / 3600
+            calculateInt %= 3600
+            let minute = calculateInt / 60
+            let second = calculateInt % 60
+            
+            // 반환할 문자열
+            var timeString: String = ""
+            if hour != 0 {
+                timeString += "\(hour)시간"
+            }
+            if minute != 0 {
+                timeString += "\(minute)분"
+            }
+            if second != 0 {
+                timeString += "\(second)초"
+            }
+            
+            return timeString
+        }
         /// 3등안에 들면 왕관
         var isCrown: Bool = false
         
         // 등수/지각여부 확인 분기문
         if participant.location.rank == 0 {
             resultColor = .secondary
-            
         } else {
-            if calculateDouble < 0 {
+            if calculateInt < 0 {
                 resultMessage = "지각!"
                 resultColor = .red
-                calculateDouble *= -1
+                calculateInt *= -1
                 resultEnum = .late
             } else {
                 resultMessage = "\(participant.location.rank)등"
                 if participant.location.rank < 4 {
                     isCrown = true
                 }
-            
                 resultEnum = .notLate
             }
         }
@@ -158,7 +169,6 @@ struct ArriveResultView: View {
                 
                 ProfileImageView(imageString: participant.imageString, size: .xSmall)
                     .clipShape(Circle())
-                
             }
             
             VStack(alignment: .leading) {
@@ -173,12 +183,12 @@ struct ArriveResultView: View {
                         .foregroundStyle(resultColor)
                     
                 } else if resultEnum == .late {
-                    Text("\(cacluateDateformat.string(from: Date(timeIntervalSince1970: TimeInterval(calculateDouble)))) 늦게 도착")
+                    Text("\(calculateTimeString) 늦게 도착")
                         .font(.footnote)
                         .foregroundStyle(resultColor)
                     
                 } else if resultEnum == .notLate {
-                    Text("\(cacluateDateformat.string(from: Date(timeIntervalSince1970: TimeInterval(calculateDouble)))) 일찍 도착")
+                    Text("\(calculateTimeString) 일찍 도착")
                         .font(.footnote)
                         .foregroundStyle(resultColor)
                 }
@@ -193,12 +203,9 @@ struct ArriveResultView: View {
             Text(resultMessage)
                 .padding(3)
                 .foregroundColor(resultColor)
-//                .background(.yellow) // 임시 색
-//                .cornerRadius(5)
-            
+
         }
     }
-
 }
 
 #Preview {

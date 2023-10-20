@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// UserDefaults의 Extension
 extension UserDefaults {
     static var shared: UserDefaults {
         let appGroupId = "group.education.techit.zipadoo.dev"

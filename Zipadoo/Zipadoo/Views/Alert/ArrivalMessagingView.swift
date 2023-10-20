@@ -7,16 +7,15 @@
 
 import SwiftUI
 
-enum ArrivalType: String {
-    case early = "일찍"
-    case late = "늦게"
-    case onTime = "에 딱 맞춰"
-}
-
 struct ArrivalMessagingView: View {
+    
+    /// Alert 메세지 닫는 Bool 값
     @Binding var isPresented: Bool
+    
+    /// ArrivalMsModel 모델 생성
     var arrival: ArrivalMsgModel
     
+    /// 도착 시간과 비교
     var timeDifference: String {
         let timeDiff = abs(arrival.arrivarDifference)
         switch timeDiff {
@@ -36,6 +35,7 @@ struct ArrivalMessagingView: View {
         }
     }
     
+    /// Enum 선언된 ArrivalType
     var arrivalType: ArrivalType {
         if arrival.arrivarDifference > 0 {
             .early
@@ -46,7 +46,6 @@ struct ArrivalMessagingView: View {
         }
     }
     
-    // MARK: - body
     var body: some View {
         VStack {
             ProfileImageView(imageString: arrival.profileImgString, size: .regular)
@@ -76,7 +75,7 @@ struct ArrivalMessagingView: View {
             .buttonStyle(.borderedProminent)
             .padding([.horizontal, .vertical], 12)
             .tint(arrivalType == .late ? .red : .blue)
-        }
+        } // VStack
         .padding(.horizontal, 12)
         .padding(.vertical, 18)
         .frame(maxWidth: .infinity)
@@ -89,38 +88,8 @@ struct ArrivalMessagingView: View {
                 )
         )
         .padding(.horizontal, 28)
-    }
-}
-
-struct ArrivalMessagingModifier: ViewModifier {
-    @Binding var isPresented: Bool
-    var arrival: ArrivalMsgModel
-    
-    func body(content: Content) -> some View {
-        ZStack {
-            content
-            
-            if isPresented {
-                Rectangle()
-                    .fill(.black.opacity(0.5))
-                    .blur(radius: 0)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        self.isPresented = false
-                    }
-                
-                ArrivalMessagingView(isPresented: $isPresented, arrival: arrival)
-                .transition(.move(edge: .bottom).combined(with: .opacity))
-            }
-        }
-        .animation(
-            isPresented
-            ? .spring(response: 0.5)
-            : .none,
-            value: isPresented
-        )
-    }
-}
+    } // body
+} // struct
 
 #Preview {
     Text("약속 장소 도착 Alert")
