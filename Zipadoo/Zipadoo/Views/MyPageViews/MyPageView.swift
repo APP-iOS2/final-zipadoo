@@ -28,6 +28,9 @@ struct MyPageView: View {
     let tradyCount = AuthStore.shared.currentUser?.tradyCount ?? 0
     let promiseCount = AuthStore.shared.currentUser?.promiseCount ?? 1
     var tradyPercent: Int {
+        if promiseCount == 0 {
+            return 0
+        }
         return tradyCount/promiseCount*100
     }
 //    @State private var tradyPercent: Double = 0

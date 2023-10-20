@@ -22,8 +22,7 @@ struct PastPromiseView: View {
                     if promise.fetchPastPromiseData.isEmpty {
                         Text("지난 약속 내역이 없습니다.")
                         
-                    }
-                    else {
+                    } else {
                         VStack {
                             ForEach(promise.fetchPastPromiseData) { promise in
                                 NavigationLink {
@@ -38,20 +37,6 @@ struct PastPromiseView: View {
                                                 .fontWeight(.bold)
                                             
                                             Spacer()
-                                            
-                                            Image(systemName: "map.fill")
-                                                .fontWeight(.bold)
-                                                .foregroundStyle(Color.primary)
-                                                .colorInvert()
-                                                .padding(8)
-                                                .background(Color.primary)
-                                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 10)
-                                                        .shadow(color: .primary, radius: 1, x: 1, y: 1)
-                                                        .opacity(0.3)
-                                                    //
-                                                )
                                         }
                                         .padding(.vertical, 10)
                                         
