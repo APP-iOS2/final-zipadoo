@@ -30,10 +30,3 @@ extension View {
         clipShape( RoundedCorner(radius: radius, corners: corners) )
     }
 }
-//
-//  Extention.swift
-//  Zipadoo
-//
-//  Created by 윤해수 on 2023/09/21.
-//
-
