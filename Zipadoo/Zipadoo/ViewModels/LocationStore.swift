@@ -15,7 +15,7 @@ struct LocationAndParticipant: Identifiable {
     var location: Location
     var nickname: String
     var imageString: String
-    var sampleImageString: String = "doo1"
+    var moleImageString: String
 }
 
 class LocationStore: ObservableObject {
@@ -32,8 +32,6 @@ class LocationStore: ObservableObject {
     var myLocationId: String = ""
     
     let dbRef = Firestore.firestore()
-    
-    var randomImageString: [String] = ["doo1","doo2","doo3","doo4","doo5","doo6","doo7","doo8","doo9"]
     
 //    init() {
 //        myLocation = Location(participantId: myid, departureLatitude: 0, departureLongitude: 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
@@ -58,13 +56,15 @@ class LocationStore: ObservableObject {
                     let nickname = try await fetchUserNickname(participantId: locationData.participantId)
                     // 이미지 가져오기
                     let imageString = try await fetchUserImageString(participantId: locationData.participantId)
+                    // 이미지 가져오기
+                    let moleImageString = try await fetchUserMoleImageString(participantId: locationData.participantId)
                     // myLocation에 자기 데이터 저장
                     if locationData.participantId == myid {
                         myLocationId = locationData.id
                         myLocation.id = myLocationId
                     }
                     // LocationAndNickname으로도 나 포함하여 다 저장
-                    locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: nickname, imageString: imageString))
+                    locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: nickname, imageString: imageString, moleImageString: moleImageString))
                     // locatioonDatas는 나 포함하여 다 저장
                     temp.append(locationData)
                 }
@@ -72,8 +72,6 @@ class LocationStore: ObservableObject {
                 DispatchQueue.main.async {
                     self.locationDatas = temp
                     self.locationParticipantDatas = locationParticipantTemp
-                    // *이슈 패치받을때 마다 한번 불러와야할 이미지값을 계속 반복해서 받고 있음. (깜빡거림이 있을 수 있고, 불필요한 명령 반복)
-                    self.fetchSampleProfileImage()
                 }
                 
                 print(self.locationDatas)
@@ -93,17 +91,6 @@ class LocationStore: ObservableObject {
             }
         }
         return count
-    }
-    
-    // FriendsMapView에서 사용할 프로필 이미지 배열을 셔플 (.task에서 한번 실행)
-    func shuffleSampleProfileImage() {
-        randomImageString.shuffle()
-    }
-    // FriendsMapView에서 사용할 프로필 이미지를 인덱스 번호에 맞춰 패치해줌 (fetchData안에 들어있음)
-    func fetchSampleProfileImage() {
-        for index in locationParticipantDatas.indices {
-            locationParticipantDatas[index].sampleImageString = randomImageString[index]
-        }
     }
     
     /// locationData의 participantId로 유저의 닉네임만 가져오기
@@ -128,6 +115,18 @@ class LocationStore: ObservableObject {
             print("fetchUserImageString failed")
         }
         return imageString
+    }
+    
+    /// locationData의 participantId로 유저의 두더지 이미지만 가져오기
+    func fetchUserMoleImageString(participantId: String) async throws -> String {
+        var moleImageString = " - "
+        do {
+            moleImageString = try await UserStore.fetchUser(userId: participantId)?.moleImageString ?? " - "
+            
+        } catch {
+            print("fetchUserImageString failed")
+        }
+        return moleImageString
     }
     
     static func addLocationData(location: Location) {
