@@ -289,7 +289,7 @@ struct PromiseEditView: View {
             "latitude": promiseViewModel.coordXXX,
             "longitude": promiseViewModel.coordYYY,
             "participantIdArray": [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id },
-            "penalty": penalty,
+            "penalty": promiseViewModel.penalty,
             "locationIdArray": locationIdArray
         ]
         

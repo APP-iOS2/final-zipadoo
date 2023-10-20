@@ -317,7 +317,7 @@ struct AddPromiseView: View {
                                 promiseViewModel.coordXXX = 0.0 // 약속장소 위도
                                 promiseViewModel.coordYYY = 0.0 // 약속장소 경도
                                 /// 장소에 대한 정보 값
-                                promiseViewModel.promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
+//                                promiseViewModel.promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
                                 /// 지각비 변수 및 상수 값
                                 promiseViewModel.penalty = 0
                                 /// 선택된 친구 초기화
