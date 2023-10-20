@@ -84,8 +84,7 @@ struct PastPromiseView: View {
                                     .foregroundStyle(Color.primary)
                                     
                                 }
-                                .padding()
-                                
+                                .padding(10) 
                             }
                         }
                     }
