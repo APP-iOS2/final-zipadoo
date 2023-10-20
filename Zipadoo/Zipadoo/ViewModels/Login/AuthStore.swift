@@ -108,6 +108,7 @@ final class AuthStore: ObservableObject {
     func login(email: String, password: String) async throws -> Bool {
 
         // 로그인한 유저 userSession에 저장
+        // 애플 로그인은 email과 password를 못받아서 loadUserData()를 못하는 걸로 추정
         self.userSession = try await Auth.auth().signIn(withEmail: email, password: password).user
         
         try await loadUserData()

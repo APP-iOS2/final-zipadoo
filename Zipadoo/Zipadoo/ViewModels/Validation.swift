@@ -34,7 +34,7 @@ func isCorrectPhoneNumber(phonenumber: String) -> Bool {
 /// 비밀번호 유효한 형식 확인
 func isCorrectPassword(password: String) -> Bool {
 //        let passwordRegex = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{6,16}$"
-    let passwordRegex = ".{6,15}$" // 6 ~ 15 자리
+    let passwordRegex = ".{6,256}$" // 6 ~ 256 자리
     let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
 
     return passwordPredicate.evaluate(with: password)

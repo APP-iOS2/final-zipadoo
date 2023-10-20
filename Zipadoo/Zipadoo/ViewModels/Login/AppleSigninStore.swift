@@ -64,8 +64,9 @@ final class AppleSigninStore: ObservableObject {
     func createUser(email: String, password: String, name: String, nickName: String, phoneNumber: String, profileImage: UIImage?) async throws {
         
         do {
+            
             // 회원가입후 그 유저 userSession에 저장
-            let result = try await Auth.auth().createUser(withEmail: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown email", password: FirebaseAuth.Auth.auth().currentUser?.uid ?? "Unknown uid")
+            let result = try await Auth.auth().createUser(withEmail: Auth.auth().currentUser?.email ?? "Unknown email", password: Firebase.Auth.auth().currentUser?.uid ?? "Unknown uid")
 //            self.userSession = result.user
             
             // 이미지의 파베경로

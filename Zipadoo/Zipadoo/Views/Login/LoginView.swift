@@ -92,16 +92,14 @@ struct LoginView: View {
                                 print("request")
                                 singinViewModel.SigninWithAppleRequest(request)
                             } onCompletion: { result in
-                                DispatchQueue.main.async {
-                                    Task {
-                                        do {
-                                            print("result")
-                                            singinViewModel.SinginWithAppleCompletion(result)
-                                            isSigninLinkActive = true
-                                            print("result 끝")
-                                        } catch {
-                                            print("error")
-                                        }
+                                Task {
+                                    do {
+                                        print("result")
+                                        singinViewModel.SinginWithAppleCompletion(result)
+                                        isSigninLinkActive = true
+                                        print("result 끝")
+                                    } catch {
+                                        print("completion error")
                                     }
                                 }
                             }

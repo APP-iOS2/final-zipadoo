@@ -82,7 +82,6 @@ struct LoginEmailCheckView: View {
                                 .font(.subheadline)
                                 .foregroundStyle(Color.red.opacity(0.7))
                         }
-                        
                         Spacer()
                     }
                     
@@ -102,8 +101,7 @@ struct LoginEmailCheckView: View {
                                 self.isSigninLinkActive = true
                             } else {
                                 // 이메일이 중복이 있을 때 비밀번호 입력창으로 이동
-                                self.isLoginLinkActive = true
-                                
+                                self.isLoginLinkActive = true 
                             }
                         }
                     } else {

@@ -34,7 +34,7 @@ class AppleSigninViewModel: ObservableObject {
     /// 유저 회원가입
     func createUser() async throws {
         
-        try await AppleSigninStore.shared.createUser(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown", password: FirebaseAuth.Auth.auth().currentUser?.uid ?? "Unknown uid", name: name, nickName: nickName, phoneNumber: phoneNumber, profileImage: selectedImage)
+        try await AppleSigninStore.shared.createUser(email: email, password: password, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImage: selectedImage)
         
     }
     
@@ -106,18 +106,26 @@ class AppleSigninViewModel: ObservableObject {
             let credwtion = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
             Task {
                 do {
-//                    let userRef = dbRef.document(FirebaseAuth.Auth.auth().currentUser!.uid)
+
+                    try await Auth.auth().signIn(with: credwtion)
+                    let userRef = dbRef.document(Auth.auth().currentUser!.uid)
 //                    try await userRef.setData([
+//                        "id": FirebaseAuth.Auth.auth().currentUser!.uid,
 //                        "phoneNumber": FirebaseAuth.Auth.auth().currentUser?.phoneNumber ?? "Unknown",
-//                        "email": FirebaseAuth.Auth.auth().currentUser?.email ?? ""])
+//                        "email": FirebaseAuth.Auth.auth().currentUser?.email ?? ""
+
+//                    ])
+                    
+                    // 로그인 성공: if FirebaseAuth.Auth.auth().currentUser?.uid가 존재하면? -> 해당 계정 홈 뷰
+                    //    "    :
                     
                     DispatchQueue.main.async {
                         self.logState = true
-                        if isCorrectEmail(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown") {
+                        if isCorrectEmail(email: Auth.auth().currentUser?.email ?? "Unknown") {
                             print("emailCheck")
-                            print(FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown")
+                            print(Auth.auth().currentUser?.email ?? "Unknown")
                             // 여기에 데이터를 파이어베이스로 보내고 중복 체크를 수행하는 코드를 추가합니다.
-                            self.emailCheck(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown") { isUnique in
+                            self.emailCheck(email: Auth.auth().currentUser?.email ?? "Unknown") { isUnique in
                                 self.uniqueEmail = isUnique // 중복 체크 결과를 업데이트합니다.
                                 if isUnique {
                                     // 중복이 없으면 회원가입 뷰로 이동
@@ -137,7 +145,6 @@ class AppleSigninViewModel: ObservableObject {
                             }
                         }
                     }
-                    try await Auth.auth().signIn(with: credwtion)
                    
                 } catch {
                     print("error 46")
@@ -150,7 +157,7 @@ class AppleSigninViewModel: ObservableObject {
     
     /// 유저 로그인
     func login() async throws -> Bool {
-        try await AppleSigninStore.shared.login(email: FirebaseAuth.Auth.auth().currentUser?.email ?? "Unknown", password: FirebaseAuth.Auth.auth().currentUser?.uid ?? "Unknown")
+        try await AppleSigninStore.shared.login(email: Auth.auth().currentUser?.email ?? "Unknown", password: Auth.auth().currentUser?.uid ?? "Unknown")
     }
     
 }
