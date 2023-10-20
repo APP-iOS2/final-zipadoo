@@ -47,7 +47,7 @@ struct AddPromiseView: View {
     @State private var sheetTitle: String = "약속 장소 선택"
     
     var isAllWrite: Bool {
-        return !promiseViewModel.promiseTitle.isEmpty && Calendar.current.startOfDay(for: promiseViewModel.date) != today && !promiseViewModel.address.isEmpty
+        return !promiseViewModel.promiseTitle.isEmpty /*&& Calendar.current.startOfDay(for: promiseViewModel.date) != today*/ && !promiseViewModel.address.isEmpty
     }
     
     @StateObject private var authUser: AuthStore = AuthStore()

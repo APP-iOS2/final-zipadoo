@@ -123,11 +123,10 @@ struct MyPageView: View {
             ScrollView {
                 VStack(alignment: .leading) {
                     
-                    // MARK: - 프로필 사진, 이름, 감자
                     VStack(spacing: 5) {
+                        // MARK: - 유저정보
                         HStack {
                             // 프로필 이미지
-                            
                             ProfileImageView(imageString: currentUser?.profileImageString ?? userImageString, size: .regular)
                                 .overlay(
                                     Circle()
@@ -172,7 +171,7 @@ struct MyPageView: View {
                         }
                         .padding(.bottom, 30)
                         
-                        // 감자 코인
+                        // MARK: - 감자 , 캐시
                         
                         .padding(.bottom, 10)
                         
@@ -223,6 +222,7 @@ struct MyPageView: View {
                         }) // 감자코인
                         .font(.headline)
                         
+                        // MARK: - 감자 이용내열, 충전버튼
                         Divider()
                             .padding(.vertical, 15)
                         HStack {
