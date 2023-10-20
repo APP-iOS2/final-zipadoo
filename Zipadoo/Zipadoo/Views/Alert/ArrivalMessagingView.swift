@@ -75,66 +75,82 @@ struct ArrivalMessagingView: View {
     }
     // MARK: - body
     var body: some View {
-        VStack {
-            // MARK: - 도착정보
-            VStack {
-                ProfileImageView(imageString: arrival.profileImgString, size: .regular)
-                    .padding(.vertical, 12)
-                
+        ZStack {
+            if let url = URL(string: "https://lottiefiles.com/animations/confetti-throw-9oxIpCIgx3") {
                 VStack {
-                    Text("\(arrival.name)님")
-                    
-                    Text("\(arrival.rank)등으로 도착하셨습니다!")
-                        .fontWeight(.semibold)
-                    
+                    LottieView(url: url)
+                    Spacer()
                 }
-                .padding(.bottom, 3)
+            }
+//            LottieView(filename: <#T##String#>)
+            VStack {
                 
-                Text("약속 시간\(timeDifference)\(arrivalType.rawValue) 오셨네요")
+                ArriveMessageView
+                    .padding(EdgeInsets(top: 18, leading: 12, bottom: 0, trailing: 12))
                 
-//                if arrivalType == .late {
-                    Text("다음부턴 조금 더 일찍 출발해보세요!")
-                    Text("\(arrival.potato)감자가 차감 될 예정입니다")
-                        .font(.footnote).bold()
-                        .foregroundColor(.secondary)
-                        .padding(.vertical, 12)
-//                }
+                ButtonView
+                    .background(.gray.opacity(0.1))
+                    .border(.black.opacity(0.2))
+                    .cornerRadius(40, corners: .bottomLeft)
+                    .cornerRadius(40, corners: .bottomRight)
                 
             }
-            .padding(EdgeInsets(top: 18, leading: 12, bottom: 0, trailing: 12))
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 30)
+                    .stroke(.brown.opacity(0.5))
+                    .background(
+                        RoundedRectangle(cornerRadius: 30)
+                            .fill(.white)
+                    )
+                
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 30)
+                    .stroke(.black.opacity(0.5), lineWidth: 1)
+            )
+            .drawingGroup()
+            .padding(.horizontal, 40)
+        }
+    }
+    // MARK: - 도착정보
+    var ArriveMessageView: some View {
+        VStack {
+            ProfileImageView(imageString: arrival.profileImgString, size: .regular)
+                .padding(.vertical, 12)
             
-            // MARK: - 확인 버튼
-            Button {
-                isPresented = false
-                print("Button clicked: \(isPresented)")
-            } label: {
-                Text("확인")
-                    .bold()
-                    .padding(EdgeInsets(top: 12, leading: 0, bottom: 18, trailing: 0))
-                    .frame(maxWidth: .infinity)
+            VStack {
+                Text("\(arrival.name)님")
+                
+                Text("\(arrival.rank)등으로 도착하셨습니다!")
+                    .fontWeight(.semibold)
+                
             }
-            .background(.gray.opacity(0.1))
-            .border(.black.opacity(0.2))
-            .cornerRadius(40, corners: .bottomLeft)
-            .cornerRadius(40, corners: .bottomRight)
+            .padding(.bottom, 3)
+            
+            Text("약속 시간\(timeDifference)\(arrivalType.rawValue) 오셨네요")
+            
+//                if arrivalType == .late {
+                Text("다음부턴 조금 더 일찍 출발해보세요!")
+                Text("\(arrival.potato)감자가 차감 될 예정입니다")
+                    .font(.footnote).bold()
+                    .foregroundColor(.secondary)
+                    .padding(.vertical, 12)
+//                }
             
         }
-        .drawingGroup()
-        .frame(maxWidth: .infinity)
-        .background(
-            RoundedRectangle(cornerRadius: 30)
-                .stroke(.brown.opacity(0.5))
-                .background(
-                    RoundedRectangle(cornerRadius: 30)
-                        .fill(.white)
-                )
-                
-        )
-        .overlay(
-            RoundedRectangle(cornerRadius: 30)
-                .stroke(.black.opacity(0.5), lineWidth: 1)
-        )
-        .padding(.horizontal, 40)
+    }
+    // MARK: - 확인 버튼
+    var ButtonView: some View {
+        Button {
+            isPresented = false
+            print("Button clicked: \(isPresented)")
+        } label: {
+            Text("확인")
+                .bold()
+                .padding(EdgeInsets(top: 12, leading: 0, bottom: 18, trailing: 0))
+                .frame(maxWidth: .infinity)
+        }
     }
 }
 
@@ -154,9 +170,10 @@ struct ArrivalMessagingModifier: ViewModifier {
                     .onTapGesture {
                         self.isPresented = false
                     }
-                
+                    
                 ArrivalMessagingView(isPresented: $isPresented, arrival: arrival)
-                .transition(.move(edge: .bottom).combined(with: .opacity))
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+            
             }
         }
         .animation(
@@ -169,14 +186,14 @@ struct ArrivalMessagingModifier: ViewModifier {
 }
 
 #Preview {
-    Text("약속 장소 도착 Alert")
-      .modifier(
-        ArrivalMessagingModifier(isPresented: .constant(true), arrival: ArrivalMsgModel(
-            name: "아라",
-            profileImgString: "https://cdn.discordapp.com/emojis/1154686109234774058.webp?size=240&quality=lossless",
-            rank: 2,
-            arrivarDifference: 720.3641,
-            potato: 500))
-      )
-//    ExampleView()
+//    Text("약속 장소 도착 Alert")
+//      .modifier(
+//        ArrivalMessagingModifier(isPresented: .constant(true), arrival: ArrivalMsgModel(
+//            name: "아라",
+//            profileImgString: "https://cdn.discordapp.com/emojis/1154686109234774058.webp?size=240&quality=lossless",
+//            rank: 2,
+//            arrivarDifference: 720.3641,
+//            potato: 500))
+//      )
+    ExampleView()
 }
