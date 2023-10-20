@@ -24,4 +24,16 @@ extension View {
     func profileImageModifier() -> some View {
         self.modifier(ImageStyleModifier())
     }
+    
+    /// 뷰의 cornerRadius 모서리 마다 따로주기
+    func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
+        clipShape( RoundedCorner(radius: radius, corners: corners) )
+    }
 }
+//
+//  Extention.swift
+//  Zipadoo
+//
+//  Created by 윤해수 on 2023/09/21.
+//
+
