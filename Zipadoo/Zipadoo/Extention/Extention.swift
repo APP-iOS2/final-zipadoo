@@ -20,4 +20,8 @@ extension View {
         return modifier(ArrivalMessagingModifier(isPresented: isPresented, arrival: arrival)
         )
     }
+    
+    func profileImageModifier() -> some View {
+        self.modifier(ImageStyleModifier())
+    }
 }

@@ -17,7 +17,6 @@ struct LoginByEmailPWView: View {
     @State private var isPasswordCorrect = false
     /// 비밀번호 확인 안내문구
     @State private var adminMessage: String = ""
-    
     /// 로그인 성공 시 풀스크린 판별한 Bool 값
     @State private var loginResult: Bool = false
     

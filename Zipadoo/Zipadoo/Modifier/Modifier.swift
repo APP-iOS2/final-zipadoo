@@ -11,7 +11,6 @@ import SwiftUI
 struct TextFieldStyle: ViewModifier {
     
     func body(content: Content) -> some View {
-        
         content
             .padding(10)
             .overlay(
@@ -48,5 +47,19 @@ struct ArrivalMessagingModifier: ViewModifier {
             : .none,
             value: isPresented
         )
+    } // body
+} // struct
+
+struct ImageStyleModifier: ViewModifier {
+    
+    func body(content: Content) -> some View {
+        content
+            .frame(width: UIScreen.main.bounds.width * 0.8, height: UIScreen.main.bounds.width * 0.8)
+            .foregroundColor(Color.secondary)
+            .clipShape(Circle())
+            .overlay(
+                Circle()
+                    .stroke(Color.primary, lineWidth: 1)
+            )
     } // body
 } // struct
