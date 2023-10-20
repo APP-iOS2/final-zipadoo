@@ -6,38 +6,44 @@
 //
 
 import SwiftUI
-// import KakaoSDKCommon
-// import KakaoSDKAuth
-// import KakaoSDKUser
+ /* 카카오 로그인 import
+ import KakaoSDKCommon
+ import KakaoSDKAuth
+ import KakaoSDKUser
+ */
 
 // 로그인 뷰 모델
-
 struct LoginView: View {
     
+    /// 다크모드일 때 컬러 변경
+    @Environment(\.colorScheme) var colorScheme
+    
+    // 카카오 로그인 미구현
     //    @StateObject var kakaoStore: KakaoStore = KakaoStore()
     
-    @State private var spaceHeight: CGFloat = 500 // 두더지 머리 위에 공간 높이
-    @Environment(\.colorScheme) var colorScheme // 다크모드일 때 컬러 변경
-    
-    let dothezColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+    /// 두더지 머리 위에 공간 높이
+    @State private var spaceHeight: CGFloat = 500
     
     var body: some View {
         NavigationStack {
             ZStack {
-                Color.primary.colorInvert()// 배경색
+                /// 배경색
+                Color.primary.colorInvert()
+                
                 NavigationView {
-                ZStack {
+                    ZStack {
                         VStack {
                             // MARK: - 두더지 이미지
                             Spacer(minLength: spaceHeight)
                             
-                            Image("dothez")
+                            Image("Dothez")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: UIScreen.main.bounds.width * 0.9)
                                 .onAppear {
                                     withAnimation(.bouncy(duration: 2)) {
-                                        spaceHeight = 200// 애니메이션 최종 높이
+                                        // 애니메이션 최종 높이
+                                        spaceHeight = 200
                                     }
                                 }
                             
@@ -91,7 +97,6 @@ struct LoginView: View {
                                         .aspectRatio(contentMode: .fit)
                                         .frame(width: UIScreen.main.bounds.width * 0.9)
                                         .cornerRadius(5)
-                                    
                                 } else {
                                     Image("apple_login")
                                         .resizable()
@@ -100,25 +105,17 @@ struct LoginView: View {
                                         .cornerRadius(5)
                                         .colorInvert()
                                 }
-                                //
-                                
                             }
                             
-                            ZStack {
-                                // 두더지 몸통
-                                Rectangle()
-                                    .frame(width: UIScreen.main.bounds.width * 0.9, height: 100)
-                                    .foregroundColor(Color.primary)
-                                    .colorInvert()
-                                
-                            }
+                            // 두더지 몸통
+                            Rectangle()
+                                .frame(width: UIScreen.main.bounds.width * 0.9, height: 100)
+                                .foregroundColor(Color.primary)
+                                .colorInvert()
                         }
-                        
-                    } // ScrollView
+                    } // ZStack
                     .frame(maxWidth: UIScreen.main.bounds.width)
-                    
-                    } // NavigationView
-               
+                } // NavigationView
             } // ZStack
         } // NavigationStack
     } // body

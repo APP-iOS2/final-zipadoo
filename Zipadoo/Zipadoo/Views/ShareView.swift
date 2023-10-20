@@ -12,14 +12,15 @@ import AppsFlyerLib
 struct ActivityViewController: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
     var activityItems: [Any]
-    var applicationActivities: [UIActivity]? = nil
+    var applicationActivities: [UIActivity]?
     
     func makeUIViewController(context: UIViewControllerRepresentableContext<ActivityViewController>) -> UIActivityViewController {
         let controller = UIActivityViewController(
             activityItems: activityItems,
             applicationActivities: applicationActivities
         )
-        controller.completionWithItemsHandler = { (activityType, completed, returnedItems, error) in
+        // activityType, completed, returnedItems, error 미사용으로 _ 사용
+        controller.completionWithItemsHandler = { (_, _, _, _) in
             self.presentationMode.wrappedValue.dismiss()
         }
         return controller
