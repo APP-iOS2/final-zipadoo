@@ -167,7 +167,9 @@ struct AppleSignInView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
                         checkValid()
-                        
+                        Task {
+                            try do
+                        }
                     } label: {
                         Text("다음")
                             .fontWeight(.semibold)
@@ -223,8 +225,8 @@ struct AppleSignInView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        AppleSignInView(signInViewModel: AppleSigninViewModel())
-    }
-}
+//#Preview {
+//    NavigationStack {
+//        AppleSignInView(signInViewModel: AppleSigninViewModel())
+//    }
+//}

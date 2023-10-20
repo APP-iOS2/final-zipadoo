@@ -25,6 +25,7 @@ struct LoginView: View {
     @State var loginResult: Bool = false // 로그인 성공 시 풀스크린 판별한 Bool 값
     @State var uniqueEmail: Bool = false // 이메일 중복 체크
     @State var isSigninLinkActive: Bool = false // uniqueEmail = false일 경우 회원가입뷰 버튼으로 활성화
+    @State var appleLoginSucces: Bool = false
     
     let dothezColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
     
@@ -38,7 +39,7 @@ struct LoginView: View {
                             // MARK: - 두더지 이미지
                             Spacer(minLength: spaceHeight)
                             
-                            Image("dothez")
+                            Image("Dothez")
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: UIScreen.main.bounds.width * 0.9)
@@ -105,11 +106,9 @@ struct LoginView: View {
                             }
                             .frame(width: UIScreen.main.bounds.width * 0.9, height: 50)
                             .cornerRadius(5)
-                            
-                            NavigationLink(destination: AppleSignInView(signInViewModel: singinViewModel), isActive: $isSigninLinkActive) {
-                                EmptyView() // 빈 뷰를 사용하여 링크 트리거를 활성화합니다.
+                            .navigationDestination(isPresented: $isSigninLinkActive) {
+                                AppleSignInView(signInViewModel: singinViewModel)
                             }
-                            .hidden() // 빈
                             
                             ZStack {
                                 // 두더지 몸통

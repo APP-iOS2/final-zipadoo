@@ -18,12 +18,14 @@ class AppleSigninViewModel: ObservableObject {
     @AppStorage ("logState") var logState = false
     @Published var nonce = ""
     
+    @Published var id: String = ""
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var nickName: String = ""
     @Published var name: String = ""
     @Published var phoneNumber: String = ""
     @Published var selectedImage: UIImage?
+    @Published var profileString: String = ""
     
     @State var loginResult: Bool = false // 로그인 성공 시 풀스크린 판별한 Bool 값
     @State var uniqueEmail: Bool = false // 이메일 중복 체크
@@ -31,11 +33,18 @@ class AppleSigninViewModel: ObservableObject {
     
     let dbRef = Firestore.firestore().collection("Users")
     
+    @MainActor
     /// 유저 회원가입
     func createUser() async throws {
-        
-        try await AppleSigninStore.shared.createUser(email: email, password: password, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImage: selectedImage)
-        
+        do {
+            if let uiImage = selectedImage {
+                profileString = try await ProfileImageUploader.uploadImage(image: uiImage) ?? "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
+                let user = User(id: id, name: name, nickName: nickName, phoneNumber: phoneNumber, potato: 0, profileImageString: profileString, crustDepth: 0, tardyCount: 0, friendsIdArray: [], friendsIdRequestArray: [])
+                try dbRef.document(id).setData(from: user)
+            }
+        }
+        //        try await AuthStore.shared.addUserDataApple(id: id, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImageString: profileString)
+        //        try await AppleSigninStore.shared.createUser(email: email, password: password, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImage: selectedImage)
     }
     
     // 이메일 중복 체크 (기존 회원 여부)
@@ -104,63 +113,52 @@ class AppleSigninViewModel: ObservableObject {
                 return
             }
             let credwtion = OAuthProvider.credential(withProviderID: "apple.com", idToken: tokenString, rawNonce: nonce)
-            Task {
-                do {
-
-                    try await Auth.auth().signIn(with: credwtion)
-                    let userRef = dbRef.document(Auth.auth().currentUser!.uid)
-//                    try await userRef.setData([
-//                        "id": FirebaseAuth.Auth.auth().currentUser!.uid,
-//                        "phoneNumber": FirebaseAuth.Auth.auth().currentUser?.phoneNumber ?? "Unknown",
-//                        "email": FirebaseAuth.Auth.auth().currentUser?.email ?? ""
-
-//                    ])
+            Auth.auth().signIn(with: credwtion) { [weak self] authResult, error in
+                guard let self = self else { return }
+                
+                if let error = error {
+                    print("Firebase 로그인 실패: \(error.localizedDescription)")
+                    // Firebase 로그인 실패에 대한 처리
+                } else if let authResult = authResult {
+                    print("Firebase 로그인 성공, 사용자 ID: \(authResult.user.uid)")
                     
-                    // 로그인 성공: if FirebaseAuth.Auth.auth().currentUser?.uid가 존재하면? -> 해당 계정 홈 뷰
-                    //    "    :
+                    // Firestore에 사용자 정보 저장
+                    let userRef = dbRef.document(authResult.user.uid)
                     
-                    DispatchQueue.main.async {
-                        self.logState = true
-                        if isCorrectEmail(email: Auth.auth().currentUser?.email ?? "Unknown") {
-                            print("emailCheck")
-                            print(Auth.auth().currentUser?.email ?? "Unknown")
-                            // 여기에 데이터를 파이어베이스로 보내고 중복 체크를 수행하는 코드를 추가합니다.
-                            self.emailCheck(email: Auth.auth().currentUser?.email ?? "Unknown") { isUnique in
-                                self.uniqueEmail = isUnique // 중복 체크 결과를 업데이트합니다.
-                                if isUnique {
-                                    // 중복이 없으면 회원가입 뷰로 이동
-                                    self.uniqueEmail = true
-                                    self.isSigninLinkActive = true
-                                } else {
-                                    // 이메일이 중복이 있을 때 홈 뷰로 이동
-                                    Task {
-                                        do {
-                                            let emailLoginResult: Bool = try await self.login()
-                                            self.loginResult = emailLoginResult
-                                        } catch {
-                                            print("로그인 실패")
-                                        }
-                                    }
-                                }
-                            }
+                    let userData: [String: Any] = [
+                        "id": authResult.user.uid,
+                        "email": authResult.user.email ?? "",
+                        "name": "빈 값",
+                        "nickName": "빈 값",
+                        "phoneNumber": "빈 값",
+                        "phtato": 0,
+                        "profileImageString": "",
+                        "crustDepth": 0,
+                        "tardyCount": 0
+                    ]
+                    
+                    userRef.setData(userData, merge: true) { error in
+                        if let error = error {
+                            print("Firestore에 사용자 정보 저장 실패: \(error.localizedDescription)")
+                        } else {
+                            print("Firestore에 사용자 정보 저장 성공")
                         }
                     }
-                   
-                } catch {
-                    print("error 46")
+                    // 사용자 로그인 상태 유지 (예: UserDefaults를 사용)
+                    UserDefaults.standard.set(true, forKey: "isUserLoggedIn")
                 }
             }
         case .failure(let failure):
-            print(failure.localizedDescription)
+            print("ASAuthorization 실패: \(failure.localizedDescription)")
         }
     }
     
-    /// 유저 로그인
-    func login() async throws -> Bool {
-        try await AppleSigninStore.shared.login(email: Auth.auth().currentUser?.email ?? "Unknown", password: Auth.auth().currentUser?.uid ?? "Unknown")
+    /// 회원가입인척 정보 수정 로직
+    func editUsersStore() {
+        
     }
-    
 }
+
 func randomNonceString(length: Int = 32) -> String {
     precondition(length > 0)
     var randomBytes = [UInt8](repeating: 0, count: length)

@@ -79,6 +79,7 @@ struct AppleSignInProfileView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     
                     Button {
+                        print(signinViewModel.id)
                         Task {
                             try await signinViewModel.createUser()
                         }
@@ -94,6 +95,6 @@ struct AppleSignInProfileView: View {
     }
 }
 
-#Preview {
-    AppleSignInProfileView(signinViewModel: AppleSigninViewModel())
-}
+//#Preview {
+//    AppleSignInProfileView(signinViewModel: AppleSigninViewModel())
+//}

@@ -96,7 +96,17 @@ final class AuthStore: ObservableObject {
     func addUserData(id: String, name: String, nickName: String, phoneNumber: String, profileImageString: String) async throws {
         do {
             let user = User(id: id, name: name, nickName: nickName, phoneNumber: phoneNumber, potato: 0, profileImageString: profileImageString, crustDepth: 0, tardyCount: 0, friendsIdArray: [], friendsIdRequestArray: [])
-            try dbRef.document(id).setData(from: user)
+            try dbRef.document(UUID().uuidString).setData(from: user)
+            
+        } catch {
+            print("User 등록 실패")
+        }
+    }
+    
+    func addUserDataApple(id: String, name: String, nickName: String, phoneNumber: String, profileImageString: String) async throws {
+        do {
+            let user = User(id: id, name: name, nickName: nickName, phoneNumber: phoneNumber, potato: 0, profileImageString: profileImageString, crustDepth: 0, tardyCount: 0, friendsIdArray: [], friendsIdRequestArray: [])
+            try dbRef.document(UUID().uuidString).setData(from: user)
             
         } catch {
             print("User 등록 실패")
