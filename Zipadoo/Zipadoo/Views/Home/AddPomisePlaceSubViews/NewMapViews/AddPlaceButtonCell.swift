@@ -57,6 +57,7 @@ struct AddPlaceButtonCell: View {
                                 
                                 Text(destination)
                                     .font(.title3)
+                                    .foregroundStyle(.black)
                                     .padding(.top)
                                     .padding(.horizontal)
                                 

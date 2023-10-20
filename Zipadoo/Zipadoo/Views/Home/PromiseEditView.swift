@@ -33,7 +33,7 @@ struct PromiseEditView: View {
     @State var edifPlaceSheet: Bool = false
     private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
     private let today = Calendar.current.startOfDay(for: Date())
-    @State private var penalty: Int = 0
+//    @State private var penalty: Int = 0 (사용X)
     @State private var showingPenalty: Bool = false
     @State private var sheetTitle: String = "약속장소 수정"
     @State private var previewPlaceSheet: Bool = false
@@ -161,7 +161,7 @@ struct PromiseEditView: View {
                             }
                             .padding(.horizontal, 15)
                             
-                            Picker("지각비", selection: $penalty) {
+                            Picker("지각비", selection: $promiseViewModel.penalty) {
                                 ForEach(availableValues, id: \.self) { value in
                                     
                                     Text("\(value)").tag(value)
