@@ -23,7 +23,6 @@ struct FriendProfileView: View {
             "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
         }
     }
-    let dummyImageString: String = "https://cdn.discordapp.com/attachments/1153285599625748531/1154611582748336148/9b860155ad6b6c37.png"
     
     let dummyKm: Int = 1000
     @State var isShownFullScreenCover = false

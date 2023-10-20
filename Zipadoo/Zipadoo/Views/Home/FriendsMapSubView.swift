@@ -48,7 +48,7 @@ struct FriendsMapSubView: View {
                             region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                         } label: {
                             InfoView(name: annotation.nickname,
-                                     imageString: annotation.imageString,
+                                     imageString: AuthStore.shared.currentUser?.moleImageString ?? "",
                                      destinationLatitude: destinationCoordinate.latitude,
                                      destinationLongitude: destinationCoordinate.longitude,
                                      currentLatitude: locationStore.myLocation.currentLatitude,
@@ -59,7 +59,7 @@ struct FriendsMapSubView: View {
                             region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                         } label: {
                             InfoView(name: annotation.nickname,
-                                     imageString: annotation.imageString,
+                                     imageString: annotation.sampleImageString,
                                      destinationLatitude: destinationCoordinate.latitude,
                                      destinationLongitude: destinationCoordinate.longitude,
                                      currentLatitude: annotation.location.currentLatitude,
@@ -88,7 +88,7 @@ struct FriendsMapSubView: View {
     FriendsMapSubView(locationStore: LocationStore(), isShowingFriendSheet: .constant(true),
                       region: .constant(.automatic),
                       destinationCoordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323),
-                      promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 0, longitude: 0, participantIdArray: [], checkDoublePromise: true, locationIdArray: []))
+                      promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 0, longitude: 0, participantIdArray: [], checkDoublePromise: true, locationIdArray: [], penalty: 0))
 }
 
 struct InfoView: View {
@@ -103,28 +103,13 @@ struct InfoView: View {
         VStack {
             Text(name)
                 .font(.subheadline)
-            ZStack {
-                Circle()
-                    .frame(width: 60)
-                    .foregroundColor(Color(.blue))
-                /*AsyncImage(url: URL(string: imageString), content: {
-                    image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50)
-                }) {
-                    Image(.dothez)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 50)
-                }*/
-                Image(.dothez)
-                    .resizable()
-                    .frame(width: 25, height: 25) // 크기 조절
-                    .aspectRatio(contentMode: .fill)
-                
-            }
+            Image(imageString)
+                .resizable()
+                .frame(width: 50, height: 50) // 크기 조절
+                .aspectRatio(contentMode: .fill)
+                .overlay(
+                    Circle().stroke(Color.white, lineWidth: 2))
+                .shadow(radius: 5)
             Text(formatDistance(distance))
         }
         .padding()
