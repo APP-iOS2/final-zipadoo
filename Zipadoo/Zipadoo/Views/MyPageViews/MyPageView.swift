@@ -27,8 +27,14 @@ struct MyPageView: View {
     // 지각률에 따라 메시지 다르게 보여주기
     let tradyCount = AuthStore.shared.currentUser?.tradyCount ?? 0
     let promiseCount = AuthStore.shared.currentUser?.promiseCount ?? 1
+    
+    // promiseCount 0 방지용
     var tradyPercent: Int {
-        return tradyCount/promiseCount*100
+        if promiseCount == 0 {
+            return 0
+        } else {
+            return tradyCount * 100 / promiseCount
+        }
     }
 //    @State private var tradyPercent: Double = 0
     var promisePercent: Int {
