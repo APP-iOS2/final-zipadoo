@@ -14,8 +14,8 @@ struct PromiseEditView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var promise: Promise
     @State private var editedPromiseTitle: String = ""
-    @State private var editedDestination: String = ""
-    @State private var editedAddress: String = ""
+//    @State private var editedDestination: String = "" (사용X)
+//    @State private var editedAddress: String = "" (사용X)
     @State private var editedPromiseDate: Date = Date()
     @State private var mapViewSheet: Bool = false
     @State private var addFriendSheet: Bool = false
@@ -23,18 +23,13 @@ struct PromiseEditView: View {
     @State private var showAlert: Bool = false
     @State private var alertMessage = ""
     @State private var editSelectedFriends: [String] = []
-    @State private var editPromiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
-    @ObservedObject private var editPromise: PromiseViewModel = PromiseViewModel()
+    @State private var locationIdArray: [String] = []
+//    @State private var editPromiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) (사용X)
+    @ObservedObject private var promiseViewModel: PromiseViewModel = PromiseViewModel()
     @StateObject private var authUser: AuthStore = AuthStore()
     @StateObject var friendsStore: FriendsStore = FriendsStore()
     @StateObject var userStore: UserStore = UserStore()
     @Binding var selectedFriends: [User]
-    //    @State private var destination: String = "" // 약속 장소 이름
-    //    @State private var address = "" // 약속장소 주소
-    //    @State private var coordX = 0.0 // 약속장소 위도
-    //    @State private var coordY = 0.0 // 약속장소 경도
-    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
-    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
     @State var edifPlaceSheet: Bool = false
     private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
     private let today = Calendar.current.startOfDay(for: Date())
@@ -106,16 +101,16 @@ struct PromiseEditView: View {
                         }
                         .buttonStyle(.borderedProminent)
                         .sheet(isPresented: $edifPlaceSheet) {
-                            OneMapView(promiseViewModel: editPromise, destination: $editedDestination, address: $editedAddress, sheetTitle: $sheetTitle)
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $promiseViewModel.destination, address: $promiseViewModel.address, sheetTitle: $sheetTitle)
                         }
                         
                         Spacer()
-                        if !editPromise.destination.isEmpty {
+                        if !promiseViewModel.destination.isEmpty {
                             Button {
                                 previewPlaceSheet = true
                             } label: {
                                 HStack {
-                                    Text("\(editPromise.destination)")
+                                    Text("\(promiseViewModel.destination)")
                                         .font(.callout)
                                     Image(systemName: "chevron.forward")
                                         .resizable()
@@ -131,7 +126,7 @@ struct PromiseEditView: View {
                                         .foregroundStyle(Color.gray)
                                         .padding(.top, 10)
                                     
-                                    PreviewPlaceOnMap(promiseViewModel: editPromise)
+                                    PreviewPlaceOnMap(promiseViewModel: promiseViewModel)
                                         .presentationDetents([.height(700)])
                                         .padding(.top, 15)
                                 }
@@ -181,7 +176,7 @@ struct PromiseEditView: View {
                         }
                         Spacer()
                         
-                        Text("\(penalty)개")
+                        Text("\(promiseViewModel.penalty)개")
                             .font(.title3)
                             .padding(.leading, 100)
                     }
@@ -237,12 +232,17 @@ struct PromiseEditView: View {
                                 .scrollIndicators(.hidden)
                             }
                         }
+                        .padding(.bottom)
                 }
                 .padding(.horizontal, 15)
                 .onAppear {
                     editedPromiseTitle = promise.promiseTitle
-                    editedDestination = promise.destination
                     editedPromiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+                    promiseViewModel.destination = promise.destination
+                    promiseViewModel.address = promise.address
+                    promiseViewModel.coordXXX = promise.latitude
+                    promiseViewModel.coordYYY = promise.longitude
+                    promiseViewModel.penalty = promise.penalty
                     editSelectedFriends = promise.participantIdArray
                     Task {
                         try await friendsStore.fetchFriends()
@@ -267,20 +267,30 @@ struct PromiseEditView: View {
             }
         }
     }
-    //MARK: - 약속 수정 함수
+    // MARK: - 약속 수정 함수
     func updatePromise() {
         let promiseRef = dbRef.document(promise.id)
+        
+        let IdArray = [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id }
+        
+        for id in IdArray {
+            let friendLocation = Location(participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
+            
+            locationIdArray.append(friendLocation.id)
+            
+            LocationStore.addLocationData(location: friendLocation)
+        }
         
         let updatedData: [String: Any] = [
             "promiseTitle": editedPromiseTitle,
             "promiseDate": editedPromiseDate.timeIntervalSince1970,
-            "destination": editedDestination,
-            "address": editedAddress,
-            "latitude": editPromise.coordXXX,
-            "longitude": editPromise.coordYYY,
-            //            "participantIdArray": editSelectedFriends
-            "participantIdArray": selectedFriends.map { $0.id },
-            "penalty": penalty
+            "destination": promiseViewModel.destination,
+            "address": promiseViewModel.address,
+            "latitude": promiseViewModel.coordXXX,
+            "longitude": promiseViewModel.coordYYY,
+            "participantIdArray": [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id },
+            "penalty": promiseViewModel.penalty,
+            "locationIdArray": locationIdArray
         ]
         
         promiseRef.updateData(updatedData) { error in

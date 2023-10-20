@@ -26,11 +26,15 @@ struct MyPageView: View {
     // 지각 깊이 데이터 프로퍼티
     // 지각률에 따라 메시지 다르게 보여주기
     let tradyCount = AuthStore.shared.currentUser?.tradyCount ?? 0
-    let promiseCount = AuthStore.shared.currentUser?.promiseCount ?? 1
+    let promiseCount = AuthStore.shared.currentUser?.promiseCount ?? 0
     var tradyPercent: Int {
-        return tradyCount/promiseCount*100
+        if promiseCount == 0 {
+            return 0
+        } else {
+            return tradyCount/promiseCount*100
+        }
     }
-//    @State private var tradyPercent: Double = 0
+    //    @State private var tradyPercent: Double = 0
     var promisePercent: Int {
         return 100 - tradyPercent
     }
@@ -56,65 +60,81 @@ struct MyPageView: View {
     }
     
     var tradyMessage: String {
-        switch promisePercent {
-        case 0: "약속이 뭔말인지 몰라요?"
-        case 1...30: "지각을 넘어 핵으로 들어가겠어요"
-        case 31...50: "슬슬 지각쟁이소리 들어도 할말없음"
-        case 51...70: "조금만 더 약속에 신경써요"
-        case 71...80: "나쁘지 않아요"
-        case 81...90: "오 꽤 지키는데요?"
-        case 91...95: "너무 좋아요!"
-        case 96...100: "약속의 신"
-        default:
-            "약속이 뭔말인지 몰라요?"
+        if promiseCount == 0 {
+            return "약속을 잘 지켜보아요."
+        } else {
+            switch promisePercent {
+            case 0: return "약속이 뭔말인지 몰라요?"
+            case 1...30: return "지각을 넘어 핵으로 들어가겠어요"
+            case 31...50: return "슬슬 지각쟁이소리 들어도 할말없음"
+            case 51...70: return "조금만 더 약속에 신경써요"
+            case 71...80: return "나쁘지 않아요"
+            case 81...90: return "오 꽤 지키는데요?"
+            case 91...95: return "너무 좋아요!"
+            case 96...100: return "약속의 신"
+            default:
+                return "약속이 뭔말인지 몰라요?"
+            }
         }
     }
     
     var tradyTitle: String {
-        switch promisePercent {
-        case 0: "플랭크톤"
-        case 1...30: "자벌레"
-        case 31...50: "일탈쟁이"
-        case 51...70: "어중간지각쟁이"
-        case 71...80: "일반인"
-        case 81...90: "약속의 수호자"
-        case 91...95: "친구들의 사랑"
-        case 96...100: "약속의 신"
-        default:
-            "플랭크톤"
+        if promiseCount == 0 {
+            return "뉴비약속러"
+        } else {
+            switch promisePercent {
+            case 0: return "플랭크톤"
+            case 1...30: return "자벌레"
+            case 31...50: return "일탈쟁이"
+            case 51...70: return "어중간지각쟁이"
+            case 71...80: return "일반인"
+            case 81...90: return "약속의 수호자"
+            case 91...95: return "친구들의 사랑"
+            case 96...100: return "약속의 신"
+            default:
+                return "플랭크톤"
+            }
         }
     }
     
     var crustDepth: String {
-        switch promisePercent {
-        case 0: "5,151 ~ 6,371km--내핵"
-        case 1...30: "2,891 ~ 5,151km--외핵"
-        case 31...50: "670 ~ 2,891km--하부맨틀"
-        case 51...70: "6-35 ~ 670km--상부맨틀"
-        case 71...80: "0 ~ 30-35km--지각"
-        case 81...90: "0km--지표"
-        case 91...95: "0 ~ 10km--하층대기,대류권"
-        case 96...100: "10 ~ 50km--성층권"
-        default:
-            "5,151 ~ 6,371km--내핵"
+        if promiseCount == 0 {
+            return "0km--지표"
+        } else {
+            switch promisePercent {
+            case 0: return "5,151 ~ 6,371km--내핵"
+            case 1...30: return "2,891 ~ 5,151km--외핵"
+            case 31...50: return "670 ~ 2,891km--하부맨틀"
+            case 51...70: return "6-35 ~ 670km--상부맨틀"
+            case 71...80: return "0 ~ 30-35km--지각"
+            case 81...90: return "0km--지표"
+            case 91...95: return "0 ~ 10km--하층대기,대류권"
+            case 96...100: return "10 ~ 50km--성층권"
+            default:
+                return "5,151 ~ 6,371km--내핵"
+            }
         }
     }
     
     var crustBackgroundImage: String {
-        switch promisePercent {
-        case 0: "crust7"
-        case 1...30: "crust6"
-        case 31...50: "crust5"
-        case 51...70: "crust4"
-        case 71...80: "crust3"
-        case 81...90: "crust2"
-        case 91...95: "crust1"
-        case 96...100: "crust0"
-        default:
-            "crust7"
+        if promiseCount == 0 {
+            return "crust2"
+        } else {
+            switch promisePercent {
+            case 0: return "crust7"
+            case 1...30: return "crust6"
+            case 31...50: return "crust5"
+            case 51...70: return "crust4"
+            case 71...80: return "crust3"
+            case 81...90: return "crust2"
+            case 91...95: return "crust1"
+            case 96...100: return "crust0"
+            default:
+                return "crust7"
+            }
         }
     }
-
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -317,7 +337,7 @@ struct MyPageView: View {
                     )
                     .padding(.top, 15)
                     // test
-//                    Slider(value: $tradyPercent, in: 0...100)
+                    //                    Slider(value: $tradyPercent, in: 0...100)
                     
                     // MARK: - 지난 약속
                     VStack {
