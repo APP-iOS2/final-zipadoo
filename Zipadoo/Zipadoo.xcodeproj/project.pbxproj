@@ -10,6 +10,7 @@
 		047127952AD7BE4F00767E9C /* OneMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127942AD7BE4F00767E9C /* OneMapView.swift */; };
 		047127972AD7C7A800767E9C /* OneAddLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127962AD7C7A800767E9C /* OneAddLocation.swift */; };
 		04C7A85A2AC94889001B2AF8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04C7A8592AC94889001B2AF8 /* Alamofire */; };
+		04F7BCAD2AE2FB8A008A08EC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04F7BCAC2AE2FB89008A08EC /* GoogleService-Info.plist */; };
 		088A0F242AD78EAD00BC6EF5 /* FriendsMapSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A0F232AD78EAD00BC6EF5 /* FriendsMapSubView.swift */; };
 		088F7D402AD4DED40094B9B4 /* ReceivingLocationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F7D3F2AD4DED40094B9B4 /* ReceivingLocationTestView.swift */; };
 		088F7D422AD4EAB50094B9B4 /* GPSStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F7D412AD4EAB50094B9B4 /* GPSStore.swift */; };
@@ -166,6 +167,7 @@
 /* Begin PBXFileReference section */
 		047127942AD7BE4F00767E9C /* OneMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMapView.swift; sourceTree = "<group>"; };
 		047127962AD7C7A800767E9C /* OneAddLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneAddLocation.swift; sourceTree = "<group>"; };
+		04F7BCAC2AE2FB89008A08EC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		088A0F232AD78EAD00BC6EF5 /* FriendsMapSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsMapSubView.swift; sourceTree = "<group>"; };
 		088F7D3F2AD4DED40094B9B4 /* ReceivingLocationTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceivingLocationTestView.swift; sourceTree = "<group>"; };
 		088F7D412AD4EAB50094B9B4 /* GPSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSStore.swift; sourceTree = "<group>"; };
@@ -621,6 +623,7 @@
 		FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */ = {
 			isa = PBXGroup;
 			children = (
+				04F7BCAC2AE2FB89008A08EC /* GoogleService-Info.plist */,
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
@@ -821,6 +824,7 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
+				04F7BCAD2AE2FB8A008A08EC /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
