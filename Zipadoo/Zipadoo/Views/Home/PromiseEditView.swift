@@ -23,8 +23,9 @@ struct PromiseEditView: View {
     @State private var showAlert: Bool = false
     @State private var alertMessage = ""
     @State private var editSelectedFriends: [String] = []
+    @State private var locationIdArray: [String] = []
     @State private var editPromiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
-    @ObservedObject private var editPromise: PromiseViewModel = PromiseViewModel()
+    @ObservedObject private var promiseViewModel: PromiseViewModel = PromiseViewModel()
     @StateObject private var authUser: AuthStore = AuthStore()
     @StateObject var friendsStore: FriendsStore = FriendsStore()
     @StateObject var userStore: UserStore = UserStore()
@@ -106,16 +107,16 @@ struct PromiseEditView: View {
                         }
                         .buttonStyle(.borderedProminent)
                         .sheet(isPresented: $edifPlaceSheet) {
-                            OneMapView(promiseViewModel: editPromise, destination: $editedDestination, address: $editedAddress, sheetTitle: $sheetTitle)
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $editedDestination, address: $editedAddress, sheetTitle: $sheetTitle)
                         }
                         
                         Spacer()
-                        if !editPromise.destination.isEmpty {
+                        if !promiseViewModel.destination.isEmpty {
                             Button {
                                 previewPlaceSheet = true
                             } label: {
                                 HStack {
-                                    Text("\(editPromise.destination)")
+                                    Text("\(promiseViewModel.destination)")
                                         .font(.callout)
                                     Image(systemName: "chevron.forward")
                                         .resizable()
@@ -131,7 +132,7 @@ struct PromiseEditView: View {
                                         .foregroundStyle(Color.gray)
                                         .padding(.top, 10)
                                     
-                                    PreviewPlaceOnMap(promiseViewModel: editPromise)
+                                    PreviewPlaceOnMap(promiseViewModel: promiseViewModel)
                                         .presentationDetents([.height(700)])
                                         .padding(.top, 15)
                                 }
@@ -267,20 +268,30 @@ struct PromiseEditView: View {
             }
         }
     }
-    //MARK: - 약속 수정 함수
+    // MARK: - 약속 수정 함수
     func updatePromise() {
         let promiseRef = dbRef.document(promise.id)
+        
+        let IdArray = [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id }
+        
+        for id in IdArray {
+            let friendLocation = Location(participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
+            
+            locationIdArray.append(friendLocation.id)
+            
+            LocationStore.addLocationData(location: friendLocation)
+        }
         
         let updatedData: [String: Any] = [
             "promiseTitle": editedPromiseTitle,
             "promiseDate": editedPromiseDate.timeIntervalSince1970,
             "destination": editedDestination,
             "address": editedAddress,
-            "latitude": editPromise.coordXXX,
-            "longitude": editPromise.coordYYY,
-            //            "participantIdArray": editSelectedFriends
-            "participantIdArray": selectedFriends.map { $0.id },
-            "penalty": penalty
+            "latitude": promiseViewModel.coordXXX,
+            "longitude": promiseViewModel.coordYYY,
+            "participantIdArray": [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id },
+            "penalty": penalty,
+            "locationIdArray": locationIdArray
         ]
         
         promiseRef.updateData(updatedData) { error in
