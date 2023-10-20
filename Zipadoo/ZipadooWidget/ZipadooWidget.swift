@@ -135,7 +135,7 @@ struct ZipadooWidgetEntryView: View {
     
     // 약속 정보 띄워주는 뷰
     private var promiseInfoView: some View {
-        Link(destination: URL(string: "https://www.apple.com")!) {
+        VStack(alignment: .leading) {
             HStack {
                 VStack {
                     Text(entry.title)

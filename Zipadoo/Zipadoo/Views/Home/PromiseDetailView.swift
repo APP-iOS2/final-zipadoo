@@ -18,7 +18,8 @@ struct PromiseDetailView: View {
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
     @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
     @StateObject var loginUser: UserStore = UserStore()
-  
+    @EnvironmentObject var widgetStore: WidgetStore
+    
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
     @State private var remainingTime: Double = 0.0
@@ -62,6 +63,11 @@ struct PromiseDetailView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     zipadooToolbarView
                 }
+            }
+            .onAppear {
+                widgetStore.widgetPromiseID = nil
+                widgetStore.widgetPromise = nil
+                widgetStore.isShowingDetailForWidget = false
             }
         }
         .alert(isPresented: $isShowingDeleteAlert) {

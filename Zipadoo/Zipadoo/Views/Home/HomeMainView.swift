@@ -45,6 +45,7 @@ struct HomeMainView: View {
                         ForEach(promise.fetchTrackingPromiseData) { promise in
                             NavigationLink {
                                 PromiseDetailView(promise: promise)
+                                    .environmentObject(widgetStore)
                                 
                             } label: {
                                 promiseListCell(promise: promise, color: .red)
