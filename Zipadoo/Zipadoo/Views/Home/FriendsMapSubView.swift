@@ -48,7 +48,7 @@ struct FriendsMapSubView: View {
                             region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                         } label: {
                             InfoView(name: annotation.nickname,
-                                     imageString: annotation.sampleImageString,
+                                     imageString: AuthStore.shared.currentUser?.moleImageString ?? "",
                                      destinationLatitude: destinationCoordinate.latitude,
                                      destinationLongitude: destinationCoordinate.longitude,
                                      currentLatitude: locationStore.myLocation.currentLatitude,
@@ -88,7 +88,7 @@ struct FriendsMapSubView: View {
     FriendsMapSubView(locationStore: LocationStore(), isShowingFriendSheet: .constant(true),
                       region: .constant(.automatic),
                       destinationCoordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323),
-                      promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 0, longitude: 0, participantIdArray: [], checkDoublePromise: true, locationIdArray: []))
+                      promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 0, longitude: 0, participantIdArray: [], checkDoublePromise: true, locationIdArray: [], penalty: 0))
 }
 
 struct InfoView: View {

@@ -61,7 +61,7 @@ final class AuthStore: ObservableObject {
     
     /// email 회원가입
     @MainActor
-    func createUser(email: String, password: String, name: String, nickName: String, phoneNumber: String, profileImage: UIImage?) async throws {
+    func createUser(email: String, password: String, name: String, nickName: String, phoneNumber: String, profileImage: UIImage?, moleImageString: String) async throws {
         
         do {
             // 회원가입후 그 유저 userSession에 저장
@@ -77,7 +77,7 @@ final class AuthStore: ObservableObject {
             }
             
             // 파베에 유저정보 저장
-            try await addUserData(id: result.user.uid, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImageString: profileImageString)
+            try await addUserData(id: result.user.uid, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImageString: profileImageString, moleImageString: moleImageString)
             
             // 이메일 따로 저장하는 collection -> 이메일중복 확인 위해서
             let dbRef = Firestore.firestore().collection("User email")
@@ -94,9 +94,9 @@ final class AuthStore: ObservableObject {
     }
     
     /// 로그인 스토어 데이터를 받아서 파이어베이스에 보내기 (email, 카카오, 애플)
-    func addUserData(id: String, name: String, nickName: String, phoneNumber: String, profileImageString: String) async throws {
+    func addUserData(id: String, name: String, nickName: String, phoneNumber: String, profileImageString: String, moleImageString: String) async throws {
         do {
-            let user = User(id: id, name: name, nickName: nickName, phoneNumber: phoneNumber, potato: 0, profileImageString: profileImageString, crustDepth: 0, tardyCount: 0, friendsIdArray: [], friendsIdRequestArray: [])
+            let user = User(id: id, name: name, nickName: nickName, phoneNumber: phoneNumber, potato: 0, profileImageString: profileImageString, crustDepth: 0, tradyCount: 0, friendsIdArray: [], friendsIdRequestArray: [], moleImageString: moleImageString)
             try dbRef.document(id).setData(from: user)
             
         } catch {

@@ -30,7 +30,7 @@ struct AddPromiseView: View {
     let step: Int = 100
 
     // 지각비 변수 및 상수 값
-    @State private var selectedValue: Int = 0
+    @State private var penalty: Int = 0
     private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
 
     private let today = Calendar.current.startOfDay(for: Date())
@@ -232,7 +232,7 @@ struct AddPromiseView: View {
                         .font(.footnote)
         
                     HStack {
-                        Text("\(selectedValue)원")
+                        Text("\(promiseViewModel.penalty)원")
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
                             
@@ -247,8 +247,6 @@ struct AddPromiseView: View {
                                     animate3.toggle()
                                     showingPenalty.toggle()
                                 }
-                        
-     
                     }
                     .padding(.top, 10)
                     Divider()
@@ -321,7 +319,7 @@ struct AddPromiseView: View {
                                 /// 장소에 대한 정보 값
                                 promiseViewModel.promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
                                 /// 지각비 변수 및 상수 값
-                                promiseViewModel.selectedValue = 0
+                                promiseViewModel.penalty = 0
                                 /// 선택된 친구 초기화
                                 promiseViewModel.selectedFriends = []
                             }),
@@ -344,7 +342,7 @@ struct AddPromiseView: View {
                 }
                 .padding(.horizontal, 15)
                 
-                Picker("지각비", selection: $selectedValue) {
+                Picker("지각비", selection: $promiseViewModel.penalty) {
                     ForEach(availableValues, id: \.self) { value in
 
                         Text("\(value)").tag(value)
