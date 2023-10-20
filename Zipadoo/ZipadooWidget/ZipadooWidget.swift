@@ -10,15 +10,15 @@ import SwiftUI
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> ZipadooEntry {
-        ZipadooEntry(date: Date(), title: "약속 타이틀", destination: "약속 장소", time: "약속 시간", arrivalMember: 0)
+        ZipadooEntry(date: Date(), promiseID: "", title: "약속 타이틀", destination: "약속 장소", time: "약속 시간")
     }
     
     func getSnapshot(in context: Context, completion: @escaping (ZipadooEntry) -> Void) {
         let entry = ZipadooEntry(date: Date(),
+                                 promiseID: "",
                                  title: "약속 타이틀",
                                  destination: "서울시 종로구 종로3길 17",
-                                 time: "오전 9시",
-                                 arrivalMember: 0)
+                                 time: "오전 9시")
         completion(entry)
     }
     
@@ -35,10 +35,10 @@ struct Provider: TimelineProvider {
                 
                 if todayPromises.isEmpty {
                     let empty = ZipadooEntry(date: Date(),
+                                             promiseID: "",
                                              title: "Zipadoo",
                                              destination: "오늘의 일정은?",
-                                             time: "",
-                                             arrivalMember: -1)
+                                             time: "")
                     entries.append(empty)
                     
                     completion(Timeline(entries :entries,policy:.atEnd))
@@ -48,6 +48,7 @@ struct Provider: TimelineProvider {
                 todayPromises.sort { $0.time < $1.time }
                 
                 for (index, data) in todayPromises.enumerated() {
+                    print(data.promiseID)
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "a hh:mm"
                     
@@ -64,20 +65,20 @@ struct Provider: TimelineProvider {
                     }
                     
                     let entryAtLoadTime = ZipadooEntry(date: entryStartTime,
+                                                       promiseID: data.promiseID,
                                                        title: data.title,
                                                        destination: data.place,
-                                                       time: dateFormatter.string(from:dateOfPromise),
-                                                       arrivalMember: data.arrivalMember)
+                                                       time: dateFormatter.string(from:dateOfPromise))
                     
                     entries.append(entryAtLoadTime)
                     
                     // 마지막 약속이면 약속 30분 뒤에 해당 entry 보여주기
                     if index == todayPromises.count - 1 {
                         let lastEvent = ZipadooEntry(date: dateOfPromise.addingTimeInterval(1800),
-                                                             title: "Zipadoo",
-                                                             destination: "오늘 모든 일정이 끝났어요!",
-                                                             time: "",
-                                                             arrivalMember: -1)
+                                                     promiseID: "",
+                                                     title: "Zipadoo",
+                                                     destination: "오늘 모든 일정이 끝났어요!",
+                                                     time: "")
                         
                         entries.append(lastEvent)
                     }
@@ -112,7 +113,7 @@ struct Provider: TimelineProvider {
 struct ZipadooWidgetEntryView: View {
     var entry: ZipadooEntry
     var body: some View {
-        if entry.title == "Zipadoo" && entry.arrivalMember < 0 {
+        if entry.title == "Zipadoo" {
             emptyView
         } else {
             promiseInfoView
@@ -153,9 +154,7 @@ struct ZipadooWidgetEntryView: View {
                 
                 Spacer()
                 
-                Link(destination: URL(string: "zipadoo://detailView?promiseID=F3C0842D-D626-4367-9346-EA308BD32827")!) {
-                    
-                    
+                Link(destination: URL(string: "zipadoo://detailView?promiseID=\(entry.promiseID)")!) {
                     Text("도착 인원 확인")
                         .padding([.vertical, .horizontal], 8)
                         .background(Color.blue)
@@ -193,18 +192,18 @@ struct ZipadooWidget: Widget {
     ZipadooWidget()
 } timeline: {
     ZipadooEntry(date: Date(),
+                 promiseID: "",
                  title: "Zipadoo 뒷풀이",
                  destination: "앤티앤즈 센트럴시티터미널역점",
-                 time: "pm 06:30",
-                 arrivalMember: 111)
+                 time: "pm 06:30")
 }
 
 #Preview(as: .systemMedium) {
     ZipadooWidget()
 } timeline: {
     ZipadooEntry(date: Date(),
+                 promiseID: "",
                  title: "Zipadoo",
                  destination: "오늘 모든 일정이 끝났어요!",
-                 time: "",
-                 arrivalMember: -1)
+                 time: "")
 }

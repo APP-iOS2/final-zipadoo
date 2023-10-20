@@ -64,11 +64,6 @@ struct PromiseDetailView: View {
                     zipadooToolbarView
                 }
             }
-            .onAppear {
-                widgetStore.widgetPromiseID = nil
-                widgetStore.widgetPromise = nil
-                widgetStore.isShowingDetailForWidget = false
-            }
         }
         .alert(isPresented: $isShowingDeleteAlert) {
             Alert(
@@ -94,6 +89,10 @@ struct PromiseDetailView: View {
         .onAppear {
             currentDate = Date().timeIntervalSince1970
             formatRemainingTime()
+            widgetStore.widgetPromiseID = nil
+            widgetStore.widgetPromise = nil
+            widgetStore.isShowingDetailForWidget = false
+            
         }
         .onReceive(timer, perform: { _ in
             currentDate = Date().timeIntervalSince1970

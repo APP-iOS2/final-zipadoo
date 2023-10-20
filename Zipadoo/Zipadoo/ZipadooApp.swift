@@ -85,7 +85,6 @@ struct ZipadooApp: App {
                                     if let promiseId = widgetStore.widgetPromiseID {
                                         do {
                                             try await widgetStore.fetchPromise(promiseId: promiseId)
-                                            widgetStore.isShowingDetailForWidget = true
                                         } catch {
                                             print("Failed to fetch the Promise with ID \(promiseId)")
                                         }
@@ -95,7 +94,6 @@ struct ZipadooApp: App {
                                 break
                             }
                         }
-                        
                 } else {
                     LaunchScreen()
                         .onAppear {
@@ -113,6 +111,7 @@ struct ZipadooApp: App {
                 let promiseID = components?.queryItems?.first(where: { $0.name == "promiseID" })?.value
                 
                 widgetStore.widgetPromiseID = promiseID
+                print("아이디 \(promiseID)")
             }
 //                .onOpenURL(perform: { url in
 //                    if AuthApi.isKakaoTalkLoginUrl(url) {

@@ -378,8 +378,7 @@ class PromiseViewModel: ObservableObject {
             let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
             
             if promiseDateComponents == todayComponents {
-                //let arrivalMemCount = promise.lo
-                let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
+                let data = WidgetData(promiseID: promise.id, title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination)
                 widgetDatas.append(data)
             } else {
                 // 오름차순 정렬인데 해당 약속이 오늘이 아니라면 이 후 약속은 볼 필요 없음

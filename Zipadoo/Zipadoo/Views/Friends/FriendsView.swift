@@ -58,8 +58,9 @@ struct FriendsView: View {
             .navigationTitle("친구 관리")
             .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(isPresented: $widgetStore.isShowingDetailForWidget) {
-                PromiseDetailView(promise: widgetStore.widgetPromise ??
-                                  Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0.0, destination: "", address: "", latitude: 0.0, longitude: 0.0, participantIdArray: [""], checkDoublePromise: false, locationIdArray: [""]))
+                if let promise = widgetStore.widgetPromise {
+                    PromiseDetailView(promise: promise)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

@@ -9,8 +9,8 @@ import Foundation
 
 struct WidgetData: Identifiable, Codable {
     var id = UUID().uuidString
+    let promiseID: String
     let title: String
     let time: Double
     let place: String
-    var arrivalMember: Int
 }
