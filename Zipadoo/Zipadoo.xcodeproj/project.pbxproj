@@ -68,6 +68,7 @@
 		C076BDA52AD934C1005AE81D /* ArrivalMsgModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA42AD934C1005AE81D /* ArrivalMsgModel.swift */; };
 		C076BDA82AD938D6005AE81D /* AlertStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA72AD938D6005AE81D /* AlertStore.swift */; };
 		C076BDAC2ADEC79F005AE81D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C076BDAB2ADEC79F005AE81D /* GoogleService-Info.plist */; };
+		C08716882AE25C99005914C5 /* WidgetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08716872AE25C99005914C5 /* WidgetStore.swift */; };
 		FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */; };
 		FA24740A2ACD4BDB00D4C821 /* PlaceMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E42ACD4BDB00D4C821 /* PlaceMarkView.swift */; };
 		FA24740B2ACD4BDB00D4C821 /* FriendsLocationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */; };
@@ -218,6 +219,7 @@
 		C076BDA42AD934C1005AE81D /* ArrivalMsgModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalMsgModel.swift; sourceTree = "<group>"; };
 		C076BDA72AD938D6005AE81D /* AlertStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStore.swift; sourceTree = "<group>"; };
 		C076BDAB2ADEC79F005AE81D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C08716872AE25C99005914C5 /* WidgetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStore.swift; sourceTree = "<group>"; };
 		FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpectedTravelTimeMarkView.swift; sourceTree = "<group>"; };
 		FA2473E42ACD4BDB00D4C821 /* PlaceMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMarkView.swift; sourceTree = "<group>"; };
 		FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationListView.swift; sourceTree = "<group>"; };
@@ -426,6 +428,14 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
+		C08716862AE25C8C005914C5 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				C08716872AE25C99005914C5 /* WidgetStore.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
 		FA2473E22ACD4BDB00D4C821 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -516,6 +526,7 @@
 		FA2474312ACD4D6E00D4C821 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				C08716862AE25C8C005914C5 /* Widget */,
 				C076BDA62AD93865005AE81D /* Alert */,
 				FA24745B2ACE39AC00D4C821 /* DateChanger.swift */,
 				FA2474322ACD4D6E00D4C821 /* UserStore.swift */,
@@ -867,6 +878,7 @@
 				FA24745E2ACE3B8200D4C821 /* MyPagePromiseStore.swift in Sources */,
 				C02790FE2ACFCF8A00BBDCCA /* LocationAndInfo.swift in Sources */,
 				FA24742D2ACD4C0B00D4C821 /* ShareView.swift in Sources */,
+				C08716882AE25C99005914C5 /* WidgetStore.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				FA2474602ACE3BC000D4C821 /* PastPromiseView.swift in Sources */,
 				FA2474172ACD4BDB00D4C821 /* AddLocationDatas.swift in Sources */,

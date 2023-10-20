@@ -142,6 +142,8 @@ class PromiseViewModel: ObservableObject {
                     self.fetchTrackingPromiseData = tempPromiseTracking
                     self.fetchPastPromiseData = tempPastPromise
                     
+                    self.addTodayPromisesToUserDefaults()
+                    
                     self.isLoading = false
                 }
             }

@@ -56,7 +56,10 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct ZipadooApp: App {
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject var alertStore: AlertStore = AlertStore()
+    @StateObject private var widgetStore = WidgetStore()
+    @StateObject private var promiseViewModel = PromiseViewModel()
     /*
     init() {
         // Kakao SDK 초기화
@@ -66,7 +69,6 @@ struct ZipadooApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State private var showMainView = false
-    @State var linkActive = false
     
     var body: some Scene {
         WindowGroup {
@@ -74,6 +76,26 @@ struct ZipadooApp: App {
                 if showMainView {
                     ContentView()
                         .environmentObject(alertStore)
+                        .environmentObject(promiseViewModel)
+                        .environmentObject(widgetStore)
+                        .onChange(of: scenePhase) { newScenePhase in
+                            switch newScenePhase {
+                            case .active:
+                                Task {
+                                    if let promiseId = widgetStore.widgetPromiseID {
+                                        do {
+                                            try await widgetStore.fetchPromise(promiseId: promiseId)
+                                            widgetStore.isShowingDetailForWidget = true
+                                        } catch {
+                                            print("Failed to fetch the Promise with ID \(promiseId)")
+                                        }
+                                    }
+                                }
+                            @unknown default:
+                                break
+                            }
+                        }
+                        
                 } else {
                     LaunchScreen()
                         .onAppear {
@@ -89,9 +111,8 @@ struct ZipadooApp: App {
                 guard url.scheme == "zipadoo" else { return }
                 let components = URLComponents(url: url, resolvingAgainstBaseURL: true)
                 let promiseID = components?.queryItems?.first(where: { $0.name == "promiseID" })?.value
-                print(promiseID)
-                linkActive = true
                 
+                widgetStore.widgetPromiseID = promiseID
             }
 //                .onOpenURL(perform: { url in
 //                    if AuthApi.isKakaoTalkLoginUrl(url) {

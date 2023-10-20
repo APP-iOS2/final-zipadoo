@@ -9,11 +9,12 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var alertStore: AlertStore
-    @StateObject private var promiseViewModel = PromiseViewModel()
+    @EnvironmentObject var widgetStore: WidgetStore
+    @EnvironmentObject var promiseViewModel: PromiseViewModel
     @StateObject var viewModel = ContentViewModel()
+    //@State private var fetchedPromise: Promise?
     
     var body: some View {
-        
         // 로그인이 되어있지 않은 상태면 로그인 뷰로,
         if viewModel.userSession == nil {
             LoginView()
@@ -28,6 +29,7 @@ struct ContentView: View {
                     .tag(0)
                     .environmentObject(alertStore)
                     .environmentObject(promiseViewModel)
+                    .environmentObject(widgetStore)
                 
                 // 친구리스트
                 FriendsView()
@@ -36,6 +38,7 @@ struct ContentView: View {
                         Text("친구")
                     }
                     .tag(1)
+                    .environmentObject(widgetStore)
                 
                 // 마이페이지
                 MyPageView()
@@ -45,6 +48,7 @@ struct ContentView: View {
                     }
                     .tag(2)
                     .environmentObject(promiseViewModel)
+                    .environmentObject(widgetStore)
                 
             }
             .arrivalMessageAlert(isPresented: $alertStore.isPresentedArrival, arrival: alertStore.arrivalMsgAlert)
@@ -55,4 +59,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(AlertStore())
+        .environmentObject(PromiseViewModel())
 }

@@ -10,6 +10,7 @@ import WidgetKit
 
 struct MyPageView: View {
     @EnvironmentObject private var promiseViewModel: PromiseViewModel
+    @EnvironmentObject var widgetStore: WidgetStore
     /// 현재 로그인된 유저(옵셔널)
     let currentUser: User? = AuthStore.shared.currentUser
     /// 유저가 있으면 유저프로필 String저장
@@ -43,37 +44,37 @@ struct MyPageView: View {
                                     Circle()
                                         .stroke(Color.secondary, lineWidth: 1)
                                 )
-                          
+                            
                             Group {  // 칭호, 이름, 위치
-                            VStack(alignment: .leading) {
-                                // 닉네임, 지각 깊이(위치)
-                                VStack {
-                                    HStack {
-                                        VStack {
-                                            HStack {
-                                                Text("지각쟁이") // 칭호
-                                                    .font(.subheadline)
-                                                    .foregroundStyle(.secondary)
-                                                Spacer()
+                                VStack(alignment: .leading) {
+                                    // 닉네임, 지각 깊이(위치)
+                                    VStack {
+                                        HStack {
+                                            VStack {
+                                                HStack {
+                                                    Text("지각쟁이") // 칭호
+                                                        .font(.subheadline)
+                                                        .foregroundStyle(.secondary)
+                                                    Spacer()
+                                                }
+                                                HStack {
+                                                    Text("\(currentUser?.nickName ?? "안나옴") 님")
+                                                        .font(.title3)
+                                                        .fontWeight(.semibold)
+                                                    Spacer()
+                                                }
                                             }
-                                            HStack {
-                                                Text("\(currentUser?.nickName ?? "안나옴") 님")
-                                                    .font(.title3)
-                                                    .fontWeight(.semibold)
-                                                Spacer()
-                                            }
+                                            Spacer()
+                                            
                                         }
-                                        Spacer()
+                                        .padding(.bottom, 10)
+                                        
+                                        HStack {
+                                            
+                                            Spacer()
+                                        }
                                         
                                     }
-                                    .padding(.bottom, 10)
-                                    
-                                    HStack {
-                                    
-                                        Spacer()
-                                    }
-                                    
-                                }
                                     
                                 }
                                 .padding(.leading, 10)
@@ -83,9 +84,9 @@ struct MyPageView: View {
                         .padding(.bottom, 30)
                         
                         // 감자 코인
-                  
+                        
                         .padding(.bottom, 10)
-                      
+                        
                         Group {
                             HStack {
                                 NavigationLink {
@@ -95,11 +96,11 @@ struct MyPageView: View {
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: 23, height: 20)
-                                       
+                                    
                                     Text("감자")
                                         .foregroundColor(.secondary)
                                         .frame(width: 30, height: 20)
-              
+                                    
                                     Spacer()
                                     
                                 }
@@ -117,15 +118,15 @@ struct MyPageView: View {
                                             .stroke(Color.primary, lineWidth: 1)
                                     }
                                     .frame(width: 23, height: 20)
-                                    
+                                
                                 Text("캐시")
                                     .foregroundColor(.secondary)
                                     .frame(width: 30, height: 20)
-                                   
+                                
                                 Spacer()
                                 Text("30,000")
                                     .fontWeight(.semibold)
-                               
+                                
                             }
                         }
                         .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
@@ -136,7 +137,7 @@ struct MyPageView: View {
                         Divider()
                             .padding(.vertical, 15)
                         HStack {
-            
+                            
                             NavigationLink {
                                 MyPotatoView()
                             } label: {
@@ -150,12 +151,12 @@ struct MyPageView: View {
                                 }
                                 .foregroundColor(.primary)
                                 .font(.headline)
-                                      
+                                
                             }
                             
                         }
                         .padding(.bottom, 15)
-                              
+                        
                     }
                     .padding()
                     .overlay(
@@ -192,7 +193,7 @@ struct MyPageView: View {
                                     .font(.subheadline)
                                     .fontWeight(.semibold)
                                     .foregroundColor(.red)
-                                    
+                                
                                 Text("지각횟수 0회")
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
@@ -220,7 +221,7 @@ struct MyPageView: View {
                                 //                        }
                                 //                    }
                             }
-                                                }
+                        }
                     }
                     .padding()
                     
@@ -231,10 +232,10 @@ struct MyPageView: View {
                                 .opacity(0.05)
                                 .shadow(color: .primary, radius: 10, x: 5, y: 5)
                         }
-                  
+                        
                     )
                     .padding(.top, 15)
-               
+                    
                     // MARK: - 지난 약속
                     VStack {
                         NavigationLink {
@@ -263,7 +264,7 @@ struct MyPageView: View {
                                 .opacity(0.05)
                                 .shadow(color: .primary, radius: 10, x: 5, y: 5)
                         }
-        
+                        
                     )
                     .padding(.vertical, 15)
                     
@@ -297,22 +298,27 @@ struct MyPageView: View {
                                 .opacity(0.05)
                                 .shadow(color: .primary, radius: 10, x: 5, y: 5)
                         }
-                
+                        
                     )
-                   
+                    
                 }
-            .padding()
-       
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink {
-                        SettingView()
-                    } label: {
-                        Image(systemName: "gearshape")
-                            .foregroundColor(.primary)
+                .padding()
+                
+                .toolbar {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        NavigationLink {
+                            SettingView()
+                        } label: {
+                            Image(systemName: "gearshape")
+                                .foregroundColor(.primary)
+                        }
                     }
+                    // ScrollView
                 }
-            } // ScrollView
+            }
+            .navigationDestination(isPresented: $widgetStore.isShowingDetailForWidget) {
+                PromiseDetailView(promise: widgetStore.widgetPromise ??
+                                  Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0.0, destination: "", address: "", latitude: 0.0, longitude: 0.0, participantIdArray: [""], checkDoublePromise: false, locationIdArray: [""]))
             }
             
         }

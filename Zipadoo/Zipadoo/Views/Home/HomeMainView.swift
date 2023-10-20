@@ -11,6 +11,7 @@ import WidgetKit
 
 struct HomeMainView: View {
     @EnvironmentObject var promise: PromiseViewModel
+    @EnvironmentObject var widgetStore: WidgetStore
     let user: User?
     
     @State private var isShownFullScreenCover: Bool = false
@@ -82,7 +83,6 @@ struct HomeMainView: View {
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity) // 스크롤을 최대한 바깥으로 하기 위함
                 .onAppear {
-                    promise.addTodayPromisesToUserDefaults()
                     Task {
                         try await promise.fetchData(userId: loginUserID)
                     }
@@ -91,6 +91,10 @@ struct HomeMainView: View {
                     Task {
                         try await promise.fetchData(userId: loginUserID)
                     }
+                }
+                .navigationDestination(isPresented: $widgetStore.isShowingDetailForWidget) {
+                    PromiseDetailView(promise: widgetStore.widgetPromise ??
+                                      Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0.0, destination: "", address: "", latitude: 0.0, longitude: 0.0, participantIdArray: [""], checkDoublePromise: false, locationIdArray: [""]))
                 }
             }
         }

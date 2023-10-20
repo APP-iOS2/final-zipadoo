@@ -11,6 +11,7 @@ import SlidingTabView
 struct FriendsView: View {
     
     @StateObject var friendsStore: FriendsStore = FriendsStore()
+    @EnvironmentObject var widgetStore: WidgetStore
     /// 친구 삭제 알람
     @State private var isDeleteAlert: Bool = false
     /// segmentedControl 인덱스
@@ -56,6 +57,10 @@ struct FriendsView: View {
 //            .pickerStyle(SegmentedPickerStyle())
             .navigationTitle("친구 관리")
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(isPresented: $widgetStore.isShowingDetailForWidget) {
+                PromiseDetailView(promise: widgetStore.widgetPromise ??
+                                  Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0.0, destination: "", address: "", latitude: 0.0, longitude: 0.0, participantIdArray: [""], checkDoublePromise: false, locationIdArray: [""]))
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink {
