@@ -136,34 +136,33 @@ struct ZipadooWidgetEntryView: View {
     
     // 약속 정보 띄워주는 뷰
     private var promiseInfoView: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                VStack {
-                    Text(entry.title)
-                        .font(.title2)
+        Link(destination: URL(string: "https://www.apple.com")!) {
+            VStack(alignment: .leading) {
+                
+                Text(entry.title)
+                    //.font(.title2)
+                
+                Text(entry.destination)
+                    //.font(.title2)
+                
+                
+                HStack() {
+                    Text(entry.time)
+                        .font(.largeTitle)
                     
-                    Text(entry.destination)
-                        .font(.title2)
-                }
-                Spacer()
-            }
-            
-            HStack() {
-                Text(entry.time)
-                    .font(.largeTitle)
-                
-                Spacer()
-                
-                Link(destination: URL(string: "zipadoo://detailView?promiseID=\(entry.promiseID)")!) {
-                    Text("도착 인원 확인")
-                        .padding([.vertical, .horizontal], 8)
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(14)
+                    Spacer()
+                    
+                    Link(destination: URL(string: "zipadoo://detailView?promiseID=\(entry.promiseID)")!) {
+                        Text("자세히")
+                            .padding([.vertical, .horizontal], 8)
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(14)
+                    }
                 }
             }
+            .bold()
         }
-        .bold()
     }
 }
 

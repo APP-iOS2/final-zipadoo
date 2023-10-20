@@ -55,6 +55,7 @@ struct HomeMainView: View {
                         ForEach(promise.fetchPromiseData) { promise in
                             NavigationLink {
                                 PromiseDetailView(promise: promise)
+                                    .environmentObject(widgetStore)
                             } label: {
                                 promiseListCell(promise: promise, color: .primary)
                             }
@@ -81,6 +82,12 @@ struct HomeMainView: View {
                         
                     }
                 }
+                .navigationDestination(isPresented: $widgetStore.isShowingDetailForWidget) {
+                    if let promise = widgetStore.widgetPromise {
+                        PromiseDetailView(promise: promise)
+                            .environmentObject(widgetStore)
+                    }
+                }
                 .padding()
                 .frame(maxWidth: .infinity, maxHeight: .infinity) // 스크롤을 최대한 바깥으로 하기 위함
                 .onAppear {
@@ -93,11 +100,11 @@ struct HomeMainView: View {
                         try await promise.fetchData(userId: loginUserID)
                     }
                 }
-                .navigationDestination(isPresented: $widgetStore.isShowingDetailForWidget) {
-                    if let promise = widgetStore.widgetPromise {
-                        PromiseDetailView(promise: promise)
-                    }
-                }
+//                .navigationDestination(isPresented: $widgetStore.isShowingDetailForWidget) {
+//                    if let promise = widgetStore.widgetPromise {
+//                        PromiseDetailView(promise: promise)
+//                    }
+//                }
             }
         }
     }

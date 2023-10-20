@@ -69,12 +69,13 @@ struct ZipadooApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State private var showMainView = false
+    @State private var selectedTab = 0
     
     var body: some Scene {
         WindowGroup {
             ZStack {
                 if showMainView {
-                    ContentView()
+                    ContentView(selectedTab: $selectedTab)
                         .environmentObject(alertStore)
                         .environmentObject(promiseViewModel)
                         .environmentObject(widgetStore)
@@ -109,9 +110,8 @@ struct ZipadooApp: App {
                 guard url.scheme == "zipadoo" else { return }
                 let components = URLComponents(url: url, resolvingAgainstBaseURL: true)
                 let promiseID = components?.queryItems?.first(where: { $0.name == "promiseID" })?.value
-                
                 widgetStore.widgetPromiseID = promiseID
-                print("아이디 \(promiseID)")
+                selectedTab = 0
             }
 //                .onOpenURL(perform: { url in
 //                    if AuthApi.isKakaoTalkLoginUrl(url) {

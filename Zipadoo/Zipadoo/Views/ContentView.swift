@@ -12,6 +12,7 @@ struct ContentView: View {
     @EnvironmentObject var widgetStore: WidgetStore
     @EnvironmentObject var promiseViewModel: PromiseViewModel
     @StateObject var viewModel = ContentViewModel()
+    @Binding var selectedTab: Int
     //@State private var fetchedPromise: Promise?
     
     var body: some View {
@@ -19,7 +20,7 @@ struct ContentView: View {
         if viewModel.userSession == nil {
             LoginView()
         } else {
-            TabView {
+            TabView(selection: $selectedTab) {
                 // 홈
                 HomeMainView(user: viewModel.currentUser)
                     .tabItem {
@@ -38,7 +39,6 @@ struct ContentView: View {
                         Text("친구")
                     }
                     .tag(1)
-                    .environmentObject(widgetStore)
                 
                 // 마이페이지
                 MyPageView()
@@ -48,7 +48,6 @@ struct ContentView: View {
                     }
                     .tag(2)
                     .environmentObject(promiseViewModel)
-                    .environmentObject(widgetStore)
                 
             }
             .arrivalMessageAlert(isPresented: $alertStore.isPresentedArrival, arrival: alertStore.arrivalMsgAlert)
@@ -57,7 +56,7 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(selectedTab: .constant(0))
         .environmentObject(AlertStore())
         .environmentObject(PromiseViewModel())
 }
