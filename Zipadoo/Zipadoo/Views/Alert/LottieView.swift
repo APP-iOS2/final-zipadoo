@@ -12,30 +12,41 @@ import UIKit
 struct LottieView: UIViewRepresentable {
 //    var filename: String
     var url: URL
+    var size: CGFloat
+    
     func makeUIView(context: UIViewRepresentableContext<LottieView>) -> UIView {
-        let view = UIView(frame: .zero)
-        
+        let view = UIView()
         let animationView = LottieAnimationView()
-//        animationView.animation = LottieAnimation.named(filename)
         animationView.contentMode = .scaleAspectFit
         animationView.loopMode = .loop
-//        animationView.play() // 애니메이션 재생
         
-//        LottieAnimation.loadedFrom(url: url, closure: { animation in
-//            animationView.animation = animation
-//            animationView.play()
-//        }, animationCache: DefaultAnimationCache.sharedCache)
+        LottieAnimation.loadedFrom(url: url, closure: { animation in
+            animationView.animation = animation
+            animationView.play()
+        }, animationCache: DefaultAnimationCache.sharedCache)
         
         view.addSubview(animationView)
         animationView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            animationView.heightAnchor.constraint(equalTo: view.heightAnchor),
-            animationView.widthAnchor.constraint(equalTo: view.widthAnchor)
-        ])
         
+        NSLayoutConstraint.activate([
+            // 받아온 사이즈 적용
+            animationView.widthAnchor.constraint(equalToConstant: size),
+            animationView.heightAnchor.constraint(equalToConstant: size),
+            animationView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
         return view
     }
-    func updateUIView(_ uiView: UIViewType, context: Context) {
-        // no code
+    
+//    func updateUIView(_ uiView: UIViewType, context: Context) {
+//        // no code
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+//                
+//            animationView.removeFromSuperview()
+//            
+//        })
+//    
+//    }
+    func updateUIView(_ uiView: UIView, context: Context) {
+        //
     }
 }
