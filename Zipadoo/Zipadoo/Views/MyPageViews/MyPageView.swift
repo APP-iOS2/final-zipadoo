@@ -120,7 +120,7 @@ struct MyPageView: View {
 
     var body: some View {
         NavigationStack {
-            ScrollView {
+            ScrollView (showsIndicators: false) {
                 VStack(alignment: .leading) {
                     
                     VStack(spacing: 5) {
