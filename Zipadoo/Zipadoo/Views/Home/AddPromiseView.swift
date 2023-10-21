@@ -21,8 +21,8 @@ struct AddPromiseView: View {
     @State private var id: String = ""
     @State private var promiseTitle: String = ""
     @State private var date = Date()
-    @State private var destination: String = "" // 약속 장소 이름
-    @State private var address = "" // 약속장소 주소
+    //    @State private var destination: String = "" // 약속 장소 이름(사용X)
+    //    @State private var address = "" // 약속장소 주소 (사용X)
 
     // 지각비관련 변수
     let minValue: Int = 0
@@ -38,9 +38,9 @@ struct AddPromiseView: View {
     
     @State private var addPlaceMapSheet: Bool = false // 장소 검색 버튼 클릭값
     @State private var previewPlaceSheet: Bool = false // 프리뷰 버튼 클릭값
-//    @State private var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) // 장소에 대한 정보 값
-//    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값
-//    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값
+//    @State private var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) // 장소에 대한 정보 값 (사용X)
+//    @State var isClickedPlace: Bool = false /// 검색 결과에 나온 장소 클릭값 (사용X)
+//    @State var addLocationButton: Bool = false /// 장소 추가 버튼 클릭값 (사용X)
     @State private var showingConfirmAlert: Bool = false
     @State private var showingCancelAlert: Bool = false
     @State private var showingPenalty: Bool = false
@@ -169,7 +169,7 @@ struct AddPromiseView: View {
                         }
                         .buttonStyle(.borderedProminent)
                         .sheet(isPresented: $addPlaceMapSheet) {
-                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address, sheetTitle: $sheetTitle)
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $promiseViewModel.destination, address: $promiseViewModel.address, sheetTitle: $sheetTitle)
                         }
                         
                         Spacer()
@@ -205,7 +205,7 @@ struct AddPromiseView: View {
                         
                         NavigationLink {
                             //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
-                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address, sheetTitle: $sheetTitle)
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $promiseViewModel.destination, address: $promiseViewModel.address, sheetTitle: $sheetTitle)
                         } label: {
                             Image(systemName: "location.magnifyingglass")
                                 .foregroundColor(.primary)
@@ -317,7 +317,7 @@ struct AddPromiseView: View {
                                 promiseViewModel.coordXXX = 0.0 // 약속장소 위도
                                 promiseViewModel.coordYYY = 0.0 // 약속장소 경도
                                 /// 장소에 대한 정보 값
-                                promiseViewModel.promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
+//                                promiseViewModel.promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
                                 /// 지각비 변수 및 상수 값
                                 promiseViewModel.penalty = 0
                                 /// 선택된 친구 초기화
