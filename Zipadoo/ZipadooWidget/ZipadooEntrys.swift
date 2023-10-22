@@ -9,8 +9,8 @@ import WidgetKit
 
 struct ZipadooEntry: TimelineEntry {
     let date: Date
+    let promiseID: String
     let title: String
     let destination: String
     let time: String
-    let arrivalMember: Int
 }

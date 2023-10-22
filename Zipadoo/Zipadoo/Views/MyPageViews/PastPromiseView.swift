@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import WidgetKit
 
 struct PastPromiseView: View {
     @EnvironmentObject var promise: PromiseViewModel
@@ -27,12 +26,13 @@ struct PastPromiseView: View {
     }
     
     var body: some View {
-        NavigationStack {
-            if let loginUserID = currentUser?.id {
-                ScrollView {
+        VStack {
+            if promise.isLoading == false {
+                VStack {
                     // 약속 배열 값 존재하는지 확인.
                     if promise.fetchPastPromiseData.isEmpty {
-                        Text("지난 약속 내역이 없습니다.")
+                        Text("지난 약속 내역이 없습니다")
+                            .foregroundStyle(.secondary)
                         
                     } else {
                         VStack {
@@ -122,18 +122,7 @@ struct PastPromiseView: View {
                         }
                     }
                 }
-                .onAppear {
-                    Task {
-                        try await promise.fetchData(userId: loginUserID)
-                    }
-                }
-                .refreshable {
-                    Task {
-                        try await promise.fetchData(userId: loginUserID)
-                    }
-                }
-                .padding()
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
                 //                    .toolbar {
                 //                        ToolbarItem(placement: .topBarTrailing) {
                 //                            Button {
@@ -146,38 +135,22 @@ struct PastPromiseView: View {
                 //                            })
                 //                        }
                 //                    }
-                .onAppear {
-                    print(Date().timeIntervalSince1970)
-                    var calendar = Calendar.current
-                    calendar.timeZone = NSTimeZone.local
-                    let encoder = JSONEncoder()
-                    
-                    var widgetDatas: [WidgetData] = []
-                    
-                    for promise in promise.fetchPromiseData {
-                        let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
-                        let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
-                        let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-                        
-                        if promiseDateComponents == todayComponents {
-                            // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
-                            let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
-                            widgetDatas.append(data)
-                        }
-                    }
-                    
-                    do {
-                        let encodedData = try encoder.encode(widgetDatas)
-                        
-                        UserDefaults.shared.set(encodedData, forKey: "todayPromises")
-                        
-                        WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
-                    } catch {
-                        print("Failed to encode Promise:", error)
-                    }
-                }
+                
+            }
+            
+        }
+        .onAppear {
+            Task {
+                try await promise.fetchData(userId: currentUser?.id ?? "no id")
             }
         }
+        .refreshable {
+            Task {
+                try await promise.fetchData(userId: currentUser?.id ?? "no id")
+            }
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
