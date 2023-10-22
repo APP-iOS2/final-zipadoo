@@ -50,7 +50,8 @@ struct HomeMainView: View {
                         VStack {
                             Image(.zipadoo)
                                 .resizable()
-                                .frame(width: 200, height: 200)
+                                .scaledToFit()
+                                .frame(width: 150)
                             
                             Text("약속이 없어요\n 약속을 만들어 보세요!")
                                 .multilineTextAlignment(.center)
@@ -117,15 +118,11 @@ struct HomeMainView: View {
                                     }
                             }
                             .offset(y: isCardSpread ? 0 : CGFloat(index) * -120)
-                            
                             .padding()
                         }
-                        
                         //                            .offset(y: isCardSpread ? 0 : CGFloat((promise.fetchPromiseData.count - 1) * -180))
                         //                            .padding(.top, isCardSpread ? 30 : 0)
-                        
                     }
-                    
                 }
                 // 배경색
                 .background(Color.primaryInvert.ignoresSafeArea(.all))
@@ -158,18 +155,13 @@ struct HomeMainView: View {
                                 animate.toggle()
                                 isShownFullScreenCover.toggle()
                             }
-                        
                             .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
                                 AddPromiseView(promiseViewModel: promise)
                             })
-                        
                     }
-                }
-                
-            }
-            
+                }   
+            }   
         }
-        
     }
     
     func promiseListCell(promise: Promise, color: Color, isTracking: Bool) -> some View {
@@ -254,7 +246,6 @@ struct HomeMainView: View {
                         .padding(.trailing, -5)
                         .symbolEffect(.pulse.byLayer, options: .repeating, isActive: isTracking)
                     }
-                    
                     
                     // 추적중인 약속만 지도뷰 이동 가능
                     //                        if isTracking {
@@ -372,20 +363,20 @@ struct HomeMainView: View {
         }
     }
 }
-    
 
 
-    // MARK: - 시간 형식변환 함수
-    func formatDate(date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR") // 한글로 표시
-        dateFormatter.dateFormat = "MM월 dd일 (E) a h:mm" // 원하는 날짜 형식으로 포맷팅
-        return dateFormatter.string(from: date)
-    }
-    
-    #Preview {
-        HomeMainView(user: User.sampleData)
-    }
+
+// MARK: - 시간 형식변환 함수
+func formatDate(date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "ko_KR") // 한글로 표시
+    dateFormatter.dateFormat = "MM월 dd일 (E) a h:mm" // 원하는 날짜 형식으로 포맷팅
+    return dateFormatter.string(from: date)
+}
+
+#Preview {
+    HomeMainView(user: User.sampleData)
+}
 
 extension Color {
     init(hex: UInt, opacity: Double = 1.0) {
