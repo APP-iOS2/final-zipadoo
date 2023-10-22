@@ -23,8 +23,6 @@ struct HomeMainView: View {
     
     // 약속의 갯수 확인
     //    @State private var userPromiseArray: [Promise] = []
-    // 상단 탭바 인덱스
-    @State private var tabIndex = 0
     
     // 약속 카드 테두리 색 모션회전
     @State var rotation: CGFloat = 0.0
