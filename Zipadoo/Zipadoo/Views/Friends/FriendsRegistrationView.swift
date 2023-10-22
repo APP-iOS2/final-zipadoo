@@ -23,15 +23,24 @@ struct FriendsRegistrationView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            TextField("친구의 닉네임을 입력해주세요.", text: $nickNameTextField)
-                .padding(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(.secondary)
-                )
-                .padding(.bottom, 5)
+            ZStack {
+                TextField("친구의 닉네임을 입력해주세요.", text: $nickNameTextField)
+                    .padding(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(.secondary)
+                    )
+                HStack {
+                    Spacer()
+                    Image(systemName: "xmark.circle.fill")
+                        .padding(.trailing, 10)
+                        .foregroundColor(.secondary)
+                }
+                
+            }
+            .padding(.bottom, 5)
             
-            // 해당하는 닉네임이 없으면 알람메세지
+            // 조건에 안맞을 시 알림메세지
             if !friendsStore.alertMessage.isEmpty {
                 Text("\(friendsStore.alertMessage)")
                     .font(.footnote)
@@ -50,7 +59,6 @@ struct FriendsRegistrationView: View {
                             if resultBool { // 추가할 수 있으면 알람
                                 friendsStore.alertMessage = ""
                                 isShowingAlert.toggle()
-                                
                             }
                         }
                     }
