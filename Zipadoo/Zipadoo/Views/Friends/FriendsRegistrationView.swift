@@ -23,6 +23,7 @@ struct FriendsRegistrationView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
+      
             ZStack {
                 TextField("친구의 닉네임을 입력해주세요.", text: $nickNameTextField)
                     .padding(10)
@@ -43,18 +44,15 @@ struct FriendsRegistrationView: View {
                 
             }
             .padding(.bottom, 5)
-            
-            // 조건에 안맞을 시 알림메세지
-            if !friendsStore.alertMessage.isEmpty {
-                Text("\(friendsStore.alertMessage)")
-                    .font(.footnote)
-                    .foregroundStyle(.red)
-            }
-            Spacer()
-        }
-        .padding()
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            HStack {
+                
+                // 조건에 안맞을 시 알림메세지
+                if !friendsStore.alertMessage.isEmpty {
+                    Text("\(friendsStore.alertMessage)")
+                        .font(.footnote)
+                        .foregroundStyle(.red)
+                }
+                Spacer()
                 Button {
                     // 추가성공 -> dismiss
                     // 추가실패 -> 현 페이지 머물기, 그런 사람 없다고 밑에 안내문구
@@ -70,23 +68,26 @@ struct FriendsRegistrationView: View {
                 } label: {
                     Text("추가")
                 }
-            }
-        }
-        .alert(isPresented: $isShowingAlert, content: {
-            
-            Alert(
-                title: Text(""),
-                message: Text("친구를 요청합니다"),
-                dismissButton: .default(Text("확인"), action: {
-                    isShowingAlert = false
-                    dismiss()
-                    friendsStore.alertMessage = ""
+                .alert(isPresented: $isShowingAlert, content: {
+                    
+                    Alert(
+                        title: Text(""),
+                        message: Text("친구를 요청합니다"),
+                        dismissButton: .default(Text("확인"), action: {
+                            isShowingAlert = false
+                            dismiss()
+                            friendsStore.alertMessage = ""
+                        })
+                    )
                 })
-            )
-        })
-        .onAppear {
-            friendsStore.alertMessage = ""
+                .onAppear {
+                    friendsStore.alertMessage = ""
+                }
+            }
+    
         }
+        .padding()
+
     }
 }
 
