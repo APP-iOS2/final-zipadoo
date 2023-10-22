@@ -14,6 +14,18 @@ struct PastPromiseView: View {
     
     let currentUser = AuthStore.shared.currentUser
     
+    var startIndex: Int {
+        print("startIndex: \((promise.selectedPage - 1) * 5)")
+        return (promise.selectedPage - 1) * 5
+    }
+    var endIndex: Int {
+        if promise.selectedPage == promise.pastPromisePage {
+            return promise.fetchPastPromiseData.count
+        } else {
+            return (promise.selectedPage - 1) * 5 + 5
+        }
+    }
+    
     var body: some View {
         NavigationStack {
             if let loginUserID = currentUser?.id {
@@ -24,11 +36,11 @@ struct PastPromiseView: View {
                         
                     } else {
                         VStack {
-                            ForEach(promise.fetchPastPromiseData) { promise in
+                            ForEach(promise.fetchPastPromiseData[startIndex ..< endIndex]) { promise in
                                 NavigationLink {
                                     // 도착정보 보여주기
                                     ArriveResultView(promise: promise)
-
+                                    
                                 } label: {
                                     VStack(alignment: .leading) {
                                         HStack {
@@ -61,9 +73,9 @@ struct PastPromiseView: View {
                                                 
                                                 Text("\(promise.penalty)")
                                                     .fontWeight(.semibold)
-//                                                    .font(.title3)
+                                                //                                                    .font(.title3)
                                             }
-//                                            .padding(.bottom, 10)
+                                            //                                            .padding(.bottom, 10)
                                             
                                         }
                                         .font(.callout)
@@ -84,7 +96,28 @@ struct PastPromiseView: View {
                                     .foregroundStyle(Color.primary)
                                     
                                 }
-                                .padding(10) 
+                                .padding(10)
+                            }
+                            HStack {
+                                ForEach(1...promise.pastPromisePage, id: \.self) { page in
+                                    Button {
+                                        promise.selectedPage = page
+                                        
+                                    } label: {
+                                        ZStack {
+                                            if page == promise.selectedPage {
+                                                Circle()
+                                                    .foregroundStyle(.sand)
+                                            }
+                                            Text("\(page)")
+                                        }
+                                        .frame(width: 20, height: 20)
+
+                                    }
+                                    .disabled(page == promise.selectedPage) // 이미선택된 페이지는 disabled
+                                    .foregroundColor(page == promise.selectedPage ? .cider : .secondary)
+                                    .padding(.trailing, 5)
+                                }
                             }
                         }
                     }

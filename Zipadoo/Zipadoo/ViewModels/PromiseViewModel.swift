@@ -11,7 +11,7 @@ import FirebaseFirestoreSwift
 import FirebaseCore
 
 class PromiseViewModel: ObservableObject {
-    //@Published var promiseViewModel: [Promise]
+
     @Published var isLoading: Bool = true
     
     /// 예정인 약속 저장
@@ -20,11 +20,6 @@ class PromiseViewModel: ObservableObject {
     @Published var fetchTrackingPromiseData: [Promise] = []
     /// 지난 약속 저장
     @Published var fetchPastPromiseData: [Promise] = []
-    /*
-    /// 로그인중인 유저
-    var currentUser: User?
-     */
-
     // 저장될 변수
     @Published var id: String = ""
     @Published var promiseTitle: String = ""
@@ -40,6 +35,13 @@ class PromiseViewModel: ObservableObject {
 
     /// 약속에 참여할 친구배열
     @Published var selectedFriends: [User] = []
+    
+    /// 지난약속 아래 페이지 수
+    var pastPromisePage: Int {
+        Int(ceil(Double(fetchPastPromiseData.count / 5)))
+    }
+    /// 선택된 페이지네이션 숫자
+    @Published var selectedPage: Int = 1 // 디폴트 1
     
     private let dbRef = Firestore.firestore().collection("Promise")
     
