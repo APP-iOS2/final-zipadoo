@@ -49,7 +49,7 @@ struct Provider: TimelineProvider {
                 
                 for (index, data) in todayPromises.enumerated() {
                     let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "a hh:mm"
+                    dateFormatter.dateFormat = "hh:mm a"
                     
                     let dateOfPromise = Date(timeIntervalSince1970: data.time)
                     
@@ -149,30 +149,36 @@ struct ZipadooWidgetEntryView: View {
     private var promiseInfoView: some View {
         Link(destination: URL(string: "https://www.apple.com")!) {
             VStack(alignment: .leading) {
-                
-                Text(entry.title)
-                    //.font(.title2)
-                
-                Text(entry.destination)
-                    //.font(.title2)
-                
-                
-                HStack() {
-                    Text(entry.time)
-                        .font(.largeTitle)
+                HStack {
+                    // TODO: 지파두 로고로 변경하기
+                    Text("지파두")
+                        .font(.title3)
                     
                     Spacer()
                     
                     Link(destination: URL(string: "zipadoo://detailView?promiseID=\(entry.promiseID)")!) {
-                        Text("자세히")
-                            .padding([.vertical, .horizontal], 8)
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(14)
+                        HStack {
+                            Text("더보기")
+                            Image(systemName: "chevron.compact.right")
+                        }
+                        .font(.caption)
                     }
                 }
+                
+                Divider()
+                    .padding(.bottom, 5)
+                
+                Group {
+                    Text(entry.title)
+                    
+                    Text(entry.destination)
+                    
+                    Text(entry.time)
+                        .font(.largeTitle)
+                }
+                .bold()
             }
-            .bold()
+            .padding([.vertical, .horizontal], 7)
         }
     }
 }
@@ -205,7 +211,7 @@ struct ZipadooWidget: Widget {
                  promiseID: "",
                  title: "Zipadoo 뒷풀이",
                  destination: "앤티앤즈 센트럴시티터미널역점",
-                 time: "pm 06:30")
+                 time: "06:30 PM")
 }
 
 #Preview(as: .systemMedium) {
