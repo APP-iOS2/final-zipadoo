@@ -13,24 +13,31 @@ struct AddFriendCellView: View {
     
     @State private var addFriendsSheet: Bool = false
     
+    // 심볼이펙트
+    @State private var animate = false
+    
     var body: some View {
             HStack {
                 Text("친구추가")
-                    .font(.title2)
-                    .bold()
-                
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .foregroundColor(.secondary)
                 Spacer()
                 
-                Button {
-                    addFriendsSheet.toggle()
-                    print("친구 추가")
-                } label: {
-                    Label("추가하기", systemImage: "plus")
-                        .foregroundColor(.black)
-                }
-                .buttonStyle(.bordered)
+            // 친구 추가버튼
+                    Image(systemName: "person.crop.circle.badge.plus")
+                        .foregroundColor(.primary)
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .symbolEffect(.bounce, value: animate)
+                        .onTapGesture {
+                            animate.toggle()
+                            addFriendsSheet.toggle()
+                        }
+                
+                
             }
-            .padding(.top, 40)
+            .padding(.top, 60)
             
             RoundedRectangle(cornerRadius: 5)
                 .stroke(lineWidth: 0.05)

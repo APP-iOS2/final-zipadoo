@@ -8,20 +8,21 @@
 import SwiftUI
 
 struct ContentView: View {
+    
     @EnvironmentObject var alertStore: AlertStore
     @EnvironmentObject var widgetStore: WidgetStore
     @EnvironmentObject var promiseViewModel: PromiseViewModel
-    @StateObject var viewModel = ContentViewModel()
+    @StateObject var viewModel = AuthStore()
     @Binding var selectedTab: Int
     //@State private var fetchedPromise: Promise?
     
     var body: some View {
         // 로그인이 되어있지 않은 상태면 로그인 뷰로,
-        if viewModel.userSession == nil {
+        if viewModel.userSession?.uid == nil {
             LoginView()
         } else {
             TabView(selection: $selectedTab) {
-                // 홈
+                // MARK: - 홈 뷰
                 HomeMainView(user: viewModel.currentUser)
                     .tabItem {
                         Image(systemName: "house.fill")
@@ -32,7 +33,7 @@ struct ContentView: View {
                     .environmentObject(promiseViewModel)
                     .environmentObject(widgetStore)
                 
-                // 친구리스트
+                // MARK: - 친구리스트 뷰
                 FriendsView()
                     .tabItem {
                         Image(systemName: "person.2.fill")
@@ -40,7 +41,7 @@ struct ContentView: View {
                     }
                     .tag(1)
                 
-                // 마이페이지
+                // MARK: - 마이페이지 뷰
                 MyPageView()
                     .tabItem {
                         Image(systemName: "person.fill")
@@ -48,7 +49,6 @@ struct ContentView: View {
                     }
                     .tag(2)
                     .environmentObject(promiseViewModel)
-                
             }
             .arrivalMessageAlert(isPresented: $alertStore.isPresentedArrival, arrival: alertStore.arrivalMsgAlert)
         }

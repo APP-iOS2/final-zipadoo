@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// 더미 유저
-let dummyUser: User = User(id: "1", name: "gs", nickName: "닉네임", phoneNumber: "01", profileImageString: "22", friendsIdArray: ["12", "2"], friendsIdRequestArray: ["3"])
+let dummyUser: User = User(id: "1", name: "gs", nickName: "닉네임", phoneNumber: "01", profileImageString: "22", friendsIdArray: ["12", "2"], friendsIdRequestArray: ["3"], moleImageString: "doo1")
 
 struct FriendSellView: View {
     @Binding var selectedFriends: [User]
@@ -28,11 +28,11 @@ struct FriendSellView: View {
                     Image(systemName: "minus.circle.fill")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 25)
+                        .frame(width: 20)
                 }
-                .offset(x: 25, y: -24)
+                .offset(x: 23, y: -22)
             }
-            .shadow(radius: 1)
+//            .shadow(radius: 1)
             .tint(.red)
             
             Text(friend.nickName)

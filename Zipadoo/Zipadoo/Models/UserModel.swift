@@ -19,21 +19,21 @@ struct User: Codable, Identifiable, Equatable {
     /// 포인트
     var potato: Int = 0
     /// 유저 이미지
-    var profileImageString: String 
+    var profileImageString: String
     /// 지각 심도
     var crustDepth: Int = 0
     /// 유저의 지각 약속 수
-    var tardyCount: Int = 0
+    var tradyCount: Int = 0
     /// 친구 id 배열
     var friendsIdArray: [String]
     /// 친구요청 id배역
     var friendsIdRequestArray: [String]
-    /*
-    /// 유저의 약속 수
-    let promiseCount: Int?
-     */
+    /// 총 약속수
+    var promiseCount: Int = 0
+    /// 유저 두더지 이미지
+    var moleImageString: String
 }
 
 extension User {
-    static let sampleData: User = .init(id: "1234", name: "홍길동", nickName: "길똥이", phoneNumber: "010-1234-5678", profileImageString: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png", crustDepth: 4, friendsIdArray: ["12345","123456"], friendsIdRequestArray: [])
+    static let sampleData: User = .init(id: "1234", name: "홍길동", nickName: "길똥이", phoneNumber: "010-1234-5678", profileImageString: "https://img1.daumcdn.net/thumb/C500x500/?fname=http://t1.daumcdn.net/brunch/service/user/6qYm/image/eAFjiZeA-fGh8Y327AH7oTQIsxQ.png", crustDepth: 4, friendsIdArray: ["12345","123456"], friendsIdRequestArray: [], moleImageString: "doo1")
 }

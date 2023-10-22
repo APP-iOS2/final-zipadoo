@@ -150,9 +150,10 @@ struct ZipadooWidgetEntryView: View {
         Link(destination: URL(string: "https://www.apple.com")!) {
             VStack(alignment: .leading) {
                 HStack {
-                    // TODO: 지파두 로고로 변경하기
-                    Text("지파두")
-                        .font(.title3)
+                    Image(.logo)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 55)
                     
                     Spacer()
                     

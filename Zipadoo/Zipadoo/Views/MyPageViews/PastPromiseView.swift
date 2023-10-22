@@ -26,7 +26,9 @@ struct PastPromiseView: View {
                         VStack {
                             ForEach(promise.fetchPastPromiseData) { promise in
                                 NavigationLink {
-                                    ArriveResultView()
+                                    // 도착정보 보여주기
+                                    ArriveResultView(promise: promise)
+
                                 } label: {
                                     VStack(alignment: .leading) {
                                         HStack {

@@ -32,13 +32,13 @@ class PromiseViewModel: ObservableObject {
     @Published var date = Date()
     @Published var destination: String = "" // 약속 장소 이름
     @Published var address = "" // 약속장소 주소
-    @Published var coordX = 0.0 // 약속장소 위도
-    @Published var coordY = 0.0 // 약속장소 경도
+    @Published var coordXXX = 0.0 // 약속장소 위도
+    @Published var coordYYY = 0.0 // 약속장소 경도
     /// 장소에 대한 정보 값
     @Published var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
     /// 지각비 변수 및 상수 값
-    @Published var selectedValue: Int = 0
-    
+    @Published var penalty: Int = 0
+
     /// 약속에 참여할 친구배열
     @Published var selectedFriends: [User] = []
     
@@ -143,7 +143,12 @@ class PromiseViewModel: ObservableObject {
                     self.fetchPastPromiseData = tempPastPromise
                     
                     self.addTodayPromisesToUserDefaults()
-                    
+
+                    if let imminent = self.fetchTrackingPromiseData.first {
+                        self.addSharingNotification(imminent: imminent)
+                    } else if let imminent = self.fetchPromiseData.first {
+                        self.addSharingNotification(imminent: imminent)
+                    }
                     self.isLoading = false
                 }
             }
@@ -216,13 +221,14 @@ class PromiseViewModel: ObservableObject {
            makingUserID: AuthStore.shared.currentUser?.id ?? "not ID",
            promiseTitle: promiseTitle,
            promiseDate: date.timeIntervalSince1970, // 날짜 및 시간을 TimeInterval로 변환
-           destination: promiseLocation.destination,
-           address: promiseLocation.address,
-           latitude: promiseLocation.latitude,
-           longitude: promiseLocation.longitude,
+           destination: destination,
+           address: address,
+           latitude: coordXXX,
+           longitude: coordYYY,
            participantIdArray: [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id },
            checkDoublePromise: false, // 원하는 값으로 설정
-           locationIdArray: [])
+           locationIdArray: [],
+           penalty: penalty)
         
         do {
             // 친구도 동일하게 저장
@@ -247,14 +253,14 @@ class PromiseViewModel: ObservableObject {
             date = Date()
             destination = "" // 약속 장소 이름
             address = "" // 약속장소 주소
-            coordX = 0.0 // 약속장소 위도
-            coordY = 0.0 // 약속장소 경도
+            coordXXX = 0.0 // 약속장소 위도
+            coordYYY = 0.0 // 약속장소 경도
             /// 장소에 대한 정보 값
             promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
-            /// 지각비 변수 및 상수 값
-            selectedValue = 0
             /// 선택된 친구 초기화
             selectedFriends = []
+            /// 지각비 변수 및 상수 값
+            penalty = 0
 
         } catch {
             print("약속 등록")
@@ -273,20 +279,37 @@ class PromiseViewModel: ObservableObject {
     
     // MARK: - 약속 수정 함수
     /// 약속 수정 함수
-    func editPromise(_ promise: Promise) {
-        let updatedData: [String: Any] = [
-            "promiseTitle": "\(promise.promiseTitle)",
-            "promiseDate": "\(promise.promiseDate)",
-            "destination": "\(promise.destination)",
-            "participantIdArray": "\(promise.participantIdArray)"
-        ]
+//    func editPromise(_ promise: Promise) {
+//        let updatedData: [String: Any] = [
+//            "participantIdArray": "\(promise.participantIdArray)"
+//        ]
+//        
+//        dbRef.document(promise.id).updateData(updatedData) { error in
+//            if let error = error {
+//                print("Error updating document: \(error)")
+//            } else {
+//                print("Document successfully updated")
+//            }
+//        }
+//    }
+    
+    // 나가기 버튼 구현을 위해 기존 함수 주석처리
+    func exitPromise(_ promise: Promise, locationId: String) async throws {
         
-        dbRef.document(promise.id).updateData(updatedData) { error in
-            if let error = error {
-                print("Error updating document: \(error)")
-            } else {
-                print("Document successfully updated")
-            }
+        do {
+            let firestore = Firestore.firestore()
+            let promiseRef = firestore.collection("Promise").document(promise.id)
+            
+            let updateData: [String: Any] = [
+                "participantIdArray": promise.participantIdArray,
+                "locationIdArray": promise.locationIdArray
+            ]
+            
+            try await LocationStore.deleteLocationData(locationId: locationId)
+            
+            try await promiseRef.updateData(updateData)
+        } catch {
+            print("약속 업데이트 실패: \(error)")
         }
     }
     

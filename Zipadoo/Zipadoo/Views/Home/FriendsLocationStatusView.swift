@@ -150,5 +150,6 @@ struct ProgressWithImageView: View {
                                     longitude: 0.0,
                                     participantIdArray: ["3", "4", "5"],
                                     checkDoublePromise: false,
-                                    locationIdArray: ["35", "34", "89"]))
+                                    locationIdArray: ["35", "34", "89"],
+                                    penalty: 10))
 }
