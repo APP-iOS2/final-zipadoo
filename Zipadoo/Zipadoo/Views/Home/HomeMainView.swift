@@ -118,7 +118,7 @@ struct HomeMainView: View {
                                                 }
                                             }
                                     }
-                                    .offset(y: isCardSpread ? 0 : CGFloat(index) * -180)
+                                    .offset(y: isCardSpread ? 0 : CGFloat(index) * -120)
                                     
                                     .padding()
                                 }
