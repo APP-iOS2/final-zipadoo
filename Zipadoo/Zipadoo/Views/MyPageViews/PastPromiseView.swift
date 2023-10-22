@@ -20,7 +20,8 @@ struct PastPromiseView: View {
                 VStack {
                     // 약속 배열 값 존재하는지 확인.
                     if promise.fetchPastPromiseData.isEmpty {
-                        Text("지난 약속 내역이 없습니다.")
+                        Text("지난 약속 내역이 없습니다")
+                            .foregroundStyle(.secondary)
                         
                     } else {
                         ScrollView {
