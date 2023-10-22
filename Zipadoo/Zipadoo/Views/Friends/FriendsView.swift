@@ -19,10 +19,11 @@ struct FriendsView: View {
     @State private var selectedFriendId: String = ""
     /// 상단 탭바 인덱스
     @State private var tabIndex = 0
-    
-    
-    
+    /// 친구 추가뷰 시트
+    @State private var isShowingFriendsRegistrationView = false
+  
     var body: some View {
+        
         NavigationStack {
             VStack {
                 // MARK: - 변경 SlidingTab
@@ -44,13 +45,18 @@ struct FriendsView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink {
-                        FriendsRegistrationView(friendsStore: friendsStore)
+                    Button {
+                        isShowingFriendsRegistrationView = true
                     } label: {
                         Image(systemName:"person.crop.circle.fill.badge.plus")
                     }
                     .foregroundColor(.primary)
-                    .foregroundStyle(.primary)
+                    .sheet(isPresented: $isShowingFriendsRegistrationView) {
+                        FriendsRegistrationView(friendsStore: friendsStore)
+                            .presentationDetents([.medium])
+                            .presentationDragIndicator(.hidden)
+      
+                    }
                 }
             }
             .alert(isPresented: $isDeleteAlert) {
@@ -92,50 +98,52 @@ struct FriendsView: View {
                     
                 } else {
                     List {
-                            ForEach(friendsStore.friendsFetchArray) { friend in
-                                ZStack {
-                                NavigationLink(destination: FriendProfileView(user: friend),
-                                               label: {
+                        ForEach(friendsStore.friendsFetchArray) { friend in
+                            ZStack {
+                                NavigationLink(destination: FriendProfileView(user: friend), label: {
                                     // 리스트에 네비게이션 링크 적용시 ">" 마크 제거하기 위하여 ZStack, EmptyView(), Opacatiy(0) 사용
                                     EmptyView()
                                 })
-                                    .opacity(0)
-
-                                    HStack {
-                                        ProfileImageView(imageString: friend.profileImageString, size: .mini)
-                                        VStack(alignment: .leading) {
-                                            Text(friend.nickName)
-                                                .fontWeight(.semibold)
-                                                .font(.headline)
-                                            //                                            Text(FriendProfileView.user.crustDepth)
-                                            // Text(friend.tardyTitle)
-                                            Text("뉴비약속러")
-                                                .foregroundStyle(Color.secondary)
-                                                .font(.caption)
-                                        }
-                                        Spacer()
-
-                                    } // Hstack
+                                .opacity(0)
+                                
+                                HStack {
+                                    // 프로필 이미지
+                                    ProfileImageView(imageString: friend.profileImageString, size: .mini)
                                     
-//                                }// label
-//                                )  // Navi
-                               
-                            } // Foreach
-                                .swipeActions {
-                                    Button {
-                                        selectedFriendId = friend.id
-                                        isDeleteAlert.toggle()
-                                    }label: {
-//                                        Image(systemName: "trash.fill")
-                                        Text("삭제")
+                                    // 이름, 닉네임
+                                    VStack(alignment: .leading) {
+                                        Text(friend.nickName)
                                             .fontWeight(.semibold)
-                                           
-                                        //                                        .padding(5)
-                                        //                                        .foregroundColor(.secondary)
-                                        //                                        .background(.primaryInvert)
+                                            .font(.headline)
+                                        //                                            Text(FriendProfileView.user.crustDepth)
+                                        // Text(friend.tardyTitle)
+                                        Text("뉴비약속러")
+                                            .foregroundStyle(Color.secondary)
+                                            .font(.caption)
                                     }
-                                    .tint(.red)
-                                } //swipe
+                                    Spacer()
+                                    
+                                } // Hstack
+                                
+                                //                                }// label
+                                //                                )  // Navi
+                                
+                            } // Foreach
+                            .swipeActions {
+                                Button {
+                                    selectedFriendId = friend.id
+                                    isDeleteAlert.toggle()
+                                }label: {
+                                    //                                        Image(systemName: "trash.fill")
+                                    Text("삭제")
+                                        .fontWeight(.semibold)
+                                    
+                                    //                                        .padding(5)
+                                    //                                        .foregroundColor(.secondary)
+                                    //                                        .background(.primaryInvert)
+                                }
+                                .tint(.red)
+                            } // swipe
                             //                                HStack {
                             //                                    Spacer()
                             //
@@ -150,12 +158,11 @@ struct FriendsView: View {
                             //                                }
                             
                             //                            .padding(.vertical, 5)
-                        } //Zstack
-                        } // List
+                        } // Zstack
+                    } // List
                     .listStyle(.plain)
-                   
-                    .padding(.top, -16)
-   
+                    .padding(.top, -17)
+                    
                 }
             }
         }
@@ -185,11 +192,23 @@ struct FriendsView: View {
                     List {
                         ForEach(friendsStore.requestFetchArray) { friend in
                             ZStack {
-                                NavigationLink(destination: MyPageView(), label: {
+                                NavigationLink(destination: FriendProfileView(user: friend), label: {
                                     HStack {
-                                        ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
+                                        // 프로필 이미지
+                                        ProfileImageView(imageString: friend.profileImageString, size: .mini)
                                         
-                                        Text(friend.nickName)
+                                        // 이름, 닉네임
+                                        VStack(alignment: .leading) {
+                                            Text(friend.nickName)
+                                                .fontWeight(.semibold)
+                                                .font(.headline)
+                                            //                                            Text(FriendProfileView.user.crustDepth)
+                                            // Text(friend.tardyTitle)
+                                            Text("뉴비약속러")
+                                                .foregroundStyle(Color.secondary)
+                                                .font(.caption)
+                                        }
+                                        
                                     }
                                 })
                                 
@@ -225,10 +244,11 @@ struct FriendsView: View {
                                         }
                                 }
                             }
-                            .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
+                            
                         }
                     }
                     .listStyle(.plain)
+                    .padding(.top, -17)
                 }
             }
         }
