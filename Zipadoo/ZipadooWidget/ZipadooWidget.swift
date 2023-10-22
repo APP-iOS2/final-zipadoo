@@ -127,7 +127,9 @@ struct ZipadooWidgetEntryView: View {
         if entry.title == "Zipadoo" {
             emptyView
         } else {
-            promiseInfoView
+            Link(destination: URL(string: "zipadoo://detailView?promiseID=\(entry.promiseID)")!) {
+                promiseInfoView
+            }
         }
     }
     
@@ -147,7 +149,6 @@ struct ZipadooWidgetEntryView: View {
     
     // 약속 정보 띄워주는 뷰
     private var promiseInfoView: some View {
-        Link(destination: URL(string: "https://www.apple.com")!) {
             VStack(alignment: .leading) {
                 HStack {
                     Image(.logo)
@@ -157,13 +158,7 @@ struct ZipadooWidgetEntryView: View {
                     
                     Spacer()
                     
-                    Link(destination: URL(string: "zipadoo://detailView?promiseID=\(entry.promiseID)")!) {
-                        HStack {
-                            Text("더보기")
-                            Image(systemName: "chevron.compact.right")
-                        }
-                        .font(.caption)
-                    }
+                    Text(calculateDate(date: entry.date))
                 }
                 
                 Divider()
@@ -180,7 +175,12 @@ struct ZipadooWidgetEntryView: View {
                 .bold()
             }
             .padding([.vertical, .horizontal], 7)
-        }
+    }
+    
+    func calculateDate(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy.MM.dd"
+        return dateFormatter.string(from: date)
     }
 }
 
