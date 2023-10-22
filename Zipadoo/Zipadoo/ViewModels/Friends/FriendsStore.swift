@@ -111,6 +111,7 @@ final class FriendsStore: ObservableObject {
             let querySnapshot = try await snapshot.getDocuments()
             if querySnapshot.isEmpty {
                 print("해당 닉네임 가진 친구 없음")
+                alertMessage = "해당 닉네임을 가진 사용자가 없습니다"
                 completion(false) // 중복된 닉네임이 없을 경우 false를 반환
             } else {
                 // 닉네임이 있으면 조건 따진 후 addRequest 함수 실행

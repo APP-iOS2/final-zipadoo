@@ -37,14 +37,6 @@ struct FriendsRegistrationView: View {
                     .font(.footnote)
                     .foregroundStyle(.red)
             }
-            /*
-            TextField("친구의 연락처를 입력해주세요.", text: $phoneTextField)
-                .padding(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(.gray)
-                )
-            */
             Spacer()
         }
         .padding()
