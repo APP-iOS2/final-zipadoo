@@ -243,14 +243,14 @@ struct ArrivalMessagingView: View {
 }
 
 #Preview {
-//    Text("약속 장소 도착 Alert")
-//      .modifier(
-//        ArrivalMessagingModifier(isPresented: .constant(true), arrival: ArrivalMsgModel(
-//            name: "아라",
-//            profileImgString: "https://cdn.discordapp.com/emojis/1154686109234774058.webp?size=240&quality=lossless",
-//            rank: 2,
-//            arrivarDifference: 720.3641,
-//            potato: 500))
-//      )
-    ExampleView()
+    Text("약속 장소 도착 Alert")
+      .modifier(
+        ArrivalMessagingModifier(isPresented: .constant(true), arrival: ArrivalMsgModel(
+            name: "아라",
+            profileImgString: "https://cdn.discordapp.com/emojis/1154686109234774058.webp?size=240&quality=lossless",
+            rank: 2,
+            arrivarDifference: 720.3641,
+            potato: 500))
+      )
+//    ExampleView()
 }
