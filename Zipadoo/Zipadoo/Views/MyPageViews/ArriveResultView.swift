@@ -164,7 +164,7 @@ struct ArriveResultView: View {
             // 이미지
             ZStack {
                 Circle()
-                    .fill(.secondary)
+                    .fill(.gray)
                     .frame(width: 36, height: 36)
                 
                 ProfileImageView(imageString: participant.imageString, size: .xSmall)
