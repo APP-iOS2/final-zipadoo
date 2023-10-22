@@ -53,7 +53,7 @@ struct FriendsView: View {
                     .foregroundColor(.primary)
                     .sheet(isPresented: $isShowingFriendsRegistrationView) {
                         FriendsRegistrationView(friendsStore: friendsStore)
-                            .presentationDetents([.medium])
+                            .presentationDetents([.fraction(0.2)])
                             .presentationDragIndicator(.hidden)
       
                     }
