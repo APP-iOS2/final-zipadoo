@@ -7,8 +7,10 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string></string>
+			<string>education.techit.zipadoo.dev</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>zipadoo</string>
