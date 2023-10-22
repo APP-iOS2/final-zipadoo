@@ -32,9 +32,13 @@ struct FriendsRegistrationView: View {
                     )
                 HStack {
                     Spacer()
-                    Image(systemName: "xmark.circle.fill")
-                        .padding(.trailing, 10)
-                        .foregroundColor(.secondary)
+                    Button {
+                        nickNameTextField = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .padding(.trailing, 10)
+                            .foregroundColor(.secondary)
+                    }
                 }
                 
             }

@@ -22,6 +22,8 @@ final class FriendsStore: ObservableObject {
     var friendsIdRequestArray: [String] = []
     
     @Published var alertMessage: String = ""
+    @Published var isLoadingFriends: Bool = true
+    @Published var isLoadingRequest: Bool = true
     
     let dbRef = Firestore.firestore().collection("Users")
     
@@ -52,6 +54,7 @@ final class FriendsStore: ObservableObject {
             // 메인 스레드에서 UI 업데이트를 수행합니다.
             DispatchQueue.main.async {
                 self.friendsFetchArray = tempArray
+                self.isLoadingFriends = false
             }
             
         } catch {
@@ -85,6 +88,7 @@ final class FriendsStore: ObservableObject {
             // 메인 스레드에서 UI 업데이트를 수행합니다.
             DispatchQueue.main.async {
                 self.requestFetchArray = tempArray
+                self.isLoadingRequest = false
             }
             
         } catch {
