@@ -7,23 +7,21 @@
 //
 
 import SwiftUI
-import WidgetKit
 import SlidingTabView
 
 struct HomeMainView: View {
-    
     let user: User?
+    
     //    @StateObject private var loginUser: UserStore = UserStore()
     
     @ObservedObject private var locationStore: LocationStore = LocationStore()
-    
-    @StateObject var promise: PromiseViewModel = PromiseViewModel()
-    
+    @EnvironmentObject var promise: PromiseViewModel
+    @EnvironmentObject var widgetStore: WidgetStore
     @State private var isShownFullScreenCover: Bool = false
     
     // 약속의 갯수 확인
     //    @State private var userPromiseArray: [Promise] = []
-  
+    
     
     // 약속 카드 테두리 색 모션회전
     @State var rotation: CGFloat = 0.0
@@ -78,7 +76,7 @@ struct HomeMainView: View {
                         ForEach(promise.fetchTrackingPromiseData) { promise in
                             NavigationLink {
                                 PromiseDetailView(promise: promise)
-                                
+                                    .environmentObject(self.promise)
                             } label: {
                                 promiseListCell(promise: promise, color: .color5, isTracking: true)
                             }
@@ -120,48 +118,20 @@ struct HomeMainView: View {
                                     }
                             }
                             .offset(y: isCardSpread ? 0 : CGFloat(index) * -120)
-                            
                             .padding()
                         }
-                        
                         //                            .offset(y: isCardSpread ? 0 : CGFloat((promise.fetchPromiseData.count - 1) * -180))
                         //                            .padding(.top, isCardSpread ? 30 : 0)
-                        
                     }
-                    
                 }
                 // 배경색
                 .background(Color.primaryInvert.ignoresSafeArea(.all))
                 // MARK: - 약속 추가 버튼
                 .frame(maxWidth: .infinity, maxHeight: .infinity) // 스크롤을 최대한 바깥으로 하기 위함
-                .onAppear {
-                    print(Date().timeIntervalSince1970)
-                    var calendar = Calendar.current
-                    calendar.timeZone = NSTimeZone.local
-                    let encoder = JSONEncoder()
-                    
-                    var widgetDatas: [WidgetData] = []
-                    
-                    for promise in promise.fetchPromiseData {
-                        let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
-                        let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
-                        let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-                        
-                        if promiseDateComponents == todayComponents {
-                            // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
-                            let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
-                            widgetDatas.append(data)
-                        }
-                    }
-                    
-                    do {
-                        let encodedData = try encoder.encode(widgetDatas)
-                        
-                        UserDefaults.shared.set(encodedData, forKey: "todayPromises")
-                        
-                        WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
-                    } catch {
-                        print("Failed to encode Promise:", error)
+                .navigationDestination(isPresented: $widgetStore.isShowingDetailForWidget) {
+                    if let promise = widgetStore.widgetPromise {
+                        PromiseDetailView(promise: promise)
+                            .environmentObject(widgetStore)
                     }
                 }
                 .onAppear {
@@ -185,43 +155,13 @@ struct HomeMainView: View {
                                 animate.toggle()
                                 isShownFullScreenCover.toggle()
                             }
-                        
                             .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
                                 AddPromiseView(promiseViewModel: promise)
                             })
-                        
                     }
-                }
-                
-                //            .ignoresSafeArea(.all)
-                
-                //            var widgetDatas: [WidgetData] = []
-                //
-                //            for promise in promise.promiseViewModel {
-                //                let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
-                //                let promiseDateComponents = calendar.dateComponents([.year, .month, .day], from: promiseDate)
-                //                let todayComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-                //
-                //                if promiseDateComponents == todayComponents {
-                //                    // TODO: 도착 인원 수 파베 연동 후 테스트하기. 지금은 0으로!
-                //                    let data = WidgetData(title: promise.promiseTitle, time: promise.promiseDate, place: promise.destination, arrivalMember: 0)
-                //                    widgetDatas.append(data)
-                //                }
-                //            }
-                
-                //            do {
-                //                let encodedData = try encoder.encode(widgetDatas)
-                //
-                //                UserDefaults.shared.set(encodedData, forKey: "todayPromises")
-                //
-                //                WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
-                //            } catch {
-                //                print("Failed to encode Promise:", error)
-                //            }
-            }
-            
+                }   
+            }   
         }
-        
     }
     
     func promiseListCell(promise: Promise, color: Color, isTracking: Bool) -> some View {
@@ -306,7 +246,6 @@ struct HomeMainView: View {
                         .padding(.trailing, -5)
                         .symbolEffect(.pulse.byLayer, options: .repeating, isActive: isTracking)
                     }
-                    
                     
                     // 추적중인 약속만 지도뷰 이동 가능
                     //                        if isTracking {

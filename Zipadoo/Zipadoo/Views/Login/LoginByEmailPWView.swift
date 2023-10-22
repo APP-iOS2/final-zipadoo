@@ -107,7 +107,7 @@ struct LoginByEmailPWView: View {
             }
         }
         .fullScreenCover(isPresented: $loginResult, content: {
-            ContentView()
+            ContentView(selectedTab: .constant(0))
         })
     } // body
 } // struct
