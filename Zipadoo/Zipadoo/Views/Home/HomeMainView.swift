@@ -50,11 +50,12 @@ struct HomeMainView: View {
                             VStack {
                                 Image(.zipadoo)
                                     .resizable()
-                                    .frame(width: 200, height: 200)
+                                    .scaledToFit()
+                                    .frame(width: 150)
                                 
                                 Text("약속이 없어요\n 약속을 만들어 보세요!")
                                     .multilineTextAlignment(.center)
-                                    .font(.title)
+                                    .font(.title3)
                                     .foregroundColor(.secondary)
                                     .padding()
                             }
