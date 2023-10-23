@@ -17,6 +17,7 @@ enum ArrivalType: String {
 /// 프로필 이미지 사이즈 열거형
 enum ProfileImageSize {
     case xSmall
+    case mini
     case small
     case regular
     case medium
@@ -26,6 +27,8 @@ enum ProfileImageSize {
         switch self {
         case .xSmall:
             return 30
+        case .mini:
+            return 50
         case .small:
             return 60
         case .regular:
