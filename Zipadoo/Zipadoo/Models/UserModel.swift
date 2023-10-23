@@ -32,6 +32,10 @@ struct User: Codable, Identifiable, Equatable {
     var promiseCount: Int = 0
     /// 유저 두더지 이미지
     var moleImageString: String
+    /// 유저 두더지 드릴 이미지
+    var moleDrillImageString: String {
+        return "\(moleImageString)_1"
+    }
 }
 
 extension User {
