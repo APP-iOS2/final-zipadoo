@@ -34,6 +34,7 @@ struct AddPromiseView: View {
     private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
 
     private let today = Calendar.current.startOfDay(for: Date())
+    let thirtyMinutesFromNow = Calendar.current.date(byAdding: .minute, value: 30, to: Date()) ?? Date()
     @State private var addFriendSheet: Bool = false
     
     @State private var addPlaceMapSheet: Bool = false // 장소 검색 버튼 클릭값
@@ -47,13 +48,14 @@ struct AddPromiseView: View {
     @State private var sheetTitle: String = "약속 장소 선택"
     
     var isAllWrite: Bool {
-        return !promiseViewModel.promiseTitle.isEmpty /*&& Calendar.current.startOfDay(for: promiseViewModel.date) != today */&& !promiseViewModel.address.isEmpty
+        return !promiseViewModel.promiseTitle.isEmpty && isSelectedDataPickerOnce && !promiseViewModel.address.isEmpty && !promiseViewModel.selectedFriends.isEmpty
     }
     
     @StateObject private var authUser: AuthStore = AuthStore()
     
     // 데이트피커
     @State private var showDatePicker = false
+    @State private var isSelectedDataPickerOnce = false
     
     // 심볼 이펙트
     @State  private  var animate1 =  false
@@ -113,9 +115,9 @@ struct AddPromiseView: View {
                         .font(.footnote)
                   
                     HStack {
-                        let time = promiseViewModel.date.formatted(date: .omitted, time: .shortened)
+                        let time = date.formatted(date: .omitted, time: .shortened)
                         
-                        let date = promiseViewModel.date.formatted(date: .abbreviated, time: .omitted)
+                        let date = date.formatted(date: .abbreviated, time: .omitted)
                         
                         Text("\(time), \(date)")
                             .fontWeight(.semibold)
@@ -352,8 +354,11 @@ struct AddPromiseView: View {
             }
         }
         .sheet(isPresented: $showDatePicker) {
-            CustomDatePicker(promiseViewModel: promiseViewModel, date: $promiseViewModel.date, showPicker: $showDatePicker)
+            CustomDatePicker(promiseViewModel: promiseViewModel, date: $date, showPicker: $showDatePicker)
                 .presentationDetents([.fraction(0.7)])
+                .onAppear {
+                    isSelectedDataPickerOnce = true
+                }
         }
     }
 }
@@ -378,9 +383,12 @@ struct CustomDatePicker: View {
                 .ignoresSafeArea()
             
             // today-> 분단위 표시되는 Date()로 변경
-            DatePicker("현재시간으로 부터 30분 뒤부터 선택 가능", selection: $promiseViewModel.date ,in: thirtyMinutesFromNow..., displayedComponents: [.date, .hourAndMinute])
+            DatePicker("현재시간으로 부터 30분 뒤부터 선택 가능", selection: $date ,in: thirtyMinutesFromNow..., displayedComponents: [.date, .hourAndMinute])
                 .datePickerStyle(.graphical)
                 .labelsHidden()
+                .onAppear {
+                    date = thirtyMinutesFromNow
+                }
             
             // Close Button...
             Button {
