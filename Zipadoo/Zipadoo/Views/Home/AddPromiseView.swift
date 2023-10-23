@@ -165,7 +165,9 @@ struct AddPromiseView: View {
                             } label: {
                                 HStack {
                                     Text("\(promiseViewModel.destination)")
-                                        .font(.callout)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.primary)
+                                    // 지우면 안됨!! 기존 파란색링크 글씨 -> 검은색
                                     Image(systemName: "chevron.forward")
                                         .resizable()
                                         .scaledToFit()

@@ -191,9 +191,9 @@ struct PromiseDetailMapView: View {
             }
         }
         .onAppear {
-            // 5초마다 반복, 전역에서 사라지지 않고 실행됨
-            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
-                print("나는 맵에서 만들어짐! ! 5초 지남")
+            // 1초마다 반복, 전역에서 사라지지 않고 실행됨
+            let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                print("나는 맵에서 만들어짐! ! 1초 지남")
                 // 위치 도착 위치 비교
                 if !isArrived {
                     // 도착 체크 함수
@@ -238,9 +238,11 @@ struct PromiseDetailMapView: View {
         }
         .task { // 초기화 코드
             // myLocation 초기화
-            let departureLatitude = gpsStore.lastSeenLocation?.coordinate.latitude ?? 0
-            let departureLongitude = gpsStore.lastSeenLocation?.coordinate.longitude ?? 0
+            let departureLatitude = 37.47694972793077
+            let departureLongitude = 126.98195644152227
             locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: departureLatitude, departureLongitude: departureLongitude, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+//            locationStore.myLocation.currentLatitude = gpsStore.lastSeenLocation?.coordinate.latitude ?? 0
+//            locationStore.myLocation.currentLongitude = gpsStore.lastSeenLocation?.coordinate.longitude ?? 0
             // 패치해주는 코드
             do {
                 try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
