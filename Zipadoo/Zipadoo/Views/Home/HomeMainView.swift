@@ -230,7 +230,7 @@ struct HomeMainView: View {
                     Spacer()
                     if isTracking {
                         NavigationLink {
-                            FriendsMapView(promise: promise)
+                            PromiseDetailMapView(promise: promise)
                         } label: {
                             ZStack {
                                 // 맵 아이콘 배경색

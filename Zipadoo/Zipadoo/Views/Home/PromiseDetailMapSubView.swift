@@ -9,40 +9,21 @@ import SwiftUI
 import CoreLocation
 import MapKit
 
-extension PromiseTitleAndTime {
-    func calculateTimeRemaining(targetTime: Double) -> String {
-        let currentTime = Date().timeIntervalSince1970
-        let timeDifference = targetTime - currentTime
-
-        if timeDifference <= 0 {
-            return "Time has expired"
-        } else {
-            let days = Int(timeDifference / 86400)
-            let hours = Int((timeDifference.truncatingRemainder(dividingBy: 86400) / 3600))
-            let minutes = Int((timeDifference.truncatingRemainder(dividingBy: 3600) / 60))
-            let seconds = Int(timeDifference.truncatingRemainder(dividingBy: 60))
-
-            if days > 0 {
-                return String(format: "%d일 %02d시 %02d분 %02d초", days, hours, minutes, seconds)
-            } else {
-                return String(format: "%02d시 %02d분 %02d초", hours, minutes, seconds)
-            }
-        }
-    }
-}
-
-struct FriendsMapSubView: View {
+struct PromiseDetailMapSubView: View {
     @ObservedObject var locationStore: LocationStore
-    @Binding var isShowingFriendSheet: Bool
     @Binding var region: MapCameraPosition
     let destinationCoordinate: CLLocationCoordinate2D
     var promise: Promise
+    
+    @Binding var isShowingFriendSheet: Bool
+    @State private var progressTrigger: Bool = false
+    @Binding var detents: PresentationDetent
+    
     var body: some View {
-        VStack {
-            PromiseTitleAndTime(promise: promise)
-            .padding(5)
-            LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
-                ForEach(locationStore.locationParticipantDatas) { annotation in
+        VStack(alignment: .leading) {
+            PromiseTitleAndTimeView(promise: promise)
+            /* LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
+                ForEach(locationStore.locationParticipantDatasDummy) { annotation in
                     if annotation.location.participantId == AuthStore.shared.currentUser?.id ?? "" {
                         Button {
                             region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
@@ -67,31 +48,39 @@ struct FriendsMapSubView: View {
                         }
                     }
                 }
+            } */
+            ScrollView {
+                PromiseDetailProgressBarView(locationStore: locationStore, region: $region, destinationCoordinate: destinationCoordinate, promise: promise, progressTrigger: $progressTrigger, detents: $detents)
             }
-            .toolbar(content: {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        isShowingFriendSheet = false
-                    } label: {
-                        Image(systemName: "x.square")
-                    }
-                    
+            .scrollIndicators(.hidden)
+        }
+        // 왜 안먹지?
+        .toolbar(content: {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    isShowingFriendSheet = false
+                } label: {
+                    Image(systemName: "x.square")
                 }
-            })
-            
-            Spacer()
+                
+            }
+        })
+        .padding()
+        .onDisappear {
+            progressTrigger = false
+            detents = .medium
         }
     }
 }
 
 #Preview {
-    FriendsMapSubView(locationStore: LocationStore(), isShowingFriendSheet: .constant(true),
-                      region: .constant(.automatic),
-                      destinationCoordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323),
-                      promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 0, longitude: 0, participantIdArray: [], checkDoublePromise: true, locationIdArray: [], penalty: 0))
+    PromiseDetailMapSubView(locationStore: LocationStore(), region: .constant(.automatic),
+                            destinationCoordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323),
+                            promise: Promise(id: "", makingUserID: "", promiseTitle: "사당역 모여라", promiseDate: 1697694660, destination: "왕십리 캐치카페", address: "서울특별시 관악구 청룡동", latitude: 37.47694972793077, longitude: 126.98195644152227, participantIdArray: [], checkDoublePromise: false, locationIdArray: [], penalty: 10),
+                            isShowingFriendSheet: .constant(true), detents: .constant(.medium))
 }
 
-struct InfoView: View {
+struct PromiseInfoView: View {
     let name: String
     let imageString: String
     let destinationLatitude: Double
@@ -122,20 +111,46 @@ struct InfoView: View {
     }
 }
 
-struct PromiseTitleAndTime: View {
+struct PromiseTitleAndTimeView: View {
     var promise: Promise
     @State private var RemainingTime: String = ""
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     var body: some View {
-        Group {
-            Text("\(promise.promiseTitle)")
-                .padding(.top)
-                .bold()
-            // 수정 필요
+        VStack(alignment: .leading) {
+                Text("\(promise.promiseTitle)")
+                    .font(.title)
+                    .padding(.top)
+                    .padding(.bottom)
+                    .bold()
+            HStack {
+                Image(systemName: "pin")
+                Text("\(promise.destination)")
+            }
+            /// 저장된 promiseDate값을 Date 타입으로 변환
+            let datePromise = Date(timeIntervalSince1970: promise.promiseDate)
+            HStack {
+                Image(systemName: "clock")
+                Text("\(formatDate(date: datePromise))")
+            }
             Text("남은시간 : \(RemainingTime)")
                 .font(.title3)
                 .bold()
+                .foregroundStyle(.white)
+                .padding(8)
+                .frame(maxWidth: .infinity)
+                .background(Color.red)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .padding(.bottom)
         }
+        .padding(.leading)
+        .padding(.trailing)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .foregroundColor(.primary)
+                .opacity(0.05)
+                .shadow(color: .primary, radius: 10, x: 5, y: 5)
+            
+        )
         .task {
             RemainingTime = calculateTimeRemaining(targetTime: promise.promiseDate)
         }
@@ -145,7 +160,7 @@ struct PromiseTitleAndTime: View {
     }
 }
 
-extension InfoView {
+extension PromiseInfoView {
     // 재승 작성, 위도,경도로 미터 구하는 함수
     func degreesToRadians(_ degrees: Double) -> Double {
         return degrees * .pi / 180.0
@@ -175,6 +190,28 @@ extension InfoView {
         } else {
             let distanceInKilometers = distance / 1000.0
             return String(format: "%.2f km", distanceInKilometers)
+        }
+    }
+}
+
+extension PromiseTitleAndTimeView {
+    func calculateTimeRemaining(targetTime: Double) -> String {
+        let currentTime = Date().timeIntervalSince1970
+        let timeDifference = targetTime - currentTime
+
+        if timeDifference <= 0 {
+            return "Time has expired"
+        } else {
+            let days = Int(timeDifference / 86400)
+            let hours = Int((timeDifference.truncatingRemainder(dividingBy: 86400) / 3600))
+            let minutes = Int((timeDifference.truncatingRemainder(dividingBy: 3600) / 60))
+            let seconds = Int(timeDifference.truncatingRemainder(dividingBy: 60))
+
+            if days > 0 {
+                return String(format: "%d일 %02d시 %02d분 %02d초", days, hours, minutes, seconds)
+            } else {
+                return String(format: "%02d시 %02d분 %02d초", hours, minutes, seconds)
+            }
         }
     }
 }
