@@ -151,7 +151,6 @@ struct MyPageView: View {
 //                                        .fill(.secondary) // 사진을 흐리게하는 코드이므로 주석처리
                                 )
                                 .padding(.trailing, 10)
-                            
                             // 칭호, 이름, 위치
                             VStack(alignment: .leading) {
                                 Spacer().frame(height: 10) // 이름 부분 중앙 정렬
