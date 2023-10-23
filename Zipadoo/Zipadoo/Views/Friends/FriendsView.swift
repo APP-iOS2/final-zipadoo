@@ -58,6 +58,14 @@ struct FriendsView: View {
       
                     }
                 }
+                // MARK: - 지파두 마크
+                ToolbarItem(placement: .topBarLeading) {
+                    Image("zipadooMark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 20)
+                }
+                
             }
             .alert(isPresented: $isDeleteAlert) {
                 Alert(
@@ -84,10 +92,11 @@ struct FriendsView: View {
             if friendsStore.isLoadingFriends == false {
                 if friendsStore.friendsFetchArray.isEmpty {
                     VStack {
-                        Image(systemName: "person.fill.xmark")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
+                        //텍스트만 나오도록 제거
+//                        Image(systemName: "person.fill.xmark")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 40, height: 40)
                         Group {
                             Text("아직 친구가 없어요")
                             Text("친구를 추가해 보세요!")

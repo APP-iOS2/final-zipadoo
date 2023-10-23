@@ -13,7 +13,7 @@ struct LaunchScreen: View {
     var body: some View {
         VStack {
             GeometryReader { geometry in
-                Image(.zipadoo)
+                Image("Dothez")
                     .resizable()
                     .scaledToFit()
                     .frame(width: geometry.size.width, height: geometry.size.height * 0.2)
