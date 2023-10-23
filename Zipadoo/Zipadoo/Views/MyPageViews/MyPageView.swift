@@ -144,14 +144,18 @@ struct MyPageView: View {
                         // MARK: - 유저정보
                         HStack {
                             // 프로필 이미지
-                            ProfileImageView(imageString: currentUser?.profileImageString ?? userImageString, size: .regular)
-                                .overlay(
-                                    Circle()
-                                        .stroke(Color.gray, lineWidth: 3)
-                                        .fill(.secondary)
-                                )
-                                .padding(.trailing, 10)
-                            
+                            ZStack {
+                                Circle()
+                                    .fill(.secondary)
+                                    .frame(width: 80, height: 80)
+                                
+                                ProfileImageView(imageString: currentUser?.profileImageString ?? userImageString, size: .regular)
+                                    .overlay(
+                                        Circle()
+                                            .stroke(Color.gray, lineWidth: 3)
+                                    )      
+                            }
+                            .padding(.trailing, 10)
                             // 칭호, 이름, 위치
                             VStack(alignment: .leading) {
                                 Text(tradyTitle)

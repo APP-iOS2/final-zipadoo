@@ -21,8 +21,9 @@ struct FriendsListVIew: View {
     
     var body: some View {
         NavigationStack {
-            RoundedRectangle(cornerRadius: 5)
+            RoundedRectangle(cornerRadius: 10)
                 .stroke(lineWidth: 0.5)
+                .foregroundColor(.secondary)
                 .frame(width: 360, height: 120)
                 .overlay {
                     VStack {
@@ -58,10 +59,21 @@ struct FriendsListVIew: View {
                         alertMessage = "\(friend.nickName)님은 이미 존재합니다."
                     }
                 } label: {
+                    // 친구 추가 목록에 넣은 친구는 opacity 처리하여 구분 쉽게 함
                     HStack {
-                        ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
+                        if !selectedFriends.contains(friend) {
+                            ProfileImageView(imageString: friend.profileImageString, size: .mini)
+                            Text(friend.nickName)
+                        } else {
+                                ProfileImageView(imageString: friend.profileImageString, size: .mini)
+                                .opacity(0.5)
+                                Text(friend.nickName)
+                                .foregroundColor(.secondary)
+                               
+                            }
                         
-                        Text(friend.nickName)
+                        
+                    
                     }
                 }
                 .alert(isPresented: $showAlert) {
