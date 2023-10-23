@@ -141,10 +141,6 @@ struct AddPromiseView: View {
                                 .font(.title3)
                                 .fontWeight(.semibold)
                                 .symbolEffect(.bounce, value: animate1)
-                                .onTapGesture {
-                                    animate1.toggle()
-                                    showDatePicker.toggle()
-                                }
                       
     
 //                        DatePicker("날짜/시간", selection: $promiseViewModel.date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
@@ -153,6 +149,10 @@ struct AddPromiseView: View {
 //.padding(.top, 10)
                     }
                     .padding(.top, 10)
+                    .onTapGesture {
+                        animate1.toggle()
+                        showDatePicker.toggle()
+                    }
         
                     Divider()
                         .frame(maxWidth: .infinity)
@@ -171,63 +171,71 @@ struct AddPromiseView: View {
                         .font(.footnote)
                     
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
-                    HStack {
-                        if !destination.isEmpty {
-                            Button {
-                                previewPlaceSheet = true
-                            } label: {
-                                HStack {
-                                    Text("\(destination)")
-                                        .font(.callout)
-                                    Image(systemName: "chevron.forward")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 6)
-                                        .padding(.leading, -5)
+                    Group {
+                        HStack {
+                            if !destination.isEmpty {
+                                Button {
+                                    previewPlaceSheet = true
+                                } label: {
+                                    HStack {
+                                        Text("\(destination)")
+                                            .font(.callout)
+                                        Image(systemName: "chevron.forward")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 6)
+                                            .padding(.leading, -5)
+                                    }
                                 }
-                            }
-                            .sheet(isPresented: $previewPlaceSheet) {
-                                VStack {
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .frame(width: 50, height: 5)
-                                        .foregroundStyle(Color.gray)
-                                        .padding(.top, 10)
-                                    
-                                    PreviewPlaceOnMap(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
-                                        .presentationDetents([.height(700)])
-                                        .padding(.top, 15)
+                                .sheet(isPresented: $previewPlaceSheet) {
+                                    VStack {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .frame(width: 50, height: 5)
+                                            .foregroundStyle(Color.gray)
+                                            .padding(.top, 10)
+                                        
+                                        PreviewPlaceOnMap(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
+                                            .presentationDetents([.height(700)])
+                                            .padding(.top, 15)
+                                    }
                                 }
+                                
+                                //                        Button {
+                                //                            addPlaceMapSheet = true
+                                //                            //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
+                                ////                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
+                                //                        } label: {
+                                //                            Image(systemName: "location.magnifyingglass")
+                                //                                .foregroundColor(.primary)
+                                //                                .font(.title3)
+                                //                                .fontWeight(.semibold)
+                                //
+                                //                        }
+                                
+                                
                             }
-                        }
-                        Spacer()
-                        Button {
-                            addPlaceMapSheet = true
-                            //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
-//                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
-                        } label: {
+                            Spacer()
+                            
                             Image(systemName: "location.magnifyingglass")
                                 .foregroundColor(.primary)
                                 .font(.title3)
                                 .fontWeight(.semibold)
-              
                         }
+                        .padding(.top, 10)
                         
-                        .sheet(isPresented: $addPlaceMapSheet) {
-                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, sheetTitle: $sheetTitle)
-                        }
-                        
-                   
-                        
-                    
-                  
-     
+                        Divider()
+                            .frame(maxWidth: .infinity)
+                            .overlay {
+                                Color.secondary
+                            }
                     }
-                    .padding(.top, 10)
-                    Divider()
-                        .frame(maxWidth: .infinity)
-                        .overlay {
-                            Color.secondary
-                        }
+                    .onTapGesture {
+                        addPlaceMapSheet = true
+                    }
+                    .sheet(isPresented: $addPlaceMapSheet) {
+                        OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, sheetTitle: $sheetTitle)
+                    }
+                    
                     // MARK: - 지각비 구현
                     Text("지각비")
                         .font(.title3)
@@ -238,32 +246,36 @@ struct AddPromiseView: View {
                         .foregroundColor(.secondary)
                         .font(.footnote)
         
-                    HStack {
-                        Text("\(penalty)원")
-                            .fontWeight(.semibold)
-                            .foregroundColor(.primary)
+                    Group {
+                        HStack {
+                            Text("\(penalty)원")
+                                .fontWeight(.semibold)
+                                .foregroundColor(.primary)
                             
-                        Spacer()
-                   // 버튼
+                            Spacer()
+                            // 버튼
                             Image(systemName: "wonsign.circle")
                                 .foregroundColor(.primary)
                                 .font(.title3)
                                 .fontWeight(.semibold)
                                 .symbolEffect(.bounce, value: animate3)
-                                .onTapGesture {
-                                    animate3.toggle()
-                                    showingPenalty.toggle()
-                                }
-                    }
-                    .padding(.top, 10)
-                    Divider()
-                        .frame(maxWidth: .infinity)
-                        .overlay {
-                            Color.secondary
                         }
+                        .padding(.top, 10)
+                        
+                        Divider()
+                            .frame(maxWidth: .infinity)
+                            .overlay {
+                                Color.secondary
+                            }
+                    }
+                    .onTapGesture {
+                        animate3.toggle()
+                        showingPenalty.toggle()
+                    }
         
                     // MARK: - 약속 친구 추가 구현
                     AddFriendCellView(selectedFriends: $selectedFriends)
+                    
                 }
                 .padding(.horizontal, 15)
             }
