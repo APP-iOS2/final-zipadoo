@@ -48,14 +48,15 @@ struct HomeMainView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     if promise.fetchTrackingPromiseData.isEmpty && promise.fetchPromiseData.isEmpty {
                         VStack {
-                            Image(.zipadoo)
+                            Image("Dothez")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 150)
                             
                             Text("약속이 없어요\n 약속을 만들어 보세요!")
                                 .multilineTextAlignment(.center)
-                                .font(.title)
+                                .font(.title3)
+                                .fontWeight(.semibold)
                                 .foregroundColor(.secondary)
                                 .padding()
                         }
@@ -64,15 +65,19 @@ struct HomeMainView: View {
                         
                     } else {
                         // 추적중
-                        HStack {
-                            Text("진행중인 약속")
-                                .foregroundColor(.primary)
-                                .fontWeight(.semibold)
-                                .font(.title3)
-                                .padding(.horizontal, 35)
-                            Spacer()
+                        if !promise.fetchTrackingPromiseData.isEmpty { // 리스트가 있을 때 보이도록 함
+                            HStack {
+                                Text("진행중인 약속")
+                                    .foregroundColor(.secondary)
+                                    .fontWeight(.semibold)
+                                    .font(.title3)
+                                    .padding(.horizontal, 35)
+                                Spacer()
+                            }
+                            .padding(.bottom, -10)
+                            .padding(.top,10)
                         }
-                        .padding(.bottom, -10)
+                        
                         ForEach(promise.fetchTrackingPromiseData) { promise in
                             NavigationLink {
                                 PromiseDetailView(promise: promise)
@@ -84,15 +89,17 @@ struct HomeMainView: View {
                             
                         }
                         
-                        HStack {
-                            Text("예정된 약속")
-                                .foregroundColor(.primary)
-                                .fontWeight(.semibold)
-                                .font(.title3)
-                                .padding(.horizontal, 35)
-                            Spacer()
+                        if !promise.fetchPromiseData.isEmpty { // 리스트가 있을 때 보이도록 함
+                            HStack {
+                                Text("예정된 약속")
+                                    .foregroundColor(.secondary)
+                                    .fontWeight(.semibold)
+                                    .font(.title3)
+                                    .padding(.horizontal, 35)
+                                Spacer()
+                            }
+                            .padding(.bottom, -10)
                         }
-                        .padding(.bottom, -10)
                         
                         ForEach(promise.fetchPromiseData.indices,id: \.self) { index in
                             NavigationLink {
@@ -159,7 +166,14 @@ struct HomeMainView: View {
                                 AddPromiseView(promiseViewModel: promise)
                             })
                     }
-                }   
+                    // MARK: - 지파두 마크
+                    ToolbarItem(placement: .topBarLeading) {
+                        Image("zipadooMark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 20)
+                    }
+                }
             }   
         }
     }
@@ -168,10 +182,9 @@ struct HomeMainView: View {
         // MARK: - 카드 배경 이미지, 테두리
         ZStack {
             // 맵 버튼 그라데이션 색 선언
-            let gradient = LinearGradient(gradient: Gradient(stops: [
-                Gradient.Stop(color: Color(hex: 0xFF5747), location: 0.1),
-                Gradient.Stop(color: Color(hex: 0xFF5747).opacity(0.5), location: 1.0)
-            ]), startPoint: .topLeading, endPoint: .bottomTrailing)
+//            Gradient.Stop(color: Color(hex: 0xFF5747), location: 0.1),
+//            Gradient.Stop(color: Color(hex: 0xFF5747).opacity(0.5), location: 1.0)
+//            ]), startPoint: .bottomLeading, endPoint: .topTrailing)
             
             // 카드 배경색
             RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -221,11 +234,10 @@ struct HomeMainView: View {
                         } label: {
                             ZStack {
                                 // 맵 아이콘 배경색
-                                
-                                RoundedRectangle(cornerRadius: 20, style: .circular)
-                                    .frame(width: 90, height: 34)
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .frame(width: 90, height: 40)
                                     .foregroundColor(.clear)
-                                    .background(gradient)
+                                    .background(Color.color1)
                                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                                 // 맵 아이콘 태두리
                                 HStack {
@@ -246,7 +258,7 @@ struct HomeMainView: View {
                         .padding(.trailing, -5)
                         .symbolEffect(.pulse.byLayer, options: .repeating, isActive: isTracking)
                     }
-                    
+                
                     // 추적중인 약속만 지도뷰 이동 가능
                     //                        if isTracking {
                     //                            NavigationLink {
@@ -286,6 +298,7 @@ struct HomeMainView: View {
                     Group {
                         HStack {
                             Image(systemName: "pin")
+                                .font(.footnote) // 아이콘이 너무 커서 좀더 작게함
                             Text("\(promise.destination)")
                         }
                         /// 저장된 promiseDate값을 Date 타입으로 변환
@@ -293,14 +306,14 @@ struct HomeMainView: View {
                         
                         HStack {
                             Image(systemName: "clock")
+                                .font(.footnote) // 아이콘이 너무 커서 좀더 작게함
                             Text("\(formatDate(date: datePromise))")
                         }
                         .padding(.bottom, 10)
                     }
                     .font(.callout)
                     .fontWeight(.semibold)
-                    
-                    
+                            
                     //                        Rectangle()
                     //                            .background(Color.primaryInvert)
                     //                            .frame(height: 1).opacity(0.3)
@@ -328,8 +341,7 @@ struct HomeMainView: View {
                             .font(.title3)
                             .foregroundStyle(Color.primaryInvert)
                         // TODO: - promise.penalty 데이터 연결
-                        
-                        
+     
                         //                    Text("\(promise.participantIdArray.count)명")
                         //                        .font(.callout)
                         //                        .fontWeight(.semibold)
@@ -351,7 +363,7 @@ struct HomeMainView: View {
             RoundedRectangle(cornerRadius: 10)
                 .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
                 .foregroundColor(.primary)
-                .opacity(isTracking ? 0: 0.1)
+                .opacity(isTracking ? 0: 0.05) // 0.1 다소 어두워서 0.05로 더 밝게처리
                 .shadow(color: .black, radius: 20, x: 1, y: 1)
         )
         //        .opacity(isTracking ? 1 : 0.5)
@@ -363,7 +375,6 @@ struct HomeMainView: View {
         }
     }
 }
-
 
 
 // MARK: - 시간 형식변환 함수

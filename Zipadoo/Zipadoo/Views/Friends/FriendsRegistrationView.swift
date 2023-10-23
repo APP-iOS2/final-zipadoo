@@ -39,6 +39,7 @@ struct FriendsRegistrationView: View {
                         Image(systemName: "xmark.circle.fill")
                             .padding(.trailing, 10)
                             .foregroundColor(.secondary)
+                      
                     }
                 }
                 
@@ -66,8 +67,12 @@ struct FriendsRegistrationView: View {
                     }
                     
                 } label: {
-                    Text("추가")
+                    HStack { }
+                    Text("친구 요청")
+//                    Image(systemName: "paperplane")
+//                    Image(systemName: "plus.circle")
                 }
+                .padding(.trailing, 5)
                 .alert(isPresented: $isShowingAlert, content: {
                     
                     Alert(
