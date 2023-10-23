@@ -13,6 +13,7 @@ import FirebaseCore
 struct PromiseEditView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var promise: Promise
+    @Binding var navigationBackToHome: Bool
     @State private var editedPromiseTitle: String = ""
     @State private var editedDestination: String = ""
     @State private var editedAddress: String = ""
@@ -205,30 +206,29 @@ struct PromiseEditView: View {
                         .overlay {
                             HStack {
                                 ScrollView(.horizontal) {
-                                    //if editSelectedFriends.isEmpty {
-                                    HStack {
-                                        ForEach(editSelectedFriends, id: \.self) { friendId in
-                                            if let friend = userStore.userFetchArray.first(where: { $0.id == friendId }) {
-                                                EditFriendSellView(selectedFriends: $selectedFriends, friend: friend)
+                                    if selectedFriends.isEmpty {
+                                        HStack {
+                                            ForEach(editSelectedFriends, id: \.self) { friendId in
+                                                if let friend = userStore.userFetchArray.first(where: { $0.id == friendId }) {
+                                                    EditFriendSellView(selectedFriends: $selectedFriends, friend: friend)
+                                                        .padding()
+                                                        .padding(.trailing, -50)
+                                                }
+                                            }
+                                        }
+                                        .padding(.leading, -20)
+                                        .padding(.trailing, 50)
+                                    } else {
+                                        HStack {
+                                            ForEach(selectedFriends) { friend in
+                                                FriendSellView(selectedFriends: $selectedFriends, friend: friend)
                                                     .padding()
                                                     .padding(.trailing, -50)
                                             }
                                         }
+                                        .padding(.leading, -20)
+                                        .padding(.trailing, 50)
                                     }
-                                    .padding(.leading, -20)
-                                    .padding(.trailing, 50)
-                                    
-                                    //                                    else {
-                                    //                                        HStack {
-                                    //                                            ForEach(selectedFriends) { friend in
-                                    //                                                FriendSellView(selectedFriends: $selectedFriends, friend: friend)
-                                    //                                                    .padding()
-                                    //                                                    .padding(.trailing, -50)
-                                    //                                            }
-                                    //                                        }
-                                    //                                        .padding(.leading, -20)
-                                    //                                        .padding(.trailing, 50)
-                                    //                                    }
                                 }
                                 .frame(height: 90)
                                 .scrollIndicators(.hidden)
@@ -245,14 +245,20 @@ struct PromiseEditView: View {
                     coordXXX = promise.latitude
                     coordYYY = promise.longitude
                     penalty = promise.penalty
-                    editPromiseLocation = PromiseLocation(destination: editedDestination, address: editedAddress, latitude: coordXXX, longitude: coordYYY)
+                    
                     for id in promise.participantIdArray {
+                        if let loginUser = AuthStore.shared.currentUser {
+                            if loginUser.id == id {
+                                continue
+                            }
+                        }
                         Task {
                             if let friend = try await UserStore.fetchUser(userId: id) {
                                 selectedFriends.append(friend)
                             }
                         }
                     }
+                    
                     Task {
                         try await friendsStore.fetchFriends()
                     }
@@ -265,6 +271,7 @@ struct PromiseEditView: View {
                     trailing: Button("저장") {
                         updatePromise()
                         dismiss()
+                        navigationBackToHome = true
                     }
                 )
                 .sheet(isPresented: $addFriendsSheet) {

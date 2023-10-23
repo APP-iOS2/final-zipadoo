@@ -288,9 +288,29 @@ struct AddPromiseView: View {
                             dismissButton:
                                     .default(Text("확인"),
                                              action: {
+                                                 let makingUserID = AuthStore.shared.currentUser?.id ?? "not ID"
+                                                 var participantIds = [makingUserID]
+                                                 var locationIds: [String] = []
+                                                 
+                                                 for friend in selectedFriends {
+                                                     participantIds.append(friend.id)
+                                                 }
+                                                 
+                                                 for id in participantIds {
+                                                     Task {
+                                                         let participantsLocation = Location(participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
+                                                         locationIds.append(participantsLocation.id)
+                                                         
+                                                         LocationStore.addLocationData(location: participantsLocation) // 파베에 Location저장
+                                                     }
+                                                 }
+                                                 
+                                                 let promise = Promise(id: UUID().uuidString, makingUserID: makingUserID, promiseTitle: promiseTitle, promiseDate: date.timeIntervalSince1970, destination: destination, address: address, latitude: coordXXX, longitude: coordYYY, participantIdArray: participantIds, checkDoublePromise: false, locationIdArray: locationIds, penalty: penalty)
+                                                 
+                                                 
                                                  Task {
                                                      do {
-                                                         try await //promiseViewModel.addPromiseData()
+                                                         try await promiseViewModel.addPromiseData(promise: promise)
                                                          
                                                          dismiss()
                                                      } catch {
@@ -298,9 +318,9 @@ struct AddPromiseView: View {
                                                      }
                                                  }
                                              })
-                        )
-                    }
+                        )}
                 }
+                
                 ToolbarItem(placement: .cancellationAction) {
                     Button {
                         showingCancelAlert.toggle()
