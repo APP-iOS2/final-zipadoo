@@ -33,6 +33,11 @@ class AppleSigninViewModel: ObservableObject {
     
     let dbRef = Firestore.firestore().collection("Users")
     
+    /// 유저 로그인
+    func login() async throws -> Bool {
+        try await AuthStore.shared.login(email: Auth.auth().currentUser?.email ?? "not found email", password: Auth.auth().currentUser?.uid ?? "not found uid")
+    }
+    
     @MainActor
     /// 유저 회원가입
     func createUser() async throws {
@@ -128,11 +133,13 @@ class AppleSigninViewModel: ObservableObject {
                     let userData: [String: Any] = [
                         "id": authResult.user.uid,
                         "email": authResult.user.email ?? "",
+                        "friendsIdArray": [],
                         "name": "빈 값",
                         "nickName": "빈 값",
                         "phoneNumber": "빈 값",
                         "phtato": 0,
                         "profileImageString": "",
+                        "promiseCount": 0,
                         "crustDepth": 0,
                         "tardyCount": 0
                     ]

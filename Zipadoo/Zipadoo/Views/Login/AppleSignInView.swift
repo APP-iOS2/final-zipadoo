@@ -168,7 +168,7 @@ struct AppleSignInView: View {
                     Button {
                         checkValid()
                         Task {
-                            try do
+                           
                         }
                     } label: {
                         Text("다음")

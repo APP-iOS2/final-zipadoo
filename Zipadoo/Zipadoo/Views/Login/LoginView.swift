@@ -18,6 +18,7 @@ import AuthenticationServices
 struct LoginView: View {
     //    @StateObject var kakaoStore: KakaoStore = KakaoStore()
     @StateObject var singinViewModel = AppleSigninViewModel()
+    @ObservedObject var singinStore = AppleSigninStore()
     @AppStorage ("logState") var logState = false
     @State private var spaceHeight: CGFloat = 500 // 두더지 머리 위에 공간 높이
     @Environment(\.colorScheme) var colorScheme // 다크모드일 때 컬러 변경
@@ -95,10 +96,11 @@ struct LoginView: View {
                             } onCompletion: { result in
                                 Task {
                                     do {
-                                        print("result")
+                                        print("completion start")
                                         singinViewModel.SinginWithAppleCompletion(result)
-                                        isSigninLinkActive = true
-                                        print("result 끝")
+                                        logState = true
+//                                        isSigninLinkActive = true
+                                        print("completion end")
                                     } catch {
                                         print("completion error")
                                     }
