@@ -12,9 +12,9 @@ struct ContentView: View {
     @EnvironmentObject var alertStore: AlertStore
     @EnvironmentObject var widgetStore: WidgetStore
     @EnvironmentObject var promiseViewModel: PromiseViewModel
-    @StateObject var viewModel = AuthStore()
+    
+    @StateObject var viewModel = ContentViewModel()
     @Binding var selectedTab: Int
-    //@State private var fetchedPromise: Promise?
     
     var body: some View {
         // 로그인이 되어있지 않은 상태면 로그인 뷰로,
