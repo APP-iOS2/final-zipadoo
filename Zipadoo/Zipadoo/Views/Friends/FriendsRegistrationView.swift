@@ -23,33 +23,36 @@ struct FriendsRegistrationView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            TextField("친구의 닉네임을 입력해주세요.", text: $nickNameTextField)
-                .padding(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(.secondary)
-                )
-                .padding(.bottom, 5)
-            
-            // 해당하는 닉네임이 없으면 알람메세지
-            if !friendsStore.alertMessage.isEmpty {
-                Text("\(friendsStore.alertMessage)")
-                    .font(.footnote)
-                    .foregroundStyle(.red)
+      
+            ZStack {
+                TextField("친구의 닉네임을 입력해주세요.", text: $nickNameTextField)
+                    .padding(10)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(.secondary)
+                    )
+                HStack {
+                    Spacer()
+                    Button {
+                        nickNameTextField = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .padding(.trailing, 10)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                
             }
-            /*
-            TextField("친구의 연락처를 입력해주세요.", text: $phoneTextField)
-                .padding(10)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(.gray)
-                )
-            */
-            Spacer()
-        }
-        .padding()
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
+            .padding(.bottom, 5)
+            HStack {
+                
+                // 조건에 안맞을 시 알림메세지
+                if !friendsStore.alertMessage.isEmpty {
+                    Text("\(friendsStore.alertMessage)")
+                        .font(.footnote)
+                        .foregroundStyle(.red)
+                }
+                Spacer()
                 Button {
                     // 추가성공 -> dismiss
                     // 추가실패 -> 현 페이지 머물기, 그런 사람 없다고 밑에 안내문구
@@ -58,7 +61,6 @@ struct FriendsRegistrationView: View {
                             if resultBool { // 추가할 수 있으면 알람
                                 friendsStore.alertMessage = ""
                                 isShowingAlert.toggle()
-                                
                             }
                         }
                     }
@@ -66,23 +68,26 @@ struct FriendsRegistrationView: View {
                 } label: {
                     Text("추가")
                 }
-            }
-        }
-        .alert(isPresented: $isShowingAlert, content: {
-            
-            Alert(
-                title: Text(""),
-                message: Text("친구를 요청합니다"),
-                dismissButton: .default(Text("확인"), action: {
-                    isShowingAlert = false
-                    dismiss()
-                    friendsStore.alertMessage = ""
+                .alert(isPresented: $isShowingAlert, content: {
+                    
+                    Alert(
+                        title: Text(""),
+                        message: Text("친구를 요청합니다"),
+                        dismissButton: .default(Text("확인"), action: {
+                            isShowingAlert = false
+                            dismiss()
+                            friendsStore.alertMessage = ""
+                        })
+                    )
                 })
-            )
-        })
-        .onAppear {
-            friendsStore.alertMessage = ""
+                .onAppear {
+                    friendsStore.alertMessage = ""
+                }
+            }
+    
         }
+        .padding()
+
     }
 }
 
