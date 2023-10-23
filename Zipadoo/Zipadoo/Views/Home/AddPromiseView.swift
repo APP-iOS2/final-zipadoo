@@ -47,7 +47,7 @@ struct AddPromiseView: View {
     @State private var sheetTitle: String = "약속 장소 선택"
     
     var isAllWrite: Bool {
-        return !promiseViewModel.promiseTitle.isEmpty /*&& Calendar.current.startOfDay(for: promiseViewModel.date) != today */&& !promiseViewModel.address.isEmpty
+        return !promiseViewModel.promiseTitle.isEmpty && Calendar.current.startOfDay(for: promiseViewModel.date) != today && !promiseViewModel.address.isEmpty
     }
     
     @StateObject private var authUser: AuthStore = AuthStore()
@@ -159,6 +159,20 @@ struct AddPromiseView: View {
                     
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
                     HStack {
+                        Button {
+                            addPlaceMapSheet = true
+                            //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
+//                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
+                        } label: {
+                            Label("장소 검색", systemImage: "mappin")
+                                .foregroundColor(.white)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .sheet(isPresented: $addPlaceMapSheet) {
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $promiseViewModel.destination, address: $promiseViewModel.address, sheetTitle: $sheetTitle)
+                        }
+                        
+                        Spacer()
                         if !promiseViewModel.destination.isEmpty {
                             Button {
                                 previewPlaceSheet = true
@@ -186,27 +200,19 @@ struct AddPromiseView: View {
                                 }
                             }
                         }
+                        
                         Spacer()
-                        Button {
-                            addPlaceMapSheet = true
+                        
+                        NavigationLink {
                             //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
-//                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $promiseViewModel.destination, address: $promiseViewModel.address, sheetTitle: $sheetTitle)
                         } label: {
                             Image(systemName: "location.magnifyingglass")
                                 .foregroundColor(.primary)
                                 .font(.title3)
                                 .fontWeight(.semibold)
-              
+ 
                         }
-                        
-                        .sheet(isPresented: $addPlaceMapSheet) {
-                            OneMapView(promiseViewModel: promiseViewModel, destination: $promiseViewModel.destination, address: $promiseViewModel.address, sheetTitle: $sheetTitle)
-                        }
-                        
-                   
-                        
-                    
-                  
      
                     }
                     .padding(.top, 10)
@@ -361,10 +367,7 @@ struct AddPromiseView: View {
 // Custom Date Picker...
 struct CustomDatePicker: View {
     @StateObject var promiseViewModel: PromiseViewModel
-    
-    // 현재시간으로부터 30분 뒤 상 수선언
-    let thirtyMinutesFromNow = Calendar.current.date(byAdding: .minute, value: 30, to: Date()) ?? Date()
-    
+    private let today = Calendar.current.startOfDay(for: Date())
     @Binding var date: Date
     @Binding var showPicker: Bool
     
@@ -376,9 +379,7 @@ struct CustomDatePicker: View {
             Rectangle()
                 .fill(.ultraThinMaterial)
                 .ignoresSafeArea()
-            
-            // today-> 분단위 표시되는 Date()로 변경
-            DatePicker("현재시간으로 부터 30분 뒤부터 선택 가능", selection: $promiseViewModel.date ,in: thirtyMinutesFromNow..., displayedComponents: [.date, .hourAndMinute])
+            DatePicker("", selection: $promiseViewModel.date ,in: self.today..., displayedComponents: [.date, .hourAndMinute])
                 .datePickerStyle(.graphical)
                 .labelsHidden()
             

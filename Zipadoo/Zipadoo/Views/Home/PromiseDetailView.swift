@@ -16,9 +16,8 @@ enum SharingStatus: String {
 struct PromiseDetailView: View {
     // MARK: - Property Wrappers
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
-    @EnvironmentObject var promiseViewModel: PromiseViewModel
+    @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
     @StateObject var loginUser: UserStore = UserStore()
-    @EnvironmentObject var widgetStore: WidgetStore
     
     @Environment(\.dismiss) private var dismiss
     @State private var currentDate: Double = 0.0
@@ -86,9 +85,6 @@ struct PromiseDetailView: View {
         .onAppear {
             currentDate = Date().timeIntervalSince1970
             formatRemainingTime()
-            widgetStore.widgetPromiseID = nil
-            widgetStore.widgetPromise = nil
-            widgetStore.isShowingDetailForWidget = false
         }
         .onReceive(timer, perform: { _ in
             currentDate = Date().timeIntervalSince1970

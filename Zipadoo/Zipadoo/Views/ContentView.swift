@@ -10,18 +10,16 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var alertStore: AlertStore
-    @EnvironmentObject var widgetStore: WidgetStore
-    @EnvironmentObject var promiseViewModel: PromiseViewModel
-    
-    @StateObject var viewModel = ContentViewModel()
-    @Binding var selectedTab: Int
+    @StateObject private var promiseViewModel = PromiseViewModel()
+    @StateObject var viewModel = AuthStore()
     
     var body: some View {
+        
         // 로그인이 되어있지 않은 상태면 로그인 뷰로,
         if viewModel.userSession?.uid == nil {
             LoginView()
         } else {
-            TabView(selection: $selectedTab) {
+            TabView {
                 // MARK: - 홈 뷰
                 HomeMainView(user: viewModel.currentUser)
                     .tabItem {
@@ -31,7 +29,6 @@ struct ContentView: View {
                     .tag(0)
                     .environmentObject(alertStore)
                     .environmentObject(promiseViewModel)
-                    .environmentObject(widgetStore)
                 
                 // MARK: - 친구리스트 뷰
                 FriendsView()
@@ -56,7 +53,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(selectedTab: .constant(0))
+    ContentView()
         .environmentObject(AlertStore())
-        .environmentObject(PromiseViewModel())
 }

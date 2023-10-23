@@ -33,9 +33,9 @@ struct ExampleView: View {
                 name: "아라",
                 profileImgString: "https://cdn.discordapp.com/emojis/1154686109234774058.webp?size=240&quality=lossless",
                 rank: 6,
-//                arrivarDifference: 720.3641,
+                arrivarDifference: 720.3641,
 //                arrivarDifference: -70,
-                arrivarDifference: -70,
+//                arrivarDifference: 0,
                 potato: 500)))
         }
     }
@@ -47,49 +47,31 @@ struct ArrivalMessagingView: View {
     var arrival: ArrivalMsgModel
     
     var timeDifference: String {
-        var timeDiff = arrival.arrivarDifference
-        // 딱 맞춰 도착
-        if timeDiff <= 0 && timeDiff > -60 {
+        let timeDiff = abs(arrival.arrivarDifference)
+        switch timeDiff {
+        case 0:
             return ""
-        }
-        // 늦거나 일찍 왔을 때
-        if timeDiff < 0 {
-            // 늦게 왔을 때
-            timeDiff = abs(timeDiff)
-            switch timeDiff {
-            case 60..<3600 :
-                let minute = timeDiff / 60
-                return "보다 \(Int(minute))분 "
-            case 3600..<86400 :
-                let hours = timeDiff / (60 * 60)
-                let minute = Int(timeDiff) % (60 * 60) / 60
-                var message = "보다 \(Int(hours))시간 "
-                message += minute == 0 ? "" : "\(minute)분 "
-                return message
-            default:
-                return ""
-            }
-        } else {
-            // 일찍 왔을 때(30분이 최대)
-            switch abs(timeDiff) {
-            case 1..<3600 :
-                let minute = timeDiff / 60
-                return "보다 \(Int(minute) + 1)분 "
-
-            default :
-                return ""
-            }
+        case 0..<3600:
+            let minute = timeDiff / 60
+            return "보다 \(Int(minute))분 "
+        case 3600..<86400:
+            let hours = timeDiff / (60 * 60)
+            let minute = Int(timeDiff) % (60 * 60) / 60
+            var message = "보다 \(Int(hours))시간 "
+            message += minute == 0 ? "" : "\(minute)분 "
+            return message
+        default:
+            return ""
         }
     }
     
     var arrivalType: ArrivalType {
-        let timeDiff = arrival.arrivarDifference
-        if timeDiff <= 0 && timeDiff > -60 {
-            return .onTime
-        } else if timeDiff < 0 {
-            return .late
+        if arrival.arrivarDifference > 0 {
+            .early
+        } else if arrival.arrivarDifference < 0 {
+            .late
         } else {
-            return .early
+            .onTime
         }
     }
     /// 3등안에 들었는가

@@ -39,9 +39,9 @@ struct AddFriendCellView: View {
             }
             .padding(.top, 60)
             
-            RoundedRectangle(cornerRadius: 10)
-                .stroke(lineWidth: 0.5)
-                .foregroundColor(.secondary)
+            RoundedRectangle(cornerRadius: 5)
+                .stroke(lineWidth: 0.05)
+                .foregroundColor(.zipadoo)
                 .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                 .frame(width: 360, height: 120)
                 .overlay {
