@@ -189,7 +189,7 @@ struct HomeMainView: View {
                     // 추적중인 약속만 지도뷰 이동 가능
                     if isTracking {
                         NavigationLink {
-                            FriendsMapView(promise: promise)
+                            PromiseDetailMapView(promise: promise)
                         } label: {
                             ZStack {
                                 // 맵 아이콘 배경색

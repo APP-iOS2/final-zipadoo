@@ -29,7 +29,7 @@ struct FriendsLocationStatusView: View {
                     // 만약 ratio가 0보다 작으면 0으로 해줘야함
                     ProgressWithImageView(value: ratio,
                                           label: { Text(friends.nickname) },
-                                          currentValueLabel: { Text("(Int(round(ratio * 100)))%")})
+                                          currentValueLabel: { Text("")})
                     .progressViewStyle(BarProgressStyle(height: 25, imageString: moleImageString))
                     .transition(.opacity)
                     .padding(.bottom, 50)

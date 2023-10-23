@@ -16,6 +16,19 @@ struct LocationAndParticipant: Identifiable {
     var nickname: String
     var imageString: String
     var moleImageString: String
+    /// 유저 두더지 드릴 이미지
+    var moleDrillImageString: String {
+        return "\(moleImageString)_1"
+    }
+    static let dummyData1: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy1", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.48047306060714, currentLongitude: 126.95138412144169), nickname: "더미1", imageString: "", moleImageString: "doo1")
+    static let dummyData2: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy2", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.48516705133686, currentLongitude: 127.01723145026864), nickname: "더미2", imageString: "", moleImageString: "doo2")
+    static let dummyData3: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy3", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.441054579994564, currentLongitude: 127.00673485084162), nickname: "더미3", imageString: "", moleImageString: "doo3")
+    static let dummyData4: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy4", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.459858093439664, currentLongitude: 126.7041804752457), nickname: "더미4", imageString: "", moleImageString: "doo4")
+    static let dummyData5: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy1", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.38047306060714, currentLongitude: 126.85138412144169), nickname: "더미5", imageString: "", moleImageString: "doo5")
+    static let dummyData6: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy2", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.28516705133686, currentLongitude: 127.71723145026864), nickname: "더미6", imageString: "", moleImageString: "doo6")
+    static let dummyData7: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy3", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.141054579994564, currentLongitude: 127.60673485084162), nickname: "더미7", imageString: "", moleImageString: "doo7")
+    static let dummyData8: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy4", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.059858093439664, currentLongitude: 126.5041804752457), nickname: "더미8", imageString: "", moleImageString: "doo8")
+    static let dummyData9: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy4", departureLatitude: 0, departureLongitude: 0, currentLatitude: 36.459858093439664, currentLongitude: 126.4041804752457), nickname: "더미9", imageString: "", moleImageString: "doo9")
 }
 
 class LocationStore: ObservableObject {
@@ -26,6 +39,8 @@ class LocationStore: ObservableObject {
     @Published var locationDatas: [Location] = []
     /// 참여자들의 Location과 닉네임을 저장
     @Published var locationParticipantDatas: [LocationAndParticipant] = []
+    
+    @Published var locationParticipantDatasDummy: [LocationAndParticipant] = [LocationAndParticipant.dummyData1, LocationAndParticipant.dummyData2, LocationAndParticipant.dummyData3, LocationAndParticipant.dummyData4, LocationAndParticipant.dummyData5, LocationAndParticipant.dummyData6, LocationAndParticipant.dummyData7, LocationAndParticipant.dummyData8, LocationAndParticipant.dummyData9]
     
     var myid: String = AuthStore.shared.currentUser?.id ?? ""
     
