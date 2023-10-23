@@ -17,6 +17,7 @@ struct AddFriendCellView: View {
     @State private var animate = false
     
     var body: some View {
+        VStack {
             HStack {
                 Text("친구추가")
                     .font(.title3)
@@ -24,16 +25,16 @@ struct AddFriendCellView: View {
                     .foregroundColor(.secondary)
                 Spacer()
                 
-            // 친구 추가버튼
-                    Image(systemName: "person.crop.circle.badge.plus")
-                        .foregroundColor(.primary)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .symbolEffect(.bounce, value: animate)
-                        .onTapGesture {
-                            animate.toggle()
-                            addFriendsSheet.toggle()
-                        }
+                // 친구 추가버튼
+                Image(systemName: "person.crop.circle.badge.plus")
+                    .foregroundColor(.primary)
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                    .symbolEffect(.bounce, value: animate)
+                    .onTapGesture {
+                        animate.toggle()
+                        addFriendsSheet.toggle()
+                    }
                 
                 
             }
@@ -70,13 +71,18 @@ struct AddFriendCellView: View {
                         }
                     }
                 }
-        
-            .sheet(isPresented: $addFriendsSheet) {
-                FriendsListVIew(isShowingSheet: $addFriendsSheet, selectedFriends: $selectedFriends)
-            }
+                .sheet(isPresented: $addFriendsSheet) {
+                    FriendsListVIew(isShowingSheet: $addFriendsSheet, selectedFriends: $selectedFriends)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    animate.toggle()
+                    addFriendsSheet.toggle()
+                }
+        }
     }
 }
 
 #Preview {
-    AddFriendCellView(selectedFriends: .constant([dummyUser]))
+    AddFriendCellView(selectedFriends: .constant([]))
 }

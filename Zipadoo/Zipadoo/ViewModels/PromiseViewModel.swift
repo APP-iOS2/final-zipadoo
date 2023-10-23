@@ -202,7 +202,7 @@ class PromiseViewModel: ObservableObject {
      */
     
     // PromiseId로 Promise객체 가져오기
-    static func fetchPromise(promiseId: String) async throws -> Promise {
+    func fetchPromise(promiseId: String) async throws -> Promise {
         let snapshot = try await Firestore.firestore().collection("Promise").document(promiseId).getDocument()
         
         let promise = try snapshot.data(as: Promise.self)
@@ -232,21 +232,21 @@ class PromiseViewModel: ObservableObject {
     //    }
     
     @MainActor
-    func addPromiseData() async throws {
+    func addPromiseData(promise: Promise) async throws {
         // Promise객체 생성
         var promise = Promise(
            id: UUID().uuidString,
            makingUserID: AuthStore.shared.currentUser?.id ?? "not ID",
-           promiseTitle: promiseTitle,
-           promiseDate: date.timeIntervalSince1970, // 날짜 및 시간을 TimeInterval로 변환
-           destination: destination,
-           address: address,
-           latitude: coordXXX,
-           longitude: coordYYY,
-           participantIdArray: [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id },
+           promiseTitle: promise.promiseTitle,
+           promiseDate: promise.promiseDate, // 날짜 및 시간을 TimeInterval로 변환
+           destination: promise.destination,
+           address: promise.address,
+           latitude: promise.latitude,
+           longitude: promise.longitude,
+           participantIdArray: promise.participantIdArray,
            checkDoublePromise: false, // 원하는 값으로 설정
            locationIdArray: [],
-           penalty: penalty)
+           penalty: promise.penalty)
         
         do {
             // 친구도 동일하게 저장
@@ -265,21 +265,6 @@ class PromiseViewModel: ObservableObject {
             if let loginUserID = AuthStore.shared.currentUser?.id {
                 try await fetchData(userId: loginUserID)
             }
-            
-            id = ""
-            promiseTitle = ""
-            date = Date()
-            destination = "" // 약속 장소 이름
-            address = "" // 약속장소 주소
-            coordXXX = 0.0 // 약속장소 위도
-            coordYYY = 0.0 // 약속장소 경도
-            /// 장소에 대한 정보 값
-            promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
-            /// 선택된 친구 초기화
-            selectedFriends = []
-            /// 지각비 변수 및 상수 값
-            penalty = 0
-
         } catch {
             print("약속 등록")
         }
