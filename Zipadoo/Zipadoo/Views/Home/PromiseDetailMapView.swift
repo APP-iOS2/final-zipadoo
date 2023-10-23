@@ -238,9 +238,11 @@ struct PromiseDetailMapView: View {
         }
         .task { // 초기화 코드
             // myLocation 초기화
-            let departureLatitude = gpsStore.lastSeenLocation?.coordinate.latitude ?? 0
-            let departureLongitude = gpsStore.lastSeenLocation?.coordinate.longitude ?? 0
-            locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: departureLatitude, departureLongitude: departureLongitude, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+//            let departureLatitude = 37.47694972793077
+//            let departureLongitude = 126.98195644152227
+//            locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: departureLatitude, departureLongitude: departureLongitude, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+            locationStore.myLocation.currentLatitude = gpsStore.lastSeenLocation?.coordinate.latitude ?? 0
+            locationStore.myLocation.currentLongitude = gpsStore.lastSeenLocation?.coordinate.longitude ?? 0
             // 패치해주는 코드
             do {
                 try await locationStore.fetchData(locationIdArray: promise.locationIdArray)

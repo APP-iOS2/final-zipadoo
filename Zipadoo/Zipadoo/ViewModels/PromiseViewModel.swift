@@ -378,11 +378,11 @@ class PromiseViewModel: ObservableObject {
         }
         
         // 현재 등록된 알림 확인하는 코드
-//        notificationCenter.getPendingNotificationRequests { (requests) in
-//            for request in requests {
-//                print("\(request.identifier) will be delivered at \(request.trigger)")
-//            }
-//        }
+        notificationCenter.getPendingNotificationRequests { (requests) in
+            for request in requests {
+                print("\(request.identifier) will be delivered at \(request.trigger)")
+            }
+        }
     }
     
     func addTodayPromisesToUserDefaults() {
