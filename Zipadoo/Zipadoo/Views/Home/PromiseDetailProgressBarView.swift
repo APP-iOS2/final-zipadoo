@@ -52,8 +52,9 @@ struct PromiseDetailProgressBarView: View {
                         Text("남은 거리 : \(formatDistance(distance))  ")
                     }
                     .offset(y: 15)
-                    
+                    /// 남은거리 / 전체거리 비율
                     let ratio = caculateRatio(location: locationStore.myLocation)
+//                    let ratio = 0.5
                     
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: 10)
@@ -61,7 +62,7 @@ struct PromiseDetailProgressBarView: View {
                             .foregroundColor(Color.gray)
                         
                         RoundedRectangle(cornerRadius: 10)
-                            .frame(width: CGFloat(ratio) * UIScreen.main.bounds.width, height: 38)
+                            .frame(width: CGFloat(ratio) * (UIScreen.main.bounds.width - 64), height: 38)
                         // 애니메이션 작동하나?
                             .animation(.linear(duration: 2), value: ratio)
                             .foregroundColor(Color.brown)
@@ -75,7 +76,7 @@ struct PromiseDetailProgressBarView: View {
                                 .foregroundColor(.green)
                                 .offset(y: 15)
                                 .rotationEffect(.degrees(270))
-                                .offset(x: CGFloat(ratio) * UIScreen.main.bounds.width - 20)
+                                .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - 14)
                         }
                 }
             }
@@ -93,7 +94,8 @@ struct PromiseDetailProgressBarView: View {
                         }
                         .offset(y: 15)
                         // 남은 거리 비율
-                        let ratio = caculateRatio(location: friends.location)
+//                        let ratio = caculateRatio(location: friends.location)
+                        let ratio = 0
                         
                         ZStack(alignment: .leading) {
                             RoundedRectangle(cornerRadius: 10)
@@ -101,7 +103,7 @@ struct PromiseDetailProgressBarView: View {
                                 .foregroundColor(Color.gray)
                             
                             RoundedRectangle(cornerRadius: 10)
-                                .frame(width: CGFloat(ratio) * UIScreen.main.bounds.width, height: 38)
+                                .frame(width: CGFloat(ratio) * (UIScreen.main.bounds.width - 64), height: 38)
                             // 애니메이션 작동하나?
                                 .animation(.linear(duration: 2), value: ratio)
                                 .foregroundColor(Color.brown)
@@ -116,7 +118,7 @@ struct PromiseDetailProgressBarView: View {
                                     .foregroundColor(.green)
                                     .offset(y: 15)
                                     .rotationEffect(.degrees(270))
-                                    .offset(x: CGFloat(ratio) * UIScreen.main.bounds.width - 20)
+                                    .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - 14)
                             }
                         }
                     }
@@ -168,11 +170,16 @@ extension PromiseDetailProgressBarView {
         print("출발위치 경도 : \(location.departureLatitude)")
         
         let totalDistance = straightDistance(x1: location.departureLatitude, y1: location.departureLongitude, x2: promise.latitude, y2: promise.longitude)
+        
+        print("전체 거리 : \(totalDistance)")
+        
         let remainingDistance = straightDistance(x1: location.currentLatitude, y1: location.currentLongitude, x2: promise.latitude, y2: promise.longitude)
+        
+        print("남은 거리 : \(remainingDistance)")
         
         print("총 계산 비율 : \(distanceRatio(depature: totalDistance, arrival: remainingDistance))")
         
-        return distanceRatio(depature: totalDistance, arrival: remainingDistance)
+        return distanceRatio(depature: remainingDistance, arrival: totalDistance)
     }
     /// 지구가 원이라,, 거리를 원주 기준으로? 맞나?
     func degreesToRadians(_ degrees: Double) -> Double {

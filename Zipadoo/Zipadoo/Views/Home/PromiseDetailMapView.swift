@@ -238,8 +238,8 @@ struct PromiseDetailMapView: View {
         }
         .task { // 초기화 코드
             // myLocation 초기화
-            let departureLatitude = 37.48047306060714
-            let departureLongitude = 126.95138412144169
+            let departureLatitude = gpsStore.lastSeenLocation?.coordinate.latitude ?? 0
+            let departureLongitude = gpsStore.lastSeenLocation?.coordinate.longitude ?? 0
             locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: departureLatitude, departureLongitude: departureLongitude, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
             // 패치해주는 코드
             do {
