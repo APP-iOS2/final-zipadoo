@@ -51,9 +51,13 @@ struct PromiseDetailMapView: View {
                     UserAnnotation(anchor: .center)
                     // 도착 위치 표시
                     Annotation("약속 위치", coordinate: promise.coordinate, anchor: .bottom) {
-                        Image(systemName: "mappin")
-                            .font(.title)
-                            .foregroundColor(.blue)
+                        Button(action: {
+                            region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                        }, label: {
+                            Image(systemName: "mappin")
+                                .font(.title)
+                                .foregroundColor(.blue)
+                        })
                     }
                     // 도착 반경 표시
                     MapCircle(center: promise.coordinate, radius: arrivalCheckRadius)
@@ -75,13 +79,17 @@ struct PromiseDetailMapView: View {
                              .frame(width: 25, height: 25) // 크기 조절
                              .aspectRatio(contentMode: .fill)
                              }*/
-                            Image(annotation.moleImageString)
-                                .resizable()
-                                .frame(width: 25, height: 25) // 크기 조절
-                                .aspectRatio(contentMode: .fill)
-                                .overlay(
-                                    Circle().stroke(Color.white, lineWidth: 2))
-                                .shadow(radius: 10)
+                            Button {
+                                region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                            } label: {
+                                Image(annotation.moleImageString)
+                                    .resizable()
+                                    .frame(width: 25, height: 25) // 크기 조절
+                                    .aspectRatio(contentMode: .fill)
+                                    .overlay(
+                                        Circle().stroke(Color.white, lineWidth: 2))
+                                    .shadow(radius: 10)
+                            }
                         }
                     }
                     // 경로 그리기

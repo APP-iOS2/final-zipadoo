@@ -13,12 +13,12 @@
 		088A0F242AD78EAD00BC6EF5 /* FriendsMapSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088A0F232AD78EAD00BC6EF5 /* FriendsMapSubView.swift */; };
 		088F7D402AD4DED40094B9B4 /* ReceivingLocationTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F7D3F2AD4DED40094B9B4 /* ReceivingLocationTestView.swift */; };
 		088F7D422AD4EAB50094B9B4 /* GPSStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088F7D412AD4EAB50094B9B4 /* GPSStore.swift */; };
+		08A4989D2AE61C1F008810D5 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08A4989C2AE61C1F008810D5 /* GoogleService-Info.plist */; };
 		08BC9AF22ACF973A0003AE32 /* EditPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08BC9AF12ACF973A0003AE32 /* EditPasswordView.swift */; };
 		08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B42ABC1BE0005D231D /* MyPageView.swift */; };
 		08C6F0B92ABC1D6A005D231D /* MyPotatoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */; };
 		08C6F0BB2ABC1DA2005D231D /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BA2ABC1DA2005D231D /* SettingView.swift */; };
 		08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C6F0BC2ABC1E1C005D231D /* PayingView.swift */; };
-		08C963852AE2BD3F003ECDD7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08C963842AE2BD3F003ECDD7 /* GoogleService-Info.plist */; };
 		08C963872AE2E70C003ECDD7 /* PromiseDetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C963862AE2E70C003ECDD7 /* PromiseDetailMapView.swift */; };
 		08C963892AE2E753003ECDD7 /* PromiseDetailMapSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C963882AE2E753003ECDD7 /* PromiseDetailMapSubView.swift */; };
 		08C9638B2AE2F973003ECDD7 /* PromiseDetailProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08C9638A2AE2F973003ECDD7 /* PromiseDetailProgressBarView.swift */; };
@@ -73,6 +73,7 @@
 		C076BD9F2AD8FC0C005AE81D /* ArrivalMessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BD9E2AD8FC0C005AE81D /* ArrivalMessagingView.swift */; };
 		C076BDA52AD934C1005AE81D /* ArrivalMsgModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA42AD934C1005AE81D /* ArrivalMsgModel.swift */; };
 		C076BDA82AD938D6005AE81D /* AlertStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA72AD938D6005AE81D /* AlertStore.swift */; };
+		C08716882AE25C99005914C5 /* WidgetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08716872AE25C99005914C5 /* WidgetStore.swift */; };
 		FA103F1E2AE2164F00BE56CA /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA103F1D2AE2164F00BE56CA /* Enum.swift */; };
 		FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */; };
 		FA24740A2ACD4BDB00D4C821 /* PlaceMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E42ACD4BDB00D4C821 /* PlaceMarkView.swift */; };
@@ -174,12 +175,12 @@
 		088A0F232AD78EAD00BC6EF5 /* FriendsMapSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsMapSubView.swift; sourceTree = "<group>"; };
 		088F7D3F2AD4DED40094B9B4 /* ReceivingLocationTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceivingLocationTestView.swift; sourceTree = "<group>"; };
 		088F7D412AD4EAB50094B9B4 /* GPSStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPSStore.swift; sourceTree = "<group>"; };
+		08A4989C2AE61C1F008810D5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08BC9AF12ACF973A0003AE32 /* EditPasswordView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditPasswordView.swift; sourceTree = "<group>"; };
 		08C6F0B42ABC1BE0005D231D /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		08C6F0B82ABC1D6A005D231D /* MyPotatoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPotatoView.swift; sourceTree = "<group>"; };
 		08C6F0BA2ABC1DA2005D231D /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		08C6F0BC2ABC1E1C005D231D /* PayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PayingView.swift; sourceTree = "<group>"; };
-		08C963842AE2BD3F003ECDD7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		08C963862AE2E70C003ECDD7 /* PromiseDetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailMapView.swift; sourceTree = "<group>"; };
 		08C963882AE2E753003ECDD7 /* PromiseDetailMapSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailMapSubView.swift; sourceTree = "<group>"; };
 		08C9638A2AE2F973003ECDD7 /* PromiseDetailProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseDetailProgressBarView.swift; sourceTree = "<group>"; };
@@ -228,6 +229,7 @@
 		C076BD9E2AD8FC0C005AE81D /* ArrivalMessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalMessagingView.swift; sourceTree = "<group>"; };
 		C076BDA42AD934C1005AE81D /* ArrivalMsgModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalMsgModel.swift; sourceTree = "<group>"; };
 		C076BDA72AD938D6005AE81D /* AlertStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStore.swift; sourceTree = "<group>"; };
+		C08716872AE25C99005914C5 /* WidgetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStore.swift; sourceTree = "<group>"; };
 		FA103F1D2AE2164F00BE56CA /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpectedTravelTimeMarkView.swift; sourceTree = "<group>"; };
 		FA2473E42ACD4BDB00D4C821 /* PlaceMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMarkView.swift; sourceTree = "<group>"; };
@@ -441,6 +443,14 @@
 			path = Alert;
 			sourceTree = "<group>";
 		};
+		C08716862AE25C8C005914C5 /* Widget */ = {
+			isa = PBXGroup;
+			children = (
+				C08716872AE25C99005914C5 /* WidgetStore.swift */,
+			);
+			path = Widget;
+			sourceTree = "<group>";
+		};
 		FA103F1C2AE2163900BE56CA /* Enum */ = {
 			isa = PBXGroup;
 			children = (
@@ -540,6 +550,7 @@
 		FA2474312ACD4D6E00D4C821 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				C08716862AE25C8C005914C5 /* Widget */,
 				C076BDA62AD93865005AE81D /* Alert */,
 				FA24745B2ACE39AC00D4C821 /* DateChanger.swift */,
 				FA2474322ACD4D6E00D4C821 /* UserStore.swift */,
@@ -638,7 +649,7 @@
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
-				08C963842AE2BD3F003ECDD7 /* GoogleService-Info.plist */,
+				08A4989C2AE61C1F008810D5 /* GoogleService-Info.plist */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
 				FA103F1C2AE2163900BE56CA /* Enum */,
@@ -836,7 +847,7 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-				08C963852AE2BD3F003ECDD7 /* GoogleService-Info.plist in Resources */,
+				08A4989D2AE61C1F008810D5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -895,6 +906,7 @@
 				FA24745E2ACE3B8200D4C821 /* MyPagePromiseStore.swift in Sources */,
 				C02790FE2ACFCF8A00BBDCCA /* LocationAndInfo.swift in Sources */,
 				FA24742D2ACD4C0B00D4C821 /* ShareView.swift in Sources */,
+				C08716882AE25C99005914C5 /* WidgetStore.swift in Sources */,
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				FA2474602ACE3BC000D4C821 /* PastPromiseView.swift in Sources */,
 				FA2474172ACD4BDB00D4C821 /* AddLocationDatas.swift in Sources */,

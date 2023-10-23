@@ -43,7 +43,6 @@ struct FriendsLocationStatusView: View {
                         .shadow(radius: 0.8)
                         .padding(.trailing, 10)
                 }
-                
             }
         }
         .onAppear {
