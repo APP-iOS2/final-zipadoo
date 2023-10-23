@@ -137,7 +137,7 @@ struct MyPageView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView (showsIndicators: false) {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     
                     VStack(spacing: 5) {
@@ -273,7 +273,7 @@ struct MyPageView: View {
                         .foregroundStyle(.secondary)
                         .padding(.top, 1)
                         
-                        ZStack {
+                        VStack {
                             Image(crustBackgroundImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
