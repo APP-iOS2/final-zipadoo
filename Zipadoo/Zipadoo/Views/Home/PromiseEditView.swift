@@ -14,8 +14,8 @@ struct PromiseEditView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var promise: Promise
     @State private var editedPromiseTitle: String = ""
-//    @State private var editedDestination: String = "" (사용X)
-//    @State private var editedAddress: String = "" (사용X)
+    @State private var editedDestination: String = ""
+    @State private var editedAddress: String = ""
     @State private var editedPromiseDate: Date = Date()
     @State private var mapViewSheet: Bool = false
     @State private var addFriendSheet: Bool = false
@@ -24,12 +24,12 @@ struct PromiseEditView: View {
     @State private var alertMessage = ""
     @State private var editSelectedFriends: [String] = []
     @State private var locationIdArray: [String] = []
-//    @State private var editPromiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780) (사용X)
+//    @State private var editPromiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
     @ObservedObject private var promiseViewModel: PromiseViewModel = PromiseViewModel()
     @StateObject private var authUser: AuthStore = AuthStore()
     @StateObject var friendsStore: FriendsStore = FriendsStore()
     @StateObject var userStore: UserStore = UserStore()
-    @Binding var selectedFriends: [User]
+    @State var selectedFriends: [User] = []
     @State var edifPlaceSheet: Bool = false
     private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
     private let today = Calendar.current.startOfDay(for: Date())
@@ -37,9 +37,10 @@ struct PromiseEditView: View {
     @State private var showingPenalty: Bool = false
     @State private var sheetTitle: String = "약속장소 수정"
     @State private var previewPlaceSheet: Bool = false
-    
+    @State private var coordXXX = 0.0 // 약속장소 위도
+    @State private var coordYYY = 0.0 // 약속장소 경도
     private let dbRef = Firestore.firestore().collection("Promise")
-    
+
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
@@ -101,16 +102,16 @@ struct PromiseEditView: View {
                         }
                         .buttonStyle(.borderedProminent)
                         .sheet(isPresented: $edifPlaceSheet) {
-                            OneMapView(promiseViewModel: promiseViewModel, destination: $promiseViewModel.destination, address: $promiseViewModel.address, sheetTitle: $sheetTitle)
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $editedDestination, address: $editedAddress, coordXXX: $coordXXX, coordYYY: $coordYYY, sheetTitle: $sheetTitle)
                         }
                         
                         Spacer()
-                        if !promiseViewModel.destination.isEmpty {
+                        if !editedDestination.isEmpty {
                             Button {
                                 previewPlaceSheet = true
                             } label: {
                                 HStack {
-                                    Text("\(promiseViewModel.destination)")
+                                    Text("\(editedDestination)")
                                         .font(.callout)
                                     Image(systemName: "chevron.forward")
                                         .resizable()
@@ -126,7 +127,7 @@ struct PromiseEditView: View {
                                         .foregroundStyle(Color.gray)
                                         .padding(.top, 10)
                                     
-                                    PreviewPlaceOnMap(promiseViewModel: promiseViewModel)
+                                    PreviewPlaceOnMap(promiseViewModel: promiseViewModel, destination: $editedDestination, address: $editedAddress, coordXXX: $coordXXX, coordYYY: $coordYYY)
                                         .presentationDetents([.height(700)])
                                         .padding(.top, 15)
                                 }
@@ -176,7 +177,7 @@ struct PromiseEditView: View {
                         }
                         Spacer()
                         
-                        Text("\(promiseViewModel.penalty)개")
+                        Text("\(penalty)개")
                             .font(.title3)
                             .padding(.leading, 100)
                     }
@@ -204,29 +205,30 @@ struct PromiseEditView: View {
                         .overlay {
                             HStack {
                                 ScrollView(.horizontal) {
-                                    if selectedFriends.isEmpty {
-                                        HStack {
-                                            ForEach(editSelectedFriends, id: \.self) { friendId in
-                                                if let friend = userStore.userFetchArray.first(where: { $0.id == friendId }) {
-                                                    EditFriendSellView(selectedFriends: $selectedFriends, friend: friend)
-                                                        .padding()
-                                                        .padding(.trailing, -50)
-                                                }
-                                            }
-                                        }
-                                        .padding(.leading, -20)
-                                        .padding(.trailing, 50)
-                                    } else {
-                                        HStack {
-                                            ForEach(selectedFriends) { friend in
-                                                FriendSellView(selectedFriends: $selectedFriends, friend: friend)
+                                    //if editSelectedFriends.isEmpty {
+                                    HStack {
+                                        ForEach(editSelectedFriends, id: \.self) { friendId in
+                                            if let friend = userStore.userFetchArray.first(where: { $0.id == friendId }) {
+                                                EditFriendSellView(selectedFriends: $selectedFriends, friend: friend)
                                                     .padding()
                                                     .padding(.trailing, -50)
                                             }
                                         }
-                                        .padding(.leading, -20)
-                                        .padding(.trailing, 50)
                                     }
+                                    .padding(.leading, -20)
+                                    .padding(.trailing, 50)
+                                    
+                                    //                                    else {
+                                    //                                        HStack {
+                                    //                                            ForEach(selectedFriends) { friend in
+                                    //                                                FriendSellView(selectedFriends: $selectedFriends, friend: friend)
+                                    //                                                    .padding()
+                                    //                                                    .padding(.trailing, -50)
+                                    //                                            }
+                                    //                                        }
+                                    //                                        .padding(.leading, -20)
+                                    //                                        .padding(.trailing, 50)
+                                    //                                    }
                                 }
                                 .frame(height: 90)
                                 .scrollIndicators(.hidden)
@@ -238,12 +240,19 @@ struct PromiseEditView: View {
                 .onAppear {
                     editedPromiseTitle = promise.promiseTitle
                     editedPromiseDate = Date(timeIntervalSince1970: promise.promiseDate)
-                    promiseViewModel.destination = promise.destination
-                    promiseViewModel.address = promise.address
-                    promiseViewModel.coordXXX = promise.latitude
-                    promiseViewModel.coordYYY = promise.longitude
-                    promiseViewModel.penalty = promise.penalty
-                    editSelectedFriends = promise.participantIdArray
+                    editedDestination = promise.destination
+                    editedAddress = promise.address
+                    coordXXX = promise.latitude
+                    coordYYY = promise.longitude
+                    penalty = promise.penalty
+                    editPromiseLocation = PromiseLocation(destination: editedDestination, address: editedAddress, latitude: coordXXX, longitude: coordYYY)
+                    for id in promise.participantIdArray {
+                        Task {
+                            if let friend = try await UserStore.fetchUser(userId: id) {
+                                selectedFriends.append(friend)
+                            }
+                        }
+                    }
                     Task {
                         try await friendsStore.fetchFriends()
                     }
@@ -284,12 +293,12 @@ struct PromiseEditView: View {
         let updatedData: [String: Any] = [
             "promiseTitle": editedPromiseTitle,
             "promiseDate": editedPromiseDate.timeIntervalSince1970,
-            "destination": promiseViewModel.destination,
-            "address": promiseViewModel.address,
-            "latitude": promiseViewModel.coordXXX,
-            "longitude": promiseViewModel.coordYYY,
+            "destination": editedDestination,
+            "address": editedAddress,
+            "latitude": coordXXX,
+            "longitude": coordYYY,
             "participantIdArray": [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id },
-            "penalty": promiseViewModel.penalty,
+            "penalty": penalty,
             "locationIdArray": locationIdArray
         ]
         

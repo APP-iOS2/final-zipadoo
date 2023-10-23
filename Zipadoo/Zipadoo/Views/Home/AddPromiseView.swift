@@ -15,23 +15,34 @@ struct AddPromiseView: View {
     @Environment(\.dismiss) private var dismiss
     
     @StateObject var promiseViewModel: PromiseViewModel
-    //    var user: User
-    
-    // 저장될 변수
+//    //    var user: User
+//    
+//    // 저장될 변수
+//    @State private var id: String = ""
+//    @State private var promiseTitle: String = ""
+//    @State private var date = Date()
+//    //    @State private var destination: String = "" // 약속 장소 이름(사용X)
+//    //    @State private var address = "" // 약속장소 주소 (사용X)
+
     @State private var id: String = ""
     @State private var promiseTitle: String = ""
     @State private var date = Date()
-    //    @State private var destination: String = "" // 약속 장소 이름(사용X)
-    //    @State private var address = "" // 약속장소 주소 (사용X)
-
+    @State private var destination: String = "" // 약속 장소 이름
+    @State private var address = "" // 약속장소 주소
+    @State private var coordXXX = 0.0 // 약속장소 위도
+    @State private var coordYYY = 0.0 // 약속장소 경도
+    /// 장소에 대한 정보 값
+    @State private var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
+    /// 지각비 변수 및 상수 값
+    @State private var penalty: Int = 0
+    private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
+    /// 약속에 참여할 친구배열
+    @State private var selectedFriends: [User] = []
+    
     // 지각비관련 변수
     let minValue: Int = 0
     let maxValue: Int = 5000
     let step: Int = 100
-
-    // 지각비 변수 및 상수 값
-    @State private var penalty: Int = 0
-    private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
 
     private let today = Calendar.current.startOfDay(for: Date())
     let thirtyMinutesFromNow = Calendar.current.date(byAdding: .minute, value: 30, to: Date()) ?? Date()
@@ -48,7 +59,7 @@ struct AddPromiseView: View {
     @State private var sheetTitle: String = "약속 장소 선택"
     
     var isAllWrite: Bool {
-        return !promiseViewModel.promiseTitle.isEmpty && isSelectedDataPickerOnce && !promiseViewModel.address.isEmpty && !promiseViewModel.selectedFriends.isEmpty
+        return !promiseTitle.isEmpty && isSelectedDataPickerOnce && !address.isEmpty && !selectedFriends.isEmpty
     }
     
     @StateObject private var authUser: AuthStore = AuthStore()
@@ -79,16 +90,16 @@ struct AddPromiseView: View {
                     
                     HStack {
                      
-                        TextField("약속 이름을 입력해주세요.", text: $promiseViewModel.promiseTitle)
+                        TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
                             .fontWeight(.semibold)
                         
-                            .onChange(of: promiseViewModel.promiseTitle) {
-                                if promiseViewModel.promiseTitle.count > 15 {
-                                    promiseViewModel.promiseTitle = String(promiseViewModel.promiseTitle.prefix(15))
+                            .onChange(of: promiseTitle) {
+                                if promiseTitle.count > 15 {
+                                    promiseTitle = String(promiseTitle.prefix(15))
                                 }
                             }
                         
-                        Text("\(promiseViewModel.promiseTitle.count)")
+                        Text("\(promiseTitle.count)")
                             .foregroundColor(.gray)
                             .padding(.trailing, -7)
                         Text("/15")
@@ -161,12 +172,12 @@ struct AddPromiseView: View {
                     
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
                     HStack {
-                        if !promiseViewModel.destination.isEmpty {
+                        if !destination.isEmpty {
                             Button {
                                 previewPlaceSheet = true
                             } label: {
                                 HStack {
-                                    Text("\(promiseViewModel.destination)")
+                                    Text("\(destination)")
                                         .font(.callout)
                                     Image(systemName: "chevron.forward")
                                         .resizable()
@@ -182,7 +193,7 @@ struct AddPromiseView: View {
                                         .foregroundStyle(Color.gray)
                                         .padding(.top, 10)
                                     
-                                    PreviewPlaceOnMap(promiseViewModel: promiseViewModel)
+                                    PreviewPlaceOnMap(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
                                         .presentationDetents([.height(700)])
                                         .padding(.top, 15)
                                 }
@@ -202,7 +213,7 @@ struct AddPromiseView: View {
                         }
                         
                         .sheet(isPresented: $addPlaceMapSheet) {
-                            OneMapView(promiseViewModel: promiseViewModel, destination: $promiseViewModel.destination, address: $promiseViewModel.address, sheetTitle: $sheetTitle)
+                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, sheetTitle: $sheetTitle)
                         }
                         
                    
@@ -228,7 +239,7 @@ struct AddPromiseView: View {
                         .font(.footnote)
         
                     HStack {
-                        Text("\(promiseViewModel.penalty)원")
+                        Text("\(penalty)원")
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
                             
@@ -252,7 +263,7 @@ struct AddPromiseView: View {
                         }
         
                     // MARK: - 약속 친구 추가 구현
-                    AddFriendCellView(selectedFriends: $promiseViewModel.selectedFriends)
+                    AddFriendCellView(selectedFriends: $selectedFriends)
                 }
                 .padding(.horizontal, 15)
             }
@@ -279,7 +290,7 @@ struct AddPromiseView: View {
                                              action: {
                                                  Task {
                                                      do {
-                                                         try await promiseViewModel.addPromiseData()
+                                                         try await //promiseViewModel.addPromiseData()
                                                          
                                                          dismiss()
                                                      } catch {
@@ -304,20 +315,6 @@ struct AddPromiseView: View {
                             message: Text("작성 중인 내용은 저장되지 않습니다."),
                             primaryButton: .destructive(Text("등록 취소"), action: {
                                 dismiss()
-                                
-                                promiseViewModel.id = ""
-                                promiseViewModel.promiseTitle = ""
-                                promiseViewModel.date = Date()
-                                promiseViewModel.destination = "" // 약속 장소 이름
-                                promiseViewModel.address = "" // 약속장소 주소
-                                promiseViewModel.coordXXX = 0.0 // 약속장소 위도
-                                promiseViewModel.coordYYY = 0.0 // 약속장소 경도
-                                /// 장소에 대한 정보 값
-//                                promiseViewModel.promiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
-                                /// 지각비 변수 및 상수 값
-                                promiseViewModel.penalty = 0
-                                /// 선택된 친구 초기화
-                                promiseViewModel.selectedFriends = []
                             }),
                             secondaryButton: .default(Text("계속 작성"), action: {
                                 
@@ -338,7 +335,7 @@ struct AddPromiseView: View {
                 }
                 .padding(.horizontal, 15)
                 
-                Picker("지각비", selection: $promiseViewModel.penalty) {
+                Picker("지각비", selection: $penalty) {
                     ForEach(availableValues, id: \.self) { value in
 
                         Text("\(value)").tag(value)

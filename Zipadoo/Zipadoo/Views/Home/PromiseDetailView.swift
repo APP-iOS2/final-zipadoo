@@ -121,7 +121,7 @@ struct PromiseDetailView: View {
 //            PromiseEditView(promise: .constant(promise))
 //        }
         .sheet(isPresented: $isShowingEditSheet,
-               content: { PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
+               content: { PromiseEditView(promise: .constant(promise))
         })
         .sheet(
             isPresented: $isShowingShareSheet,
@@ -145,7 +145,7 @@ struct PromiseDetailView: View {
 //                        isShowingEditSheet.toggle()
 //                    } 
                     NavigationLink {
-                        PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
+                        PromiseEditView(promise: .constant(promise))
                     } label: {
                         Text("수정")
                     }
