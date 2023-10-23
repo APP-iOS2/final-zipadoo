@@ -272,7 +272,7 @@ struct MyPageView: View {
                         .foregroundStyle(.secondary)
                         .padding(.top, 1)
                         
-                        ZStack {
+                        VStack {
                             Image(crustBackgroundImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)

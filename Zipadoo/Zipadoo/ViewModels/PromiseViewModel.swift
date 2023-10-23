@@ -12,7 +12,7 @@ import FirebaseCore
 import WidgetKit
 
 class PromiseViewModel: ObservableObject {
-    //@Published var promiseViewModel: [Promise]
+
     @Published var isLoading: Bool = true
     
     /// 예정인 약속 저장
@@ -21,10 +21,33 @@ class PromiseViewModel: ObservableObject {
     @Published var fetchTrackingPromiseData: [Promise] = []
     /// 지난 약속 저장
     @Published var fetchPastPromiseData: [Promise] = []
-    /*
-    /// 로그인중인 유저
-    var currentUser: User?
-     */
+    // 저장될 변수
+    @Published var id: String = ""
+    @Published var promiseTitle: String = ""
+    @Published var date = Date()
+    @Published var destination: String = "" // 약속 장소 이름
+    @Published var address = "" // 약속장소 주소
+    @Published var coordXXX = 0.0 // 약속장소 위도
+    @Published var coordYYY = 0.0 // 약속장소 경도
+    /// 장소에 대한 정보 값
+    @Published var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
+    /// 지각비 변수 및 상수 값
+    @Published var penalty: Int = 0
+
+    /// 약속에 참여할 친구배열
+    @Published var selectedFriends: [User] = []
+    
+    /// 지난약속 아래 페이지 수(올림)
+    var pastPromisePage: Int {
+        var result = Int(ceil(Double(fetchPastPromiseData.count) / Double(10)))
+        // 페이지가 5보다 크다면 5페이지까지
+        if result > 5 {
+            result = 5
+        }
+        return result
+    }
+    /// 선택된 페이지네이션 숫자
+    @Published var selectedPage: Int = 1 // 디폴트 1
     
     private let dbRef = Firestore.firestore().collection("Promise")
     
@@ -83,7 +106,7 @@ class PromiseViewModel: ObservableObject {
     func fetchData(userId: String) async throws {
         do {
             let snapshot = try await dbRef.getDocuments()
-            
+
             var tempPromiseArray: [Promise] = []
             var tempPromiseTracking: [Promise] = []
             var tempPastPromise: [Promise] = []
@@ -124,7 +147,18 @@ class PromiseViewModel: ObservableObject {
                     
                     self.fetchPromiseData = tempPromiseArray
                     self.fetchTrackingPromiseData = tempPromiseTracking
-                    self.fetchPastPromiseData = tempPastPromise
+                    
+                    self.fetchPastPromiseData.removeAll() // 지난약속 다시 초기화
+                    
+                    // 지난약속이 50개 이상이면 fetchPastPromiseData에 50개까지 넣기
+                    if tempPastPromise.count > 50 {
+                        for i in 0 ..< 50 {
+                            self.fetchPastPromiseData.append(tempPastPromise[i])
+//                            print("\(i)")
+                        }
+                    } else {
+                        self.fetchPastPromiseData = tempPastPromise
+                    }
                     
                     self.addTodayPromisesToUserDefaults()
 

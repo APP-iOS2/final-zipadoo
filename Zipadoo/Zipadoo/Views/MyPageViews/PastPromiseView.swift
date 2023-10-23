@@ -13,6 +13,23 @@ struct PastPromiseView: View {
     
     let currentUser = AuthStore.shared.currentUser
     
+    /// 페이지마다 나올 첫 번쨰 인덱스
+    var startIndex: Int {
+        print("\((promise.selectedPage - 1) * 10)")
+        return (promise.selectedPage - 1) * 10
+    }
+    /// 페이지마다 나올 마지막 인덱스
+    var endIndex: Int {
+        // 마지막페이지 누르면 남은거 다 가져오기
+        if promise.selectedPage == promise.pastPromisePage {
+            print("\(promise.fetchPastPromiseData.count)")
+            return promise.fetchPastPromiseData.count
+        } else {
+            print("\((promise.selectedPage - 1) * 10 + 10)")
+            return (promise.selectedPage - 1) * 10 + 10
+        }
+    }
+    
     var body: some View {
         VStack {
             if promise.isLoading == false {
@@ -24,7 +41,7 @@ struct PastPromiseView: View {
                         
                     } else {
                         ScrollView {
-                            ForEach(promise.fetchPastPromiseData) { promise in
+                            ForEach(promise.fetchPastPromiseData[startIndex ..< endIndex]) { promise in
                                 NavigationLink {
                                     // 도착정보 보여주기
                                     ArriveResultView(promise: promise)
@@ -82,9 +99,31 @@ struct PastPromiseView: View {
                                         
                                     )
                                     .foregroundStyle(Color.primary)
-                                    
                                 }
                                 .padding(10)
+                            }
+                            
+                        }
+                        // 스크롤뷰 밖 버튼
+                        HStack {
+                            ForEach(1...promise.pastPromisePage, id: \.self) { page in
+                                Button {
+                                    promise.selectedPage = page
+                                    
+                                } label: {
+                                    ZStack {
+                                        if page == promise.selectedPage {
+                                            Circle()
+                                                .foregroundStyle(.sand)
+                                        }
+                                        Text("\(page)")
+                                    }
+                                    .frame(width: 20, height: 20)
+
+                                }
+                                .disabled(page == promise.selectedPage) // 이미선택된 페이지는 disabled
+                                .foregroundColor(page == promise.selectedPage ? .cider : .secondary)
+//                                    .padding(.trailing, 5)
                             }
                         }
                     }
