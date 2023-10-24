@@ -203,7 +203,7 @@ struct MyPageView: View {
                                 
                                 Spacer()
                                 
-                                Text("30,000")
+                                Text("0")
                                     .fontWeight(.semibold)
                                 
                                 Text("원")
