@@ -139,39 +139,22 @@ struct FriendsView: View {
                                     
                                 } // Hstack
                                 
-                                //                                }// label
-                                //                                )  // Navi
-                                
                             } // Foreach
                             .swipeActions {
                                 Button {
                                     selectedFriendId = friend.id
                                     isDeleteAlert.toggle()
+                                    Task {
+                                        try await friendsStore.fetchFriends()
+                                    }
                                 }label: {
                                     //                                        Image(systemName: "trash.fill")
                                     Text("삭제")
                                         .fontWeight(.semibold)
-                                    
-                                    //                                        .padding(5)
-                                    //                                        .foregroundColor(.secondary)
-                                    //                                        .background(.primaryInvert)
                                 }
                                 .tint(.red)
                             } // swipe
-                            //                                HStack {
-                            //                                    Spacer()
-                            //
-                            //                                    Image(systemName: "")
-                            //                                        .padding(5)
-                            //                                        .foregroundColor(.secondary)
-                            //                                        .background(.primaryInvert)
-                            //                                        .onTapGesture {
-                            //                                            selectedFriendId = friend.id
-                            //                                            isDeleteAlert.toggle()
-                            //                                        }
-                            //                                }
-                            
-                            //                            .padding(.vertical, 5)
+
                         } // Zstack
                     } // List
                     .listStyle(.plain)
