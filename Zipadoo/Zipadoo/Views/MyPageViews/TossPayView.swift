@@ -137,13 +137,13 @@ struct TossPayView: View {
                             print("onSuccess orderId \(orderId)")
                             print("onSuccess amount \(amount)")
                             let title = "TossPayments 요청에 성공하였습니다."
-                            let message = """
+                            let nickNameMessage = """
                                               onSuccess
                                               paymentKey: \(paymentKey)
                                               orderId: \(orderId)
                                               amount: \(amount)
                                               """
-                            resultInfo = (title, message)
+                            resultInfo = (title, nickNameMessage)
                             showingResultAlert = true
                         }
                         .onFail { (errorCode: String, errorMessage: String, orderId: String) in
@@ -151,13 +151,13 @@ struct TossPayView: View {
                             print("onFail errorMessage \(errorMessage)")
                             print("onFail orderId \(orderId)")
                             let title = "TossPayments 요청에 실패하였습니다."
-                            let message = """
+                            let nickNameMessage = """
                                           onFail
                                           errorCode: \(errorCode)
                                           errorMessage: \(errorMessage)
                                           orderId: \(orderId)
                                           """
-                            resultInfo = (title, message)
+                            resultInfo = (title, nickNameMessage)
                             showingResultAlert = true
                         }
                     })

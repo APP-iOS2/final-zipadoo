@@ -62,6 +62,7 @@ struct ZipadooApp: App {
     @StateObject var alertStore: AlertStore = AlertStore()
     @StateObject private var widgetStore = WidgetStore()
     @StateObject private var promiseViewModel = PromiseViewModel()
+    @StateObject private var friendsStore = FriendsStore()
     /*
     init() {
         // Kakao SDK 초기화
@@ -81,6 +82,7 @@ struct ZipadooApp: App {
                         .environmentObject(alertStore)
                         .environmentObject(promiseViewModel)
                         .environmentObject(widgetStore)
+                        .environmentObject(friendsStore)
                         .onChange(of: scenePhase) { newScenePhase in
                             switch newScenePhase {
                             case .active:

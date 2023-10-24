@@ -10,7 +10,7 @@ import SlidingTabView
 
 struct FriendsView: View {
     
-    @StateObject var friendsStore: FriendsStore = FriendsStore()
+    @StateObject var friendsStore: FriendsStore
     /// 친구 삭제 알람
     @State private var isDeleteAlert: Bool = false
     /// segmentedControl 인덱스
@@ -82,6 +82,11 @@ struct FriendsView: View {
                     })
                 )
             }
+            .onAppear {
+                Task {
+                    try await friendsStore.fetchFriendsRequest()
+                }
+            }
         }
     }
     
@@ -134,39 +139,22 @@ struct FriendsView: View {
                                     
                                 } // Hstack
                                 
-                                //                                }// label
-                                //                                )  // Navi
-                                
                             } // Foreach
                             .swipeActions {
                                 Button {
                                     selectedFriendId = friend.id
                                     isDeleteAlert.toggle()
+                                    Task {
+                                        try await friendsStore.fetchFriends()
+                                    }
                                 }label: {
                                     //                                        Image(systemName: "trash.fill")
                                     Text("삭제")
                                         .fontWeight(.semibold)
-                                    
-                                    //                                        .padding(5)
-                                    //                                        .foregroundColor(.secondary)
-                                    //                                        .background(.primaryInvert)
                                 }
                                 .tint(.red)
                             } // swipe
-                            //                                HStack {
-                            //                                    Spacer()
-                            //
-                            //                                    Image(systemName: "")
-                            //                                        .padding(5)
-                            //                                        .foregroundColor(.secondary)
-                            //                                        .background(.primaryInvert)
-                            //                                        .onTapGesture {
-                            //                                            selectedFriendId = friend.id
-                            //                                            isDeleteAlert.toggle()
-                            //                                        }
-                            //                                }
-                            
-                            //                            .padding(.vertical, 5)
+
                         } // Zstack
                     } // List
                     .listStyle(.plain)
@@ -276,6 +264,6 @@ struct FriendsView: View {
 
 #Preview {
     NavigationStack {
-        FriendsView()
+        FriendsView(friendsStore: FriendsStore())
     }
 }

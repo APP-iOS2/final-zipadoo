@@ -190,9 +190,10 @@ struct PromiseDetailMapView: View {
                     .animation(.linear, value: 10)
             }
         }
+        /*
         .onAppear {
             // 1초마다 반복, 전역에서 사라지지 않고 실행됨
-            let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            let timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
                 print("나는 맵에서 만들어짐! ! 1초 지남")
                 // 위치 도착 위치 비교
                 if !isArrived {
@@ -235,7 +236,7 @@ struct PromiseDetailMapView: View {
                     print("파이어베이스 에러")
                 }
             }
-        }
+        }*/
         .task { // 초기화 코드
             // myLocation 초기화
 //            locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: departureLatitude, departureLongitude: departureLongitude, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)

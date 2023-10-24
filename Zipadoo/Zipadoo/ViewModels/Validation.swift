@@ -17,7 +17,7 @@ func isCorrectEmail(email: String) -> Bool {
 
 /// 닉네임 유효한 형식 확인
 func isCorrectNickname(nickname: String) -> Bool {
-    let nicknameRegex = "[A-Za-z0-9]{2,6}"
+    let nicknameRegex = "[a-zA-Z0-9가-힣]{2,6}"
     let nicknamePredicate = NSPredicate(format: "SELF MATCHES %@", nicknameRegex)
     
     return nicknamePredicate.evaluate(with: nickname)
