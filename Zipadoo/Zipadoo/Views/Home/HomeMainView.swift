@@ -11,14 +11,12 @@ import SlidingTabView
 
 struct HomeMainView: View {
     let user: User?
+
+//    @StateObject private var userStore: UserStore = UserStore()
     
-    //    @StateObject private var loginUser: UserStore = UserStore()
-    
-    @ObservedObject private var locationStore: LocationStore = LocationStore()
     @EnvironmentObject var promise: PromiseViewModel
     @EnvironmentObject var widgetStore: WidgetStore
     @State private var isShownFullScreenCover: Bool = false
-    
     // 약속의 갯수 확인
     //    @State private var userPromiseArray: [Promise] = []
     
@@ -32,10 +30,6 @@ struct HomeMainView: View {
     @State private var isCardSpread = false
     @State private var selectedPromiseIndex: Int?
     
-    var userImageString: String {
-        user?.profileImageString ?? "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
-    }
-    
     // 기기별 화면크기 선언
     let screenWidth = UIScreen.main.bounds.size.width
     let screenHeight = UIScreen.main.bounds.size.height
@@ -43,7 +37,7 @@ struct HomeMainView: View {
     var body: some View {
         NavigationStack {
             // 예정된 약속 리스트
-            if let loginUserID = user?.id {
+            if let _ = user?.id {
                 ScrollView(.vertical, showsIndicators: false) {
                     if promise.fetchTrackingPromiseData.isEmpty && promise.fetchPromiseData.isEmpty {
                         VStack {
@@ -82,12 +76,13 @@ struct HomeMainView: View {
                                 PromiseDetailMapView(promise: promise)
                                     .environmentObject(self.promise)
                             } label: {
-                                promiseListCell(promise: promise, color: Color("Mocha"), isTracking: true)
+                                PromiseListCell(promise: promise, color: .mocha, isTracking: true)
                             }
                             .padding(.vertical, 15) // 리스트 패딩차이 조절용
                             
                         }
                         
+                        // 예정된약속
                         if !promise.fetchPromiseData.isEmpty { // 리스트가 있을 때 보이도록 함
                             HStack {
                                 Text("예정된 약속")
@@ -101,12 +96,7 @@ struct HomeMainView: View {
                         }
                         
                         ForEach(promise.fetchPromiseData.indices, id: \.self) { index in
-                            NavigationLink {
-                                PromiseDetailMapView(promise: promise.fetchPromiseData[index])
-                            } label: {
-                                promiseListCell(promise: promise.fetchPromiseData[index], color: .color4, isTracking: false)
-                                //                                        .offset(y: isCardSpread ? 0 : CGFloat(index) * -180)
-                            }
+                            PromiseListCell(promise: promise.fetchPromiseData[index], color: .color4, isTracking: false)
                             .overlay {
                                 Rectangle()
                                     .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
@@ -177,201 +167,6 @@ struct HomeMainView: View {
         }
     }
     
-    func promiseListCell(promise: Promise, color: Color, isTracking: Bool) -> some View {
-        // MARK: - 카드 배경 이미지, 테두리
-        ZStack {
-            // 맵 버튼 그라데이션 색 선언
-            let gradient = LinearGradient(gradient: Gradient(stops: [
-                Gradient.Stop(color: Color(hex: 0xFF5747), location: 0.1),
-                Gradient.Stop(color: Color(hex: 0xFF5747).opacity(0.5), location: 1.0)
-            ]), startPoint: .topLeading, endPoint: .bottomTrailing)
-            
-            // 카드 배경색
-            RoundedRectangle(cornerRadius: 10, style: .continuous)
-                .frame(width: screenWidth * 0.9, height: screenHeight * 0.25)
-                .foregroundColor(.clear)
-                .background(color)
-                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-            //                    .background(LinearGradient(gradient:  Gradient(colors: [Color.blue, Color.green]), startPoint: .top, endPoint: .bottom))
-            //                  .shadow(color: .primary, radius: 10, x: 5, y: 5)
-            //                    .overlay {
-            //                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-            //                            .stroke(.white, lineWidth: 4)
-            //                    }
-            
-            // MARK: - 테두리
-            //                if isTracking {
-            //                    Group {
-            //                        RoundedRectangle(cornerRadius: 20, style: .continuous)
-            //                            .frame(width: screenWidth, height: screenHeight * 0.6)
-            //                        //                .foregroundStyle(LinearGradient(gradient: Gradient(colors:[.red,.orange,.yellow,.green,.blue,.purple,.pink]), startPoint: .top, endPoint: .bottom))
-            //                            .foregroundStyle(LinearGradient(gradient: Gradient(colors: [.sand.opacity(0.4), .frame3, .frame3, .frame3.opacity(0.4)]), startPoint: .top, endPoint: .bottom))
-            //                            .rotationEffect(.degrees(rotation))
-            //                            .mask {
-            //                                RoundedRectangle(cornerRadius: 20, style: .continuous)
-            //                                    .stroke(lineWidth: 3) // 라인 두께
-            //                                    .frame(width: (screenWidth * 0.9)-2, height: (screenHeight * 0.5)-2)
-            //                            }
-            //                    }
-            //
-            //                    .onAppear {
-            //                        withAnimation(.linear(duration: 4).repeatForever(autoreverses: false)) {
-            //                            rotation = 360
-            //                        }
-            //                    }
-            //                }
-            VStack(alignment: .leading) {
-                // MARK: - 약속 제목, 맵 버튼
-                HStack {
-                    Text(promise.promiseTitle)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .foregroundColor(isTracking ? .primaryInvert : .mocha)
-                    Spacer()
-                    if isTracking {
-                        NavigationLink {
-                            PromiseDetailMapView(promise: promise)
-                        } label: {
-                            ZStack {
-                                // 맵 아이콘 배경색
-                                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                                    .frame(width: 90, height: 40)
-                                    .foregroundColor(.clear)
-                                    .background(Color.red)
-                                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                                // 맵 아이콘 태두리
-                                HStack {
-                                    Image(systemName: "map.fill")
-                                        .fontWeight(.bold)
-                                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        .font(.headline)
-                                        .foregroundColor(.primaryInvert)
-                                    Text("LIVE")
-                                        .fontWeight(.bold)
-                                        .font(.headline)
-                                        .foregroundStyle(.primaryInvert)
-                                        .padding(.leading, -3)
-                                }
-                            } // ZStack
-                            //                        .offset(y: isTracking ? -40 : 0)
-                        }
-                        .padding(.trailing, -5)
-                        .symbolEffect(.pulse.byLayer, options: .repeating, isActive: isTracking)
-                    }
-                
-                    // 추적중인 약속만 지도뷰 이동 가능
-                    //                        if isTracking {
-                    //                            NavigationLink {
-                    //                                FriendsMapView(promise: promise)
-                    //                            } label: {
-                    //                                ZStack {
-                    //                                    // 맵 아이콘 배경색
-                    //
-                    //                                    RoundedRectangle(cornerRadius: 60, style: .circular)
-                    //                                        .frame(width: 80, height: 40)
-                    //                                        .foregroundColor(.clear)
-                    //                                        .background(gradient)
-                    //                                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-                    //                                    // 맵 아이콘 태두리
-                    //                                    HStack {
-                    //                                        Image(systemName: "map.fill")
-                    //                                            .fontWeight(.bold)
-                    //                                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    //                                            .font(.headline)
-                    //                                            .foregroundColor(.primaryInvert)
-                    //                                        Text("보기")
-                    //                                            .fontWeight(.bold)
-                    //                                            .font(.headline)
-                    //                                            .foregroundStyle(.primaryInvert)
-                    //                                    }
-                    //                                } // ZStack
-                    //                                //                        .offset(y: isTracking ? -40 : 0)
-                    //                            }
-                    //                            .symbolEffect(.pulse.byLayer, options: .repeating, isActive: isTracking)
-                    //                        }
-                }
-                
-                .padding(.vertical, 10)
-                
-                Group {
-                    // MARK: - 장소, 시간
-                    Group {
-                        HStack {
-                            Image(systemName: "pin")
-                                .font(.footnote) // 아이콘이 너무 커서 좀더 작게함
-                            Text("\(promise.destination)")
-                        }
-                        /// 저장된 promiseDate값을 Date 타입으로 변환
-                        let datePromise = Date(timeIntervalSince1970: promise.promiseDate)
-                        
-                        HStack {
-                            Image(systemName: "clock")
-                                .font(.footnote) // 아이콘이 너무 커서 좀더 작게함
-                            Text("\(formatDate(date: datePromise))")
-                        }
-                        .padding(.bottom, 10)
-                    }
-                    .font(.callout)
-                    .fontWeight(.semibold)
-                    //                        Rectangle()
-                    //                            .background(Color.primaryInvert)
-                    //                            .frame(height: 1).opacity(0.3)
-                    
-                    // MARK: - 참여자 목록, 벌금
-                    
-                    HStack(spacing: -12) {
-                        
-                        ForEach(locationStore.locationParticipantDatas) { user in
-                            ProfileImageView(imageString: user.imageString, size: .xSmall)
-                                .padding(1)
-                                .background(.primaryInvert, in: Circle())
-                            // 프사 원 테두리
-                                .background(
-                                    Circle()
-                                        .stroke(.primary, lineWidth: 0.1)
-                                )
-                        }
-                        //                        ProfileImageView(imageString: userImageString, size: .xSmall)
-                        //                        .offset(x: -10, y: 0)
-                        
-                        Spacer()
-                        Text("\(promise.penalty)원")
-                            .fontWeight(.semibold)
-                            .font(.title3)
-                            .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
-                        // TODO: - promise.penalty 데이터 연결
-                        //                    Text("\(promise.participantIdArray.count)명")
-                        //                        .font(.callout)
-                        //                        .fontWeight(.semibold)
-                        //                        .foregroundColor(.primaryInvert)
-                    }
-                    .padding(.vertical, 15)
-                    
-                }
-                .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
-                .fontWeight(.semibold)
-                
-                // 참여자의 ID를 통해 참여자 정보 가져오기
-            }
-            .padding(.horizontal, 20)
-            .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
-            
-        }
-        .overlay(
-            RoundedRectangle(cornerRadius: 10)
-                .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
-                .foregroundColor(.primary)
-                .opacity(isTracking ? 0: 0.05) // 0.1 다소 어두워서 0.05로 더 밝게처리
-                .shadow(color: .black, radius: 20, x: 1, y: 1)
-        )
-        //        .opacity(isTracking ? 1 : 0.5)
-        
-        .onAppear {
-            Task {
-                try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
-            }
-        }
-    }
 }
 
 // MARK: - 시간 형식변환 함수
@@ -395,5 +190,155 @@ extension Color {
             blue: Double(hex & 0x0000FF) / 255.0,
             opacity: opacity
         )
+    }
+}
+
+struct PromiseListCell: View {
+    var promise: Promise
+    var color: Color
+    var isTracking: Bool
+    
+    @State var isLoading: Bool = true
+    
+    // 기기별 화면크기 선언
+    let screenWidth = UIScreen.main.bounds.size.width
+    let screenHeight = UIScreen.main.bounds.size.height
+    /// 참여자들의 프로필 String 배열
+    @State var participantImageArray: [String] = []
+    
+    var body: some View {
+        ZStack {
+            
+           // 맵 버튼 그라데이션 색 선언
+           let gradient = LinearGradient(gradient: Gradient(stops: [
+               Gradient.Stop(color: Color(hex: 0xFF5747), location: 0.1),
+               Gradient.Stop(color: Color(hex: 0xFF5747).opacity(0.5), location: 1.0)
+           ]), startPoint: .topLeading, endPoint: .bottomTrailing)
+           
+           // 카드 배경색
+           RoundedRectangle(cornerRadius: 10, style: .continuous)
+               .frame(width: screenWidth * 0.9, height: screenHeight * 0.25)
+               .foregroundColor(.clear)
+               .background(color)
+               .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+
+           VStack(alignment: .leading) {
+               // MARK: - 약속 제목, 맵 버튼
+               promiseHeader(promise: promise, isTracking: isTracking)
+                   .padding(.vertical, 10)
+               
+               Group {
+                   // MARK: - 장소, 시간
+                   Group {
+                       HStack {
+                           Image(systemName: "pin")
+                               .font(.footnote) // 아이콘이 너무 커서 좀더 작게함
+                           Text("\(promise.destination)")
+                       }
+                       /// 저장된 promiseDate값을 Date 타입으로 변환
+                       let datePromise = Date(timeIntervalSince1970: promise.promiseDate)
+                       
+                       HStack {
+                           Image(systemName: "clock")
+                               .font(.footnote) // 아이콘이 너무 커서 좀더 작게함
+                           Text("\(formatDate(date: datePromise))")
+                       }
+                       .padding(.bottom, 10)
+                   }
+                   .font(.callout)
+                   .fontWeight(.semibold)
+                   
+                   // MARK: - 참여자 목록, 벌금
+                   if !isLoading {
+                       HStack(spacing: -12) {
+                           ForEach(participantImageArray, id: \.self) { imageString in
+                               ProfileImageView(imageString: imageString, size: .xSmall)
+                                   .padding(1)
+                                   .background(.primaryInvert, in: Circle())
+                               // 프사 원 테두리
+                                   .background(
+                                    Circle()
+                                        .stroke(.primary, lineWidth: 0.1)
+                                   )
+                           }
+                           //                        ProfileImageView(imageString: makinguser[0], size: .xSmall)
+                           Spacer()
+                           Text("\(promise.penalty)원")
+                               .fontWeight(.semibold)
+                               .font(.title3)
+                               .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
+                           // TODO: - promise.penalty 데이터 연결
+                       }
+                       .padding(.vertical, 15)
+                   }
+                   
+               }
+               .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
+               .fontWeight(.semibold)
+               // 참여자의 ID를 통해 참여자 정보 가져오기
+           }
+           .padding(.horizontal, 20)
+           .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
+           
+       }
+       .overlay(
+           RoundedRectangle(cornerRadius: 10)
+               .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
+               .foregroundColor(.primary)
+               .opacity(isTracking ? 0: 0.05) // 0.1 다소 어두워서 0.05로 더 밝게처리
+               .shadow(color: .black, radius: 20, x: 1, y: 1)
+       )
+       
+       .onAppear {
+           Task {
+               participantImageArray = []
+               for id in promise.participantIdArray {
+                   let imageString = try await UserStore.fetchUser(userId: id)?.profileImageString ?? "- no image -"
+                   participantImageArray.append(imageString)
+               }
+               isLoading = false
+           }
+       }
+
+    }
+    
+    private func promiseHeader(promise: Promise, isTracking: Bool) -> some View {
+        HStack {
+            Text(promise.promiseTitle)
+                .font(.title)
+                .fontWeight(.bold)
+                .foregroundColor(isTracking ? .primaryInvert : .mocha)
+            Spacer()
+            if isTracking {
+                NavigationLink {
+                    PromiseDetailMapView(promise: promise)
+                } label: {
+                    ZStack {
+                        // 맵 아이콘 배경색
+                        RoundedRectangle(cornerRadius: 10, style: .continuous)
+                            .frame(width: 90, height: 40)
+                            .foregroundColor(.clear)
+                            .background(Color.red)
+                            .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                        // 맵 아이콘 태두리
+                        HStack {
+                            Image(systemName: "map.fill")
+                                .fontWeight(.bold)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .font(.headline)
+                                .foregroundColor(.primaryInvert)
+                            Text("LIVE")
+                                .fontWeight(.bold)
+                                .font(.headline)
+                                .foregroundStyle(.primaryInvert)
+                                .padding(.leading, -3)
+                        }
+                    } // ZStack
+                    //                        .offset(y: isTracking ? -40 : 0)
+                }
+                .padding(.trailing, -5)
+                .symbolEffect(.pulse.byLayer, options: .repeating, isActive: isTracking)
+            }
+        }
     }
 }

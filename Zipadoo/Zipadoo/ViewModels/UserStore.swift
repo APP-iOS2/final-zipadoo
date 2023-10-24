@@ -17,6 +17,8 @@ final class UserStore: ObservableObject {
     @Published var userFetchArray: [User] = []
     
     @Published var currentUser: User?
+    
+    @Published var participantImageArray: [String] = []
         
     let dbRef = Firestore.firestore().collection("Users")
     
@@ -60,7 +62,24 @@ final class UserStore: ObservableObject {
         
         return try snapshot.data(as: User.self)
     }
-    
+    /// 홈메인뷰 프로필이미지 가져오기 위한 함수
+    @MainActor
+    func fetchImageString(participantIdArray: [String]) async throws -> [String] {
+//        participantImageArray.removeAll()
+        var tempArray: [String] = []
+//        let dbRef = Firestore.firestore().collection("Users")
+        for id in participantIdArray {
+            let snapshot = try await dbRef.document(id).getDocument()
+            let string = try snapshot.data(as: User.self).profileImageString 
+            tempArray.append(string)
+            
+        }
+//        DispatchQueue.main.async {
+//            self.participantImageArray = tempArray
+//            print(self.participantImageArray)
+//        }
+        return tempArray
+    }
     /// 로그인한 유저 정보 가져오기
     @MainActor
     func loginUser() async throws {

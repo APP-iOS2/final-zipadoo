@@ -33,7 +33,7 @@
 //                    .progressViewStyle(BarProgressStyle(height: 25, imageString: moleImageString))
 //                    .transition(.opacity)
 //                    .padding(.bottom, 50)
-//                    
+//
 //                    Text("\(Int(round(ratio * 100)))%")
 //                        .font(.title)
 //                        .bold()
@@ -42,6 +42,7 @@
 //                        .clipShape(RoundedRectangle(cornerRadius: 10))
 //                        .shadow(radius: 0.8)
 //                        .padding(.trailing, 10)
+
 //                }
 //            }
 //        }
@@ -177,4 +178,4 @@
 //        let remainingDistance = straightDistance(x1: location.currentLatitude, y1: location.currentLongitude, x2: promise.latitude, y2: promise.longitude)
 //        return distanceRatio(depature: totalDistance, arrival: remainingDistance)
 //    }
-//}
+// }
