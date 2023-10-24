@@ -163,7 +163,7 @@ struct PromiseDetailView: View {
                                 // 해당 ID 배열에서 제거
                                 let locationIndex = index + 1
                                 promise.participantIdArray.remove(at: index)
-                                promise.locationIdArray.remove(at: locationIndex)
+                                promise.locationIdArray.remove(at: locationIndex) // 약속 나가기 오류발견!
                             }
                             
                             Task {
@@ -245,7 +245,7 @@ struct PromiseDetailView: View {
                 .font(.caption)
             }
             
-            FriendsLocationStatusView(promise: promise)
+//            FriendsLocationStatusView(promise: promise)
         }
     }
     
