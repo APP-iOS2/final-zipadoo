@@ -23,7 +23,7 @@ struct LocationAndParticipant: Identifiable {
     static let dummyData1: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy1", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.48047306060714, currentLongitude: 126.95138412144169), nickname: "더미1", imageString: "", moleImageString: "doo1")
     static let dummyData2: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy2", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.48516705133686, currentLongitude: 127.01723145026864), nickname: "더미2", imageString: "", moleImageString: "doo2")
     static let dummyData3: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy3", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.441054579994564, currentLongitude: 127.00673485084162), nickname: "더미3", imageString: "", moleImageString: "doo3")
-    static let dummyData4: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy4", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.459858093439664, currentLongitude: 126.7041804752457), nickname: "더미4", imageString: "", moleImageString: "doo4")
+    static let dummyData4: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy4", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.47694972793077, currentLongitude: 126.98195644152227), nickname: "더미4", imageString: "", moleImageString: "doo4")
     static let dummyData5: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy1", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.38047306060714, currentLongitude: 126.85138412144169), nickname: "더미5", imageString: "", moleImageString: "doo5")
     static let dummyData6: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy2", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.28516705133686, currentLongitude: 127.71723145026864), nickname: "더미6", imageString: "", moleImageString: "doo6")
     static let dummyData7: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy3", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.141054579994564, currentLongitude: 127.60673485084162), nickname: "더미7", imageString: "", moleImageString: "doo7")
@@ -40,7 +40,7 @@ class LocationStore: ObservableObject {
     /// 참여자들의 Location과 닉네임을 저장
     @Published var locationParticipantDatas: [LocationAndParticipant] = []
     
-    @Published var locationParticipantDatasDummy: [LocationAndParticipant] = [LocationAndParticipant.dummyData1, LocationAndParticipant.dummyData2, LocationAndParticipant.dummyData3, LocationAndParticipant.dummyData4, LocationAndParticipant.dummyData5, LocationAndParticipant.dummyData6, LocationAndParticipant.dummyData7, LocationAndParticipant.dummyData8, LocationAndParticipant.dummyData9]
+    @Published var locationParticipantDatasDummy: [LocationAndParticipant] = [LocationAndParticipant.dummyData2, LocationAndParticipant.dummyData3, LocationAndParticipant.dummyData4, LocationAndParticipant.dummyData5, LocationAndParticipant.dummyData6, LocationAndParticipant.dummyData7, LocationAndParticipant.dummyData8, LocationAndParticipant.dummyData9]
     
     var myid: String = AuthStore.shared.currentUser?.id ?? ""
     
@@ -52,6 +52,34 @@ class LocationStore: ObservableObject {
 //        myLocation = Location(participantId: myid, departureLatitude: 0, departureLongitude: 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
 //        print("myLocation 초기화 완료: \(myLocation)")
 //    }
+    init() {
+        myLocationFetch()
+    }
+    
+    func myLocationFetch() {
+        // UserDefaults에서 데이터 가져오기
+        do {
+            if let data = UserDefaults.standard.object(forKey: "myLocationData") as? Data {
+                myLocation = try
+                JSONDecoder().decode(Location.self, from: data)
+            }
+        } catch {
+            print("UserDefaults로 부터 데이터 가져오기 실패")
+        }
+    }
+    // UserDefaults에 시작위치값 저장
+    func updateDeparture(newLatitude: Double, newLongtitude: Double) {
+        myLocation.participantId = AuthStore.shared.currentUser?.id ?? ""
+        myLocation.departureLatitude = newLatitude
+        myLocation.departureLongitude = newLongtitude
+        print("변경후 myLocation: \(myLocation)")
+        do {
+            let data: Data = try JSONEncoder().encode(myLocation)
+            UserDefaults.standard.set(data, forKey: "myLocationData")
+        } catch {
+            print("JSON 생성 후 UserDefaults 실패")
+        }
+    }
     
     /// locationIdArray로 Location배열 패치
     @MainActor
@@ -152,13 +180,13 @@ class LocationStore: ObservableObject {
             print("location 등록 실패")
         }
     }
-    // 아마 시작점 변경은 안쓰지 않을까
-    func updateDeparture(locationId: String, newLatitude: Double, newLongtitude: Double) {
+
+    /* func updateDeparture(locationId: String, newLatitude: Double, newLongtitude: Double) {
         let updateData1: [String: Any] = ["departureLatitude": newLatitude]
         let updateData2: [String: Any] = ["departureLongitude": newLongtitude]
         dbRef.collection("Location").document(locationId).updateData(updateData1)
         dbRef.collection("Location").document(locationId).updateData(updateData2)
-    }
+    } */
     
     func updateCurrentLocation(locationId: String, newLatitude: Double, newLongtitude: Double) {
         let updateData1: [String: Any] = ["currentLatitude": newLatitude]

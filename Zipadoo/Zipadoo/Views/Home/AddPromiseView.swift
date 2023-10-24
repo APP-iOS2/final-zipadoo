@@ -142,7 +142,6 @@ struct AddPromiseView: View {
                                 .fontWeight(.semibold)
                                 .symbolEffect(.bounce, value: animate1)
                       
-    
 //                        DatePicker("날짜/시간", selection: $promiseViewModel.date, in: self.today..., displayedComponents: [.date, .hourAndMinute])
 //                            .datePickerStyle(.compact)
 //                            .labelsHidden()
@@ -171,58 +170,62 @@ struct AddPromiseView: View {
                         .font(.footnote)
                     
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
-
-                    HStack {
-                        if !promiseViewModel.destination.isEmpty {
+                    
+                    Group {
+                        HStack {
                             Button {
-                                previewPlaceSheet = true
+                                addPlaceMapSheet = true
                             } label: {
-                                HStack {
-                                    Text("\(promiseViewModel.destination)")
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.primary)
-                                    // 지우면 안됨!! 기존 파란색링크 글씨 -> 검은색
-                                    Image(systemName: "chevron.forward")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 6)
-                                        .padding(.leading, -5)
-
-                                }
-                                .sheet(isPresented: $previewPlaceSheet) {
-                                    VStack {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .frame(width: 50, height: 5)
-                                            .foregroundStyle(Color.gray)
-                                            .padding(.top, 10)
-                                        
-                                        PreviewPlaceOnMap(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
-                                            .presentationDetents([.height(700)])
-                                            .padding(.top, 15)
+                                if !destination.isEmpty {
+                                    Button {
+                                        previewPlaceSheet = true
+                                    } label: {
+                                        HStack {
+                                            Text("\(destination)")
+                                                .font(.callout)
+                                            Image(systemName: "chevron.forward")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 6)
+                                                .padding(.leading, -5)
+                                        }
                                     }
+                                    .sheet(isPresented: $previewPlaceSheet) {
+                                        VStack {
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .frame(width: 50, height: 5)
+                                                .foregroundStyle(Color.gray)
+                                                .padding(.top, 10)
+                                            
+                                            PreviewPlaceOnMap(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
+                                                .presentationDetents([.height(700)])
+                                                .padding(.top, 15)
+                                        }
+                                    }
+                                    
+                                    //                        Button {
+                                    //                            addPlaceMapSheet = true
+                                    //                            //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
+                                    ////                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
+                                    //                        } label: {
+                                    //                            Image(systemName: "location.magnifyingglass")
+                                    //                                .foregroundColor(.primary)
+                                    //                                .font(.title3)
+                                    //                                .fontWeight(.semibold)
+                                    //
+                                    //                        }
+                                        
                                 }
+                                Spacer()
                                 
-                                //                        Button {
-                                //                            addPlaceMapSheet = true
-                                //                            //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
-                                ////                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
-                                //                        } label: {
-                                //                            Image(systemName: "location.magnifyingglass")
-                                //                                .foregroundColor(.primary)
-                                //                                .font(.title3)
-                                //                                .fontWeight(.semibold)
-                                //
-                                //                        }
-                                
-                                
+                                Image(systemName: "location.magnifyingglass")
+                                    .foregroundColor(.primary)
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
                             }
-                            Spacer()
-                            
-                            Image(systemName: "location.magnifyingglass")
-                                .foregroundColor(.primary)
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                        }      
+                        }
+                        .padding(.top, 10)
+                        
                         Divider()
                             .frame(maxWidth: .infinity)
                             .overlay {
@@ -247,20 +250,24 @@ struct AddPromiseView: View {
                         .font(.footnote)
         
                     Group {
-                        HStack {
-                            Text("\(penalty)원")
-                                .fontWeight(.semibold)
-                                .foregroundColor(.primary)
-                            
-                            Spacer()
-                            // 버튼
-                            Image(systemName: "wonsign.circle")
-                                .foregroundColor(.primary)
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .symbolEffect(.bounce, value: animate3)
+                        Button {
+                            showingPenalty.toggle()
+                        } label: {
+                            HStack {
+                                Text("\(penalty)원")
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.primary)
+                                
+                                Spacer()
+                                // 버튼
+                                Image(systemName: "wonsign.circle")
+                                    .foregroundColor(.primary)
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .symbolEffect(.bounce, value: animate3)
+                            }
+                            .padding(.top, 10)
                         }
-                        .padding(.top, 10)
                         
                         Divider()
                             .frame(maxWidth: .infinity)
@@ -318,7 +325,6 @@ struct AddPromiseView: View {
                                                  }
                                                  
                                                  let promise = Promise(id: UUID().uuidString, makingUserID: makingUserID, promiseTitle: promiseTitle, promiseDate: date.timeIntervalSince1970, destination: destination, address: address, latitude: coordXXX, longitude: coordYYY, participantIdArray: participantIds, checkDoublePromise: false, locationIdArray: locationIds, penalty: penalty)
-                                                 
                                                  
                                                  Task {
                                                      do {

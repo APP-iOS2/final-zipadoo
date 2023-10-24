@@ -9,21 +9,19 @@ import SwiftUI
 import CoreLocation
 import MapKit
 
-struct ProgressBarItem {
-    let name: String
-    var progress: Double
-    let imageName: String
-}
-
 struct PromiseDetailProgressBarView: View {
     
     @ObservedObject var locationStore: LocationStore
+    @Binding var isShowingFriendSheet: Bool
     @Binding var region: MapCameraPosition
     let destinationCoordinate: CLLocationCoordinate2D
     var promise: Promise
     
     @Binding var progressTrigger: Bool
     @Binding var detents: PresentationDetent
+    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @State private var promiseFinishCheck: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -39,37 +37,48 @@ struct PromiseDetailProgressBarView: View {
                 }, label: {
                     HStack {
                         Image(systemName: !progressTrigger ? "chevron.down" : "chevron.up")
-                        Text(!progressTrigger ? "친구현황보기   " : "접기")
+                        Text(!progressTrigger ? "전체현황보기   " : "접기")
                     }
                 })
             }
-            // 나
-                VStack(alignment: .leading) {
-                    
-                    /// 남은거리 / 전체거리 비율
-                    let ratio: Double = caculateRatio(location: locationStore.myLocation)
-                    /// ratio에 맞춰서 이미지 위치 조정 다르게 변경
-                    var offsetX: Double {
-                        if ratio <= 0.3 {
-                            // 0.3보다 작거나 같을때는 바끝에
-                            return 14
-                        } else if 0.7 <= ratio && ratio < 1 {
-                            // 0.7보다 크거나 같을때는 더 들어가야함
-                            return 42
-                        } else {
-                            // 기본값 28
-                            return 28
-                        }
+            /// 나 디테일
+            VStack(alignment: .leading) {
+                
+                /// 남은거리 / 전체거리 비율
+                let ratio: Double = caculateRatio(location: locationStore.myLocation)
+                /// ratio에 맞춰서 이미지 위치 조정 다르게 변경
+                var offsetX: Double {
+                    if ratio <= 0.3 {
+                        // 0.3보다 작거나 같을때는 바끝에
+                        return 14
+                    } else if 0.7 <= ratio && ratio < 1 {
+                        // 0.7보다 크거나 같을때는 더 들어가야함
+                        return 42
+                    } else {
+                        // 기본값 28
+                        return 28
                     }
-                    
-                    HStack {
-                        Text(AuthStore.shared.currentUser?.nickName ?? "나")
-                        Spacer()
-                        let distance = calculateDistanceInMeters(x1: locationStore.myLocation.currentLatitude, y1: locationStore.myLocation.currentLongitude, x2: promise.latitude, y2: promise.longitude)
+                }
+                
+                HStack {
+                    Text(AuthStore.shared.currentUser?.nickName ?? "나")
+                    Spacer()
+                    let distance = calculateDistanceInMeters(x1: locationStore.myLocation.currentLatitude, y1: locationStore.myLocation.currentLongitude, x2: promise.latitude, y2: promise.longitude)
+                    // 지각 도착 메시지 분기문 처리
+                    if promiseFinishCheck && ratio < 0.95 {
+                        Text("아이쿠 지각입니당! ")
+                    } else if promiseFinishCheck && ratio >= 1 {
+                        Text("예쓰! 도착! ")
+                    } else {
                         Text("남은 거리 : \(formatDistance(distance))  ")
                     }
-                    .offset(y: 15)
-                    
+                }
+                .offset(y: 15)
+                // 지도 위치 움직이기
+                Button {
+                    region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                    isShowingFriendSheet = false
+                } label: {
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: 10)
                             .frame(height: 38)
@@ -78,10 +87,14 @@ struct PromiseDetailProgressBarView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .frame(width: CGFloat(ratio) * (UIScreen.main.bounds.width - 64), height: 38)
                             .foregroundColor(Color.brown)
-                        // 지도 위치 움직이기
-                        Button {
-                            region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
-                        } label: {
+                        // 두더지 이미지 도착 분기처리
+                        if promiseFinishCheck && ratio >= 1 {
+                            Image(AuthStore.shared.currentUser?.moleDrillImageString ?? "doo1_1")
+                                .resizable()
+                                .frame(width: 38, height: 55.95)
+                                .foregroundColor(.green)
+                                .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - CGFloat(offsetX) + 5)
+                        } else {
                             Image(AuthStore.shared.currentUser?.moleDrillImageString ?? "doo1_1")
                                 .resizable()
                                 .frame(width: 38, height: 55.95)
@@ -90,31 +103,45 @@ struct PromiseDetailProgressBarView: View {
                                 .rotationEffect(.degrees(270))
                                 .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - CGFloat(offsetX))
                         }
+                        
+                    }
                 }
             }
-            // 친구들
+            /// 친구들 디테일
             if progressTrigger {
                 ForEach(locationStore.locationParticipantDatas.filter {
                     $0.location.participantId != AuthStore.shared.currentUser?.id ?? ""
                 }) { friends in
                     VStack(alignment: .leading) {
-                        
                         /// 남은거리 / 전체거리 비율
+                        //                        let randomRatio : [Double] = [ 0.5, 0.2, 0.3, 0.7, 0.8, 0.9, 1 ]                        
                         let ratio = caculateRatio(location: friends.location)
                         /// ratio에 맞춰서 이미지 위치 조정 다르게 변경
                         HStack {
                             Text("\(friends.nickname)")
                             Spacer()
                             let distance = calculateDistanceInMeters(x1: friends.location.currentLatitude, y1: friends.location.currentLongitude, x2: promise.latitude, y2: promise.longitude)
-                            Text("남은 거리 : \(formatDistance(distance))  ")
+                            // 지각 도착 메시지 분기문 처리
+                            if promiseFinishCheck && ratio < 0.95 {
+                                Text("아이쿠 지각입니당!")
+                            } else if promiseFinishCheck && ratio >= 1 {
+                                Text("예쓰! 도착!")
+                            } else {
+                                Text("남은 거리 : \(formatDistance(distance))  ")
+                            }
                         }
                         .offset(y: 15)
-                        
-                        ProgressSubView(friends: friends, region: $region, realRatio: ratio)
-                            .animation(.easeIn(duration: 0.5), value: ratio)
+
+                        ProgressSubView(friends: friends, isShowingFriendSheet: $isShowingFriendSheet, region: $region, realRatio: ratio, progressTrigger: $progressTrigger, promiseFinishCheck: $promiseFinishCheck)
                     }
                 }
             }
+        }
+        .task {
+            promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
+        }
+        .onReceive(timer) { _ in
+            promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
         }
         .padding(.leading)
         .padding(.trailing)
@@ -130,7 +157,7 @@ struct PromiseDetailProgressBarView: View {
 
 struct PromiseDetailProgressBarView_Previews: PreviewProvider {
     static var previews: some View {
-        PromiseDetailProgressBarView(locationStore: LocationStore(), region: .constant(.automatic), destinationCoordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323), promise: Promise(id: "", makingUserID: "", promiseTitle: "사당역 모여라", promiseDate: 1697694660, destination: "왕십리 캐치카페", address: "서울특별시 관악구 청룡동", latitude: 37.47694972793077, longitude: 126.98195644152227, participantIdArray: [], checkDoublePromise: false, locationIdArray: [], penalty: 10), progressTrigger: .constant(false), detents: .constant(.medium))
+        PromiseDetailProgressBarView(locationStore: LocationStore(), isShowingFriendSheet: .constant(true), region: .constant(.automatic), destinationCoordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323), promise: Promise(id: "", makingUserID: "", promiseTitle: "사당역 모여라", promiseDate: 1697694660, destination: "왕십리 캐치카페", address: "서울특별시 관악구 청룡동", latitude: 37.47694972793077, longitude: 126.98195644152227, participantIdArray: [], checkDoublePromise: false, locationIdArray: [], penalty: 10), progressTrigger: .constant(false), detents: .constant(.medium))
     }
 }
 
@@ -207,9 +234,13 @@ extension PromiseDetailProgressBarView {
 
 struct ProgressSubView: View {
     let friends: LocationAndParticipant
+    @Binding var isShowingFriendSheet: Bool
     @Binding var region: MapCameraPosition
     let realRatio: Double
     @State var ratio: Double = 0
+    @Binding var progressTrigger: Bool
+    @Binding var promiseFinishCheck: Bool
+    
     var offsetX: Double {
         if ratio <= 0.3 {
             // 0.3보다 작거나 같을때는 바끝에
@@ -224,29 +255,55 @@ struct ProgressSubView: View {
     }
     
     var body: some View {
-        ZStack(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 10)
-                .frame(height: 38)
-                .foregroundColor(Color.gray)
-            
-            RoundedRectangle(cornerRadius: 10)
-                .frame(width: CGFloat(ratio) * (UIScreen.main.bounds.width - 64), height: 38)
-                .foregroundColor(Color.brown)
-            // 지도 위치 움직이기
-            Button {
-                region = .region(MKCoordinateRegion(center: friends.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
-            } label: {
-                Image(friends.moleDrillImageString)
-                    .resizable()
-                    .frame(width: 38, height: 55.95)
-                    .foregroundColor(.green)
-                    .offset(y: 15)
-                    .rotationEffect(.degrees(270))
-                    .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - CGFloat(offsetX))
+        Button { // 지도 위치 움직이기
+            region = .region(MKCoordinateRegion(center: friends.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+            isShowingFriendSheet = false
+        } label: {
+            ZStack(alignment: .leading) {
+                RoundedRectangle(cornerRadius: 10)
+                    .frame(height: 38)
+                    .foregroundColor(Color.gray)
+                
+                RoundedRectangle(cornerRadius: 10)
+                    .frame(width: CGFloat(ratio) * (UIScreen.main.bounds.width - 64), height: 38)
+                    .foregroundColor(Color.brown)
+                // 두더지 이미지 도착 분기처리
+                if promiseFinishCheck && ratio >= 1 {
+                    Image(AuthStore.shared.currentUser?.moleDrillImageString ?? "doo1_1")
+                        .resizable()
+                        .frame(width: 38, height: 55.95)
+                        .foregroundColor(.green)
+                        .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - CGFloat(offsetX) + 5)
+                } else {
+                    Image(AuthStore.shared.currentUser?.moleDrillImageString ?? "doo1_1")
+                        .resizable()
+                        .frame(width: 38, height: 55.95)
+                        .foregroundColor(.green)
+                        .offset(y: 15)
+                        .rotationEffect(.degrees(270))
+                        .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - CGFloat(offsetX))
+                }
             }
         }
-        .onAppear {
-            ratio = realRatio
+        .task {
+                withAnimation(.easeIn) {
+                    ratio = realRatio
+            }
+        }
+    }
+}
+
+extension PromiseDetailProgressBarView {
+    // 시간 지났는지 확인
+    func calculateTimeRemaining(targetTime: Double) -> Bool {
+        let currentTime = Date().timeIntervalSince1970
+        let timeDifference = targetTime - currentTime
+        
+        if timeDifference <= 0 {
+            // 약속 시간 지남
+            return true
+        } else {
+            return false
         }
     }
 }

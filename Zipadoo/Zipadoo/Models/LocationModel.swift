@@ -12,19 +12,19 @@ struct Location: Identifiable, Codable {
     /// id
     var id = UUID().uuidString
     /// 사용자 id, 유저 이름, 이미지는 유저 id로 가져오기
-    let participantId: String
+    var participantId: String
     /// 출발 위도
-    let departureLatitude: Double
+    var departureLatitude: Double
     /// 출발 경도
-    let departureLongitude: Double
+    var departureLongitude: Double
     /// 출발 위치값
     var departureCoordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: departureLatitude, longitude: departureLongitude)
     }
     /// 현재 위도
-    let currentLatitude: Double
+    var currentLatitude: Double
     /// 현재 경도
-    let currentLongitude: Double
+    var currentLongitude: Double
     /// 현재 위치값
     var currentCoordinate: CLLocationCoordinate2D {
         return CLLocationCoordinate2D(latitude: currentLatitude, longitude: currentLongitude)
