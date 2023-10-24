@@ -22,7 +22,6 @@ struct HomeMainView: View {
     // 약속의 갯수 확인
     //    @State private var userPromiseArray: [Promise] = []
     
-    
     // 약속 카드 테두리 색 모션회전
     @State var rotation: CGFloat = 0.0
     
@@ -75,7 +74,7 @@ struct HomeMainView: View {
                                 Spacer()
                             }
                             .padding(.bottom, -10)
-                            .padding(.top,10)
+                            .padding(.top, 10)
                         }
                         
                         ForEach(promise.fetchTrackingPromiseData) { promise in
@@ -83,7 +82,7 @@ struct HomeMainView: View {
                                 PromiseDetailView(promise: promise)
                                     .environmentObject(self.promise)
                             } label: {
-                                promiseListCell(promise: promise, color: Color("mocha"), isTracking: true)
+                                promiseListCell(promise: promise, color: Color("Mocha"), isTracking: true)
                             }
                             .padding(.vertical, 15) // 리스트 패딩차이 조절용
                             
@@ -101,7 +100,7 @@ struct HomeMainView: View {
                             .padding(.bottom, -10)
                         }
                         
-                        ForEach(promise.fetchPromiseData.indices,id: \.self) { index in
+                        ForEach(promise.fetchPromiseData.indices, id: \.self) { index in
                             NavigationLink {
                                 PromiseDetailView(promise: promise.fetchPromiseData[index])
                             } label: {
@@ -376,7 +375,6 @@ struct HomeMainView: View {
         }
     }
 }
-
 
 // MARK: - 시간 형식변환 함수
 func formatDate(date: Date) -> String {

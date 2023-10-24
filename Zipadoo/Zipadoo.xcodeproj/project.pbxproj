@@ -208,7 +208,6 @@
 		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
 		8BEA8B9C2ADB0C640083D488 /* PromiseTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTrackingView.swift; sourceTree = "<group>"; };
 		8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilView.swift; sourceTree = "<group>"; };
-		9A71392B2AE6AB2E0032E643 /* threePosition.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = threePosition.gpx; path = ../../../threePosition.gpx; sourceTree = "<group>"; };
 		9A7139302AE75C500032E643 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationAndInfoView.swift; sourceTree = "<group>"; };
 		C02790B52ACD297100BBDCCA /* ZipadooWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ZipadooWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -626,7 +625,6 @@
 		FAD5FE302ABBD3E700E05E6E = {
 			isa = PBXGroup;
 			children = (
-				9A71392B2AE6AB2E0032E643 /* threePosition.gpx */,
 				C02790CC2ACD299600BBDCCA /* ZipadooWidgetExtension.entitlements */,
 				FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */,
 				C02790BB2ACD297100BBDCCA /* ZipadooWidget */,
