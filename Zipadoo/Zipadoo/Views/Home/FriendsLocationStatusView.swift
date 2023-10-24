@@ -34,14 +34,14 @@ struct FriendsLocationStatusView: View {
                     .transition(.opacity)
                     .padding(.bottom, 50)
                     
-                    Text("\(Int(round(ratio * 100)))%")
-                        .font(.title)
-                        .bold()
-                        .padding(3)
-                        .background(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .shadow(radius: 0.8)
-                        .padding(.trailing, 10)
+//                    Text("\(Int(round(ratio * 100)))%")
+//                        .font(.title)
+//                        .bold()
+//                        .padding(3)
+//                        .background(.white)
+//                        .clipShape(RoundedRectangle(cornerRadius: 10))
+//                        .shadow(radius: 0.8)
+//                        .padding(.trailing, 10)
                 }
             }
         }

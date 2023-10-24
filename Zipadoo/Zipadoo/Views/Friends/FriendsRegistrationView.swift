@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FriendsRegistrationView: View {
     
-    @ObservedObject var friendsStore: FriendsStore
+    @StateObject var friendsStore: FriendsStore
     @Environment(\.dismiss) private var dismiss
     
     /// 친구 닉네임
@@ -44,12 +44,9 @@ struct FriendsRegistrationView: View {
                     }
                 }
             
-                
                 HStack {
                     
                     // 조건에 안맞을 시 알림메세지
-                
-
                     Button {
                         // 추가성공 -> dismiss
                         // 추가실패 -> 현 페이지 머물기, 그런 사람 없다고 밑에 안내문구

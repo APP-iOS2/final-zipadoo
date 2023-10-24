@@ -10,7 +10,7 @@ import SlidingTabView
 
 struct FriendsView: View {
     
-    @StateObject var friendsStore: FriendsStore = FriendsStore()
+    @StateObject var friendsStore: FriendsStore
     /// 친구 삭제 알람
     @State private var isDeleteAlert: Bool = false
     /// segmentedControl 인덱스
@@ -81,6 +81,11 @@ struct FriendsView: View {
                         }
                     })
                 )
+            }
+            .onAppear {
+                Task {
+                    try await friendsStore.fetchFriendsRequest()
+                }
             }
         }
     }
@@ -276,6 +281,6 @@ struct FriendsView: View {
 
 #Preview {
     NavigationStack {
-        FriendsView()
+        FriendsView(friendsStore: FriendsStore())
     }
 }
