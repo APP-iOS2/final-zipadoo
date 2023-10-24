@@ -12,7 +12,7 @@ struct Location: Identifiable, Codable {
     /// id
     var id = UUID().uuidString
     /// 사용자 id, 유저 이름, 이미지는 유저 id로 가져오기
-    let participantId: String
+    var participantId: String
     /// 출발 위도
     var departureLatitude: Double
     /// 출발 경도

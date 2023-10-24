@@ -15,8 +15,8 @@ import SwiftUI
 // import KakaoSDKUser
 
 class AppDelegate: NSObject, UIApplicationDelegate {
-    @StateObject private var locationStore = LocationStore()
-    @StateObject private var gpsStore = GPSStore()
+    lazy var locationStore = LocationStore()
+    @StateObject var gpsStore = GPSStore()
     let gcmMessageIDKey = "gcm.message_id"
     
     // 파이어베이스 초기화
@@ -160,8 +160,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler([[.banner, .list, .sound]])
         
         // 30분전에 유저 출발위치 및 myLocation 초기화
-        locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, departureLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
-        print("30분전 초기화 위치 - 위도 : \(locationStore.myLocation.departureLatitude) \n 경도 : \(locationStore.myLocation.departureLongitude)")
+//        locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, departureLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+        locationStore.updateDeparture(newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+        print("30분전 초기화위치 값은 : \(String(describing: gpsStore.lastSeenLocation?.coordinate))")
     }
     
     // 푸시메세지를 받았을 때 유저의 액션
@@ -188,7 +189,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler(UIBackgroundFetchResult.newData)
         
         // 30분전에 유저 출발위치 및 myLocation 초기화
-        locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, departureLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
-        print("30분전 초기화 위치 - 위도 : \(locationStore.myLocation.departureLatitude) \n 경도 : \(locationStore.myLocation.departureLongitude)")
+//        locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, departureLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+        locationStore.updateDeparture(newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+        print("30분전 초기화위치 값은 : \(String(describing: gpsStore.lastSeenLocation?.coordinate))")
+        
     }
 }

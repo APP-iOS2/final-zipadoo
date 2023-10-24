@@ -75,7 +75,7 @@ struct HomeMainView: View {
                         .padding(.bottom, -10)
                         ForEach(promise.fetchTrackingPromiseData) { promise in
                             NavigationLink {
-                                PromiseDetailView(promise: promise)
+                                PromiseDetailMapView(promise: promise)
                                     .environmentObject(self.promise)
                             } label: {
                                 promiseListCell(promise: promise, color: .color5, isTracking: true)
@@ -96,7 +96,7 @@ struct HomeMainView: View {
                         
                         ForEach(promise.fetchPromiseData.indices,id: \.self) { index in
                             NavigationLink {
-                                PromiseDetailView(promise: promise.fetchPromiseData[index])
+                                PromiseDetailMapView(promise: promise.fetchPromiseData[index])
                             } label: {
                                 promiseListCell(promise: promise.fetchPromiseData[index], color: .color4, isTracking: false)
                                 //                                        .offset(y: isCardSpread ? 0 : CGFloat(index) * -180)
@@ -130,7 +130,7 @@ struct HomeMainView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity) // 스크롤을 최대한 바깥으로 하기 위함
                 .navigationDestination(isPresented: $widgetStore.isShowingDetailForWidget) {
                     if let promise = widgetStore.widgetPromise {
-                        PromiseDetailView(promise: promise)
+                        PromiseDetailMapView(promise: promise)
                             .environmentObject(widgetStore)
                     }
                 }
@@ -299,8 +299,6 @@ struct HomeMainView: View {
                     }
                     .font(.callout)
                     .fontWeight(.semibold)
-                    
-                    
                     //                        Rectangle()
                     //                            .background(Color.primaryInvert)
                     //                            .frame(height: 1).opacity(0.3)
@@ -328,8 +326,6 @@ struct HomeMainView: View {
                             .font(.title3)
                             .foregroundStyle(Color.primaryInvert)
                         // TODO: - promise.penalty 데이터 연결
-                        
-                        
                         //                    Text("\(promise.participantIdArray.count)명")
                         //                        .font(.callout)
                         //                        .fontWeight(.semibold)
@@ -363,8 +359,6 @@ struct HomeMainView: View {
         }
     }
 }
-
-
 
 // MARK: - 시간 형식변환 함수
 func formatDate(date: Date) -> String {
