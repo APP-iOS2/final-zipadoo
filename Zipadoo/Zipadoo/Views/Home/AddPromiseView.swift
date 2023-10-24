@@ -59,7 +59,7 @@ struct AddPromiseView: View {
     @State private var sheetTitle: String = "약속 장소 선택"
     
     var isAllWrite: Bool {
-        return !promiseTitle.isEmpty && isSelectedDataPickerOnce && !address.isEmpty && !selectedFriends.isEmpty
+        return !promiseTitle.isEmpty && isSelectedDataPickerOnce && !address.isEmpty /*&& !selectedFriends.isEmpty*/
     }
     
     @StateObject private var authUser: AuthStore = AuthStore()
