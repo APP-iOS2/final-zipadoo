@@ -1,12 +1,12 @@
-# 지파두 - 지각 파는 두더지 (Zipadoo)
+# <img size = "10%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/6785967f-2630-4cd4-95ab-634833cd2d51">지파두 - 지각 파는 두더지 (Zipadoo)
 테킷 iOS앱스쿨 2기 최종프로젝트
+
 
 ## 목차
 - 프로젝트 소개
 - 아키텍처
 - 컨벤션
 - 파일 구조
-- 협업툴사용
 - 화면별 기능소개
 - TroubleShooting
 - 사용 기술
@@ -14,7 +14,7 @@
 
 
 ## 프로젝트 소개
-- ADS
+### ADS
   - 자주 지각하는 사람들에게는 습관을 고칠 수 있도록 동기를 제공하고 
 지각하지 않는 사람들에게는 소소한 금전적 보상과 성취감을 제공해주는 앱 입니다.
 
@@ -33,7 +33,20 @@
   - 정한두 : https://github.com/B-SSandoo
  
 - 진행 기간
-  - 기획 : 2023.
+  - 기획 : 2023.9.19 ~ 9.22
+  - 개발 : 2023.9.21 ~ 10.24
+
+- 기술 스택
+    - 개발언어 : Swift
+    - 개발환경 : iOS 17.0, XCode Version 15.0 / Firebase
+    - 협업도구 : Github, Discord, Figma, Notion, SwiftLint
+    - 라이브러리 : Firebase, SwiftLint, Lottie, Alamofire, TossPayments
+
+
+## 아키텍처
+MVVM
+
+## 컨벤션
 
 
 
