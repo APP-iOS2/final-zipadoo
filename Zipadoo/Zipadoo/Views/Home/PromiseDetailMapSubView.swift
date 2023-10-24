@@ -1,5 +1,5 @@
 //
-//  FriendsMapSubView.swift
+//  PromiseDetailMapSubView.swift
 //  Zipadoo
 //
 //  Created by 이재승 on 2023/10/12.
@@ -22,35 +22,8 @@ struct PromiseDetailMapSubView: View {
     var body: some View {
         VStack(alignment: .leading) {
             PromiseTitleAndTimeView(promise: promise)
-            /* LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
-                ForEach(locationStore.locationParticipantDatasDummy) { annotation in
-                    if annotation.location.participantId == AuthStore.shared.currentUser?.id ?? "" {
-                        Button {
-                            region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
-                        } label: {
-                            InfoView(name: annotation.nickname,
-                                     imageString: AuthStore.shared.currentUser?.moleImageString ?? "",
-                                     destinationLatitude: destinationCoordinate.latitude,
-                                     destinationLongitude: destinationCoordinate.longitude,
-                                     currentLatitude: locationStore.myLocation.currentLatitude,
-                                     currentLongitude: locationStore.myLocation.currentLongitude)
-                        }
-                    } else {
-                        Button {
-                            region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
-                        } label: {
-                            InfoView(name: annotation.nickname,
-                                     imageString: annotation.moleImageString,
-                                     destinationLatitude: destinationCoordinate.latitude,
-                                     destinationLongitude: destinationCoordinate.longitude,
-                                     currentLatitude: annotation.location.currentLatitude,
-                                     currentLongitude: annotation.location.currentLongitude)
-                        }
-                    }
-                }
-            } */
             ScrollView {
-                PromiseDetailProgressBarView(locationStore: locationStore, region: $region, destinationCoordinate: destinationCoordinate, promise: promise, progressTrigger: $progressTrigger, detents: $detents)
+                PromiseDetailProgressBarView(locationStore: locationStore, isShowingFriendSheet: $isShowingFriendSheet, region: $region, destinationCoordinate: destinationCoordinate, promise: promise, progressTrigger: $progressTrigger, detents: $detents)
             }
             .scrollIndicators(.hidden)
         }
