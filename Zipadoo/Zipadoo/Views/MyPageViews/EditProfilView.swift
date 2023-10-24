@@ -26,7 +26,11 @@ struct EditProfileView: View {
     
     /// 비어있는 TextField가 있을 때 true
     private var isFieldEmpty: Bool {
-        nickname.isEmpty || phoneNumber.isEmpty || !nickNameMessage.isEmpty || !numberMessage.isEmpty
+        nickname.isEmpty || phoneNumber.isEmpty
+    }
+    
+    private var isVaild: Bool {
+        isCorrectNickname(nickname: nickname) && isCorrectPhoneNumber(phonenumber: phoneNumber)
     }
     
     var body: some View {
@@ -112,7 +116,7 @@ struct EditProfileView: View {
                     Button(action: { isEditAlert.toggle() }, label: {
                         Text("수정")
                     })
-                    .disabled(isFieldEmpty) // 필드가 하나라도 비어있으면 비활성화
+                    .disabled(isFieldEmpty || !isVaild) // 필드가 하나라도 비어있으면 비활성화
                 }
             }
             .alert(isPresented: $isEditAlert) {
