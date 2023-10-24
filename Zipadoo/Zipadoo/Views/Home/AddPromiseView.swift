@@ -222,9 +222,7 @@ struct AddPromiseView: View {
                                 .foregroundColor(.primary)
                                 .font(.title3)
                                 .fontWeight(.semibold)
-                        }
-                        .padding(.top, 10)
-                        
+                        }      
                         Divider()
                             .frame(maxWidth: .infinity)
                             .overlay {
