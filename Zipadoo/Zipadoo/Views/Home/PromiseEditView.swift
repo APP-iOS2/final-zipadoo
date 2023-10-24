@@ -144,39 +144,43 @@ struct PromiseEditView: View {
                     /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
                 Group {
                     HStack {
-                        if !editedDestination.isEmpty {
-                            Button {
-                                previewPlaceSheet = true
-                            } label: {
-                                HStack {
-                                    Text("\(editedDestination)")
-                                        .font(.callout)
-                                    Image(systemName: "chevron.forward")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 6)
-                                        .padding(.leading, -5)
+                        Button {
+                            editPlaceSheet = true
+                        } label: {
+                            if !editedDestination.isEmpty {
+                                Button {
+                                    previewPlaceSheet = true
+                                } label: {
+                                    HStack {
+                                        Text("\(editedDestination)")
+                                            .font(.callout)
+                                        Image(systemName: "chevron.forward")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 6)
+                                            .padding(.leading, -5)
+                                    }
+                                }
+                                .sheet(isPresented: $previewPlaceSheet) {
+                                    VStack {
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .frame(width: 50, height: 5)
+                                            .foregroundStyle(Color.gray)
+                                            .padding(.top, 10)
+                                        
+                                        PreviewPlaceOnMap(promiseViewModel: promiseViewModel, destination: $editedDestination, address: $editedAddress, coordXXX: $coordXXX, coordYYY: $coordYYY)
+                                            .presentationDetents([.height(700)])
+                                            .padding(.top, 15)
+                                    }
                                 }
                             }
-                            .sheet(isPresented: $previewPlaceSheet) {
-                                VStack {
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .frame(width: 50, height: 5)
-                                        .foregroundStyle(Color.gray)
-                                        .padding(.top, 10)
-                                    
-                                    PreviewPlaceOnMap(promiseViewModel: promiseViewModel, destination: $editedDestination, address: $editedAddress, coordXXX: $coordXXX, coordYYY: $coordYYY)
-                                        .presentationDetents([.height(700)])
-                                        .padding(.top, 15)
-                                }
-                            }
+                            Spacer()
+                            
+                            Image(systemName: "location.magnifyingglass")
+                                .foregroundColor(.primary)
+                                .font(.title3)
+                                .fontWeight(.semibold)
                         }
-                        Spacer()
-                        
-                        Image(systemName: "location.magnifyingglass")
-                            .foregroundColor(.primary)
-                            .font(.title3)
-                            .fontWeight(.semibold)
                     }
                     .padding(.top, 10)
                     
@@ -203,20 +207,24 @@ struct PromiseEditView: View {
                         .font(.footnote)
                     
                     Group {
-                        HStack {
-                            Text("\(penalty)원")
-                                .fontWeight(.semibold)
-                                .foregroundColor(.primary)
-                            
-                            Spacer()
-                            // 버튼
-                            Image(systemName: "wonsign.circle")
-                                .foregroundColor(.primary)
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .symbolEffect(.bounce, value: animate3)
+                        Button {
+                            showingPenalty.toggle()
+                        } label: {
+                            HStack {
+                                Text("\(penalty)원")
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.primary)
+                                
+                                Spacer()
+                                // 버튼
+                                Image(systemName: "wonsign.circle")
+                                    .foregroundColor(.primary)
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .symbolEffect(.bounce, value: animate3)
+                            }
+                            .padding(.top, 10)
                         }
-                        .padding(.top, 10)
                         
                         Divider()
                             .frame(maxWidth: .infinity)

@@ -170,54 +170,59 @@ struct AddPromiseView: View {
                         .font(.footnote)
                     
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
+                    
                     Group {
                         HStack {
-                            if !destination.isEmpty {
-                                Button {
-                                    previewPlaceSheet = true
-                                } label: {
-                                    HStack {
-                                        Text("\(destination)")
-                                            .font(.callout)
-                                        Image(systemName: "chevron.forward")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 6)
-                                            .padding(.leading, -5)
+                            Button {
+                                addPlaceMapSheet = true
+                            } label: {
+                                if !destination.isEmpty {
+                                    Button {
+                                        previewPlaceSheet = true
+                                    } label: {
+                                        HStack {
+                                            Text("\(destination)")
+                                                .font(.callout)
+                                            Image(systemName: "chevron.forward")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .frame(width: 6)
+                                                .padding(.leading, -5)
+                                        }
                                     }
-                                }
-                                .sheet(isPresented: $previewPlaceSheet) {
-                                    VStack {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .frame(width: 50, height: 5)
-                                            .foregroundStyle(Color.gray)
-                                            .padding(.top, 10)
-                                        
-                                        PreviewPlaceOnMap(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
-                                            .presentationDetents([.height(700)])
-                                            .padding(.top, 15)
+                                    .sheet(isPresented: $previewPlaceSheet) {
+                                        VStack {
+                                            RoundedRectangle(cornerRadius: 8)
+                                                .frame(width: 50, height: 5)
+                                                .foregroundStyle(Color.gray)
+                                                .padding(.top, 10)
+                                            
+                                            PreviewPlaceOnMap(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
+                                                .presentationDetents([.height(700)])
+                                                .padding(.top, 15)
+                                        }
                                     }
-                                }
-                                
-                                //                        Button {
-                                //                            addPlaceMapSheet = true
-                                //                            //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
-                                ////                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
-                                //                        } label: {
-                                //                            Image(systemName: "location.magnifyingglass")
-                                //                                .foregroundColor(.primary)
-                                //                                .font(.title3)
-                                //                                .fontWeight(.semibold)
-                                //
-                                //                        }
                                     
+                                    //                        Button {
+                                    //                            addPlaceMapSheet = true
+                                    //                            //                            AddPlaceOptionCell(isClickedPlace: $isClickedPlace, addLocationButton: $addLocationButton, destination: $destination, address: $address, promiseLocation: $promiseLocation)
+                                    ////                            OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address)
+                                    //                        } label: {
+                                    //                            Image(systemName: "location.magnifyingglass")
+                                    //                                .foregroundColor(.primary)
+                                    //                                .font(.title3)
+                                    //                                .fontWeight(.semibold)
+                                    //
+                                    //                        }
+                                        
+                                }
+                                Spacer()
+                                
+                                Image(systemName: "location.magnifyingglass")
+                                    .foregroundColor(.primary)
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
                             }
-                            Spacer()
-                            
-                            Image(systemName: "location.magnifyingglass")
-                                .foregroundColor(.primary)
-                                .font(.title3)
-                                .fontWeight(.semibold)
                         }
                         .padding(.top, 10)
                         
@@ -245,20 +250,24 @@ struct AddPromiseView: View {
                         .font(.footnote)
         
                     Group {
-                        HStack {
-                            Text("\(penalty)원")
-                                .fontWeight(.semibold)
-                                .foregroundColor(.primary)
-                            
-                            Spacer()
-                            // 버튼
-                            Image(systemName: "wonsign.circle")
-                                .foregroundColor(.primary)
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .symbolEffect(.bounce, value: animate3)
+                        Button {
+                            showingPenalty.toggle()
+                        } label: {
+                            HStack {
+                                Text("\(penalty)원")
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.primary)
+                                
+                                Spacer()
+                                // 버튼
+                                Image(systemName: "wonsign.circle")
+                                    .foregroundColor(.primary)
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .symbolEffect(.bounce, value: animate3)
+                            }
+                            .padding(.top, 10)
                         }
-                        .padding(.top, 10)
                         
                         Divider()
                             .frame(maxWidth: .infinity)
