@@ -171,21 +171,23 @@ struct AddPromiseView: View {
                         .font(.footnote)
                     
                         /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
-                    Group {
-                        HStack {
-                            if !destination.isEmpty {
-                                Button {
-                                    previewPlaceSheet = true
-                                } label: {
-                                    HStack {
-                                        Text("\(destination)")
-                                            .font(.callout)
-                                        Image(systemName: "chevron.forward")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 6)
-                                            .padding(.leading, -5)
-                                    }
+
+                    HStack {
+                        if !promiseViewModel.destination.isEmpty {
+                            Button {
+                                previewPlaceSheet = true
+                            } label: {
+                                HStack {
+                                    Text("\(promiseViewModel.destination)")
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.primary)
+                                    // 지우면 안됨!! 기존 파란색링크 글씨 -> 검은색
+                                    Image(systemName: "chevron.forward")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 6)
+                                        .padding(.leading, -5)
+
                                 }
                                 .sheet(isPresented: $previewPlaceSheet) {
                                     VStack {

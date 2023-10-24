@@ -68,7 +68,7 @@ struct HomeMainView: View {
                         if !promise.fetchTrackingPromiseData.isEmpty { // 리스트가 있을 때 보이도록 함
                             HStack {
                                 Text("진행중인 약속")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(.primary)
                                     .fontWeight(.semibold)
                                     .font(.title3)
                                     .padding(.horizontal, 35)
@@ -83,7 +83,7 @@ struct HomeMainView: View {
                                 PromiseDetailView(promise: promise)
                                     .environmentObject(self.promise)
                             } label: {
-                                promiseListCell(promise: promise, color: .color5, isTracking: true)
+                                promiseListCell(promise: promise, color: Color("mocha"), isTracking: true)
                             }
                             .padding(.vertical, 15) // 리스트 패딩차이 조절용
                             
@@ -92,7 +92,7 @@ struct HomeMainView: View {
                         if !promise.fetchPromiseData.isEmpty { // 리스트가 있을 때 보이도록 함
                             HStack {
                                 Text("예정된 약속")
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(.primary)
                                     .fontWeight(.semibold)
                                     .font(.title3)
                                     .padding(.horizontal, 35)
@@ -182,9 +182,10 @@ struct HomeMainView: View {
         // MARK: - 카드 배경 이미지, 테두리
         ZStack {
             // 맵 버튼 그라데이션 색 선언
-//            Gradient.Stop(color: Color(hex: 0xFF5747), location: 0.1),
-//            Gradient.Stop(color: Color(hex: 0xFF5747).opacity(0.5), location: 1.0)
-//            ]), startPoint: .bottomLeading, endPoint: .topTrailing)
+            let gradient = LinearGradient(gradient: Gradient(stops: [
+                Gradient.Stop(color: Color(hex: 0xFF5747), location: 0.1),
+                Gradient.Stop(color: Color(hex: 0xFF5747).opacity(0.5), location: 1.0)
+            ]), startPoint: .topLeading, endPoint: .bottomTrailing)
             
             // 카드 배경색
             RoundedRectangle(cornerRadius: 10, style: .continuous)
@@ -226,7 +227,7 @@ struct HomeMainView: View {
                     Text(promise.promiseTitle)
                         .font(.title)
                         .fontWeight(.bold)
-                        .foregroundColor(.primaryInvert)
+                        .foregroundColor(isTracking ? .primaryInvert : .mocha)
                     Spacer()
                     if isTracking {
                         NavigationLink {
@@ -237,7 +238,7 @@ struct HomeMainView: View {
                                 RoundedRectangle(cornerRadius: 10, style: .continuous)
                                     .frame(width: 90, height: 40)
                                     .foregroundColor(.clear)
-                                    .background(Color.color1)
+                                    .background(Color.red)
                                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                                 // 맵 아이콘 태두리
                                 HStack {
@@ -339,7 +340,7 @@ struct HomeMainView: View {
                         Text("\(promise.penalty)원")
                             .fontWeight(.semibold)
                             .font(.title3)
-                            .foregroundStyle(Color.primaryInvert)
+                            .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
                         // TODO: - promise.penalty 데이터 연결
      
                         //                    Text("\(promise.participantIdArray.count)명")
@@ -350,7 +351,7 @@ struct HomeMainView: View {
                     .padding(.vertical, 15)
                     
                 }
-                .foregroundStyle(Color.primaryInvert)
+                .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
                 .fontWeight(.semibold)
                 
                 // 참여자의 ID를 통해 참여자 정보 가져오기
