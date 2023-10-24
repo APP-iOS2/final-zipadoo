@@ -26,6 +26,7 @@ struct PromiseDetailView: View {
     @State private var isShowingEditSheet: Bool = false
     @State private var isShowingShareSheet: Bool = false
     @State private var isShowingDeleteAlert: Bool = false
+    @State private var navigateBackToHome: Bool = false
     @State var promise: Promise
     let activeColor: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
     let disabledColor: UIColor = #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
@@ -95,6 +96,9 @@ struct PromiseDetailView: View {
             formatRemainingTime()
         })
         .onAppear {
+            if navigateBackToHome {
+                dismiss()
+            }
             Task {
                 try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
             }
@@ -121,7 +125,7 @@ struct PromiseDetailView: View {
 //            PromiseEditView(promise: .constant(promise))
 //        }
         .sheet(isPresented: $isShowingEditSheet,
-               content: { PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
+               content: { PromiseEditView(promise: .constant(promise), navigationBackToHome: $navigateBackToHome)
         })
         .sheet(
             isPresented: $isShowingShareSheet,
@@ -145,7 +149,7 @@ struct PromiseDetailView: View {
 //                        isShowingEditSheet.toggle()
 //                    } 
                     NavigationLink {
-                        PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
+                        PromiseEditView(promise: .constant(promise), navigationBackToHome: $navigateBackToHome)
                     } label: {
                         Text("수정")
                     }
@@ -241,7 +245,7 @@ struct PromiseDetailView: View {
                 .font(.caption)
             }
             
-            FriendsLocationStatusView(promise: promise)
+//            FriendsLocationStatusView(promise: promise)
         }
     }
     

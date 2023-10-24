@@ -114,7 +114,7 @@ struct PromiseDetailProgressBarView: View {
                 }) { friends in
                     VStack(alignment: .leading) {
                         /// 남은거리 / 전체거리 비율
-                        //                        let randomRatio : [Double] = [ 0.5, 0.2, 0.3, 0.7, 0.8, 0.9, 1 ]
+                        //                        let randomRatio : [Double] = [ 0.5, 0.2, 0.3, 0.7, 0.8, 0.9, 1 ]                        
                         let ratio = caculateRatio(location: friends.location)
                         /// ratio에 맞춰서 이미지 위치 조정 다르게 변경
                         HStack {
@@ -131,7 +131,7 @@ struct PromiseDetailProgressBarView: View {
                             }
                         }
                         .offset(y: 15)
-                        
+
                         ProgressSubView(friends: friends, isShowingFriendSheet: $isShowingFriendSheet, region: $region, realRatio: ratio, progressTrigger: $progressTrigger, promiseFinishCheck: $promiseFinishCheck)
                     }
                 }

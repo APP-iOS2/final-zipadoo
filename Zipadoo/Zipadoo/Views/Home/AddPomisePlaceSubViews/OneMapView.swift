@@ -36,9 +36,9 @@ struct OneMapView: View {
     /// 클릭한 장소에 대한 위치 값
     @State private var selectedPlacePosition: CLLocationCoordinate2D?
     /// 약속장소 위도
-    @State private var coordXXX: Double = CLLocationManager().location?.coordinate.latitude ?? 37.5665
+    @Binding var coordXXX: Double
     /// 약속장소 경도
-    @State private var coordYYY: Double = CLLocationManager().location?.coordinate.longitude ?? 126.9780
+    @Binding var coordYYY: Double
     /// 화면을 클릭해서 장소를 선택한 값
     @State private var selectedPlace: Bool = false
     /// 장소검색 이후 장소를 선택한 값
@@ -174,6 +174,6 @@ struct OneMapView: View {
     }
 }
 
-#Preview {
-    OneMapView(promiseViewModel: PromiseViewModel(), destination: .constant(""), address: .constant(""), sheetTitle: .constant(""))
-}
+//#Preview {
+//    OneMapView(promiseViewModel: PromiseViewModel(), destination: .constant(""), address: .constant(""), sheetTitle: .constant(""))
+//}

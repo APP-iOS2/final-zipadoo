@@ -191,9 +191,9 @@ struct PromiseDetailMapView: View {
             }
         }
         .onAppear {
-            // 5초마다 반복, 전역에서 사라지지 않고 실행됨
-            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
-                print("나는 맵에서 만들어짐! ! 5초 지남")
+            // 1초마다 반복, 전역에서 사라지지 않고 실행됨
+            let timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                print("나는 맵에서 만들어짐! ! 1초 지남")
                 // 위치 도착 위치 비교
                 if !isArrived {
                     // 도착 체크 함수

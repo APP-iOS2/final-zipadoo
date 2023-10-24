@@ -22,7 +22,6 @@ struct HomeMainView: View {
     // 약속의 갯수 확인
     //    @State private var userPromiseArray: [Promise] = []
     
-    
     // 약속 카드 테두리 색 모션회전
     @State var rotation: CGFloat = 0.0
     
@@ -48,14 +47,15 @@ struct HomeMainView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     if promise.fetchTrackingPromiseData.isEmpty && promise.fetchPromiseData.isEmpty {
                         VStack {
-                            Image(.zipadoo)
+                            Image("Dothez")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 150)
                             
                             Text("약속이 없어요\n 약속을 만들어 보세요!")
                                 .multilineTextAlignment(.center)
-                                .font(.title)
+                                .font(.title3)
+                                .fontWeight(.semibold)
                                 .foregroundColor(.secondary)
                                 .padding()
                         }
@@ -64,37 +64,43 @@ struct HomeMainView: View {
                         
                     } else {
                         // 추적중
-                        HStack {
-                            Text("진행중인 약속")
-                                .foregroundColor(.primary)
-                                .fontWeight(.semibold)
-                                .font(.title3)
-                                .padding(.horizontal, 35)
-                            Spacer()
+                        if !promise.fetchTrackingPromiseData.isEmpty { // 리스트가 있을 때 보이도록 함
+                            HStack {
+                                Text("진행중인 약속")
+                                    .foregroundColor(.primary)
+                                    .fontWeight(.semibold)
+                                    .font(.title3)
+                                    .padding(.horizontal, 35)
+                                Spacer()
+                            }
+                            .padding(.bottom, -10)
+                            .padding(.top, 10)
                         }
-                        .padding(.bottom, -10)
+                        
                         ForEach(promise.fetchTrackingPromiseData) { promise in
                             NavigationLink {
                                 PromiseDetailMapView(promise: promise)
                                     .environmentObject(self.promise)
                             } label: {
-                                promiseListCell(promise: promise, color: .color5, isTracking: true)
+                                promiseListCell(promise: promise, color: Color("Mocha"), isTracking: true)
                             }
                             .padding(.vertical, 15) // 리스트 패딩차이 조절용
                             
                         }
                         
-                        HStack {
-                            Text("예정된 약속")
-                                .foregroundColor(.primary)
-                                .fontWeight(.semibold)
-                                .font(.title3)
-                                .padding(.horizontal, 35)
-                            Spacer()
+                        if !promise.fetchPromiseData.isEmpty { // 리스트가 있을 때 보이도록 함
+                            HStack {
+                                Text("예정된 약속")
+                                    .foregroundColor(.primary)
+                                    .fontWeight(.semibold)
+                                    .font(.title3)
+                                    .padding(.horizontal, 35)
+                                Spacer()
+                            }
+                            .padding(.bottom, -10)
                         }
-                        .padding(.bottom, -10)
                         
-                        ForEach(promise.fetchPromiseData.indices,id: \.self) { index in
+                        ForEach(promise.fetchPromiseData.indices, id: \.self) { index in
                             NavigationLink {
                                 PromiseDetailMapView(promise: promise.fetchPromiseData[index])
                             } label: {
@@ -159,7 +165,14 @@ struct HomeMainView: View {
                                 AddPromiseView(promiseViewModel: promise)
                             })
                     }
-                }   
+                    // MARK: - 지파두 마크
+                    ToolbarItem(placement: .topBarLeading) {
+                        Image("zipadooMark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 20)
+                    }
+                }
             }   
         }
     }
@@ -213,7 +226,7 @@ struct HomeMainView: View {
                     Text(promise.promiseTitle)
                         .font(.title)
                         .fontWeight(.bold)
-                        .foregroundColor(.primaryInvert)
+                        .foregroundColor(isTracking ? .primaryInvert : .mocha)
                     Spacer()
                     if isTracking {
                         NavigationLink {
@@ -221,11 +234,10 @@ struct HomeMainView: View {
                         } label: {
                             ZStack {
                                 // 맵 아이콘 배경색
-                                
-                                RoundedRectangle(cornerRadius: 20, style: .circular)
-                                    .frame(width: 90, height: 34)
+                                RoundedRectangle(cornerRadius: 10, style: .continuous)
+                                    .frame(width: 90, height: 40)
                                     .foregroundColor(.clear)
-                                    .background(gradient)
+                                    .background(Color.red)
                                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                                 // 맵 아이콘 태두리
                                 HStack {
@@ -246,7 +258,7 @@ struct HomeMainView: View {
                         .padding(.trailing, -5)
                         .symbolEffect(.pulse.byLayer, options: .repeating, isActive: isTracking)
                     }
-                    
+                
                     // 추적중인 약속만 지도뷰 이동 가능
                     //                        if isTracking {
                     //                            NavigationLink {
@@ -286,6 +298,7 @@ struct HomeMainView: View {
                     Group {
                         HStack {
                             Image(systemName: "pin")
+                                .font(.footnote) // 아이콘이 너무 커서 좀더 작게함
                             Text("\(promise.destination)")
                         }
                         /// 저장된 promiseDate값을 Date 타입으로 변환
@@ -293,6 +306,7 @@ struct HomeMainView: View {
                         
                         HStack {
                             Image(systemName: "clock")
+                                .font(.footnote) // 아이콘이 너무 커서 좀더 작게함
                             Text("\(formatDate(date: datePromise))")
                         }
                         .padding(.bottom, 10)
@@ -324,7 +338,7 @@ struct HomeMainView: View {
                         Text("\(promise.penalty)원")
                             .fontWeight(.semibold)
                             .font(.title3)
-                            .foregroundStyle(Color.primaryInvert)
+                            .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
                         // TODO: - promise.penalty 데이터 연결
                         //                    Text("\(promise.participantIdArray.count)명")
                         //                        .font(.callout)
@@ -334,7 +348,7 @@ struct HomeMainView: View {
                     .padding(.vertical, 15)
                     
                 }
-                .foregroundStyle(Color.primaryInvert)
+                .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
                 .fontWeight(.semibold)
                 
                 // 참여자의 ID를 통해 참여자 정보 가져오기
@@ -347,7 +361,7 @@ struct HomeMainView: View {
             RoundedRectangle(cornerRadius: 10)
                 .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
                 .foregroundColor(.primary)
-                .opacity(isTracking ? 0: 0.1)
+                .opacity(isTracking ? 0: 0.05) // 0.1 다소 어두워서 0.05로 더 밝게처리
                 .shadow(color: .black, radius: 20, x: 1, y: 1)
         )
         //        .opacity(isTracking ? 1 : 0.5)
