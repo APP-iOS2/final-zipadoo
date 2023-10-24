@@ -161,12 +161,32 @@ class PromiseViewModel: ObservableObject {
                     }
                     
                     self.addTodayPromisesToUserDefaults()
-
-                    if let imminent = self.fetchTrackingPromiseData.first {
-                        self.addSharingNotification(imminent: imminent)
-                    } else if let imminent = self.fetchPromiseData.first {
-                        self.addSharingNotification(imminent: imminent)
+                    
+                    // MARK: - 알림 등록을 위한 부분
+                    var entryPromise = self.fetchTrackingPromiseData + self.fetchPromiseData
+                    
+                    for promise in entryPromise {
+                        let promiseDate = Date(timeIntervalSince1970: promise.promiseDate - 30 * 60)
+                        let now = Date()
+                        
+                        // 약속 30분 전 시간과 현재 시간에서 초단위는 제외
+                        let promiseComponent = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: promiseDate)
+                        let todayComponent = Calendar.current.dateComponents([.year, .month,.day,.hour,.minute], from: now)
+                        
+                        // DateComponent는 비교 연산자 사용불가
+                        // Date 타입으로 변환
+                        guard let date1 = Calendar.current.date(from: promiseComponent),
+                              let date2 = Calendar.current.date(from: todayComponent) else {
+                            return
+                        }
+                        
+                        // 약속 30분 전 시간이 현재 시간보다 이후인 약속들만 알림 등록
+                        if date1 >= date2 {
+                            self.addSharingNotification(imminent: promise)
+                            
+                        }
                     }
+                    
                     self.isLoading = false
                 }
             }
@@ -344,7 +364,7 @@ class PromiseViewModel: ObservableObject {
     /// 약속 30분 전 위치 공유 알림 등록 메서드
     func addSharingNotification(imminent: Promise) {
         let notificationCenter = UNUserNotificationCenter.current()
-
+        
         // 가장 가까운 약속 날짜
         let imminentDate = Date(timeIntervalSince1970: imminent.promiseDate)
         // 약속시간 30분 계산
@@ -354,39 +374,63 @@ class PromiseViewModel: ObservableObject {
                                                      minute: Calendar.current.component(.minute, from: triggerDate),
                                                      second: 0,
                                                      of: Date())!
-        // 알림이 울릴 시간 설정. 초단위는 0으로
-        var dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: localTriggerDate)
-        dateComponents.second = 0
+        
+        // 현재 시각과 비교하기 위해 Date 객체 생성
+        let now = Date()
+        let todayComponent = Calendar.current.dateComponents([.year, .month,.day,.hour,.minute], from: now)
         
         // 알림 메세지 설정
         let content = UNMutableNotificationContent()
         content.title = "\(imminent.promiseTitle) 30분 전입니다"
         content.body = "친구들의 위치 현황을 확인해보세요!"
-
-        // 알림이 울릴 trigger 설정
-        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-
-        // Notification에 등록할 identifier 설정
-        let requestIdentifier = "LocationSharing"
         
-        // 등록
-        let request = UNNotificationRequest(identifier: requestIdentifier,
-                                            content: content,
-                                            trigger: trigger)
-        
-        notificationCenter.add(request) { (error) in
-            if error != nil {
-                print("에러 \(requestIdentifier)")
+        // 현재 시간이 예약 시간 이후면 1초 후 바로 띄워주기
+        if Calendar.current.date(from: todayComponent) == localTriggerDate {
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+            
+            // Notification에 등록할 identifier 설정
+            let requestIdentifier = "LocationSharing - \(imminent.id)"
+            
+            // 등록
+            let request = UNNotificationRequest(identifier:requestIdentifier,
+                                                content :content,
+                                                trigger :trigger)
+            
+            notificationCenter.add(request) { (error) in
+                if error != nil {
+                    print("Error \(requestIdentifier)")
+                }
+            }
+            
+        } else {
+            // 아니면 약속시간 30분 전에 알림 띄워주기
+            var dateComponents = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute], from :localTriggerDate)
+            dateComponents.second=0
+            
+            let trigger=UNCalendarNotificationTrigger(dateMatching:dateComponents,repeats:false)
+            
+            // Notification에 등록할 identifier 설정
+            let requestIdentifier="LocationSharing - \(imminent.id)"
+            
+            // 등록
+            let request=UNNotificationRequest(identifier:requestIdentifier,
+                                              content :content,
+                                              trigger :trigger)
+            
+            notificationCenter.add(request){(error) in
+                if error != nil{
+                    print("Error \(requestIdentifier)")
+                }
             }
         }
-        
         // 현재 등록된 알림 확인하는 코드
 //        notificationCenter.getPendingNotificationRequests { (requests) in
 //            for request in requests {
-//                print("\(request.identifier) will be delivered at \(request.trigger)")
+//                print("약속 : \(request.identifier) will be delivered at \(request.trigger)")
 //            }
 //        }
     }
+
     
     func addTodayPromisesToUserDefaults() {
         var calendar = Calendar.current
