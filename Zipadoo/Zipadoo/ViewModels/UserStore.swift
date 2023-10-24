@@ -21,7 +21,7 @@ final class UserStore: ObservableObject {
     @Published var participantImageArray: [String] = []
         
     let dbRef = Firestore.firestore().collection("Users")
-    
+    let defaultImageString = "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
     init() {
         Task { try await loginUser() }
 
@@ -90,6 +90,54 @@ final class UserStore: ObservableObject {
         
         self.currentUser = user
     }
+    
+    @MainActor
+    func updateUserData(image: UIImage?, nick: String, phone: String) async throws {
+        var data = [String: Any]()
+        
+        // 선택한 사진이 있다면
+        if let uiImage = image {
+            let imageString = try? await ProfileImageUploader.uploadImage(image: uiImage)
+            data["profileImageString"] = imageString ?? defaultImageString
+            // 현재 사용자의 정보 변경
+            //AuthStore.shared.currentUser?.profileImageString = imageString ?? defaultImageString
+        }
+        
+        if currentUser?.nickName != nick {
+            data["nickName"] = nick
+            //AuthStore.shared.currentUser?.nickName = nick
+        }
+        
+        if currentUser?.phoneNumber != phone {
+            data["phoneNumber"] = phone
+            //AuthStore.shared.currentUser?.phoneNumber = phone
+        }
+        
+        // 바뀐 사항이 하나라도 있다면 파이어베이스에 업데이트
+        if !data.isEmpty {
+            do {
+                print(currentUser?.id ?? "")
+                try await dbRef.document(currentUser?.id ?? "").updateData(data)
+            } catch {
+                print("파이어베이스 업데이트 실패")
+            }
+        }
+    }
+    
+    @MainActor
+    func updatePassword(newValue newpassword: String) async throws {
+        do {
+            try await Auth.auth().currentUser?.updatePassword(to: newpassword)
+        } catch {
+            print("비밀번호 변경 실패")
+        }
+    }
+    
+    func getUserProfileImage() -> String {
+        guard let urlString = currentUser?.profileImageString else { return "" }
+        return urlString
+    }
+    
     
     /*
      /// 유저데이터 파베에 추가 함수 ->  AuthStore에 있음

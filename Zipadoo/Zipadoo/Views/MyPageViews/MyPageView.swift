@@ -410,6 +410,11 @@ struct MyPageView: View {
                     
                 } // ScrollView
             }
+            .onAppear {
+                Task {
+                    try await AuthStore.shared.loadUserData()
+                }
+            }
             // .padding(10) 너무 빈공간이 많지 않나요
         }
     }
