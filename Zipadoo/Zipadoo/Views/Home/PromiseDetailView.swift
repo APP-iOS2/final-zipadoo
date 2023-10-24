@@ -245,7 +245,7 @@ struct PromiseDetailView: View {
                 .font(.caption)
             }
             
-            FriendsLocationStatusView(promise: promise)
+//            FriendsLocationStatusView(promise: promise)
         }
     }
     

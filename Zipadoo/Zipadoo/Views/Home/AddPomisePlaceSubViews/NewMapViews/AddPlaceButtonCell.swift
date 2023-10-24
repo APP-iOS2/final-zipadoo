@@ -86,10 +86,10 @@ struct AddPlaceButtonCell: View {
                     }
             }
             // AddPlaceButtonCell이 보여지지 않을 시, 위치값들을 초기화 시킴
-            .onDisappear {
-                coordXXX = 0.0
-                coordYYY = 0.0
-            }
+//            .onDisappear {
+//                coordXXX = 0.0
+//                coordYYY = 0.0
+//            }
         }
     }
 }

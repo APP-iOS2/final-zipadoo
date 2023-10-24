@@ -208,8 +208,8 @@ struct PromiseDetailMapView: View {
                     // 한번만 실행되고 그 뒤에는 실행되면 안됨, 그런데 5초 루프문에 넣어야지 백그라운드에서 실행가능
                     if locationStore.myLocation.arriveTime == 0 {
                         // 도착시간 저장
-                        let rank = locationStore.calculateRank()
                         locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
+                        let rank = locationStore.calculateRank()
                         locationStore.updateArriveTime(locationId: locationStore.myLocation.id, arriveTime: locationStore.myLocation.arriveTime, rank: rank)
                         // 도착 알림 실행
                         alertStore.arrivalMsgAlert = ArrivalMsgModel(name: AuthStore.shared.currentUser?.nickName ?? "이름없음", profileImgString: AuthStore.shared.currentUser?.profileImageString ?? "doo1", rank: rank, arrivarDifference: promise.promiseDate - locationStore.myLocation.arriveTime, potato: 0)
@@ -239,11 +239,9 @@ struct PromiseDetailMapView: View {
         }*/
         .task { // 초기화 코드
             // myLocation 초기화
-            let departureLatitude = 37.47694972793077
-            let departureLongitude = 126.98195644152227
-            locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: departureLatitude, departureLongitude: departureLongitude, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
-//            locationStore.myLocation.currentLatitude = gpsStore.lastSeenLocation?.coordinate.latitude ?? 0
-//            locationStore.myLocation.currentLongitude = gpsStore.lastSeenLocation?.coordinate.longitude ?? 0
+//            locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: departureLatitude, departureLongitude: departureLongitude, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+            locationStore.myLocation.currentLatitude = gpsStore.lastSeenLocation?.coordinate.latitude ?? 0
+            locationStore.myLocation.currentLongitude = gpsStore.lastSeenLocation?.coordinate.longitude ?? 0
             // 패치해주는 코드
             do {
                 try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
