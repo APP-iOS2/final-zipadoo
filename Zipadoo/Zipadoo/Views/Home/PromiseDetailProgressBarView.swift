@@ -45,6 +45,23 @@ struct PromiseDetailProgressBarView: View {
             }
             // 나
                 VStack(alignment: .leading) {
+                    
+                    /// 남은거리 / 전체거리 비율
+                    let ratio: Double = caculateRatio(location: locationStore.myLocation)
+                    /// ratio에 맞춰서 이미지 위치 조정 다르게 변경
+                    var offsetX: Double {
+                        if ratio <= 0.3 {
+                            // 0.3보다 작거나 같을때는 바끝에
+                            return 14
+                        } else if 0.7 <= ratio && ratio < 1 {
+                            // 0.7보다 크거나 같을때는 더 들어가야함
+                            return 42
+                        } else {
+                            // 기본값 28
+                            return 28
+                        }
+                    }
+                    
                     HStack {
                         Text(AuthStore.shared.currentUser?.nickName ?? "나")
                         Spacer()
@@ -52,9 +69,6 @@ struct PromiseDetailProgressBarView: View {
                         Text("남은 거리 : \(formatDistance(distance))  ")
                     }
                     .offset(y: 15)
-                    /// 남은거리 / 전체거리 비율
-                    let ratio = caculateRatio(location: locationStore.myLocation)
-//                    let ratio = 0.5
                     
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: 10)
@@ -63,8 +77,6 @@ struct PromiseDetailProgressBarView: View {
                         
                         RoundedRectangle(cornerRadius: 10)
                             .frame(width: CGFloat(ratio) * (UIScreen.main.bounds.width - 64), height: 38)
-                        // 애니메이션 작동하나?
-                            .animation(.linear(duration: 2), value: ratio)
                             .foregroundColor(Color.brown)
                         // 지도 위치 움직이기
                         Button {
@@ -76,7 +88,7 @@ struct PromiseDetailProgressBarView: View {
                                 .foregroundColor(.green)
                                 .offset(y: 15)
                                 .rotationEffect(.degrees(270))
-                                .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - 14)
+                                .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - CGFloat(offsetX))
                         }
                 }
             }
@@ -86,6 +98,10 @@ struct PromiseDetailProgressBarView: View {
                     $0.location.participantId != AuthStore.shared.currentUser?.id ?? ""
                 }) { friends in
                     VStack(alignment: .leading) {
+                        
+                        /// 남은거리 / 전체거리 비율
+                        let ratio = caculateRatio(location: friends.location)
+                        /// ratio에 맞춰서 이미지 위치 조정 다르게 변경
                         HStack {
                             Text("\(friends.nickname)")
                             Spacer()
@@ -93,34 +109,9 @@ struct PromiseDetailProgressBarView: View {
                             Text("남은 거리 : \(formatDistance(distance))  ")
                         }
                         .offset(y: 15)
-                        // 남은 거리 비율
-//                        let ratio = caculateRatio(location: friends.location)
-                        let ratio = 0
                         
-                        ZStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 10)
-                                .frame(height: 38)
-                                .foregroundColor(Color.gray)
-                            
-                            RoundedRectangle(cornerRadius: 10)
-                                .frame(width: CGFloat(ratio) * (UIScreen.main.bounds.width - 64), height: 38)
-                            // 애니메이션 작동하나?
-                                .animation(.linear(duration: 2), value: ratio)
-                                .foregroundColor(Color.brown)
-                            
-                            // 지도 위치 움직이기
-                            Button {
-                                region = .region(MKCoordinateRegion(center: friends.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
-                            } label: {
-                                Image(friends.moleDrillImageString)
-                                    .resizable()
-                                    .frame(width: 38, height: 55.95)
-                                    .foregroundColor(.green)
-                                    .offset(y: 15)
-                                    .rotationEffect(.degrees(270))
-                                    .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - 14)
-                            }
-                        }
+                        ProgressSubView(friends: friends, region: $region, realRatio: ratio)
+                            .animation(.easeIn(duration: 0.5), value: ratio)
                     }
                 }
             }
@@ -210,6 +201,52 @@ extension PromiseDetailProgressBarView {
         } else {
             let distanceInKilometers = distance / 1000.0
             return String(format: "%.2f km", distanceInKilometers)
+        }
+    }
+}
+
+struct ProgressSubView: View {
+    let friends: LocationAndParticipant
+    @Binding var region: MapCameraPosition
+    let realRatio: Double
+    @State var ratio: Double = 0
+    var offsetX: Double {
+        if ratio <= 0.3 {
+            // 0.3보다 작거나 같을때는 바끝에
+            return 14
+        } else if 0.7 <= ratio && ratio < 1 {
+            // 0.7보다 크거나 같을때는 더 들어가야함
+            return 42
+        } else {
+            // 기본값 28
+            return 28
+        }
+    }
+    
+    var body: some View {
+        ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 10)
+                .frame(height: 38)
+                .foregroundColor(Color.gray)
+            
+            RoundedRectangle(cornerRadius: 10)
+                .frame(width: CGFloat(ratio) * (UIScreen.main.bounds.width - 64), height: 38)
+                .foregroundColor(Color.brown)
+            // 지도 위치 움직이기
+            Button {
+                region = .region(MKCoordinateRegion(center: friends.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+            } label: {
+                Image(friends.moleDrillImageString)
+                    .resizable()
+                    .frame(width: 38, height: 55.95)
+                    .foregroundColor(.green)
+                    .offset(y: 15)
+                    .rotationEffect(.degrees(270))
+                    .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - CGFloat(offsetX))
+            }
+        }
+        .onAppear {
+            ratio = realRatio
         }
     }
 }
