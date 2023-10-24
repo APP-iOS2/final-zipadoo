@@ -60,10 +60,10 @@ struct OneAddLocation: View {
                                 isClickedPlace = false
                                 
                                 // MARK: - '장소 선택하기' 버튼을 클릭하면 위의 데이터값 + 위치(위,경도)값을 promiseLoaction 값으로 저장함
-                                promiseViewModel.destination = destination
-                                promiseViewModel.address = address
-                                promiseViewModel.coordXXX = coordXXX
-                                promiseViewModel.coordYYY = coordYYY
+                                destination = destination
+                                address = address
+                                coordXXX = coordXXX
+                                coordYYY = coordYYY
 //                                promiseLocation = addLocationStore.setLocation(destination: destination, address: address, latitude: coordXXX, longitude: coordYYY)
                                 print(destination)
                                 print(address)
