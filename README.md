@@ -45,7 +45,9 @@
 
 
 ## <img width = "5%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/6785967f-2630-4cd4-95ab-634833cd2d51"/>아키텍처
-MVVM
+
+mvvm에 따르려 했으나 실제 작업시에 여러뷰에 필요한 뷰모델인 store도 만들어서 개발을 진행해야했다.
+패턴에 종속되어 작업하는 것 뿐만 아니라 유동적으로 개발 패턴을 생각할 필요가 있다는 것을 느껴 MVVM과 여러뷰에 필요한 Store이라고 불리는 뷰모델을 섞어 사용하게 되었다.
 
 ## <img width = "5%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/6785967f-2630-4cd4-95ab-634833cd2d51"/>컨벤션
 - 폴더 구조
@@ -117,18 +119,22 @@ MVVM
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/10be68d0-4cb3-4ba7-b424-e8a83590c93a"/>
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/5d15c5ee-1c59-4fc9-b984-567539abeb48"/>
 
-
+- 지난 약속에서는 추적이 끝난 약속을 최근에 종료된 순으로 확인할 수 있습니다.
+- 한 페이지에 10개의 약속이 노출되고, 최대 50개의 지난약속을 볼 수 있습니다.
+- 지난약속을 누르면 친구들이 얼마나 일찍/늦게 도착했는지, 몇등으로 도착했는지 결과가 나옵니다.
+  
 
 ## Trouble Shooting
 
-> 지도
+> 1. 지도
 - 참여자의 위치정보와 개인정보를 같이 가져와야했던 문제 -> https://github.com/APPSCHOOL3-iOS/final-zipadoo/issues/216<br>
-- 
+  친구들의 현재 위치와
+- 현재위치를 가져올때 뷰가 그려지기 전에 그려와지는 문제 -> 
 
-> 위젯
+> 2. 위젯
 >
 
-> 그 외
+> 3. 그 외
  - 약속 리스트 참여자 프로필 노출-> https://github.com/APPSCHOOL3-iOS/final-zipadoo/pull/322<br/>
    약속리스트 약속마다 참여자의 프로필 사진이 겹쳐지도록 뜨게 하고 싶었지만 모든 카드가 똑같이 뜨는 오류가 있었습니다. HomeMainView에서 프로필이미지를 하나하나 패치 해와야했고 이를 뷰에 카드마다 다르게 그려줘야 했는데 카드뷰를 func promiseListCell함수로 빼서 진행했더니 계속 난항이었습니다. 이후 프로필 이미지 경로배열이 저장된 class를 카드마다 생성해주는 것으로 바꿨지만 하나의 struct안에서 여러번 class LocationStore을 초기화해 만들어 주는것에 주의표시가 떴습니다. 그래서 아예 카드뷰를 struct PromiseListCell로 하나 만들어서 생성했고 내부 onappear메서드로 이미지들을 불러와 해결했습니다. 막상 해결하고 보니 꼬아서 생각해 벌어진 이슈였지만, 코드를 짜면서 느낀 점이 많아 트러블슈팅으로 넣게 되었습니다.
       
