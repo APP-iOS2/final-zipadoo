@@ -126,7 +126,7 @@ mvvm에 따르려 했으나 실제 작업시에 여러뷰에 필요한 뷰모델
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/affa0684-389c-43dd-bb18-a5f425cfd1e7"/>
 
 
-##  <img width = "5%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/6785967f-2630-4cd4-95ab-634833cd2d51"/>Trouble Shooting
+## <img width = "5%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/6785967f-2630-4cd4-95ab-634833cd2d51"/>Trouble Shooting
 
 > 1. 지도
 - 참여자의 위치정보와 개인정보를 같이 가져와야했던 문제
