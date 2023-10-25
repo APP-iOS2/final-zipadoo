@@ -47,7 +47,7 @@
 ## <img width = "5%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/6785967f-2630-4cd4-95ab-634833cd2d51"/>아키텍처
 
 mvvm에 따르려 했으나 실제 작업시에 여러뷰에 필요한 뷰모델인 store도 만들어서 개발을 진행해야했다.
-패턴에 종속되어 작업하는 것 뿐만 아니라 유동적으로 개발 패턴을 생각할 필요가 있다는 것을 느껴 MVVM과 여러뷰에 필요한 Store이라고 불리는 뷰모델을 섞어 사용하게 되었다.
+패턴에 종속되어 작업하는 것 뿐만 아니라 유동적으로 개발 패턴을 생각할 필요가 있다는 것을 느껴 MVVM과 여러뷰에 필요한 Store이라고 불리는 뷰모델을 섞어 사용하게 되었습니다.
 
 ## <img width = "5%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/6785967f-2630-4cd4-95ab-634833cd2d51"/>컨벤션
 - 폴더 구조
