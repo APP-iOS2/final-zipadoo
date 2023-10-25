@@ -107,6 +107,14 @@ MVVM
 
 
 > **마이페이지에서는 나의 지각비율과 지난약속목록을 확인할 수 있습니다**
-- 
+- 지각 횟수 및 감자(포인트) 현황 확인할 수 있습니다.
+- 토스페이를 통해 캐시를 충전할 수 있습니다.
+- 회원정보 수정을 통해 정보 수정이 가능합니다
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/9f3a45f9-5f70-48b6-8669-75400dc48419"/>
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/00f93941-75fc-47a2-9f72-93b4f5340d09"/>
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/2f0bfbd5-3b3d-4680-aee0-19ad1cd1f337"/>
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/10be68d0-4cb3-4ba7-b424-e8a83590c93a"/>
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/5d15c5ee-1c59-4fc9-b984-567539abeb48"/>
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/b505a2da-870f-44f1-8828-bca1ddf3306e"/>
 
 
