@@ -137,8 +137,8 @@ mvvm에 따르려 했으나 실제 작업시에 여러뷰에 필요한 뷰모델
 > 2. 위젯
 - 앱 데이터 공유하기 문제
 - 위젯에서 navigationLink 영역 설정 문제
-  -> https://github.com/APPSCHOOL3-iOS/final-zipadoo/issues/244<br>
-  -> https://github.com/APPSCHOOL3-iOS/final-zipadoo/pull/288<br>
+  -> https://github.com/APPSCHOOL3-iOS/final-zipadoo/issues/244
+  -> https://github.com/APPSCHOOL3-iOS/final-zipadoo/pull/288
 
 > 3. 그 외
  - 약속 리스트 참여자 프로필 노출-> https://github.com/APPSCHOOL3-iOS/final-zipadoo/pull/322<br/>
