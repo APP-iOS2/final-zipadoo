@@ -83,7 +83,6 @@ MVVM
 
 
 - 약속시간 30분이 전이 되면 푸시알람이 뜨며 추적중인 약속으로 분류됩니다
-<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/dbba3efb-312e-4175-b523-a12114dc4fb8"/>
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/4ef69c8c-fa3f-4107-ba11-d01ae381a9a6"/>
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/b714a928-f377-446f-b941-31d02efa90d7"/>
 
@@ -117,5 +116,23 @@ MVVM
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/2f0bfbd5-3b3d-4680-aee0-19ad1cd1f337"/>
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/10be68d0-4cb3-4ba7-b424-e8a83590c93a"/>
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/5d15c5ee-1c59-4fc9-b984-567539abeb48"/>
+
+
+
+## Trouble Shooting
+
+> 지도
+- PromiseDetailMapView에서 
+- 
+
+> 위젯
+>
+
+> 그 외
+ - 약속 리스트 참여자 프로필 노출-> https://github.com/APPSCHOOL3-iOS/final-zipadoo/pull/322
+   약속리스트 약속마다 참여자의 프로필 사진이 겹쳐지도록 뜨게 하고 싶었지만 모든 카드가 똑같이 뜨는 오류가 있었습니다. HomeMainView에서 프로필이미지를 하나하나 패치 해와야했고 이를 뷰에 카드마다 다르게 그려줘야 했는데 카드뷰를 func promiseListCell함수로 빼서 진행했더니 계속 난항이었습니다. 이후 프로필 이미지 경로배열이 저장된 class를 카드마다 생성해주는 것으로 바꿨지만 하나의 struct안에서 여러번 class LocationStore을 초기화해 만들어 주는것에 주의표시가 떴습니다. 이후 아예 카드뷰를 struct PromiseListCell로 하나 만들어서 생성했고 내부 onappear메서드로 이미지들을 불러와 해결했습니다. 막상 해결하고 보니 꼬아서 생각해 벌어진 이슈였지만, 코드를 짜면서 느낀 점이 많아 트러블슈팅으로 넣게 되었습니다.
+      
+
+  
 
 
