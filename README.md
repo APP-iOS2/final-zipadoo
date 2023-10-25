@@ -122,7 +122,7 @@ MVVM
 ## Trouble Shooting
 
 > 지도
-- PromiseDetailMapView에서 
+- 참여자의 위치정보와 개인정보를 같이 가져와야했던 문제 -> https://github.com/APPSCHOOL3-iOS/final-zipadoo/issues/216<br>
 - 
 
 > 위젯
