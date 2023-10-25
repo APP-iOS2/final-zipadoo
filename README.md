@@ -103,7 +103,7 @@ MVVM
 
 
 - 친구추가는 닉네임으로 가능합니다
-<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/163f13f5-d353-4653-9e57-71601f757a9b"/><br/><br/>
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/163f13f5-d353-4653-9e57-71601f757a9b"/>
 
 
 > **마이페이지에서는 나의 지각비율과 지난약속목록을 확인할 수 있습니다**
