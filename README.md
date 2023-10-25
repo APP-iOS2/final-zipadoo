@@ -119,15 +119,18 @@ mvvm에 따르려 했으나 실제 작업시에 여러뷰에 필요한 뷰모델
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/10be68d0-4cb3-4ba7-b424-e8a83590c93a"/>
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/52594310/5d15c5ee-1c59-4fc9-b984-567539abeb48"/>
 
+
 - 지난 약속에서는 추적이 끝난 약속을 최근에 종료된 순으로 확인할 수 있습니다.
 - 한 페이지에 10개의 약속이 노출되고, 최대 50개의 지난약속을 볼 수 있습니다.
 - 지난약속을 누르면 친구들이 얼마나 일찍/늦게 도착했는지, 몇등으로 도착했는지 결과가 나옵니다.
-  
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/affa0684-389c-43dd-bb18-a5f425cfd1e7"/>
+
 
 ## Trouble Shooting
 
 > 1. 지도
-- 참여자의 위치정보와 개인정보를 같이 가져와야했던 문제 -> https://github.com/APPSCHOOL3-iOS/final-zipadoo/issues/216<br>
+- 참여자의 위치정보와 개인정보를 같이 가져와야했던 문제
+ -> https://github.com/APPSCHOOL3-iOS/final-zipadoo/issues/216<br>
   친구들의 현재 위치와
 - 현재위치를 가져올때 뷰가 그려지기 전에 그려와지는 문제 -> 
 
