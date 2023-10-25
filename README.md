@@ -85,7 +85,13 @@ MVVM
 - 약속시간 30분이 전이 되면 푸시알람이 뜨며 추적중인 약속으로 분류됩니다
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/dbba3efb-312e-4175-b523-a12114dc4fb8"/>
 <img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/4ef69c8c-fa3f-4107-ba11-d01ae381a9a6"/>
-<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/b714a928-f377-446f-b941-31d02efa90d7"/><br/><br/>
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/b714a928-f377-446f-b941-31d02efa90d7"/>
+
+- 추적중인 약속을 들어가면 친구들의 위치를 실시간으로 확인할 수 있으며 도착하면 알람이 뜹니다
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/1801a698-c3c2-4069-8baa-61991b4e073f"/>
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/e5e0b553-cbe1-4625-8026-953f921d61f5"/>
+<img width = "20%" src = "https://github.com/APPSCHOOL3-iOS/final-zipadoo/assets/102401977/83b13436-3e1d-47a0-bc54-3b5011646746"/><br/><br/>
+
 
 
 > **친구탭바에서는 친구목록과 요청이들어온 친구목록을 확인할 수 있습니다**
