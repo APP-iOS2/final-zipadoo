@@ -10,45 +10,54 @@ import MapKit
 import CoreLocation
 
 // MARK: - 친구와 자신의 현황을 표시하는 뷰
-
 struct PromiseDetailMapView: View {
+    // 위치 및 GPS 정보 저장용 객체
     @StateObject private var locationStore = LocationStore()
     @StateObject private var gpsStore = GPSStore()
-    @EnvironmentObject var alertStore: AlertStore
-    // 프로필 이미지 (유저 프로필 이미지가 없을 때)
-    // 맵뷰 카메라 세팅
+    
+    /// 맵뷰 카메라 세팅
     @State private var region: MapCameraPosition = .userLocation(fallback: .automatic)
-    // 현황 뷰 띄우기
+    
+    /// 현황 뷰 띄우기
     @State private var isShowingFriendSheet: Bool = false
-    // 길 안내 토글
+    
+    /// 길 안내 토글
     @State private var isShowingRoute: Bool = false
-    // 사용확인필요
+    
+    /// 사용자 선택 지점
     @State private var mapSelection: MKMapItem?
-    // 길 안내 프로퍼티
-    @State private var getDirections = false
+    
+    /// 길 안내 관련 프로퍼티
     @State private var routeDisplaying = false
     @State private var route: MKRoute?
     @State private var routeDestination: MKMapItem?
-    // 받아야할 값들
+    
+    /// 약속 정보
     var promise: Promise
-    // 파베 갱신 시간
+    
+    /// 파이어베이스 갱신 시간
     let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
-    // 토스트 bool값
+    
+    /// 도착 여부를 나타내는 불린 값
     @State private var isArrived: Bool = false
-    // 도착 위치 버튼 bool값
+    
+    /// 도착 위치로 이동하는 버튼 상태
     @State private var moveDestination: Bool = false
-    // 도착 위치 반경
+    
+    /// 도착 위치를 확인할 반경
     let arrivalCheckRadius: Double = 150
     
+    /// 프레젠테이션 디텐트 설정
     @State private var detents: PresentationDetent = .medium
     
-    // Marker는 시각적, Anntation은 정보 포함
     var body: some View {
         NavigationStack {
             VStack {
                 Map(position: $region, selection: $mapSelection) {
+                    
                     // 현재 위치 표시
                     UserAnnotation(anchor: .center)
+                    
                     // 도착 위치 표시
                     Annotation("약속 위치", coordinate: promise.coordinate, anchor: .bottom) {
                         Button(action: {
@@ -59,26 +68,17 @@ struct PromiseDetailMapView: View {
                                 .foregroundColor(.blue)
                         })
                     }
+                    
                     // 도착 반경 표시
                     MapCircle(center: promise.coordinate, radius: arrivalCheckRadius)
                         .foregroundStyle(.blue.opacity(0.3))
                         .stroke(.blue, lineWidth: 2)
+                    
                     // 친구 위치 표시
                     ForEach(locationStore.locationParticipantDatas.filter {
                         $0.location.participantId != AuthStore.shared.currentUser?.id ?? ""
                     }) { annotation in
                         Annotation(annotation.nickname, coordinate: annotation.location.currentCoordinate, anchor: .center) {
-                            /*AsyncImage(url: URL(string: annotation.imageString), content: { image in
-                             image
-                             .resizable()
-                             .frame(width: 25, height: 25) // 크기 조절
-                             .aspectRatio(contentMode: .fill)
-                             }) {
-                             Image(.dothez)
-                             .resizable()
-                             .frame(width: 25, height: 25) // 크기 조절
-                             .aspectRatio(contentMode: .fill)
-                             }*/
                             Button {
                                 region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                             } label: {
@@ -92,6 +92,7 @@ struct PromiseDetailMapView: View {
                             }
                         }
                     }
+                    
                     // 경로 그리기
                     if let route {
                         MapPolyline(route.polyline)
@@ -99,30 +100,16 @@ struct PromiseDetailMapView: View {
                     }
                 }
                 .mapControls {
+                    /// 맵뷰 컨트롤
                     MapCompass()
                     MapPitchToggle()
                     MapUserLocationButton()
                 }
-                // 맵뷰 탭바같은거
+                
+                // 맵뷰 탭바
                 .overlay(alignment: .topLeading) {
                     VStack(alignment: .leading) {
-                        /* Menu {
-                            Button {
-                                withAnimation(.easeIn(duration: 1)) {
-                                    region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
-                                }
-                                // 맵 화면을 약속 위치로 움직여주는 버튼 기능
-                            } label: {
-                                Text("약속 위치")
-                            }
-                            Toggle("길 안내", isOn: $isShowingRoute)
-                        } label: {
-                            Image(systemName: "lineweight")
-                                .padding(15)
-                                .background(.white)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .padding(4)
-                        } */
+                        // 약속 위치로 이동하는 버튼
                         Button {
                             withAnimation(.easeIn(duration: 1)) {
                                 region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
@@ -131,8 +118,8 @@ struct PromiseDetailMapView: View {
                             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
                                 moveDestination = false
                             }
-                            // 맵 화면을 약속 위치로 움직여주는 버튼 기능
                         } label: {
+                            // 이동 중인 경우와 아닌 경우에 따른 버튼 모양 변경
                             if moveDestination {
                                 Image(systemName: "flag.fill")
                                     .foregroundColor(.blue)
@@ -153,6 +140,8 @@ struct PromiseDetailMapView: View {
                                 }
                             }
                         }
+                        
+                        // 길 안내 토글 버튼
                         Button {
                             isShowingRoute.toggle()
                         } label: {
@@ -166,9 +155,9 @@ struct PromiseDetailMapView: View {
                                 .padding(EdgeInsets(top: 1, leading: 5, bottom: 0, trailing: 5))
                                 .shadow(color: .gray.opacity(0.3), radius: 5)
                         }
-                        // 토글 버튼 ON/OFF 간단 버튼으로 변경할까? 원에 글 색만 바뀌게
                     }
                 }
+                // 하단 '친구 현황 보기' 버튼
                 .overlay(alignment: .bottom) {
                     Button {
                         isShowingFriendSheet = true
@@ -185,65 +174,19 @@ struct PromiseDetailMapView: View {
                 }
             }
             .sheet(isPresented: $isShowingFriendSheet) {
+                // 친구 현황 서브뷰 표시
                 PromiseDetailMapSubView(locationStore: locationStore, region: $region, destinationCoordinate: promise.coordinate, promise: promise, isShowingFriendSheet: $isShowingFriendSheet, detents: $detents)
                     .presentationDetents([.medium, .large], selection: $detents)
                     .animation(.linear, value: 10)
             }
         }
-        /*
-        .onAppear {
-            // 1초마다 반복, 전역에서 사라지지 않고 실행됨
-            let timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
-                print("나는 맵에서 만들어짐! ! 1초 지남")
-                // 위치 도착 위치 비교
-                if !isArrived {
-                    // 도착 체크 함수
-                    isArrived = didYouArrive(currentCoordinate:
-                                                CLLocation( latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0,
-                                                    longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0),
-                                             arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effetiveDistance: arrivalCheckRadius)
-                    // 위치 업데이트
-                    locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
-                } else { // 도착했을때
-                    // 한번만 실행되고 그 뒤에는 실행되면 안됨, 그런데 5초 루프문에 넣어야지 백그라운드에서 실행가능
-                    if locationStore.myLocation.arriveTime == 0 {
-                        // 도착시간 저장
-                        locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
-                        let rank = locationStore.calculateRank()
-                        locationStore.updateArriveTime(locationId: locationStore.myLocation.id, arriveTime: locationStore.myLocation.arriveTime, rank: rank)
-                        // 도착 알림 실행
-                        alertStore.arrivalMsgAlert = ArrivalMsgModel(name: AuthStore.shared.currentUser?.nickName ?? "이름없음", profileImgString: AuthStore.shared.currentUser?.profileImageString ?? "doo1", rank: rank, arrivarDifference: promise.promiseDate - locationStore.myLocation.arriveTime, potato: 0)
-                        alertStore.isPresentedArrival.toggle()
-                    }
-                }
-                // 유저들 위치 패치
-                Task {
-                    do {
-                        try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
-                    } catch {
-                        print("파이어베이스 에러")
-                    }
-                }
-            }
-            RunLoop.current.add(timer, forMode: .default)
-                
-            print("promise 데이터 확인 : \(promise)")
-            locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
-            Task {
-                do {
-                    try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
-                } catch {
-                    print("파이어베이스 에러")
-                }
-            }
-        }*/
-        .task { // 초기화 코드
-            // myLocation 초기화
-//            locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: departureLatitude, departureLongitude: departureLongitude, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+        .task {
+            // 현재 위치 정보 갱신
             locationStore.myLocation.currentLatitude = gpsStore.lastSeenLocation?.coordinate.latitude ?? 0
             locationStore.myLocation.currentLongitude = gpsStore.lastSeenLocation?.coordinate.longitude ?? 0
-            // 패치해주는 코드
+            
             do {
+                // 파이어베이스 데이터 갱신
                 try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
                 print("파베 패치 완료")
                 print("나의 위치데이터는 : \(locationStore.myLocation)")
@@ -251,43 +194,23 @@ struct PromiseDetailMapView: View {
                 print("파이어베이스 에러")
             }
         }
-        /* .onReceive(timer, perform: { _ in
-            print("5초 지남")
-            // 위치 도착 위치 비교
-            if !isArrived {
-                isArrived = didYouArrive(currentCoordinate:
-                                            CLLocation( latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0,
-                                                longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0),
-                                         arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effetiveDistance: arrivalCheckRadius)
-                // 위치 업데이트
-                locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
-            }
-            // 유저들 위치 패치
-            Task {
-                do {
-                    try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
-                } catch {
-                    print("파이어베이스 에러")
-                }
-            }
-        }) */
         .onChange(of: isShowingRoute) {
+            // 길 안내 토글 상태 변화 감지
             if isShowingRoute {
-                fetchRoute(startCoordinate: CLLocationCoordinate2D(latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0), destinationCoordinate: promise.coordinate)
+                // 길 안내 시작 시 경로 정보 가져오기
+                fetchRoute(
+                    startCoordinate: CLLocationCoordinate2D(
+                        latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0,
+                        longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0
+                    ),
+                    destinationCoordinate: promise.coordinate
+                )
                 print("루트 실행 후 gpsStore값은 : \(String(describing: gpsStore.lastSeenLocation?.coordinate))")
             } else {
+                // 길 안내 종료 시 경로 초기화
                 route = nil
             }
         }
-        // 도착할때 실행
-        /*.onChange(of: isArrived) {
-            // 도착시간 저장
-            locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
-            locationStore.updateArriveTime(locationId: locationStore.myLocation.id, newValue: locationStore.myLocation.arriveTime)
-            // 도착 알림 실행
-            alertStore.arrivalMsgAlert = ArrivalMsgModel(name: AuthStore.shared.currentUser?.nickName ?? "이름없음", profileImgString: AuthStore.shared.currentUser?.profileImageString ?? "doo1", rank: locationStore.calculateRank(), arrivarDifference: promise.promiseDate - locationStore.myLocation.arriveTime, potato: 0)
-            alertStore.isPresentedArrival.toggle()
-        } */
     }
 }
 
@@ -297,24 +220,37 @@ struct PromiseDetailMapView: View {
 }
 
 extension PromiseDetailMapView {
-    // 나의 위치 거리를 받아서, 도착지점 원과 비교하여 Bool값으로 출력
-    // 도착 Bool값이 true일때, 흐음... 도착시간 저장 -> 토스트 띄움
-    func didYouArrive(currentCoordinate: CLLocation, arrivalCoordinate: CLLocation, effetiveDistance: Double) -> Bool {
-        return currentCoordinate.distance(from: arrivalCoordinate) < effetiveDistance
+    /// 도착 여부를 확인하는 메서드
+    /// - Parameters:
+    ///   - currentCoordinate: 현재 좌표
+    ///   - arrivalCoordinate: 도착 좌표
+    ///   - effectiveDistance: 허용 가능한 도착 반경
+    /// - Returns: 도착 여부를 나타내는 Bool 값
+    func didYouArrive(currentCoordinate: CLLocation, arrivalCoordinate: CLLocation, effectiveDistance: Double) -> Bool {
+        return currentCoordinate.distance(from: arrivalCoordinate) < effectiveDistance
     }
+    
+    /// 경로 정보를 가져오는 메서드
+    /// - Parameters:
+    ///   - startCoordinate: 출발 좌표
+    ///   - destinationCoordinate: 도착 좌표
     func fetchRoute(startCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
+        // 경로 요청 객체 생성
         let request = MKDirections.Request()
         request.source = MKMapItem(placemark: .init(coordinate: startCoordinate))
         request.destination = MKMapItem(placemark: .init(coordinate: destinationCoordinate))
         
         Task {
+            // 경로 계산
             let result = try? await MKDirections(request: request).calculate()
             route = result?.routes.first
             routeDestination = MKMapItem(placemark: .init(coordinate: destinationCoordinate))
             
+            // 애니메이션과 함께 경로 표시 활성화
             withAnimation(.snappy) {
                 routeDisplaying = true
                 
+                // 경로가 있고 표시 중일 경우 지도 영역을 경로에 맞춤
                 if let rect = route?.polyline.boundingMapRect, routeDisplaying {
                     region = .rect(rect)
                 }
