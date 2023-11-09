@@ -9,6 +9,7 @@ import SwiftUI
 import CoreLocation
 import MapKit
 
+// MARK: - 구성원 위치 현황 및 약속 시간 현황 나열 메뉴 뷰
 struct PromiseDetailMapSubView: View {
     // 위치 정보 관리를 위한 ObservedObject
     @ObservedObject var locationStore: LocationStore
@@ -262,4 +263,3 @@ extension PromiseTitleAndTimeView {
         }
     }
 }
-

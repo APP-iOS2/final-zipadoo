@@ -9,7 +9,7 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
-// MARK: - 친구와 자신의 현황을 표시하는 뷰
+// MARK: - 친구와 자신의 현황을 표시하는 맵 뷰
 struct PromiseDetailMapView: View {
     // 위치 및 GPS 정보 저장용 객체
     @StateObject private var locationStore = LocationStore()

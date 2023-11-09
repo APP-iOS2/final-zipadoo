@@ -153,6 +153,7 @@ struct PromiseDetailProgressBarView: View {
         .task {
             promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
         }
+        /// 매 초마다 약속이 종료되었는지 여부를 확인
         .onReceive(timer) { _ in
             promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
         }
@@ -228,6 +229,23 @@ extension PromiseDetailProgressBarView {
             return String(format: "%.2f km", distanceInKilometers)
         }
     }
+    
+    /// 약속 종료 여부를 확인하는 함수
+    func calculateTimeRemaining(targetTime: Double) -> Bool {
+        // 현재 시간을 가져오기
+        let currentTime = Date().timeIntervalSince1970
+        // 목표 시간과 현재 시간의 차이 계산
+        let timeDifference = targetTime - currentTime
+        
+        // 시간이 지났는지 여부를 반환
+        if timeDifference <= 0 {
+            // 약속 시간이 이미 지났음
+            return true
+        } else {
+            // 아직 약속 시간이 남아있음
+            return false
+        }
+    }
 }
 
 struct ProgressSubView: View {
@@ -292,25 +310,6 @@ struct ProgressSubView: View {
             withAnimation(.easeIn) {
                 ratio = realRatio
             }
-        }
-    }
-}
-
-extension PromiseDetailProgressBarView {
-    // 약속 종료 여부를 확인하는 함수
-    func calculateTimeRemaining(targetTime: Double) -> Bool {
-        // 현재 시간을 가져오기
-        let currentTime = Date().timeIntervalSince1970
-        // 목표 시간과 현재 시간의 차이 계산
-        let timeDifference = targetTime - currentTime
-        
-        // 시간이 지났는지 여부를 반환
-        if timeDifference <= 0 {
-            // 약속 시간이 이미 지났음
-            return true
-        } else {
-            // 아직 약속 시간이 남아있음
-            return false
         }
     }
 }
