@@ -40,3 +40,8 @@ enum ProfileImageSize {
         }
     }
 }
+
+enum SharingStatus: String {
+    case preparing = "위치 공유 준비중"
+    case sharing = "위치 공유중"
+}
