@@ -11,6 +11,7 @@ import UIKit
 // MARK: - 약속 디테일뷰
 struct PromiseDetailView: View {
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
+    @ObservedObject var locationStore: LocationStore = LocationStore()
     @StateObject var loginUser: UserStore = UserStore()
     @EnvironmentObject var promiseViewModel: PromiseViewModel
     @EnvironmentObject var widgetStore: WidgetStore
@@ -27,7 +28,7 @@ struct PromiseDetailView: View {
     /// 약속삭제 시트 Bool값
     @State private var isShowingDeleteAlert: Bool = false
     /// 뒤로가기 Bool값
-    @State private var navigateBackToHome: Bool = false
+    @State private var isNavigateBackToHome: Bool = false
     
     @State var promise: Promise // 약속 데이터 받는 변수
     
@@ -46,7 +47,6 @@ struct PromiseDetailView: View {
     // MARK: - PromiseDetailView body
     var body: some View {
         NavigationStack {
-
             ScrollView {
                 VStack(alignment: .leading) {
                     titleView
@@ -56,12 +56,23 @@ struct PromiseDetailView: View {
                     dateView
                     
                     remainingTimeView
-                    
-//                    memberStatusView
                 }
+                .padding(.leading)
+                .padding(.trailing)
+                .padding(.bottom)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(.primary)
+                        .opacity(0.05)
+                        .shadow(color: .primary, radius: 10, x: 5, y: 5)
+                )
+                VStack {
+                    participantsView
+                }
+                .padding(.leading, 5)
+                .padding(.trailing, 5)
             }
-            .padding(.horizontal, 15)
-            .padding(.top, 20)
+            .padding(15)
             // MARK: - 더보기 버튼(삭제, 수정, 약속나가기)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -77,7 +88,6 @@ struct PromiseDetailView: View {
                     Task {
                         do {
                             try await promiseViewModel.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
-                            
                             dismiss()
                         } catch {
                             print("실패")
@@ -99,7 +109,7 @@ struct PromiseDetailView: View {
             currentDate = Date().timeIntervalSince1970
         })
         .onAppear {
-            if navigateBackToHome {
+            if isNavigateBackToHome {
                 dismiss()
             }
             Task {
@@ -112,7 +122,7 @@ struct PromiseDetailView: View {
             }
         }
         .sheet(isPresented: $isShowingEditSheet,
-               content: { PromiseEditView(promise: .constant(promise), navigationBackToHome: $navigateBackToHome)
+               content: { PromiseEditView(promise: .constant(promise), navigationBackToHome: $isNavigateBackToHome)
         })
         .sheet(
             isPresented: $isShowingShareSheet,
@@ -133,7 +143,7 @@ struct PromiseDetailView: View {
             Menu {
                 if loginUser.currentUser?.id == promise.makingUserID {
                     NavigationLink {
-                        PromiseEditView(promise: .constant(promise), navigationBackToHome: $navigateBackToHome)
+                        PromiseEditView(promise: .constant(promise), navigationBackToHome: $isNavigateBackToHome)
                     } label: {
                         Text("수정")
                     }
@@ -173,36 +183,60 @@ struct PromiseDetailView: View {
         .foregroundColor(.secondary)
     }
     
-//    private var memberStatusView: some View {
-//        VStack(alignment: .leading) {
-//            HStack {
-//                Text("친구 위치 현황")
-//                    .font(.title3).bold()
-//                
-//                Spacer()
-//                
-//                if destinagionStatus == .sharing {
-//                    Button {
-//                        // TODO: 지도 상세뷰로 navigation
-//                    } label: {
-//                        HStack {
-//                            Text("지도로 보기")
-//                            Image(systemName: "chevron.right")
-//                        }
-//                    }
+    private var                     participantsView: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text("약속한 두더지 친구들")
+                    .font(.title3).bold()
+                
+                Spacer()
+            }
+            HStack {
+                Image(systemName: "info.circle")
+                Text("약속시간 30분 전부터 위치가 공유됩니다.")
+            }
+            .foregroundColor(.secondary)
+            .font(.caption)
+            .padding(.bottom)
+            
+//            ForEach(locationStore.locationParticipantDatas) { friends in
+//                VStack(alignment: .leading) {
+//                    Image(friends.moleImageString)
+//                        .resizable()
+//                        .aspectRatio(contentMode: .fit)
+//                        .frame(width: 50, height: 50)
+//                        .padding(.bottom, 5)
+//                    
+//                    Text(friends.nickname)
 //                }
 //            }
-//            
-//            if destinagionStatus != .sharing {
-//                HStack {
-//                    Image(systemName: "info.circle")
-//                    Text("약속시간 30분 전부터 위치가 공유됩니다.")
-//                }
-//                .foregroundColor(.secondary)
-//                .font(.caption)
-//            }
-//        }
-//    }
+//            .overlay(
+//                RoundedRectangle(cornerRadius: 10)
+//                    .foregroundColor(.primary)
+//                    .opacity(0.05)
+//                    .shadow(color: .primary, radius: 10, x: 5, y: 5)
+//            )
+            // MARK: - 약속 친구 리스트 테스트
+            VStack {
+                Image(loginUser.currentUser?.moleImageString ?? "- No image -")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 50, height: 50)
+                    .padding(.bottom, 5)
+                
+                Text(loginUser.currentUser?.nickName ?? "- No NickName -")
+            }
+            .padding()
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(.primary)
+                    .opacity(0.05)
+                    .shadow(color: .primary, radius: 10, x: 5, y: 5)
+            )
+        }
+        .padding(.top)
+        .padding(.bottom)
+    }
     // MARK: - 시간 변환 함수
     private func calculateDate(date: Double) -> String {
         let date = Date(timeIntervalSince1970: date)
@@ -262,8 +296,10 @@ extension PromiseDetailView {
     // 약속 제목
     var titleView: some View {
         Text(promise.promiseTitle)
-            .font(.title2).bold()
-            .padding(.bottom, 7)
+            .font(.title)
+            .padding(.top)
+            .padding(.bottom)
+            .bold()
     }
     // 약속 장소
     var destinationView: some View {
@@ -289,19 +325,19 @@ extension PromiseDetailView {
 }
 
 // MARK: - 프리뷰 크래시로 인해 프리뷰코드 주석처리
-  #Preview {
-    PromiseDetailView(promise:
-                        Promise(
-                            id: "",
-                            makingUserID: "3",
-                            promiseTitle: "지각파는 두더지 모각코",
-                            promiseDate: 1697101051.302136,
-                            destination: "서울특별시 종로구 종로3길 17",
-                            address: "",
-                            latitude: 0.0,
-                            longitude: 0.0,
-                            participantIdArray: ["3", "4", "5"],
-                            checkDoublePromise: false,
-                            locationIdArray: ["35", "34", "89"],
-                            penalty: 0))
- }
+//  #Preview {
+//    PromiseDetailView(promise:
+//                        Promise(
+//                            id: "",
+//                            makingUserID: "3",
+//                            promiseTitle: "지각파는 두더지 모각코",
+//                            promiseDate: 1697101051.302136,
+//                            destination: "서울특별시 종로구 종로3길 17",
+//                            address: "",
+//                            latitude: 0.0,
+//                            longitude: 0.0,
+//                            participantIdArray: ["3", "4", "5"],
+//                            checkDoublePromise: false,
+//                            locationIdArray: ["35", "34", "89"],
+//                            penalty: 0))
+// }
