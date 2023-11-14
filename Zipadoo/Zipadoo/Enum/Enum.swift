@@ -40,6 +40,12 @@ enum ProfileImageSize {
         }
     }
 }
+
+enum SharingStatus: String {
+    case preparing = "위치 공유 준비중"
+    case sharing = "위치 공유중"
+}
+
 /// 약속 수정시 정보별 타입 - 약속이름, 날짜/시간, 장소, 지각비
 enum PromiseCellType {
     case promiseTitle, promiseDate, promiseDestination, promisePenalty
