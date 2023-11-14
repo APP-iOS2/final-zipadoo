@@ -11,13 +11,12 @@ struct FriendsListVIew: View {
     
     @StateObject var friendsStore: FriendsStore = FriendsStore()
     
+    /// 시트 불리언 값
     @Binding var isShowingSheet: Bool
     @Binding var selectedFriends: [User]
+    
     @State private var showAlert = false
     @State private var alertMessage = ""
-    
-    // 더미데이터
-    let friends = ["임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "이재승", "장여훈", "정한두"]
     
     var body: some View {
         NavigationStack {
@@ -48,7 +47,8 @@ struct FriendsListVIew: View {
                         }
                     }
                 }
-            // MARK: 친구목록
+            
+            // MARK: - 친구목록
             List(friendsStore.friendsFetchArray) { friend in
                 Button {
                     // 친구를 선택하면 seledtedFriends에 추가
@@ -65,15 +65,11 @@ struct FriendsListVIew: View {
                             ProfileImageView(imageString: friend.profileImageString, size: .mini)
                             Text(friend.nickName)
                         } else {
-                                ProfileImageView(imageString: friend.profileImageString, size: .mini)
+                            ProfileImageView(imageString: friend.profileImageString, size: .mini)
                                 .opacity(0.5)
-                                Text(friend.nickName)
+                            Text(friend.nickName)
                                 .foregroundColor(.secondary)
-                               
-                            }
-                        
-                        
-                    
+                        }
                     }
                 }
                 .alert(isPresented: $showAlert) {

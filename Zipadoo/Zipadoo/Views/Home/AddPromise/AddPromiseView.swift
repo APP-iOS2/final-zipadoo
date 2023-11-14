@@ -35,7 +35,8 @@ struct AddPromiseView: View {
     
     /// 약속 장소 등록 버튼 토글값
     @State private var isShowAddPlaceMapSheet: Bool = false
-    @State private var previewPlaceSheet: Bool = false // 프리뷰 버튼 클릭값
+    /// 프리뷰 버튼 클릭값
+    @State private var isPreviewPlaceSheet: Bool = false
     /// 지각비 설정 토글값
     @State private var isShowPenalty: Bool = false
     /// 약속 등록 버튼 토글값
@@ -139,7 +140,7 @@ struct AddPromiseView: View {
                             } label: {
                                 if !destination.isEmpty {
                                     Button {
-                                        previewPlaceSheet = true
+                                        isPreviewPlaceSheet = true
                                     } label: {
                                         HStack {
                                             Text("\(destination)")
@@ -151,7 +152,7 @@ struct AddPromiseView: View {
                                                 .padding(.leading, -5)
                                         }
                                     }
-                                    .sheet(isPresented: $previewPlaceSheet) {
+                                    .sheet(isPresented: $isPreviewPlaceSheet) {
                                         VStack {
                                             RoundedRectangle(cornerRadius: 8)
                                                 .frame(width: 50, height: 5)
@@ -183,7 +184,6 @@ struct AddPromiseView: View {
                     .onTapGesture {
                         isShowAddPlaceMapSheet = true
                     }
-                    
                     
                     // MARK: - 지각비 구현
                     Text("지각비")
@@ -337,49 +337,6 @@ struct AddPromiseView: View {
             .frame(maxWidth: .infinity)
             .presentationDetents([.height(300)])
         } // 지각비 sheet
-    }
-}
-
-// Custom Date Picker...
-struct CustomDatePicker: View {
-    
-    // 현재시간으로부터 30분 뒤 상 수선언
-    let thirtyMinutesFromNow = Calendar.current.date(byAdding: .minute, value: 30, to: Date()) ?? Date()
-    
-    @StateObject var promiseViewModel: PromiseViewModel
-    
-    @Binding var date: Date
-    @Binding var showPicker: Bool
-    
-    var body: some View {
-        ZStack {
-            Text("")
-            // Blur Effect...
-            Rectangle()
-                .fill(.ultraThinMaterial)
-                .ignoresSafeArea()
-            
-            // today-> 분단위 표시되는 Date()로 변경
-            DatePicker("현재시간으로 부터 30분 뒤부터 선택 가능", selection: $date ,in: thirtyMinutesFromNow..., displayedComponents: [.date, .hourAndMinute])
-                .datePickerStyle(.graphical)
-                .labelsHidden()
-                .onAppear {
-                    date = thirtyMinutesFromNow
-                }
-            
-            // Close Button...
-            Button {
-                withAnimation {
-                    showPicker.toggle()
-                }
-            } label: {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundColor(.primary)
-            }
-            .padding(10)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
-        } // ZStack
-        .opacity(showPicker ? 1 : 0)
     } // body
 } // struct
 

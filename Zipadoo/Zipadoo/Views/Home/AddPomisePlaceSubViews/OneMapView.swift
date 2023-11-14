@@ -10,7 +10,9 @@ import MapKit
 
 /// 장소검색 옵션(직접설정, 장소검색)을 하나의 맵뷰를 통해 동작하는 맵뷰
 struct OneMapView: View {
+    
     @Environment(\.dismiss) private var dismiss
+    
     @ObservedObject var promiseViewModel: PromiseViewModel
     /// 연관된 값들을 한 공간에 이름을 지어 모아둔 공간, mapControls를 사용하기 위해 호출함
     @Namespace var mapScope
@@ -47,8 +49,6 @@ struct OneMapView: View {
     @State private var addLocationButton: Bool = false
     
     @Binding var sheetTitle: String
-    
-//    @Binding var promiseLocation: PromiseLocation
     
     /// 클릭한 장소에 대한 위치 값을 약속장소로 지정하기 위해 사용하는 클래스
     var addLocationStore: AddLocationStore = AddLocationStore()
