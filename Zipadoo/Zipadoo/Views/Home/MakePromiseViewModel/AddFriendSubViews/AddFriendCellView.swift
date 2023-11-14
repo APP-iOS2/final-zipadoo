@@ -35,8 +35,7 @@ struct AddFriendCellView: View {
                         animate.toggle()
                         addFriendsSheet.toggle()
                     }
-                
-                
+                         
             }
             .padding(.top, 60)
             
@@ -57,10 +56,10 @@ struct AddFriendCellView: View {
                                  } else { */
                                 ScrollView(.horizontal) {
                                     HStack {
-                                        ForEach(selectedFriends) { friend in
-                                            FriendSellView(selectedFriends: $selectedFriends, friend: friend).padding()
-                                                .padding(.trailing, -50)
-                                        }
+                                        // 참여자 프로필, 닉네임
+                                        FriendCellView(selectedFriends: $selectedFriends).padding()
+                                            .padding(.trailing, -50)
+                                        
                                     }
                                     .padding(.leading, -20)
                                     .padding(.trailing, 50)
@@ -72,14 +71,14 @@ struct AddFriendCellView: View {
                     }
                 }
                 .sheet(isPresented: $addFriendsSheet) {
-                    FriendsListVIew(isShowingSheet: $addFriendsSheet, selectedFriends: $selectedFriends)
+                    FriendsListView(isShowingSheet: $addFriendsSheet, selectedFriends: $selectedFriends)
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
                     animate.toggle()
                     addFriendsSheet.toggle()
                 }
-        }
+        } // VStack
     }
 }
 

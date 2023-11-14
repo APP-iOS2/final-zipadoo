@@ -5,237 +5,94 @@
 //  Created by 나예슬 on 2023/10/11.
 //
 
-import SwiftUI
 import CoreLocation
+import FirebaseCore
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import FirebaseCore
+import SwiftUI
 
+enum PromiseCellType {
+    case promiseTitle, promiseDate, promiseDestination, promisePenalty
+    /// 셀타입에 따른 소제목
+    func cellTitle(_ cellType: PromiseCellType) -> String {
+        switch cellType {
+        case .promiseTitle: return "약속 이름 수정"
+        case .promiseDate: return "약속 날짜/시간 수정"
+        case .promiseDestination: return "약속 장소 수정"
+        case .promisePenalty: return "지각비 수정"
+        }
+    }
+    // 시스템 이미지 이름
+    func systemImageName(_ cellType: PromiseCellType) -> String {
+        switch cellType {
+        case .promiseDate: return "calendar"
+        case .promiseDestination: return "location.magnifyingglass"
+        case .promisePenalty: return "wonsign.circle"
+        default: return ""
+        }
+    }
+}
 struct PromiseEditView: View {
+    
     @Environment(\.dismiss) private var dismiss
+    /// 받아온 약속
     @Binding var promise: Promise
+    /// 수정후 true변경, 홈뷰로 이동
     @Binding var navigationBackToHome: Bool
-    @State private var editedPromiseTitle: String = ""
-    @State private var editedDestination: String = ""
-    @State private var editedAddress: String = ""
-    @State private var editedPromiseDate: Date = Date()
-    @State private var mapViewSheet: Bool = false
-    @State private var addFriendSheet: Bool = false
-    @State private var addFriendsSheet: Bool = false
-    @State private var showAlert: Bool = false
-    @State private var alertMessage = ""
-    @State private var editSelectedFriends: [String] = []
-    @State private var locationIdArray: [String] = []
-//    @State private var editPromiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
+
     @ObservedObject private var promiseViewModel: PromiseViewModel = PromiseViewModel()
     @StateObject private var authUser: AuthStore = AuthStore()
     @StateObject var friendsStore: FriendsStore = FriendsStore()
     @StateObject var userStore: UserStore = UserStore()
-    @State var selectedFriends: [User] = []
-    @State var editPlaceSheet: Bool = false
+    
+    // 변경하려는 데이터
+    @State private var editedPromiseTitle: String = ""
+    @State private var editedPromiseDate: Date = Date()
+    @State private var editedDestination: String = ""
+    @State private var editedAddress: String = ""
+    @State private var destinationLatitude = 0.0 // 약속장소 위도
+    @State private var destinationLongitude = 0.0 // 약속장소 경도
+    @State private var penalty: Int = 0 // 지각비 수정
+    /// 참여자들 User타입
+    @State var editSelectedFriends: [User] = []
+    
+    // 수정 시트
+    /// 데이트피커
+    @State private var isShowingDatePicker = false
+    /// 장소수정 시트
+    @State var isShowingEditMapSheet: Bool = false
+    /// 지각비 수정 시트
+    @State private var isShowingPenalty: Bool = false
+    /// 참여친구 수정 시트
+    @State private var isShowingFriendsSheet: Bool = false
+
+    /// 지각비 선택
     private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
     private let today = Calendar.current.startOfDay(for: Date())
-    @State private var penalty: Int = 0
-    @State private var showingPenalty: Bool = false
     @State private var sheetTitle: String = "약속장소 수정"
-    @State private var previewPlaceSheet: Bool = false
-    @State private var coordXXX = 0.0 // 약속장소 위도
-    @State private var coordYYY = 0.0 // 약속장소 경도
-    // 데이트피커
-    @State private var showDatePicker = false
-    @State private var isSelectedDataPickerOnce = false
-    // 심볼 이펙트
-    @State private var animate = false
-    @State private var animate1 =  false
-    @State private var animate2 =  false
-    @State private var animate3 =  false
     
-    private let dbRef = Firestore.firestore().collection("Promise")
+    // 심볼 이펙트
+//    @State private var animate = false
+//    @State private var animate1 =  false
+//    @State private var animate2 =  false
+//    @State private var animate3 =  false
 
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     // MARK: - 약속 이름 수정
-                    Text("약속 이름 수정")
-                        .font(.title3)
-                        .foregroundColor(.secondary)
-                        .fontWeight(.semibold)
-                        .padding(.top, 25)
-                    Text("")
-                        .foregroundColor(.secondary)
-                        .font(.footnote)
+                    promiseCell(.promiseTitle)
                     
-                    HStack {
-                        TextField("약속 이름을 수정해주세요", text: $editedPromiseTitle)
-                            .fontWeight(.semibold)
-                            .onChange(of: editedPromiseTitle) {
-                                if editedPromiseTitle.count > 15 {
-                                    editedPromiseTitle = String(editedPromiseTitle.prefix(15))
-                                }
-                            }
-                        
-                        Text("\(editedPromiseTitle.count)")
-                            .foregroundColor(.gray)
-                            .padding(.trailing, -7)
-                        Text("/15")
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(.top, 10)
-                    
-                    Divider()
-                        .frame(maxWidth: .infinity)
-                        .overlay {
-                            Color.secondary
-                        }
                     // MARK: - 약속 날짜/시간 수정
-                    Text("약속 날짜/시간")
-                        .font(.title3)
-                        .foregroundColor(.secondary)
-                        .fontWeight(.semibold)
-                        .padding(.top, 25)
-                    Text("약속 시간 30분 전부터 위치공유가 시작됩니다.")
-                        .foregroundColor(.red.opacity(0.8))
-                        .font(.footnote)
-                    
-                    HStack {
-                        let time = editedPromiseDate.formatted(date: .omitted, time: .shortened)
-                        
-                        let date = editedPromiseDate.formatted(date: .abbreviated, time: .omitted)
-                        
-                        Text("\(time), \(date)")
-                            .fontWeight(.semibold)
-               
-                        Spacer()
-                        
-                        // 버튼
-                            Image(systemName: "calendar")
-                                .foregroundColor(.primary)
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .symbolEffect(.bounce, value: animate1)
-                    }
-                    .padding(.top, 10)
-                    .onTapGesture {
-                        animate1.toggle()
-                        showDatePicker.toggle()
-                    }
-                    
-                    Divider()
-                        .frame(maxWidth: .infinity)
-                        .overlay {
-                            Color.secondary
-                        }
-//                    DatePicker("날짜/시간", selection: $editedPromiseDate, in: self.today..., displayedComponents: [.date, .hourAndMinute])
-//                        .datePickerStyle(.compact)
-//                        .labelsHidden()
-//                        .padding(.top, 10)
-                    
+                    promiseCell(.promiseDate)
+
                     // MARK: - 약속 장소 수정
-                    Text("약속 장소 수정")
-                        .font(.title3)
-                        .foregroundColor(.secondary)
-                        .fontWeight(.semibold)
-                        .padding(.top, 25)
-                    Text("") // 안내문구
-                        .foregroundColor(.secondary)
-                        .font(.footnote)
+                    promiseCell(.promiseDestination)
                     
-                    /// Sheet 대신 NavigationLink로 이동하여 장소 설정하도록 설정
-                Group {
-                    HStack {
-                        Button {
-                            editPlaceSheet = true
-                        } label: {
-                            if !editedDestination.isEmpty {
-                                Button {
-                                    previewPlaceSheet = true
-                                } label: {
-                                    HStack {
-                                        Text("\(editedDestination)")
-                                            .font(.callout)
-                                        Image(systemName: "chevron.forward")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 6)
-                                            .padding(.leading, -5)
-                                    }
-                                }
-                                .sheet(isPresented: $previewPlaceSheet) {
-                                    VStack {
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .frame(width: 50, height: 5)
-                                            .foregroundStyle(Color.gray)
-                                            .padding(.top, 10)
-                                        
-                                        PreviewPlaceOnMap(promiseViewModel: promiseViewModel, destination: $editedDestination, address: $editedAddress, coordXXX: $coordXXX, coordYYY: $coordYYY)
-                                            .presentationDetents([.height(700)])
-                                            .padding(.top, 15)
-                                    }
-                                }
-                            }
-                            Spacer()
-                            
-                            Image(systemName: "location.magnifyingglass")
-                                .foregroundColor(.primary)
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                        }
-                    }
-                    .padding(.top, 10)
-                    
-                    Divider()
-                        .frame(maxWidth: .infinity)
-                        .overlay {
-                            Color.secondary
-                        }
-                }
-                .onTapGesture {
-                    editPlaceSheet = true
-                }
-                .sheet(isPresented: $editPlaceSheet) {
-                    OneMapView(promiseViewModel: promiseViewModel, destination: $editedDestination, address: $editedAddress, coordXXX: $coordXXX, coordYYY: $coordYYY, sheetTitle: $sheetTitle)
-                }
                     // MARK: - 지각비 수정
-                    Text("지각비 수정")
-                        .font(.title3)
-                        .foregroundColor(.secondary)
-                        .fontWeight(.semibold)
-                        .padding(.top, 25)
-                    Text("")
-                        .foregroundColor(.secondary)
-                        .font(.footnote)
+                    promiseCell(.promisePenalty)
                     
-                    Group {
-                        Button {
-                            showingPenalty.toggle()
-                        } label: {
-                            HStack {
-                                Text("\(penalty)원")
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.primary)
-                                
-                                Spacer()
-                                // 버튼
-                                Image(systemName: "wonsign.circle")
-                                    .foregroundColor(.primary)
-                                    .font(.title3)
-                                    .fontWeight(.semibold)
-                                    .symbolEffect(.bounce, value: animate3)
-                            }
-                            .padding(.top, 10)
-                        }
-                        
-                        Divider()
-                            .frame(maxWidth: .infinity)
-                            .overlay {
-                                Color.secondary
-                            }
-                    }
-                    .onTapGesture {
-                        animate3.toggle()
-                        showingPenalty.toggle()
-                    }
                     // MARK: - 친구 수정
                     HStack {
                         Text("친구 수정")
@@ -248,10 +105,15 @@ struct PromiseEditView: View {
                             .foregroundColor(.primary)
                             .font(.title3)
                             .fontWeight(.semibold)
-                            .symbolEffect(.bounce, value: animate)
+//                            .symbolEffect(.bounce, value: animate)
                             .onTapGesture {
-                                animate.toggle()
-                                addFriendsSheet.toggle()
+//                                animate.toggle()
+                                
+                                // 친구수정버튼을 누른 후에만 친구목록이 패치되도록
+                                Task {
+                                    try await friendsStore.fetchFriends()
+                                }
+                                isShowingFriendsSheet.toggle()
                             }
                     }
                     .padding(.top, 60)
@@ -264,87 +126,50 @@ struct PromiseEditView: View {
                         .overlay {
                             HStack {
                                 ScrollView(.horizontal) {
-                                    if selectedFriends.isEmpty {
-                                        HStack {
-                                            ForEach(editSelectedFriends, id: \.self) { friendId in
-                                                if let friend = userStore.userFetchArray.first(where: { $0.id == friendId }) {
-                                                    EditFriendSellView(selectedFriends: $selectedFriends, friend: friend)
-                                                        .padding()
-                                                        .padding(.trailing, -50)
-                                                }
-                                            }
-                                        }
-                                        .padding(.leading, -20)
-                                        .padding(.trailing, 50)
-                                    } else {
-                                        HStack {
-                                            ForEach(selectedFriends) { friend in
-                                                FriendSellView(selectedFriends: $selectedFriends, friend: friend)
-                                                    .padding()
-                                                    .padding(.trailing, -50)
-                                            }
-                                        }
-                                        .padding(.leading, -20)
-                                        .padding(.trailing, 50)
+                                    HStack {
+                                        // 참여자 프로필,닉네임 나열
+                                        FriendCellView(selectedFriends: $editSelectedFriends)
+                                            .padding()
+                                            .padding(.trailing, -50)
                                     }
+                                    .padding(.leading, -20)
+                                    .padding(.trailing, 50)
                                 }
                                 .frame(height: 90)
                                 .scrollIndicators(.hidden)
                             }
                         }
                         .padding(.bottom)
-                }
+                } // VStack
                 .padding(.horizontal, 15)
-                .onAppear {
-                    editedPromiseTitle = promise.promiseTitle
-                    editedPromiseDate = Date(timeIntervalSince1970: promise.promiseDate)
-                    editedDestination = promise.destination
-                    editedAddress = promise.address
-                    coordXXX = promise.latitude
-                    coordYYY = promise.longitude
-                    penalty = promise.penalty
-                    
-                    for id in promise.participantIdArray {
-                        if let loginUser = AuthStore.shared.currentUser {
-                            if loginUser.id == id {
-                                continue
-                            }
-                        }
-                        Task {
-                            if let friend = try await UserStore.fetchUser(userId: id) {
-                                selectedFriends.append(friend)
-                            }
-                        }
-                    }
-                    
-                    Task {
-                        try await friendsStore.fetchFriends()
-                    }
-                }
-                //MARK: - 약속 수정 관련 버튼
-                .navigationBarItems(
-                    leading: Button("취소") {
-                        dismiss()
-                    },
-                    trailing: Button("저장") {
-                        updatePromise()
-                        dismiss()
-                        navigationBackToHome = true
-                    }
-                )
-                .sheet(isPresented: $addFriendsSheet) {
-                    EditFriendsListVIew(isShowingSheet: $addFriendsSheet, selectedFriends: $selectedFriends)
-                }
-                .navigationTitle("약속 수정")
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationBarBackButtonHidden()
+            } // scrollView
+            .navigationTitle("약속 수정")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarBackButtonHidden()
+        } // navigationStack
+        .navigationBarItems(
+            leading: Button("취소") {
+                dismiss()
+            },
+            trailing: Button("저장") {
+                updatePromise() // 데이터 수정함수 호출
+                dismiss()
+                navigationBackToHome = true // 홈메인뷰 이동
             }
+        )
+        // MARK: - 수정 시트 뷰
+        .sheet(isPresented: $isShowingDatePicker) {
+            CustomDatePicker(promiseViewModel: promiseViewModel, date: $editedPromiseDate, showPicker: $isShowingDatePicker)
+                .presentationDetents([.fraction(0.7)])
         }
-        .sheet(isPresented: $showingPenalty, content: {
+        .sheet(isPresented: $isShowingEditMapSheet) { // coordXXX, coordYYY
+            OneMapView(promiseViewModel: promiseViewModel, destination: $editedDestination, address: $editedAddress, coordXXX: $destinationLatitude, coordYYY: $destinationLongitude, sheetTitle: $sheetTitle)
+        }
+        .sheet(isPresented: $isShowingPenalty, content: {
             HStack {
                 Spacer()
                 Button {
-                    showingPenalty.toggle()
+                    isShowingPenalty.toggle()
                 } label: {
                     Text("결정")
                 }
@@ -353,7 +178,6 @@ struct PromiseEditView: View {
             
             Picker("지각비", selection: $penalty) {
                 ForEach(availableValues, id: \.self) { value in
-
                     Text("\(value)").tag(value)
                 }
             }
@@ -364,19 +188,129 @@ struct PromiseEditView: View {
         .onTapGesture {
             hideKeyboard()
         }
-        .sheet(isPresented: $showDatePicker) {
-            CustomDatePicker(promiseViewModel: promiseViewModel, date: $editedPromiseDate, showPicker: $showDatePicker)
-                .presentationDetents([.fraction(0.7)])
-                .onAppear {
-                    isSelectedDataPickerOnce = true
+        .sheet(isPresented: $isShowingFriendsSheet) {
+            FriendsListView(isShowingSheet: $isShowingFriendsSheet, selectedFriends: $editSelectedFriends)
+        }
+        // MARK: - onAppear
+        .onAppear {
+            // 약속의 정보들 가져와서 띄워주기
+            editedPromiseTitle = promise.promiseTitle
+            editedPromiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+            editedDestination = promise.destination
+            editedAddress = promise.address
+            destinationLatitude = promise.latitude
+            destinationLongitude = promise.longitude
+            penalty = promise.penalty
+            
+            // 자기자신을 제외한 친구들목록만 가져오기
+            for id in promise.participantIdArray {
+                if let loginUser = AuthStore.shared.currentUser {
+                    if loginUser.id == id {
+                        continue
+                    }
                 }
+                Task {
+                    if let friend = try await UserStore.fetchUser(userId: id) {
+                        editSelectedFriends.append(friend)
+                    }
+                }
+            }
+        }
+    } // body
+    
+    /// 약속 정보에 따른 cell
+    private func promiseCell(_ cellType: PromiseCellType) -> some View {
+        return VStack(alignment: .leading) {
+            // 소제목
+            Text(cellType.cellTitle(cellType))
+                .font(.title3)
+                .foregroundColor(.secondary)
+                .fontWeight(.semibold)
+                .padding(.top, 25)
+            // 약속날짜/시간일때만 추가되는 문구
+            if cellType == .promiseDate {
+                Text("약속 시간 30분 전부터 위치공유가 시작됩니다.")
+                    .foregroundColor(.red.opacity(0.8))
+                    .font(.footnote)
+            }
+            
+            // 약속이름 수정일때와 나머지경우에 따라 다른 뷰 반환
+            HStack {
+                switch cellType {
+                case .promiseTitle:
+                    TextField("약속 이름을 수정해주세요", text: $editedPromiseTitle)
+                        .fontWeight(.semibold)
+                        .onChange(of: editedPromiseTitle) {
+                            if editedPromiseTitle.count > 15 { editedPromiseTitle = String(editedPromiseTitle.prefix(15)) }
+                        }
+                    // 15자까지 쓸 수 있도록
+                    Text("\(editedPromiseTitle.count)/15")
+                        .foregroundColor(.secondary)
+                    
+                default:
+                    Group {
+                        Button {
+                            // 시트 노출
+                            switch cellType {
+                            case .promiseDate: isShowingDatePicker.toggle()
+                            case .promiseDestination: isShowingEditMapSheet.toggle()
+                            case .promisePenalty: isShowingPenalty.toggle()
+                            default: break
+                            }
+                        } label: {
+                            HStack {
+                                Text(getPromiseData(cellType)) // 약속 정보 띄우기
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(.primary)
+                                
+                                Spacer()
+                                
+                                Image(systemName: cellType.systemImageName(cellType))
+                                    .foregroundColor(.primary)
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+//                            .symbolEffect(.bounce, value: animate1)
+                            }
+                        }
+                    }
+                }
+            } // HStack
+            .padding(.top, 10)
+            
+            // 모두 공통되는 부분
+            Divider()
+                .frame(maxWidth: .infinity)
+                .overlay {
+                    Color.secondary
+                }
+        } // VStack
+    }
+    
+    /// 약속의 정보를 String타입으로 반환해주는 함수
+    func getPromiseData(_ cellType: PromiseCellType) -> String {
+        
+        switch cellType {
+        case .promiseDate:
+            let time = editedPromiseDate.formatted(date: .omitted, time: .shortened)
+            let date = editedPromiseDate.formatted(date: .abbreviated, time: .omitted)
+            return "\(time), \(date)"
+        case .promiseDestination: return editedDestination
+        case .promisePenalty: return "\(penalty)원"
+        default: return ""
         }
     }
+    
     // MARK: - 약속 수정 함수
     func updatePromise() {
+        
+        /// 수정된 참여자 LocationIdArray다시 지정
+        var locationIdArray: [String] = []
+        
+        let dbRef = Firestore.firestore().collection("Promise")
+        
         let promiseRef = dbRef.document(promise.id)
         
-        let IdArray = [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id }
+        let IdArray = [AuthStore.shared.currentUser?.id ?? " - no id - "] + editSelectedFriends.map { $0.id }
         
         for id in IdArray {
             let friendLocation = Location(participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
@@ -391,9 +325,9 @@ struct PromiseEditView: View {
             "promiseDate": editedPromiseDate.timeIntervalSince1970,
             "destination": editedDestination,
             "address": editedAddress,
-            "latitude": coordXXX,
-            "longitude": coordYYY,
-            "participantIdArray": [AuthStore.shared.currentUser?.id ?? " - no id - "] + selectedFriends.map { $0.id },
+            "latitude": destinationLatitude,
+            "longitude": destinationLongitude,
+            "participantIdArray": [AuthStore.shared.currentUser?.id ?? " - no id - "] + editSelectedFriends.map { $0.id },
             "penalty": penalty,
             "locationIdArray": locationIdArray
         ]
@@ -404,104 +338,6 @@ struct PromiseEditView: View {
             } else {
                 print("약속이 성공적으로 수정되었습니다.")
                 dismiss()
-            }
-        }
-    }
-}
-
-struct EditFriendsListVIew: View {
-    
-    @StateObject var friendsStore: FriendsStore = FriendsStore()
-    
-    @Binding var isShowingSheet: Bool
-    @Binding var selectedFriends: [User]
-    @State private var showAlert = false
-    @State private var alertMessage = ""
-    @State private var editSelectedFriends: [String] = []
-    @StateObject var userStore: UserStore = UserStore()
-    
-    // 더미데이터
-    let friends = ["임병구", "김상규", "나예슬", "남현정", "선아라", "윤해수", "이재승", "장여훈", "정한두"]
-    
-    var body: some View {
-        NavigationStack {
-            RoundedRectangle(cornerRadius: 5)
-                .stroke(lineWidth: 0.5)
-                .frame(width: 315, height: 110)
-                .overlay {
-                    HStack {
-                        ScrollView(.horizontal) {
-                            if selectedFriends.isEmpty {
-                                HStack {
-                                    ForEach(editSelectedFriends, id: \.self) { friendId in
-                                        if let friend = userStore.userFetchArray.first(where: { $0.id == friendId }) {
-                                            FriendSellView(selectedFriends: $selectedFriends, friend: friend)
-                                                .padding()
-                                                .padding(.trailing, -50)
-                                            
-                                        }
-                                    }
-                                }
-                                .padding(.leading, -20)
-                                .padding(.trailing, 50)
-                            } else {
-                                HStack {
-                                    ForEach(selectedFriends) { friend in
-                                        FriendSellView(selectedFriends: $selectedFriends, friend: friend)
-                                            .padding()
-                                            .padding(.trailing, -50)
-                                    }
-                                }
-                                .padding(.leading, -20)
-                                .padding(.trailing, 50)
-                            }
-                        }
-                        .frame(height: 90)
-                        .scrollIndicators(.hidden)
-                    }
-                }
-            
-            List(friendsStore.friendsFetchArray) { friend in
-                Button {
-                    if !selectedFriends.contains(friend) {
-                        selectedFriends.append(friend)
-                        editSelectedFriends.append(friend.id)
-                    } else {
-                        showAlert = true
-                        alertMessage = "\(friend.nickName)님은 이미 존재합니다."
-                    }
-                } label: {
-                    HStack {
-                        ProfileImageView(imageString: friend.profileImageString, size: .xSmall)
-                        
-                        Text(friend.nickName)
-                    }
-                }
-                .alert(isPresented: $showAlert) {
-                    Alert(
-                        title: Text("알림"),
-                        message: Text(alertMessage),
-                        dismissButton: .default(Text("확인")) {
-                        }
-                    )
-                }
-            }
-            .listStyle(.plain)
-            .navigationTitle("친구 목록")
-            .navigationBarTitleDisplayMode(.inline)
-            .onAppear {
-                Task {
-                    try await friendsStore.fetchFriends()
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button {
-                        isShowingSheet.toggle()
-                    } label: {
-                        Text("완료")
-                    }
-                }
             }
         }
     }

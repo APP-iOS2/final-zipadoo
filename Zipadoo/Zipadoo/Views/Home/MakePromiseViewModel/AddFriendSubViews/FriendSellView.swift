@@ -9,69 +9,43 @@ import SwiftUI
 
 /// 더미 유저
 let dummyUser: User = User(id: "1", name: "gs", nickName: "닉네임", phoneNumber: "01", profileImageString: "22", friendsIdArray: ["12", "2"], friendsIdRequestArray: ["3"], moleImageString: "doo1")
-
-struct FriendSellView: View {
+/// 참여자 닉네임, 프로필 나열
+struct FriendCellView: View {
+    /// 참여자 User타입 배열
     @Binding var selectedFriends: [User]
     
-    var friend: User
-    
     var body: some View {
-        //        ForEach(selectedFriends.indices, id: \.self) { index in
-        VStack {
-            ZStack {
-                ProfileImageView(imageString: friend.profileImageString, size: .small)
-                //                    .frame(width: 75, height: 60)
-                Button {
-                    print("친구 삭제")
-                    deleteFriend(friend)
-                } label: {
-                    Image(systemName: "minus.circle.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 20)
+        ForEach(selectedFriends.indices, id: \.self) { index in
+            VStack {
+                ZStack {
+                    ProfileImageView(imageString: selectedFriends[index].profileImageString, size: .small)
+
+                    Button {
+                        print("친구 삭제")
+                        deleteFriend(index)
+                    } label: {
+                        Image(systemName: "minus.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 20)
+                    }
+                    .offset(x: 23, y: -22)
                 }
-                .offset(x: 23, y: -22)
+                //            .shadow(radius: 1)
+                .tint(.red)
+                
+                Text(selectedFriends[index].nickName)
+                    .font(.callout)
             }
-//            .shadow(radius: 1)
-            .tint(.red)
-            
-            Text(friend.nickName)
-                .font(.callout)
+            .frame(width: 85, height: 85)
         }
-        .frame(width: 85, height: 85)
-        //        }
     }
-    func deleteFriend(_ item: User) {
-        if let index = selectedFriends.firstIndex(of: item) {
+    /// 마이너스 버튼으로 참여자 삭제
+    func deleteFriend(_ index: Int) {
             selectedFriends.remove(at: index)
-        }
-    }
-}
-
-struct EditFriendSellView: View {
-    @Binding var selectedFriends: [User]
-    
-    var friend: User
-    
-    var body: some View {
-        VStack {
-            ZStack {
-                ProfileImageView(imageString: friend.profileImageString, size: .small)
-            }
-            
-            Text(friend.nickName)
-                .font(.callout)
-        }
-        .frame(width: 85, height: 85)
-        //        }
-    }
-    func deleteFriend(_ item: User) {
-        if let index = selectedFriends.firstIndex(of: item) {
-            selectedFriends.remove(at: index)
-        }
     }
 }
 
 #Preview {
-    FriendSellView(selectedFriends: .constant([dummyUser]), friend: dummyUser)
+    FriendCellView(selectedFriends: .constant([dummyUser]))
 }
