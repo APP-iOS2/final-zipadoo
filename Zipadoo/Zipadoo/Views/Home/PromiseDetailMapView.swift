@@ -212,14 +212,7 @@ struct PromiseDetailMapView: View {
             }
         }
     }
-}
-
-#Preview {
-    PromiseDetailMapView(promise: Promise(id: "", makingUserID: "", promiseTitle: "사당역 모여라", promiseDate: 1697694660, destination: "", address: "", latitude: 37.47694972793077, longitude: 126.98195644152227, participantIdArray: [], checkDoublePromise: false, locationIdArray: [], penalty: 10))
-        .environmentObject(AlertStore())
-}
-
-extension PromiseDetailMapView {
+    
     /// 도착 여부를 확인하는 메서드
     /// - Parameters:
     ///   - currentCoordinate: 현재 좌표
@@ -258,3 +251,9 @@ extension PromiseDetailMapView {
         }
     }
 }
+
+#Preview {
+    PromiseDetailMapView(promise: Promise(id: "", makingUserID: "", promiseTitle: "사당역 모여라", promiseDate: 1697694660, destination: "", address: "", latitude: 37.47694972793077, longitude: 126.98195644152227, participantIdArray: [], checkDoublePromise: false, locationIdArray: [], penalty: 10))
+        .environmentObject(AlertStore())
+}
+
