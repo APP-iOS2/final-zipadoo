@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import MapKit
 
 // MARK: - 약속 디테일뷰
 struct PromiseDetailView: View {
@@ -44,35 +45,39 @@ struct PromiseDetailView: View {
         destinagionStatus == .preparing ? Color(disabledColor) : Color(activeColor)
     }
     
+    @State private var region: MapCameraPosition = .automatic
     // MARK: - PromiseDetailView body
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading) {
-                    titleView
-                    
-                    destinationView
-                    
-                    dateView
-                    
-                    remainingTimeView
+                    destinationMapView
+                        .frame(width: 400, height: 200 , alignment: .center)
+                    VStack(alignment: .leading) {
+                        titleView
+                        
+                        destinationView
+                        
+                        dateView
+                        
+                        remainingTimeView
+                    }
+                    .padding(.leading)
+                    .padding(.trailing)
+                    .padding(.bottom, 5)
+                    //                .overlay(
+                    //                    RoundedRectangle(cornerRadius: 10)
+                    //                        .foregroundColor(.primary)
+                    //                        .opacity(0.05)
+                    //                        .shadow(color: .primary, radius: 10, x: 5, y: 5)
+                    //                )
+                    VStack {
+                        participantsView
+                    }
+                    .padding(.init(top: 0, leading: 20, bottom: 0, trailing: 20))
                 }
-                .padding(.leading)
-                .padding(.trailing)
-                .padding(.bottom)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundColor(.primary)
-                        .opacity(0.05)
-                        .shadow(color: .primary, radius: 10, x: 5, y: 5)
-                )
-                VStack {
-                    participantsView
-                }
-                .padding(.leading, 5)
-                .padding(.trailing, 5)
             }
-            .padding(15)
+//            .padding(15)
             // MARK: - 더보기 버튼(삭제, 수정, 약속나가기)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -183,10 +188,10 @@ struct PromiseDetailView: View {
         .foregroundColor(.secondary)
     }
     
-    private var                     participantsView: some View {
+    private var participantsView: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("약속한 두더지 친구들")
+                Text("모이는 두더지 친구들")
                     .font(.title3).bold()
                 
                 Spacer()
@@ -293,6 +298,15 @@ struct PromiseDetailView: View {
 }
 // MARK: - PromiseDetailView extension (ArriveResult뷰에서 재사용 위해 extension으로 분리)
 extension PromiseDetailView {
+    var destinationMapView: some View {
+        Map(position: $region, bounds: MapCameraBounds(minimumDistance: 800), interactionModes: .all) {
+            Annotation(promise.destination, coordinate: CLLocationCoordinate2D(latitude: promise.latitude, longitude: promise.longitude)) {
+                AnnotationCell()
+                    .offset(x: 0, y: -10)
+            }
+        }
+    }
+
     // 약속 제목
     var titleView: some View {
         Text(promise.promiseTitle)
