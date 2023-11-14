@@ -73,7 +73,6 @@
 		C076BDA52AD934C1005AE81D /* ArrivalMsgModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA42AD934C1005AE81D /* ArrivalMsgModel.swift */; };
 		C076BDA82AD938D6005AE81D /* AlertStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA72AD938D6005AE81D /* AlertStore.swift */; };
 		C08716882AE25C99005914C5 /* WidgetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08716872AE25C99005914C5 /* WidgetStore.swift */; };
-		C0B8A0F82AE7CAA200536476 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0B8A0F72AE7CAA200536476 /* GoogleService-Info.plist */; };
 		FA103F1E2AE2164F00BE56CA /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA103F1D2AE2164F00BE56CA /* Enum.swift */; };
 		FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */; };
 		FA24740A2ACD4BDB00D4C821 /* PlaceMarkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E42ACD4BDB00D4C821 /* PlaceMarkView.swift */; };
@@ -95,9 +94,9 @@
 		FA24741F2ACD4BDB00D4C821 /* PromiseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473FD2ACD4BDB00D4C821 /* PromiseDetailView.swift */; };
 		FA2474202ACD4BDB00D4C821 /* FriendsLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473FE2ACD4BDB00D4C821 /* FriendsLocationView.swift */; };
 		FA2474212ACD4BDB00D4C821 /* AddDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474002ACD4BDB00D4C821 /* AddDateCell.swift */; };
-		FA2474222ACD4BDB00D4C821 /* FriendSellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474022ACD4BDB00D4C821 /* FriendSellView.swift */; };
+		FA2474222ACD4BDB00D4C821 /* FriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474022ACD4BDB00D4C821 /* FriendCellView.swift */; };
 		FA2474232ACD4BDB00D4C821 /* AddFriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474032ACD4BDB00D4C821 /* AddFriendCellView.swift */; };
-		FA2474242ACD4BDB00D4C821 /* FriendsListVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474042ACD4BDB00D4C821 /* FriendsListVIew.swift */; };
+		FA2474242ACD4BDB00D4C821 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474042ACD4BDB00D4C821 /* FriendsListView.swift */; };
 		FA2474252ACD4BDB00D4C821 /* AddPromiseTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474052ACD4BDB00D4C821 /* AddPromiseTitleCell.swift */; };
 		FA2474262ACD4BDB00D4C821 /* AddPenaltyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474062ACD4BDB00D4C821 /* AddPenaltyCell.swift */; };
 		FA2474272ACD4BDB00D4C821 /* AddPromiseUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474072ACD4BDB00D4C821 /* AddPromiseUserCell.swift */; };
@@ -229,7 +228,6 @@
 		C076BDA42AD934C1005AE81D /* ArrivalMsgModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalMsgModel.swift; sourceTree = "<group>"; };
 		C076BDA72AD938D6005AE81D /* AlertStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStore.swift; sourceTree = "<group>"; };
 		C08716872AE25C99005914C5 /* WidgetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStore.swift; sourceTree = "<group>"; };
-		C0B8A0F72AE7CAA200536476 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA103F1D2AE2164F00BE56CA /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		FA2473E32ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpectedTravelTimeMarkView.swift; sourceTree = "<group>"; };
 		FA2473E42ACD4BDB00D4C821 /* PlaceMarkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceMarkView.swift; sourceTree = "<group>"; };
@@ -251,9 +249,9 @@
 		FA2473FD2ACD4BDB00D4C821 /* PromiseDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
 		FA2473FE2ACD4BDB00D4C821 /* FriendsLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationView.swift; sourceTree = "<group>"; };
 		FA2474002ACD4BDB00D4C821 /* AddDateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDateCell.swift; sourceTree = "<group>"; };
-		FA2474022ACD4BDB00D4C821 /* FriendSellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendSellView.swift; sourceTree = "<group>"; };
+		FA2474022ACD4BDB00D4C821 /* FriendCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendCellView.swift; sourceTree = "<group>"; };
 		FA2474032ACD4BDB00D4C821 /* AddFriendCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendCellView.swift; sourceTree = "<group>"; };
-		FA2474042ACD4BDB00D4C821 /* FriendsListVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListVIew.swift; sourceTree = "<group>"; };
+		FA2474042ACD4BDB00D4C821 /* FriendsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
 		FA2474052ACD4BDB00D4C821 /* AddPromiseTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPromiseTitleCell.swift; sourceTree = "<group>"; };
 		FA2474062ACD4BDB00D4C821 /* AddPenaltyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPenaltyCell.swift; sourceTree = "<group>"; };
 		FA2474072ACD4BDB00D4C821 /* AddPromiseUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPromiseUserCell.swift; sourceTree = "<group>"; };
@@ -540,9 +538,9 @@
 		FA2474012ACD4BDB00D4C821 /* AddFriendSubViews */ = {
 			isa = PBXGroup;
 			children = (
-				FA2474022ACD4BDB00D4C821 /* FriendSellView.swift */,
+				FA2474022ACD4BDB00D4C821 /* FriendCellView.swift */,
 				FA2474032ACD4BDB00D4C821 /* AddFriendCellView.swift */,
-				FA2474042ACD4BDB00D4C821 /* FriendsListVIew.swift */,
+				FA2474042ACD4BDB00D4C821 /* FriendsListView.swift */,
 			);
 			path = AddFriendSubViews;
 			sourceTree = "<group>";
@@ -647,7 +645,6 @@
 			isa = PBXGroup;
 			children = (
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
-				C0B8A0F72AE7CAA200536476 /* GoogleService-Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
@@ -847,7 +844,6 @@
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-				C0B8A0F82AE7CAA200536476 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -946,7 +942,7 @@
 				FA24741F2ACD4BDB00D4C821 /* PromiseDetailView.swift in Sources */,
 				FA24741C2ACD4BDB00D4C821 /* ArriveResultView.swift in Sources */,
 				1BB3B0752AD535170000D91A /* ArrivalResultTempView.swift in Sources */,
-				FA2474222ACD4BDB00D4C821 /* FriendSellView.swift in Sources */,
+				FA2474222ACD4BDB00D4C821 /* FriendCellView.swift in Sources */,
 				FAD257E92AD65F4B0017D16C /* NewMapView.swift in Sources */,
 				FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */,
 				3FF033052ADD30C800FF13A5 /* AppInfoView.swift in Sources */,
@@ -974,7 +970,7 @@
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */,
 				FA24740E2ACD4BDB00D4C821 /* AddPlaceOptionCell.swift in Sources */,
-				FA2474242ACD4BDB00D4C821 /* FriendsListVIew.swift in Sources */,
+				FA2474242ACD4BDB00D4C821 /* FriendsListView.swift in Sources */,
 				08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */,
 				8B973A382AC5930D00C67B5F /* SigninByEmailView.swift in Sources */,
 				FA2474302ACD4C0B00D4C821 /* ContentView.swift in Sources */,
