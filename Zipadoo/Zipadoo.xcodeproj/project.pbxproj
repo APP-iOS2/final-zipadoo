@@ -96,7 +96,7 @@
 		FA2474212ACD4BDB00D4C821 /* AddDateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474002ACD4BDB00D4C821 /* AddDateCell.swift */; };
 		FA2474222ACD4BDB00D4C821 /* FriendSellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474022ACD4BDB00D4C821 /* FriendSellView.swift */; };
 		FA2474232ACD4BDB00D4C821 /* AddFriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474032ACD4BDB00D4C821 /* AddFriendCellView.swift */; };
-		FA2474242ACD4BDB00D4C821 /* FriendsListVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474042ACD4BDB00D4C821 /* FriendsListVIew.swift */; };
+		FA2474242ACD4BDB00D4C821 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474042ACD4BDB00D4C821 /* FriendsListView.swift */; };
 		FA2474252ACD4BDB00D4C821 /* AddPromiseTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474052ACD4BDB00D4C821 /* AddPromiseTitleCell.swift */; };
 		FA2474262ACD4BDB00D4C821 /* AddPenaltyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474062ACD4BDB00D4C821 /* AddPenaltyCell.swift */; };
 		FA2474272ACD4BDB00D4C821 /* AddPromiseUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474072ACD4BDB00D4C821 /* AddPromiseUserCell.swift */; };
@@ -251,7 +251,7 @@
 		FA2474002ACD4BDB00D4C821 /* AddDateCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddDateCell.swift; sourceTree = "<group>"; };
 		FA2474022ACD4BDB00D4C821 /* FriendSellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendSellView.swift; sourceTree = "<group>"; };
 		FA2474032ACD4BDB00D4C821 /* AddFriendCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendCellView.swift; sourceTree = "<group>"; };
-		FA2474042ACD4BDB00D4C821 /* FriendsListVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListVIew.swift; sourceTree = "<group>"; };
+		FA2474042ACD4BDB00D4C821 /* FriendsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
 		FA2474052ACD4BDB00D4C821 /* AddPromiseTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPromiseTitleCell.swift; sourceTree = "<group>"; };
 		FA2474062ACD4BDB00D4C821 /* AddPenaltyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPenaltyCell.swift; sourceTree = "<group>"; };
 		FA2474072ACD4BDB00D4C821 /* AddPromiseUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPromiseUserCell.swift; sourceTree = "<group>"; };
@@ -540,7 +540,7 @@
 			children = (
 				FA2474022ACD4BDB00D4C821 /* FriendSellView.swift */,
 				FA2474032ACD4BDB00D4C821 /* AddFriendCellView.swift */,
-				FA2474042ACD4BDB00D4C821 /* FriendsListVIew.swift */,
+				FA2474042ACD4BDB00D4C821 /* FriendsListView.swift */,
 			);
 			path = AddFriendSubViews;
 			sourceTree = "<group>";
@@ -970,7 +970,7 @@
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */,
 				FA24740E2ACD4BDB00D4C821 /* AddPlaceOptionCell.swift in Sources */,
-				FA2474242ACD4BDB00D4C821 /* FriendsListVIew.swift in Sources */,
+				FA2474242ACD4BDB00D4C821 /* FriendsListView.swift in Sources */,
 				08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */,
 				8B973A382AC5930D00C67B5F /* SigninByEmailView.swift in Sources */,
 				FA2474302ACD4C0B00D4C821 /* ContentView.swift in Sources */,
