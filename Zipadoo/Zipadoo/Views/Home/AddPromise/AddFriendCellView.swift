@@ -49,10 +49,10 @@ struct AddFriendCellView: View {
                             HStack {
                                 ScrollView(.horizontal) {
                                     HStack {
-                                        ForEach(selectedFriends) { friend in
-                                            FriendSellView(selectedFriends: $selectedFriends, friend: friend).padding()
-                                                .padding(.trailing, -50)
-                                        }
+                                        // 참여자 프로필, 닉네임
+                                        FriendCellView(selectedFriends: $selectedFriends).padding()
+                                            .padding(.trailing, -50)
+                                        
                                     }
                                     .padding(.leading, -20)
                                     .padding(.trailing, 50)
@@ -64,7 +64,7 @@ struct AddFriendCellView: View {
                     }
                 }
                 .sheet(isPresented: $isAddFriendsSheet) {
-                    FriendsListVIew(isShowingSheet: $isAddFriendsSheet, selectedFriends: $selectedFriends)
+                    FriendsListView(isShowingSheet: $isAddFriendsSheet, selectedFriends: $selectedFriends)
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {

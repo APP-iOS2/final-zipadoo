@@ -93,9 +93,8 @@
 		FA24741E2ACD4BDB00D4C821 /* MakePromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473FC2ACD4BDB00D4C821 /* MakePromiseView.swift */; };
 		FA24741F2ACD4BDB00D4C821 /* PromiseDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473FD2ACD4BDB00D4C821 /* PromiseDetailView.swift */; };
 		FA2474202ACD4BDB00D4C821 /* FriendsLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473FE2ACD4BDB00D4C821 /* FriendsLocationView.swift */; };
-		FA2474222ACD4BDB00D4C821 /* FriendSellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474022ACD4BDB00D4C821 /* FriendSellView.swift */; };
+		FA2474222ACD4BDB00D4C821 /* FriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474022ACD4BDB00D4C821 /* FriendCellView.swift */; };
 		FA2474232ACD4BDB00D4C821 /* AddFriendCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474032ACD4BDB00D4C821 /* AddFriendCellView.swift */; };
-		FA2474242ACD4BDB00D4C821 /* FriendsListVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474042ACD4BDB00D4C821 /* FriendsListVIew.swift */; };
 		FA24742D2ACD4C0B00D4C821 /* ShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474292ACD4C0B00D4C821 /* ShareView.swift */; };
 		FA2474302ACD4C0B00D4C821 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24742C2ACD4C0B00D4C821 /* ContentView.swift */; };
 		FA2474452ACD4D6E00D4C821 /* UserStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2474322ACD4D6E00D4C821 /* UserStore.swift */; };
@@ -117,6 +116,7 @@
 		FA2474602ACE3BC000D4C821 /* PastPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */; };
 		FA25DAC82AF9FAA800C8BCA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA25DAC72AF9FAA800C8BCA4 /* GoogleService-Info.plist */; };
 		FA25DACA2B036A0200C8BCA4 /* CustomDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25DAC92B036A0200C8BCA4 /* CustomDatePickerView.swift */; };
+		FA25DAD12B039C4F00C8BCA4 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25DAD02B039C4F00C8BCA4 /* FriendsListView.swift */; };
 		FA43C5622ADCFC01005BFBF7 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA43C5612ADCFC01005BFBF7 /* LaunchScreen.swift */; };
 		FAB58B882ABD1879006B9E11 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B872ABD1879006B9E11 /* FirebaseAuth */; };
 		FAB58B8E2ABD1879006B9E11 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = FAB58B8D2ABD1879006B9E11 /* FirebaseDatabase */; };
@@ -245,9 +245,8 @@
 		FA2473FC2ACD4BDB00D4C821 /* MakePromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MakePromiseView.swift; sourceTree = "<group>"; };
 		FA2473FD2ACD4BDB00D4C821 /* PromiseDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseDetailView.swift; sourceTree = "<group>"; };
 		FA2473FE2ACD4BDB00D4C821 /* FriendsLocationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationView.swift; sourceTree = "<group>"; };
-		FA2474022ACD4BDB00D4C821 /* FriendSellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendSellView.swift; sourceTree = "<group>"; };
+		FA2474022ACD4BDB00D4C821 /* FriendCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendCellView.swift; sourceTree = "<group>"; };
 		FA2474032ACD4BDB00D4C821 /* AddFriendCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendCellView.swift; sourceTree = "<group>"; };
-		FA2474042ACD4BDB00D4C821 /* FriendsListVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListVIew.swift; sourceTree = "<group>"; };
 		FA2474292ACD4C0B00D4C821 /* ShareView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareView.swift; sourceTree = "<group>"; };
 		FA24742C2ACD4C0B00D4C821 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FA2474322ACD4D6E00D4C821 /* UserStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserStore.swift; sourceTree = "<group>"; };
@@ -269,6 +268,7 @@
 		FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastPromiseView.swift; sourceTree = "<group>"; };
 		FA25DAC72AF9FAA800C8BCA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA25DAC92B036A0200C8BCA4 /* CustomDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerView.swift; sourceTree = "<group>"; };
+		FA25DAD02B039C4F00C8BCA4 /* FriendsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
 		FA43C5612ADCFC01005BFBF7 /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
 		FAD257D92AD65F4B0017D16C /* AnnotationMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationMarker.swift; sourceTree = "<group>"; };
 		FAD257DB2AD65F4B0017D16C /* PlaceInfoWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceInfoWebView.swift; sourceTree = "<group>"; };
@@ -574,8 +574,8 @@
 				FA2473F82ACD4BDB00D4C821 /* AddPromiseView.swift */,
 				FA25DAC92B036A0200C8BCA4 /* CustomDatePickerView.swift */,
 				FA2474032ACD4BDB00D4C821 /* AddFriendCellView.swift */,
-				FA2474042ACD4BDB00D4C821 /* FriendsListVIew.swift */,
-				FA2474022ACD4BDB00D4C821 /* FriendSellView.swift */,
+				FA25DAD02B039C4F00C8BCA4 /* FriendsListView.swift */,
+				FA2474022ACD4BDB00D4C821 /* FriendCellView.swift */,
 			);
 			path = AddPromise;
 			sourceTree = "<group>";
@@ -901,6 +901,7 @@
 				08C6F0B52ABC1BE0005D231D /* MyPageView.swift in Sources */,
 				08C9638D2AE319B6003ECDD7 /* PromiseDetailMapViewModel.swift in Sources */,
 				FAD257E72AD65F4B0017D16C /* AnnotationMarker.swift in Sources */,
+				FA25DAD12B039C4F00C8BCA4 /* FriendsListView.swift in Sources */,
 				FA25DACA2B036A0200C8BCA4 /* CustomDatePickerView.swift in Sources */,
 				FA2474472ACD4D6E00D4C821 /* MapViewContainer.swift in Sources */,
 				FAD257EE2AD65F4B0017D16C /* PreviewPlaceOnMap.swift in Sources */,
@@ -925,7 +926,7 @@
 				FA24741F2ACD4BDB00D4C821 /* PromiseDetailView.swift in Sources */,
 				FA24741C2ACD4BDB00D4C821 /* ArriveResultView.swift in Sources */,
 				1BB3B0752AD535170000D91A /* ArrivalResultTempView.swift in Sources */,
-				FA2474222ACD4BDB00D4C821 /* FriendSellView.swift in Sources */,
+				FA2474222ACD4BDB00D4C821 /* FriendCellView.swift in Sources */,
 				FAD257E92AD65F4B0017D16C /* NewMapView.swift in Sources */,
 				FA2474092ACD4BDB00D4C821 /* ExpectedTravelTimeMarkView.swift in Sources */,
 				3FF033052ADD30C800FF13A5 /* AppInfoView.swift in Sources */,
@@ -950,7 +951,6 @@
 				FAD5FE3D2ABBD3E700E05E6E /* ZipadooApp.swift in Sources */,
 				8BDF9CCE2ABD1F7D00255857 /* FriendsRegistrationView.swift in Sources */,
 				FA24740E2ACD4BDB00D4C821 /* AddPlaceOptionCell.swift in Sources */,
-				FA2474242ACD4BDB00D4C821 /* FriendsListVIew.swift in Sources */,
 				08C6F0BD2ABC1E1C005D231D /* PayingView.swift in Sources */,
 				8B973A382AC5930D00C67B5F /* SigninByEmailView.swift in Sources */,
 				FA2474302ACD4C0B00D4C821 /* ContentView.swift in Sources */,
