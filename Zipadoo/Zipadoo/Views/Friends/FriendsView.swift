@@ -86,8 +86,8 @@ struct FriendsView: View {
                     try await friendsStore.fetchFriendsRequest()
                 }
             }
-        }
-    }
+        } // NavigationStack
+    } // body
     
     // MARK: - 친구 목록 뷰
     private var friendListView: some View {
@@ -149,7 +149,7 @@ struct FriendsView: View {
                     .padding(.top, -17)
                 }
             }
-        }
+        } // VStack
         .onAppear {
             Task {
                 try await friendsStore.fetchFriends()
@@ -160,7 +160,7 @@ struct FriendsView: View {
                 try await friendsStore.fetchFriends()
             }
         }
-    }
+    } // friendListView
     
     // MARK: - 요청목록 뷰
     private var friendRequestView: some View {
@@ -241,8 +241,8 @@ struct FriendsView: View {
                 try await friendsStore.fetchFriendsRequest()
             }
         }
-    }
-}
+    } // friendRequestView
+} // struct
 
 #Preview {
     NavigationStack {
