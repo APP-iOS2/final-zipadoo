@@ -10,7 +10,7 @@ import SlidingTabView
 
 struct FriendsView: View {
     
-    @StateObject var friendsStore: FriendsStore = FriendsStore()
+    @StateObject var friendsStore: FriendsStore
     /// 친구 삭제 알람
     @State private var isDeleteAlert: Bool = false
     /// segmentedControl 인덱스
@@ -58,6 +58,14 @@ struct FriendsView: View {
       
                     }
                 }
+                // MARK: - 지파두 마크
+                ToolbarItem(placement: .topBarLeading) {
+                    Image("zipadooMark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 20)
+                }
+                
             }
             .alert(isPresented: $isDeleteAlert) {
                 Alert(
@@ -74,6 +82,11 @@ struct FriendsView: View {
                     })
                 )
             }
+            .onAppear {
+                Task {
+                    try await friendsStore.fetchFriendsRequest()
+                }
+            }
         }
     }
     
@@ -84,10 +97,11 @@ struct FriendsView: View {
             if friendsStore.isLoadingFriends == false {
                 if friendsStore.friendsFetchArray.isEmpty {
                     VStack {
-                        Image(systemName: "person.fill.xmark")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
+                        //텍스트만 나오도록 제거
+//                        Image(systemName: "person.fill.xmark")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 40, height: 40)
                         Group {
                             Text("아직 친구가 없어요")
                             Text("친구를 추가해 보세요!")
@@ -125,39 +139,22 @@ struct FriendsView: View {
                                     
                                 } // Hstack
                                 
-                                //                                }// label
-                                //                                )  // Navi
-                                
                             } // Foreach
                             .swipeActions {
                                 Button {
                                     selectedFriendId = friend.id
                                     isDeleteAlert.toggle()
+                                    Task {
+                                        try await friendsStore.fetchFriends()
+                                    }
                                 }label: {
                                     //                                        Image(systemName: "trash.fill")
                                     Text("삭제")
                                         .fontWeight(.semibold)
-                                    
-                                    //                                        .padding(5)
-                                    //                                        .foregroundColor(.secondary)
-                                    //                                        .background(.primaryInvert)
                                 }
                                 .tint(.red)
                             } // swipe
-                            //                                HStack {
-                            //                                    Spacer()
-                            //
-                            //                                    Image(systemName: "")
-                            //                                        .padding(5)
-                            //                                        .foregroundColor(.secondary)
-                            //                                        .background(.primaryInvert)
-                            //                                        .onTapGesture {
-                            //                                            selectedFriendId = friend.id
-                            //                                            isDeleteAlert.toggle()
-                            //                                        }
-                            //                                }
-                            
-                            //                            .padding(.vertical, 5)
+
                         } // Zstack
                     } // List
                     .listStyle(.plain)
@@ -267,6 +264,6 @@ struct FriendsView: View {
 
 #Preview {
     NavigationStack {
-        FriendsView()
+        FriendsView(friendsStore: FriendsStore())
     }
 }

@@ -1,8 +1,8 @@
 //
-//  FriendsMapView.swift
+//  PromiseDetailMapView.swift
 //  Zipadoo
 //
-//  Created by 이재승 on 2023/10/11.
+//  Created by 이재승 on 2023/10/21.
 //
 
 import SwiftUI
@@ -10,15 +10,8 @@ import MapKit
 import CoreLocation
 
 // MARK: - 친구와 자신의 현황을 표시하는 뷰
-/// gpsStore를 가지고 위도 경도 등 위치 데이터 가져오기
-/// view에 더 필요한 내용이 있으면 ViewModel 따로 작업하기
-/// 1. 나의 현재위치 표시, 도착지점 표시?
-/// 2. 친구 시트 구현하기
-/// 3. 친구 클릭시 친구 위치 확인가능, annotation으로 표현하는게 낫지 않을까? -> 일단 파베 데이터 올라가는거 확인 후 그 뒤에 다같이 Location 어떻게할지 얘기하면서 변경
-/// 4. 위도 경도 파베에 보내기
-/// 참고 상규님 MapView, NewMapView
 
-struct FriendsMapView: View {
+struct PromiseDetailMapView: View {
     @StateObject private var locationStore = LocationStore()
     @StateObject private var gpsStore = GPSStore()
     @EnvironmentObject var alertStore: AlertStore
@@ -47,6 +40,8 @@ struct FriendsMapView: View {
     // 도착 위치 반경
     let arrivalCheckRadius: Double = 150
     
+    @State private var detents: PresentationDetent = .medium
+    
     // Marker는 시각적, Anntation은 정보 포함
     var body: some View {
         NavigationStack {
@@ -56,9 +51,13 @@ struct FriendsMapView: View {
                     UserAnnotation(anchor: .center)
                     // 도착 위치 표시
                     Annotation("약속 위치", coordinate: promise.coordinate, anchor: .bottom) {
-                        Image(systemName: "mappin")
-                            .font(.title)
-                            .foregroundColor(.blue)
+                        Button(action: {
+                            region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                        }, label: {
+                            Image(systemName: "mappin")
+                                .font(.title)
+                                .foregroundColor(.blue)
+                        })
                     }
                     // 도착 반경 표시
                     MapCircle(center: promise.coordinate, radius: arrivalCheckRadius)
@@ -80,13 +79,17 @@ struct FriendsMapView: View {
                              .frame(width: 25, height: 25) // 크기 조절
                              .aspectRatio(contentMode: .fill)
                              }*/
-                            Image(annotation.moleImageString)
-                                .resizable()
-                                .frame(width: 25, height: 25) // 크기 조절
-                                .aspectRatio(contentMode: .fill)
-                                .overlay(
-                                    Circle().stroke(Color.white, lineWidth: 2))
-                                .shadow(radius: 10)
+                            Button {
+                                region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                            } label: {
+                                Image(annotation.moleImageString)
+                                    .resizable()
+                                    .frame(width: 25, height: 25) // 크기 조절
+                                    .aspectRatio(contentMode: .fill)
+                                    .overlay(
+                                        Circle().stroke(Color.white, lineWidth: 2))
+                                    .shadow(radius: 10)
+                            }
                         }
                     }
                     // 경로 그리기
@@ -182,15 +185,16 @@ struct FriendsMapView: View {
                 }
             }
             .sheet(isPresented: $isShowingFriendSheet) {
-                FriendsMapSubView(locationStore: locationStore, isShowingFriendSheet: $isShowingFriendSheet, region: $region, destinationCoordinate: promise.coordinate, promise: promise)
-                    .presentationDetents([.medium, .large])
-                    .presentationCompactAdaptation(.none)
+                PromiseDetailMapSubView(locationStore: locationStore, region: $region, destinationCoordinate: promise.coordinate, promise: promise, isShowingFriendSheet: $isShowingFriendSheet, detents: $detents)
+                    .presentationDetents([.medium, .large], selection: $detents)
+                    .animation(.linear, value: 10)
             }
         }
+        /*
         .onAppear {
-            // 5초마다 반복, 전역에서 사라지지 않고 실행됨
-            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
-                print("나는 맵에서 만들어짐! ! 5초 지남")
+            // 1초마다 반복, 전역에서 사라지지 않고 실행됨
+            let timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
+                print("나는 맵에서 만들어짐! ! 1초 지남")
                 // 위치 도착 위치 비교
                 if !isArrived {
                     // 도착 체크 함수
@@ -204,8 +208,8 @@ struct FriendsMapView: View {
                     // 한번만 실행되고 그 뒤에는 실행되면 안됨, 그런데 5초 루프문에 넣어야지 백그라운드에서 실행가능
                     if locationStore.myLocation.arriveTime == 0 {
                         // 도착시간 저장
-                        var rank = locationStore.calculateRank()
                         locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
+                        let rank = locationStore.calculateRank()
                         locationStore.updateArriveTime(locationId: locationStore.myLocation.id, arriveTime: locationStore.myLocation.arriveTime, rank: rank)
                         // 도착 알림 실행
                         alertStore.arrivalMsgAlert = ArrivalMsgModel(name: AuthStore.shared.currentUser?.nickName ?? "이름없음", profileImgString: AuthStore.shared.currentUser?.profileImageString ?? "doo1", rank: rank, arrivarDifference: promise.promiseDate - locationStore.myLocation.arriveTime, potato: 0)
@@ -232,10 +236,12 @@ struct FriendsMapView: View {
                     print("파이어베이스 에러")
                 }
             }
-        }
+        }*/
         .task { // 초기화 코드
             // myLocation 초기화
-            locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: 0, departureLongitude: 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+//            locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: departureLatitude, departureLongitude: departureLongitude, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+            locationStore.myLocation.currentLatitude = gpsStore.lastSeenLocation?.coordinate.latitude ?? 0
+            locationStore.myLocation.currentLongitude = gpsStore.lastSeenLocation?.coordinate.longitude ?? 0
             // 패치해주는 코드
             do {
                 try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
@@ -286,11 +292,11 @@ struct FriendsMapView: View {
 }
 
 #Preview {
-    FriendsMapView(promise: Promise(id: "", makingUserID: "", promiseTitle: "", promiseDate: 0, destination: "", address: "", latitude: 37.2325443502025, longitude: 127.21076196328842, participantIdArray: [], checkDoublePromise: false, locationIdArray: [], penalty: 10))
+    PromiseDetailMapView(promise: Promise(id: "", makingUserID: "", promiseTitle: "사당역 모여라", promiseDate: 1697694660, destination: "", address: "", latitude: 37.47694972793077, longitude: 126.98195644152227, participantIdArray: [], checkDoublePromise: false, locationIdArray: [], penalty: 10))
         .environmentObject(AlertStore())
 }
 
-extension FriendsMapView {
+extension PromiseDetailMapView {
     // 나의 위치 거리를 받아서, 도착지점 원과 비교하여 Bool값으로 출력
     // 도착 Bool값이 true일때, 흐음... 도착시간 저장 -> 토스트 띄움
     func didYouArrive(currentCoordinate: CLLocation, arrivalCoordinate: CLLocation, effetiveDistance: Double) -> Bool {
