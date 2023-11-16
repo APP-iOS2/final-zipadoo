@@ -5,19 +5,22 @@
 //  Created by 이재승 on 2023/09/21.
 //
 
-import SwiftUI
 import MessageUI
+import SwiftUI
 
 struct SettingView: View {
-    
+    /// 알림설정 토글
     @State private var isOnAlarm: Bool = true
+    /// 위치공개 토글
     @State private var isOnGPS: Bool = true
+    /// 로그아웃 알람창
     @State private var isLogoutAlert: Bool = false
-    @State private var emailAddress = "example@email.com"
+    /// 앱버전 문구(Project -> General -> Version에서 확인)
     private let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "버전 정보를 불러올 수 없습니다"
     
     var body: some View {
         Form {
+            // 삭제?
             Section {
                 Toggle("알림 설정", isOn: $isOnAlarm)
                 Toggle("위치 공개", isOn: $isOnGPS)
@@ -35,61 +38,58 @@ struct SettingView: View {
                 } label: {
                     Text("비밀번호 변경")
                 }
+            }
+            
+            Section {
+                NavigationLink {
+                    AppInfoView()
+                } label: {
+                    HStack {
+                        Text("버전 정보")
+                        Spacer()
+                        Text("\(appVersion)")
+                            .foregroundColor(.secondary)
+                    }
+                }
                 
                 NavigationLink {
-                    List {
+                    openSourceView
+                } label: {
+                    Text("오픈소스 라이선스")
+                }
+                
+                NavigationLink {
+                    DeveloperProfileView()
+                } label: {
+                    Text("개발자")
+                }
+                
+                // 1:1 문의하기
+                NavigationLink {
+                    Form {
                         Button(action: {
+                            // 미리 만들어둔 오픈채팅 url
                             let url = URL(string: "https://open.kakao.com/o/s2WMpYMf")!
                             UIApplication.shared.open(url)
                         }, label: {
-                            HStack {
-                                Text("오픈카톡으로 연락하기💬")
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray)
-                            }
+                            askCellView("오픈카톡으로 연락하기")
                         })
+                        
                         Button(action: {
+                            // 메일앱이 깔려있으면 가능
                             EmailController.shared.sendEmail(subject: "제목을 입력해주세요", body: "문의 내용을 입력해주세요", to: "someday0307@gmail.com")
                         }, label: {
-                            HStack {
-                                Text("이메일로 연락하기✉️")
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                                    .foregroundColor(.gray)
-                            }
+                            askCellView("이메일로 연락하기")
                         })
                     }
                     .foregroundColor(.primary)
                     .navigationTitle("1:1 문의하기")
                     .navigationBarTitleDisplayMode(.inline)
+                    
                 } label: {
                     Text("1:1 문의하기")
                 }
-            }
-            
-            NavigationLink {
-                AppInfoView()
-            } label: {
-                HStack {
-                    Text("앱 정보")
-                    Spacer()
-                    Text("\(appVersion)")
-                        .foregroundColor(.gray)
-                }
-            }
-            
-            NavigationLink {
-                OpenSourceView()
-            } label: {
-                Text("오픈소스 라이선스")
-            }
-            
-            NavigationLink {
-                DeveloperProfileView()
-            } label: {
-                Text("개발자")
-            }
+            } // Section
             
             // 로그아웃
             Section {
@@ -115,19 +115,38 @@ struct SettingView: View {
                     )
                 }
             }
-        }
+        } // Form
         .navigationTitle("설정")
+    } // body
+    
+    /// 1:1 문의하기(오픈채팅, 이메일)
+    private func askCellView(_ method: String) -> some View {
+        HStack {
+            Text(method)
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(.footnote)
+                .fontWeight(.semibold)
+                .foregroundColor(.secondary)
+        }
+    }
+    /// 오픈소스 라이선스 뷰
+    private var openSourceView: some View {
+        VStack {
+            Spacer()
+            Text("오픈 소스 리스트")
+                .navigationTitle("오픈소스 라이선스")
+                .navigationBarTitleDisplayMode(.inline)
+            Spacer()
+            
+            Text("Copyrightⓒ 2023 Zipadoo All rights reserved")
+                .font(.caption2)
+                .foregroundColor(.secondary)
+                .padding(.bottom, 50)
+        }
     }
 }
-
-struct OpenSourceView: View {
-    var body: some View {
-        Text("오픈 소스 리스트")
-            .navigationTitle("오픈소스 라이선스")
-            .navigationBarTitleDisplayMode(.inline)
-    }
-}
-
+/// 이메일로 문의하기
 class EmailController: NSObject, MFMailComposeViewControllerDelegate {
     public static let shared = EmailController()
     private override init() { }
