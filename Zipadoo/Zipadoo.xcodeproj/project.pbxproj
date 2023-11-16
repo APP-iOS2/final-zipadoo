@@ -115,7 +115,6 @@
 		FA24745C2ACE39AC00D4C821 /* DateChanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745B2ACE39AC00D4C821 /* DateChanger.swift */; };
 		FA24745E2ACE3B8200D4C821 /* MyPagePromiseStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */; };
 		FA2474602ACE3BC000D4C821 /* PastPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */; };
-		FA25DAC82AF9FAA800C8BCA4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA25DAC72AF9FAA800C8BCA4 /* GoogleService-Info.plist */; };
 		FA25DACA2B036A0200C8BCA4 /* CustomDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25DAC92B036A0200C8BCA4 /* CustomDatePickerView.swift */; };
 		FA25DAD12B039C4F00C8BCA4 /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25DAD02B039C4F00C8BCA4 /* FriendsListView.swift */; };
 		FA43C5622ADCFC01005BFBF7 /* LaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA43C5612ADCFC01005BFBF7 /* LaunchScreen.swift */; };
@@ -268,7 +267,6 @@
 		FA24745B2ACE39AC00D4C821 /* DateChanger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateChanger.swift; sourceTree = "<group>"; };
 		FA24745D2ACE3B8200D4C821 /* MyPagePromiseStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPagePromiseStore.swift; sourceTree = "<group>"; };
 		FA24745F2ACE3BC000D4C821 /* PastPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PastPromiseView.swift; sourceTree = "<group>"; };
-		FA25DAC72AF9FAA800C8BCA4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA25DAC92B036A0200C8BCA4 /* CustomDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerView.swift; sourceTree = "<group>"; };
 		FA25DAD02B039C4F00C8BCA4 /* FriendsListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
 		FA43C5612ADCFC01005BFBF7 /* LaunchScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchScreen.swift; sourceTree = "<group>"; };
@@ -632,7 +630,6 @@
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
-				FA25DAC72AF9FAA800C8BCA4 /* GoogleService-Info.plist */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
 				FA103F1C2AE2163900BE56CA /* Enum */,
@@ -831,7 +828,6 @@
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				8B93D2FE2B063793006385FF /* Settings.bundle in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
