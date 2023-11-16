@@ -19,6 +19,7 @@ final class EditProfileViewModel: ObservableObject {
     @Published var phoneNumber: String
     @Published var newpassword: String = ""
     @Published var newpasswordCheck: String = ""
+    
     /// 이미지 피커에서 선택한 사진
     @Published var selectedImage: UIImage?
 
@@ -32,7 +33,7 @@ final class EditProfileViewModel: ObservableObject {
     
     /// 유저정보 파이어베이스에 업데이트
     @MainActor
-    func updateUserData() async throws {
+    func updateUserData(nick: String, phone: String) async throws {
         var data = [String: Any]()
         
         // 선택한 사진이 있다면
@@ -43,9 +44,9 @@ final class EditProfileViewModel: ObservableObject {
             AuthStore.shared.currentUser?.profileImageString = imageString ?? defaultImageString
         }
         
-        if currentUser?.nickName != nickname {
-            data["nickName"] = nickname
-            AuthStore.shared.currentUser?.nickName = nickname
+        if currentUser?.nickName != nick {
+            data["nickName"] = nick
+            AuthStore.shared.currentUser?.nickName = nick
         }
         
         if currentUser?.phoneNumber != phoneNumber {

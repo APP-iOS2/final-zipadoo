@@ -137,7 +137,7 @@ struct MyPageView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView (showsIndicators: false) {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     
                     VStack(spacing: 5) {
@@ -148,12 +148,12 @@ struct MyPageView: View {
                                 .overlay(
                                     Circle()
                                         .stroke(Color.gray, lineWidth: 3)
-                                        .fill(.secondary)
+//                                        .fill(.secondary) // 사진을 흐리게하는 코드이므로 주석처리
                                 )
                                 .padding(.trailing, 10)
-                            
                             // 칭호, 이름, 위치
                             VStack(alignment: .leading) {
+                                Spacer().frame(height: 10) // 이름 부분 중앙 정렬
                                 Text(tradyTitle)
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
@@ -165,7 +165,6 @@ struct MyPageView: View {
                                 Spacer()
                                 // 닉네임, 지각 깊이(위치)
                             }
-                            
                             Spacer()
                         }
                         .padding(.bottom, 15)
@@ -204,7 +203,7 @@ struct MyPageView: View {
                                 
                                 Spacer()
                                 
-                                Text("30,000")
+                                Text("0")
                                     .fontWeight(.semibold)
                                 
                                 Text("원")
@@ -273,7 +272,7 @@ struct MyPageView: View {
                         .foregroundStyle(.secondary)
                         .padding(.top, 1)
                         
-                        ZStack {
+                        VStack {
                             Image(crustBackgroundImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
@@ -401,9 +400,22 @@ struct MyPageView: View {
                                 .foregroundColor(.primary)
                         }
                     }
+                    // MARK: - 지파두 마크
+                    ToolbarItem(placement: .topBarLeading) {
+                        Image("zipadooMark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 20)
+                    }
+                    
                 } // ScrollView
             }
-            .padding(10)
+            .onAppear {
+                Task {
+                    try await AuthStore.shared.loadUserData()
+                }
+            }
+            // .padding(10) 너무 빈공간이 많지 않나요
         }
     }
 }
