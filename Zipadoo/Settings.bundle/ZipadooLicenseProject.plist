@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Title</key>
+			<string>Licenses</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/abseil-cpp-binary</string>
+			<key>Title</key>
+			<string>abseil (1.2022062300.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/Alamofire</string>
+			<key>Title</key>
+			<string>Alamofire (5.8.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/AppsFlyerFramework</string>
+			<key>Title</key>
+			<string>AppsFlyerLib (6.12.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/firebase-ios-sdk</string>
+			<key>Title</key>
+			<string>Firebase (10.15.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/GoogleAppMeasurement</string>
+			<key>Title</key>
+			<string>GoogleAppMeasurement (10.13.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/GoogleDataTransport</string>
+			<key>Title</key>
+			<string>GoogleDataTransport (9.2.5)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/GoogleUtilities</string>
+			<key>Title</key>
+			<string>GoogleUtilities (7.11.5)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/grpc-binary</string>
+			<key>Title</key>
+			<string>gRPC (1.50.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/gtm-session-fetcher</string>
+			<key>Title</key>
+			<string>gtm-session-fetcher (3.1.1)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/interop-ios-for-google-sdks</string>
+			<key>Title</key>
+			<string>InteropForGoogle (100.0.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/leveldb</string>
+			<key>Title</key>
+			<string>leveldb (1.22.2)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/lottie-ios</string>
+			<key>Title</key>
+			<string>Lottie (4.3.3)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/nanopb</string>
+			<key>Title</key>
+			<string>nanopb (2.30909.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/promises</string>
+			<key>Title</key>
+			<string>Promises (2.3.1)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>ZipadooLicenseProject/swift-protobuf</string>
+			<key>Title</key>
+			<string>SwiftProtobuf (1.23.0)</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+	</array>
+</dict>
+</plist>

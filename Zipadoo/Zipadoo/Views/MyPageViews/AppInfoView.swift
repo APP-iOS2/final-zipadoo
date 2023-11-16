@@ -12,7 +12,8 @@ struct AppInfoView: View {
     private let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "버전 정보를 불러올 수 없습니다"
     
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack {
+            // MARK: - 버전정보
             HStack {
                 Image(.zipadoo)
                     .resizable()
@@ -41,11 +42,39 @@ struct AppInfoView: View {
                     Text("업데이트")
                 }
                 .buttonStyle(.automatic)
+                
             } // HStack
-            .padding()
+            .padding(.bottom, 8)
             
+            // MARK: - 오픈소스 라이센스
+            Button {
+                /// 지파두 설정창으로 이동
+                guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else { return }
+                UIApplication.shared.open(settingsURL)
+            } label: {
+                HStack {
+                    Text("오픈소스 라이센스")
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.secondary)
+                }
+                .padding(6)
+            }
+            .buttonStyle(.bordered)
+            .tint(.sand)
+
             Spacer()
+            
+            Text("Copyrightⓒ 2023 Zipadoo All rights reserved")
+                .font(.caption2)
+                .foregroundColor(.secondary)
+                .padding(.bottom, 10)
+            
         } // VStack
+        .padding()
         .navigationTitle("앱 정보")
         .navigationBarTitleDisplayMode(.inline)
     }

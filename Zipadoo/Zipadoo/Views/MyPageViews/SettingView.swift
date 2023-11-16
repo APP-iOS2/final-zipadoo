@@ -26,6 +26,7 @@ struct SettingView: View {
                 Toggle("위치 공개", isOn: $isOnGPS)
             }
             
+            // MARK: - 정보 수정
             Section {
                 NavigationLink {
                     EditProfileView()
@@ -40,24 +41,19 @@ struct SettingView: View {
                 }
             }
             
+            // MARK: - 앱정보
             Section {
                 NavigationLink {
                     AppInfoView()
                 } label: {
                     HStack {
-                        Text("버전 정보")
+                        Text("앱 정보")
                         Spacer()
-                        Text("\(appVersion)")
+                        Text("ver \(appVersion)")
                             .foregroundColor(.secondary)
                     }
                 }
-                
-                NavigationLink {
-                    openSourceView
-                } label: {
-                    Text("오픈소스 라이선스")
-                }
-                
+
                 NavigationLink {
                     DeveloperProfileView()
                 } label: {
@@ -91,7 +87,7 @@ struct SettingView: View {
                 }
             } // Section
             
-            // 로그아웃
+            // MARK: - 로그아웃
             Section {
                 Button {
                     isLogoutAlert.toggle()
@@ -128,21 +124,6 @@ struct SettingView: View {
                 .font(.footnote)
                 .fontWeight(.semibold)
                 .foregroundColor(.secondary)
-        }
-    }
-    /// 오픈소스 라이선스 뷰
-    private var openSourceView: some View {
-        VStack {
-            Spacer()
-            Text("오픈 소스 리스트")
-                .navigationTitle("오픈소스 라이선스")
-                .navigationBarTitleDisplayMode(.inline)
-            Spacer()
-            
-            Text("Copyrightⓒ 2023 Zipadoo All rights reserved")
-                .font(.caption2)
-                .foregroundColor(.secondary)
-                .padding(.bottom, 50)
         }
     }
 }
