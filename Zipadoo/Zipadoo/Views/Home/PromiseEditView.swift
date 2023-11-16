@@ -321,7 +321,7 @@ struct PromiseEditView: View {
                         try await friendsStore.fetchFriends()
                     }
                 }
-                //MARK: - 약속 수정 관련 버튼
+                // MARK: - 약속 수정 관련 버튼
                 .navigationBarItems(
                     leading: Button("취소") {
                         dismiss()
