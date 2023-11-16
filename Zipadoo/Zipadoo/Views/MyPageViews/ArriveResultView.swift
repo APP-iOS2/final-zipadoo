@@ -7,50 +7,18 @@
 
 import SwiftUI
 
-/// 참여자들의 도착상태 enum
-extension ArriveResultView {
-    enum Result {
-        case notLate
-        case late
-        case notArrive
-    }
-}
 struct ArriveResultView: View {
-    /// 약속 받아오기
     let promise: Promise
-    // 정렬된 사람 결과
-    @State var filteredLocation: [LocationAndParticipant] = []
-    
     @ObservedObject private var locationStore = LocationStore()
     
-    /// 약속시간
-    var promiseDate: Date {
-        return Date(timeIntervalSince1970: promise.promiseDate)
-    }
-    /// 시간표시 형식 지정
-    let dateformat: DateFormatter = {
-          let formatter = DateFormatter()
-           formatter.dateFormat = "a h시 mm분 ss초"
-           return formatter
-       }()
-    /// 얼마나 빨리/늦게 도착했는지
-    let cacluateDateformat: DateFormatter = {
-        let formatter = DateFormatter()
-         formatter.dateFormat = "h시간 m분 s초"
-         return formatter
-     }()
-
     var body: some View {
-        
         VStack {
             ScrollView {
                 // MARK: - 약속 정보뷰
                 HStack {
                     VStack(alignment: .leading) {
                         PromiseDetailView(promise: promise).titleView
-                        
                         PromiseDetailView(promise: promise).dateView
-                        
                         PromiseDetailView(promise: promise).destinationView
                     }
                     Spacer()
@@ -66,10 +34,9 @@ struct ArriveResultView: View {
                     Image(systemName: "flag")
                         .padding(.leading, 13)
                         .font(.title2)
-                    
                     Spacer()
                 }
-
+                
                 ZStack {
                     // 세로선
                     HStack {
@@ -79,30 +46,24 @@ struct ArriveResultView: View {
                             .padding(.leading, 16)
                         Spacer()
                     }
-
+                    
                     // 정보 행row
                     VStack {
                         Spacer()
-                        
                         ForEach(locationStore.sortResult(resultArray: locationStore.locationParticipantDatas)) { participant in
-                            
                             arrivedDataCell(participant: participant)
                                 .padding(.top, 12)
                         }
                     }
-//                    .padding(.leading, 6)
                 }
             }
             .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16))
-//            .padding()
         }
         .onAppear {
             Task {
                 // Location정보 패치
                 try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
-                
             }
-            
         }
     }
     
@@ -118,7 +79,7 @@ struct ArriveResultView: View {
         var calculateInt: Int = Int(promise.promiseDate - participant.location.arriveTime)
         /// 시간차이를 시,분,초로 바꾸기
         var calculateTimeString: String {
-
+            
             let hour = calculateInt / 3600
             calculateInt %= 3600
             let minute = calculateInt / 60
@@ -181,21 +142,17 @@ struct ArriveResultView: View {
                     Text("도착정보가 없어요")
                         .font(.footnote)
                         .foregroundStyle(resultColor)
-                    
                 } else if resultEnum == .late {
                     Text("\(calculateTimeString) 늦게 도착")
                         .font(.footnote)
                         .foregroundStyle(resultColor)
-                    
                 } else if resultEnum == .notLate {
                     Text("\(calculateTimeString) 일찍 도착")
                         .font(.footnote)
                         .foregroundStyle(resultColor)
                 }
             }
-            
             Spacer()
-            
             if isCrown {
                 Text(Image(systemName: "crown"))
             }
@@ -203,13 +160,11 @@ struct ArriveResultView: View {
             Text(resultMessage)
                 .padding(3)
                 .foregroundColor(resultColor)
-
         }
     }
 }
 
 #Preview {
-    
     ArriveResultView(promise:
                         Promise(
                             id: "",
@@ -224,5 +179,4 @@ struct ArriveResultView: View {
                             checkDoublePromise: false,
                             locationIdArray: ["35", "34", "89"],
                             penalty: 0))
-    
 }

@@ -30,3 +30,12 @@ extension View {
         clipShape( RoundedCorner(radius: radius, corners: corners) )
     }
 }
+
+/// 참여자들의 도착상태 enum
+extension ArriveResultView {
+    enum Result {
+        case notLate
+        case late
+        case notArrive
+    }
+}
