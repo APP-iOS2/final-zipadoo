@@ -9,10 +9,16 @@ import SwiftUI
 import WidgetKit
 
 struct MyPageView: View {
+    // 지난 약속을 위한 프로퍼티 래퍼
     @EnvironmentObject private var promiseViewModel: PromiseViewModel
+    /// 감자 충전 뷰 Bool값
+    @State private var isShownFullScreenCover = false
+    /// 프로그래스바 높이
+    @State private var progressBarValue: Double = 0
+    // MARK: - 유저 프로퍼티
     /// 현재 로그인된 유저(옵셔널)
     let currentUser: User? = AuthStore.shared.currentUser
-    /// 유저가 있으면 유저프로필 String저장
+    /// 유저가 있으면 유저프로필 String 저장
     var userImageString: String {
         if let user = currentUser {
             user.profileImageString
@@ -21,24 +27,25 @@ struct MyPageView: View {
             "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
         }
     }
-    @State var isShownFullScreenCover = false
-    @State private var progressBarValue: Double = 0
-    // 지각 깊이 데이터 프로퍼티
+    // MARK: - 지각 깊이 데이터 프로퍼티
     // 지각률에 따라 메시지 다르게 보여주기
+    /// 지각 수
     let tradyCount = AuthStore.shared.currentUser?.tradyCount ?? 0
+    /// 약속 수
     let promiseCount = AuthStore.shared.currentUser?.promiseCount ?? 0
+    /// 지각률
     var tradyPercent: Int {
         if promiseCount == 0 {
             return 0
         }
-        return tradyCount/promiseCount*100
+        return tradyCount/promiseCount * 100
 
     }
-    //    @State private var tradyPercent: Double = 0
+    /// 약속 지킨 횟수
     var promisePercent: Int {
         return 100 - tradyPercent
     }
-    
+    /// 두더지 이미지
     var dooAction: String {
         if let moleImageString = currentUser?.moleImageString {
             switch moleImageString {
@@ -58,7 +65,7 @@ struct MyPageView: View {
             return "doo1_1"
         }
     }
-    
+    /// 유저 칭호 설명
     var tradyMessage: String {
         if promiseCount == 0 {
             return "약속을 잘 지켜보아요."
@@ -77,7 +84,7 @@ struct MyPageView: View {
             }
         }
     }
-    
+    /// 약속 지킨 횟수에 따른 유저 칭호
     var tradyTitle: String {
         if promiseCount == 0 {
             return "뉴비약속러"
@@ -96,7 +103,7 @@ struct MyPageView: View {
             }
         }
     }
-    
+    /// 유저의 지각 깊이
     var crustDepth: String {
         if promiseCount == 0 {
             return "0km--지표"
@@ -115,7 +122,7 @@ struct MyPageView: View {
             }
         }
     }
-    
+    /// 유저의 지각 깊이에 따른 배경 이미지
     var crustBackgroundImage: String {
         if promiseCount == 0 {
             return "crust2"
@@ -139,21 +146,20 @@ struct MyPageView: View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    
+                    // MARK: - 유저정보
                     VStack(spacing: 5) {
-                        // MARK: - 유저정보
                         HStack {
-                            // 프로필 이미지
+                            // MARK: - 프로필 이미지
                             ProfileImageView(imageString: currentUser?.profileImageString ?? userImageString, size: .regular)
                                 .overlay(
                                     Circle()
                                         .stroke(Color.gray, lineWidth: 3)
-//                                        .fill(.secondary) // 사진을 흐리게하는 코드이므로 주석처리
+                                    // .fill(.secondary) // 사진을 흐리게하는 코드이므로 우선 주석처리
                                 )
                                 .padding(.trailing, 10)
-                            // 칭호, 이름, 위치
+                            // MARK: - 닉네임, 지각 깊이(위치)
                             VStack(alignment: .leading) {
-                                Spacer().frame(height: 10) // 이름 부분 중앙 정렬
+                                Spacer()
                                 Text(tradyTitle)
                                     .font(.subheadline)
                                     .foregroundStyle(.secondary)
@@ -163,8 +169,9 @@ struct MyPageView: View {
                                     .fontWeight(.semibold)
                                 
                                 Spacer()
-                                // 닉네임, 지각 깊이(위치)
                             }
+                            .padding(.bottom, 16)
+                            
                             Spacer()
                         }
                         .padding(.bottom, 15)
@@ -179,6 +186,7 @@ struct MyPageView: View {
                                 
                                 Text("감자")
                                     .foregroundColor(.secondary)
+                                
                                 Spacer()
                                 
                                 Text("\(currentUser?.potato ?? 0)")
@@ -217,7 +225,6 @@ struct MyPageView: View {
                             .padding(.vertical, 15)
                         
                         HStack {
-                            
                             NavigationLink {
                                 MyPotatoView()
                             } label: {
@@ -225,7 +232,6 @@ struct MyPageView: View {
                                     Text("감자 이용내역")
                                     Image(systemName: "chevron.right")
                                         .fontWeight(.light)
-
                                 }
                             }
                             Spacer()
@@ -237,10 +243,10 @@ struct MyPageView: View {
                                 Text("충전")
                                     .fontWeight(.semibold)
                             }
-
                         }
                         .foregroundColor(.primary)
                         .font(.headline)
+                        // MARK: - TossPay 뷰
                         .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
                             TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
                         }) // 감자코인
@@ -257,8 +263,7 @@ struct MyPageView: View {
                         
                     )
                     
-                    // MARK: - 지각깊이
-                    
+                    // MARK: - 지각 깊이
                     VStack(alignment: .leading) {
                         Text("지각 깊이")
                             .font(.title3)
@@ -282,7 +287,7 @@ struct MyPageView: View {
                                         .stroke(Color.white, lineWidth: 5))
                         }
                         .overlay(alignment: .topTrailing) {
-                            // 약속 데이터
+                            // MARK: - 약속 데이터 vytl
                             HStack {
                                 VStack {
                                     Text("지각률 \(tradyPercent)%")
@@ -302,8 +307,8 @@ struct MyPageView: View {
                             .shadow(radius: 1.2)
                             .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 15))
                         }
+                        // MARK: - 두더지 이미지
                         .overlay(alignment: .leading) {
-                            // 두더지 이미지
                             Image(dooAction)
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
@@ -354,7 +359,7 @@ struct MyPageView: View {
                     /*
                     .padding(.vertical, 15)
                     
-                    // MARK: - 획득 배지
+                    // MARK: - 획득 배지(추후 업데이트 하기)
                     VStack {
                         HStack {
                             Text("획득 배지")
@@ -387,10 +392,9 @@ struct MyPageView: View {
                         
                     )
                     */
-                    
                 }
                 .padding()
-                
+                // MARK: - 설정 버튼
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink {
@@ -407,17 +411,15 @@ struct MyPageView: View {
                             .scaledToFit()
                             .frame(height: 20)
                     }
-                    
-                } // ScrollView
-            }
+                } // toolbar
+            } // ScrollView
             .onAppear {
                 Task {
                     try await AuthStore.shared.loadUserData()
                 }
             }
-            // .padding(10) 너무 빈공간이 많지 않나요
-        }
-    }
+        } // NavigationStack
+    } // body
 }
 
 #Preview {
@@ -425,33 +427,38 @@ struct MyPageView: View {
         .environmentObject(PromiseViewModel())
 }
 
-struct MyPageProgressBar: View {
-    @Binding var progress: Double
-    
-    var body: some View {
-        VStack {
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .frame(height: 30)
-                    .cornerRadius(5)
-                    .foregroundStyle(.zipadoo.opacity(0.3))
-                
-                ZStack {
-                    Rectangle()
-                        .frame(width: CGFloat(progress) * 330, height: 30)
-                        .cornerRadius(5)
-                        .foregroundColor(.zipadoo)
-                    
-                    VStack {
-                        Image("dothez")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30)
-                        //                            .rotationEffect(Angle(degrees: 90))
-                            .shadow(radius: 10, x: 1, y: 1)
-                    }
-                }
-            }
-        }
-    }
-}
+// MARK: - 지각 퍼센테이지 (구현이 제대로 안되고 사용하지 않아서 주석처리)
+//struct MyPageProgressBar: View {
+//    @Binding var progress: Double
+//    
+//    var body: some View {
+//        VStack {
+//            ZStack(alignment: .leading) {
+//                Rectangle()
+//                    .frame(height: 30)
+//                    .cornerRadius(5)
+//                    .foregroundStyle(.zipadoo.opacity(0.3))
+//                
+//                ZStack {
+//                    Rectangle()
+//                        .frame(width: CGFloat(progress) * 330, height: 30)
+//                        .cornerRadius(5)
+//                        .foregroundColor(.zipadoo)
+//                    
+//                    VStack {
+//                        Image("dothez")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 30)
+//                        //                            .rotationEffect(Angle(degrees: 90))
+//                            .shadow(radius: 10, x: 1, y: 1)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+
+//#Preview {
+//    MyPageProgressBar(progress: .constant(1.19))
+//}
