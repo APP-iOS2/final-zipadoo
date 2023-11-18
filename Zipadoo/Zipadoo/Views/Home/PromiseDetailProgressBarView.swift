@@ -9,18 +9,34 @@ import SwiftUI
 import CoreLocation
 import MapKit
 
+/// PromiseDetailMapSubView에서 사용
 struct PromiseDetailProgressBarView: View {
     
+    // 관찰 대상 객체로 사용되는 위치 정보 스토어
     @ObservedObject var locationStore: LocationStore
+    
+    // 친구 현황 시트 표시 여부를 결정하는 바인딩 변수
     @Binding var isShowingFriendSheet: Bool
+    
+    // 맵 뷰의 카메라 위치를 조절하는 바인딩 변수
     @Binding var region: MapCameraPosition
+    
+    // 목적지 좌표
     let destinationCoordinate: CLLocationCoordinate2D
+    
+    // 현재 약속 정보
     var promise: Promise
     
+    // 약속 진행 상황을 감지하여 UI 갱신하는 바인딩 변수
     @Binding var progressTrigger: Bool
+    
+    // 약속 현황 시트의 높이를 제어하기 위한 바인딩 변수
     @Binding var detents: PresentationDetent
     
+    // 1초마다 갱신되는 타이머
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    // 약속 종료 여부를 감지하는 상태 변수
     @State private var promiseFinishCheck: Bool = false
     
     var body: some View {
@@ -45,7 +61,7 @@ struct PromiseDetailProgressBarView: View {
             VStack(alignment: .leading) {
                 
                 /// 남은거리 / 전체거리 비율
-                let ratio: Double = caculateRatio(location: locationStore.myLocation)
+                let ratio: Double = calculateRatio(location: locationStore.myLocation)
                 /// ratio에 맞춰서 이미지 위치 조정 다르게 변경
                 var offsetX: Double {
                     if ratio <= 0.3 {
@@ -113,9 +129,7 @@ struct PromiseDetailProgressBarView: View {
                     $0.location.participantId != AuthStore.shared.currentUser?.id ?? ""
                 }) { friends in
                     VStack(alignment: .leading) {
-                        /// 남은거리 / 전체거리 비율
-                        //                        let randomRatio : [Double] = [ 0.5, 0.2, 0.3, 0.7, 0.8, 0.9, 1 ]                        
-                        let ratio = caculateRatio(location: friends.location)
+                        let ratio = calculateRatio(location: friends.location)
                         /// ratio에 맞춰서 이미지 위치 조정 다르게 변경
                         HStack {
                             Text("\(friends.nickname)")
@@ -131,7 +145,7 @@ struct PromiseDetailProgressBarView: View {
                             }
                         }
                         .offset(y: 15)
-
+                        
                         ProgressSubView(friends: friends, isShowingFriendSheet: $isShowingFriendSheet, region: $region, realRatio: ratio, progressTrigger: $progressTrigger, promiseFinishCheck: $promiseFinishCheck)
                     }
                 }
@@ -140,6 +154,7 @@ struct PromiseDetailProgressBarView: View {
         .task {
             promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
         }
+        /// 매 초마다 약속이 종료되었는지 여부를 확인
         .onReceive(timer) { _ in
             promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
         }
@@ -157,153 +172,27 @@ struct PromiseDetailProgressBarView: View {
 
 struct PromiseDetailProgressBarView_Previews: PreviewProvider {
     static var previews: some View {
-        PromiseDetailProgressBarView(locationStore: LocationStore(), isShowingFriendSheet: .constant(true), region: .constant(.automatic), destinationCoordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323), promise: Promise(id: "", makingUserID: "", promiseTitle: "사당역 모여라", promiseDate: 1697694660, destination: "왕십리 캐치카페", address: "서울특별시 관악구 청룡동", latitude: 37.47694972793077, longitude: 126.98195644152227, participantIdArray: [], checkDoublePromise: false, locationIdArray: [], penalty: 10), progressTrigger: .constant(false), detents: .constant(.medium))
-    }
-}
-
-extension PromiseDetailProgressBarView {
-    /// %구하는 함수
-    func distanceRatio(depature: Double, arrival: Double) -> Double {
-        let current: Double = arrival - depature
-        var remainingDistance: Double = current/arrival
-        
-        // 만약 remainingDistance가 0보다 작다면 그냥 0을 반환
-        if remainingDistance < 0 {
-            remainingDistance = 0
-        }
-        // 현재거리/총거리 비율
-        return remainingDistance
-        
-        // return "\(Int(remainingDistance * 100))%"
-    }
-    
-    /// 직선거리 계산 함수
-    func straightDistance(x1: Double, y1: Double, x2: Double, y2: Double) -> Double {
-        let z: Double = sqrt(pow(x2-x1, 2) + pow(y2-y1, 2))
-        return z
-    }
-    /// 최종적으로 비율을 계산해주는 함수
-    func caculateRatio(location: Location) -> Double {
-        
-        print("출발위치 경도 : \(location.departureLatitude)")
-        
-        let totalDistance = straightDistance(x1: location.departureLatitude, y1: location.departureLongitude, x2: promise.latitude, y2: promise.longitude)
-        
-        print("전체 거리 : \(totalDistance)")
-        
-        let remainingDistance = straightDistance(x1: location.currentLatitude, y1: location.currentLongitude, x2: promise.latitude, y2: promise.longitude)
-        
-        print("남은 거리 : \(remainingDistance)")
-        
-        print("총 계산 비율 : \(distanceRatio(depature: totalDistance, arrival: remainingDistance))")
-        
-        return distanceRatio(depature: remainingDistance, arrival: totalDistance)
-    }
-    /// 지구가 원이라,, 거리를 원주 기준으로? 맞나?
-    func degreesToRadians(_ degrees: Double) -> Double {
-        return degrees * .pi / 180.0
-    }
-    /// 현재 위치, 도착 위치 매개변수
-    func calculateDistanceInMeters(x1: Double, y1: Double, x2: Double, y2: Double) -> Double {
-        let earthRadius = 6371000.0 // 지구의 반경 (미터)
-        
-        let lat1 = degreesToRadians(x1)
-        let lon1 = degreesToRadians(y1)
-        let lat2 = degreesToRadians(x2)
-        let lon2 = degreesToRadians(y2)
-        
-        let dLat = lat2 - lat1
-        let dLon = lon2 - lon1
-        
-        let a = sin(dLat/2) * sin(dLat/2) + cos(lat1) * cos(lat2) * sin(dLon/2) * sin(dLon/2)
-        let c = 2 * atan2(sqrt(a), sqrt(1-a))
-        
-        let distance = earthRadius * c
-        return distance
-    }
-    /// 미터로 변경
-    func formatDistance(_ distance: CLLocationDistance) -> String {
-        if distance < 1000 {
-            return String(format: "%.0f m", distance)
-        } else {
-            let distanceInKilometers = distance / 1000.0
-            return String(format: "%.2f km", distanceInKilometers)
-        }
-    }
-}
-
-struct ProgressSubView: View {
-    let friends: LocationAndParticipant
-    @Binding var isShowingFriendSheet: Bool
-    @Binding var region: MapCameraPosition
-    let realRatio: Double
-    @State var ratio: Double = 0
-    @Binding var progressTrigger: Bool
-    @Binding var promiseFinishCheck: Bool
-    
-    var offsetX: Double {
-        if ratio <= 0.3 {
-            // 0.3보다 작거나 같을때는 바끝에
-            return 14
-        } else if 0.7 <= ratio && ratio < 1 {
-            // 0.7보다 크거나 같을때는 더 들어가야함
-            return 42
-        } else {
-            // 기본값 28
-            return 28
-        }
-    }
-    
-    var body: some View {
-        Button { // 지도 위치 움직이기
-            region = .region(MKCoordinateRegion(center: friends.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
-            isShowingFriendSheet = false
-        } label: {
-            ZStack(alignment: .leading) {
-                RoundedRectangle(cornerRadius: 10)
-                    .frame(height: 38)
-                    .foregroundColor(Color.gray)
-                
-                RoundedRectangle(cornerRadius: 10)
-                    .frame(width: CGFloat(ratio) * (UIScreen.main.bounds.width - 64), height: 38)
-                    .foregroundColor(Color.brown)
-                // 두더지 이미지 도착 분기처리
-                if promiseFinishCheck && ratio >= 1 {
-                    Image(AuthStore.shared.currentUser?.moleDrillImageString ?? "doo1_1")
-                        .resizable()
-                        .frame(width: 38, height: 55.95)
-                        .foregroundColor(.green)
-                        .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - CGFloat(offsetX) + 5)
-                } else {
-                    Image(AuthStore.shared.currentUser?.moleDrillImageString ?? "doo1_1")
-                        .resizable()
-                        .frame(width: 38, height: 55.95)
-                        .foregroundColor(.green)
-                        .offset(y: 15)
-                        .rotationEffect(.degrees(270))
-                        .offset(x: CGFloat(ratio) * (UIScreen.main.bounds.width - 64) - CGFloat(offsetX))
-                }
-            }
-        }
-        .task {
-                withAnimation(.easeIn) {
-                    ratio = realRatio
-            }
-        }
-    }
-}
-
-extension PromiseDetailProgressBarView {
-    // 시간 지났는지 확인
-    func calculateTimeRemaining(targetTime: Double) -> Bool {
-        let currentTime = Date().timeIntervalSince1970
-        let timeDifference = targetTime - currentTime
-        
-        if timeDifference <= 0 {
-            // 약속 시간 지남
-            return true
-        } else {
-            return false
-        }
+        PromiseDetailProgressBarView(
+            locationStore: LocationStore(),
+            isShowingFriendSheet: .constant(true),
+            region: .constant(.automatic),
+            destinationCoordinate: CLLocationCoordinate2D(latitude: 37.497940, longitude: 127.027323),
+            promise: Promise(
+                id: "",
+                makingUserID: "",
+                promiseTitle: "사당역 모여라",
+                promiseDate: 1697694660,
+                destination: "왕십리 캐치카페",
+                address: "서울특별시 관악구 청룡동",
+                latitude: 37.47694972793077,
+                longitude: 126.98195644152227,
+                participantIdArray: [],
+                checkDoublePromise: false,
+                locationIdArray: [],
+                penalty: 10
+            ),
+            progressTrigger: .constant(false),
+            detents: .constant(.medium)
+        )
     }
 }
