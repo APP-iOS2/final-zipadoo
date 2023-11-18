@@ -33,6 +33,15 @@ extension View {
     }
 }
 
+/// 참여자들의 도착상태 enum
+extension ArriveResultView {
+    enum Result {
+        case notLate
+        case late
+        case notArrive
+    }
+}
+
 extension PromiseDetailProgressBarView {
     /// 현재 거리 비율을 계산하여 반환하는 함수
     func distanceRatio(depature: Double, arrival: Double) -> Double {
