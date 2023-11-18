@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct AddFriendCellView: View {
+    
+    /// 친구 선택 시트 불리언 값
+    @State private var isAddFriendsSheet: Bool = false
+    /// 심볼이펙트
+    @State private var animate = false
     /// 약속에 참여할 친구배열
     @Binding var selectedFriends: [User]
-    
-    @State private var addFriendsSheet: Bool = false
-    
-    // 심볼이펙트
-    @State private var animate = false
     
     var body: some View {
         VStack {
@@ -33,11 +33,9 @@ struct AddFriendCellView: View {
                     .symbolEffect(.bounce, value: animate)
                     .onTapGesture {
                         animate.toggle()
-                        addFriendsSheet.toggle()
+                        isAddFriendsSheet.toggle()
                     }
-                
-                
-            }
+            } // HStack
             .padding(.top, 60)
             
             RoundedRectangle(cornerRadius: 10)
@@ -49,18 +47,12 @@ struct AddFriendCellView: View {
                     HStack {
                         VStack {
                             HStack {
-                                /*
-                                 VStack {
-                                 HStack {
-                                 if selectedFriends.isEmpty {
-                                 Text("초대 할 친구를 추가해주세요.")
-                                 } else { */
                                 ScrollView(.horizontal) {
                                     HStack {
-                                        ForEach(selectedFriends) { friend in
-                                            FriendSellView(selectedFriends: $selectedFriends, friend: friend).padding()
-                                                .padding(.trailing, -50)
-                                        }
+                                        // 참여자 프로필, 닉네임
+                                        FriendCellView(selectedFriends: $selectedFriends).padding()
+                                            .padding(.trailing, -50)
+                                        
                                     }
                                     .padding(.leading, -20)
                                     .padding(.trailing, 50)
@@ -71,17 +63,17 @@ struct AddFriendCellView: View {
                         }
                     }
                 }
-                .sheet(isPresented: $addFriendsSheet) {
-                    FriendsListVIew(isShowingSheet: $addFriendsSheet, selectedFriends: $selectedFriends)
+                .sheet(isPresented: $isAddFriendsSheet) {
+                    FriendsListView(isShowingSheet: $isAddFriendsSheet, selectedFriends: $selectedFriends)
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {
                     animate.toggle()
-                    addFriendsSheet.toggle()
+                    isAddFriendsSheet.toggle()
                 }
-        }
-    }
-}
+        } // VStack
+    } // body
+} // struct
 
 #Preview {
     AddFriendCellView(selectedFriends: .constant([]))

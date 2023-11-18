@@ -37,7 +37,7 @@ class PromiseViewModel: ObservableObject {
     /// 약속에 참여할 친구배열
     @Published var selectedFriends: [User] = []
     
-    /// 지난약속 아래 페이지 수(올림)
+    /// 페이지네이션 - 지난약속 아래 페이지 수(올림)
     var pastPromisePage: Int {
         var result = Int(ceil(Double(fetchPastPromiseData.count) / Double(10)))
         // 페이지가 5보다 크다면 5페이지까지

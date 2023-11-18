@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-
-struct FriendsListVIew: View {
+/// 참여자 추가 또는 변경 뷰
+struct FriendsListView: View {
     
     @StateObject var friendsStore: FriendsStore = FriendsStore()
     
@@ -33,11 +33,9 @@ struct FriendsListVIew: View {
                             } else {
                                 ScrollView(.horizontal) {
                                     HStack {
-                                        ForEach(selectedFriends) { friend in
-                                            FriendSellView(selectedFriends: $selectedFriends, friend: friend)
-                                                .padding()
-                                                .padding(.trailing, -50)
-                                        }
+                                        FriendCellView(selectedFriends: $selectedFriends)
+                                            .padding()
+                                            .padding(.trailing, -50)
                                     }
                                     .padding(.leading, -20)
                                     .padding(.trailing, 50)
@@ -48,6 +46,7 @@ struct FriendsListVIew: View {
                         }
                     }
                 }
+            
             // MARK: 친구목록
             List(friendsStore.friendsFetchArray) { friend in
                 Button {
@@ -71,9 +70,6 @@ struct FriendsListVIew: View {
                                 .foregroundColor(.secondary)
                                
                             }
-                        
-                        
-                    
                     }
                 }
                 .alert(isPresented: $showAlert) {
@@ -84,7 +80,7 @@ struct FriendsListVIew: View {
                         }
                     )
                 }
-            }
+            } // List
             .listStyle(.plain)
             .navigationTitle("친구 목록")
             .navigationBarTitleDisplayMode(.inline)
@@ -102,10 +98,10 @@ struct FriendsListVIew: View {
                     }
                 }
             }
-        }
+        } // NavigationStack
     }
 }
 
 #Preview {
-    FriendsListVIew(isShowingSheet: .constant(true), selectedFriends: .constant([dummyUser]))
+    FriendsListView(isShowingSheet: .constant(true), selectedFriends: .constant([dummyUser]))
 }
