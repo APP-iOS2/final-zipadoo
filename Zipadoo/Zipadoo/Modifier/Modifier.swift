@@ -63,3 +63,22 @@ struct ImageStyleModifier: ViewModifier {
             )
     } // body
 } // struct
+
+/// 로그인뷰 상단 문구 스타일
+struct LoginTextStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .foregroundColor(.primary)
+            .font(.title2)
+            .fontWeight(.semibold)
+    }
+}
+
+struct LoginMessageStyle: ViewModifier {
+    @State var color: Color
+    func body(content: Content) -> some View {
+        content
+            .font(.subheadline)
+            .foregroundStyle(color.opacity(0.7))
+    }
+}

@@ -14,7 +14,6 @@ import SwiftUI
 
 // 로그인 뷰 모델
 struct LoginView: View {
-    
     /// 다크모드일 때 컬러 변경
     @Environment(\.colorScheme) var colorScheme
     
@@ -27,7 +26,7 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                /// 배경색
+                /// 배경색(반전)
                 Color.primary.colorInvert()
                 
                 NavigationView {
@@ -35,11 +34,8 @@ struct LoginView: View {
                         VStack {
                             // MARK: - 두더지 이미지
                             Spacer(minLength: spaceHeight)
-                            
-                            Image("Dothez")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: UIScreen.main.bounds.width * 0.9)
+                             
+                            imageAndLoginButtonView("Dothez")
                                 .onAppear {
                                     withAnimation(.bouncy(duration: 2)) {
                                         // 애니메이션 최종 높이
@@ -48,7 +44,7 @@ struct LoginView: View {
                                 }
                             
                             Spacer(minLength: 50)
-                        }
+                        } // VStack
                         
                         VStack {
                             Spacer(minLength: 5)
@@ -57,13 +53,9 @@ struct LoginView: View {
                             NavigationLink {
                                 LoginEmailCheckView()
                             } label: {
-                                Image("email_login")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: UIScreen.main.bounds.width * 0.9)
-                                    .cornerRadius(5)
+                                imageAndLoginButtonView("email_login")
                             }
-                            
+                            /*
                             // MARK: - 카카오톡 로그인 버튼
                             Button {
                                 /*
@@ -79,47 +71,45 @@ struct LoginView: View {
                                  */
                                 print("Kakao Login Button")
                             } label: {
-                                Image("kakao_login")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: UIScreen.main.bounds.width * 0.9)
-                                    .cornerRadius(5)
+                                imageAndLoginButtonView("kakao_login")
                             }
                             .disabled(true)
-                            
+                             */
                             // MARK: - 애플 로그인 버튼
                             Button {
                                 print("apple login")
                             } label: {
+                                // 다크모드 아니면 애플버튼 색 반전
                                 if colorScheme == .dark {
-                                    Image("apple_login")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: UIScreen.main.bounds.width * 0.9)
-                                        .cornerRadius(5)
+                                    imageAndLoginButtonView("apple_login")
                                 } else {
-                                    Image("apple_login")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: UIScreen.main.bounds.width * 0.9)
-                                        .cornerRadius(5)
+                                    imageAndLoginButtonView("apple_login")
                                         .colorInvert()
                                 }
                             }
-                            
+                             
                             // 두더지 몸통
                             Rectangle()
-                                .frame(width: UIScreen.main.bounds.width * 0.9, height: 100)
+                                .frame(width: UIScreen.main.bounds.width * 0.9, height: 120) // 100에서 카톡로그인 삭제로 120으로 늘림
                                 .foregroundColor(Color.primary)
                                 .colorInvert()
-                        }
+                        } // VStack
                     } // ZStack
                     .frame(maxWidth: UIScreen.main.bounds.width)
                 } // NavigationView
             } // ZStack
         } // NavigationStack
-    } // body
-} // struct
+    }
+    
+    /// 두더지 이미지와 로그인버튼 뷰
+    func imageAndLoginButtonView(_ imageString: String) -> some View {
+        Image(imageString)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: UIScreen.main.bounds.width * 0.9)
+            .cornerRadius(5)
+    }
+}
 
 #Preview {
     LoginView()
