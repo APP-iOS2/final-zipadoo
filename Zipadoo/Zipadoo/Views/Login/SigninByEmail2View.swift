@@ -10,7 +10,6 @@ import SwiftUI
 struct SigninByEmail2View: View {
     
     @ObservedObject var emailLoginStore: EmailLoginStore
-    
     /// 이미지 피커 Bool 값
     @State private var isShowingImagePicker = false
     /// 상단 안내 문구
@@ -18,14 +17,11 @@ struct SigninByEmail2View: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            Spacer()
-                .frame(width: 50, height: 50)
+            spacerView(50)
             
             // MARK: - 상단 메세지: 프로필 사진 등록해주세요
             Text(adminMessage)
-                .foregroundColor(.primary)
-                .font(.title2)
-                .fontWeight(.semibold)
+                .modifier(LoginTextStyle())
                 .padding(.bottom, 10)
                 .padding(.leading, 15)
             

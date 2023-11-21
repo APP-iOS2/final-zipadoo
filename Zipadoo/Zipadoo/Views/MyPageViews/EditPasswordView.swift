@@ -9,6 +9,9 @@ import SwiftUI
 
 /// 비밀번호 변경 뷰
 struct EditPasswordView: View {
+    // 유효성검사위해 뷰 선언
+    private let loginEmailCheckView = LoginEmailCheckView()
+    
     @ObservedObject var userStore = UserStore()
     
     @Environment (\.dismiss) private var dismiss
@@ -25,7 +28,7 @@ struct EditPasswordView: View {
     }
     /// 비어있는 TextField가 있을 때 true
     private var isValid: Bool {
-        isCorrectPassword(password: newpassword)
+        loginEmailCheckView.isCorrectPassword(password: newpassword)
     }
     
     var body: some View {

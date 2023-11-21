@@ -9,7 +9,8 @@ import SwiftUI
 
 // 이메일로 가입되어 있는 사람만 정보 수정 뷰 뜰 것
 struct EditProfileView: View {
-    
+    // 유효성검사위해 뷰 선언
+    private let loginEmailCheckView = LoginEmailCheckView()
     //@ObservedObject var viewModel = EditProfileViewModel()
     @ObservedObject var userStore: UserStore = UserStore()
     @Environment (\.dismiss) private var dismiss
@@ -30,7 +31,7 @@ struct EditProfileView: View {
     }
     
     private var isVaild: Bool {
-        isCorrectNickname(nickname: nickname) && isCorrectPhoneNumber(phonenumber: phoneNumber)
+        loginEmailCheckView.isCorrectNickname(nickname: nickname) && loginEmailCheckView.isCorrectPhoneNumber(phonenumber: phoneNumber)
     }
     
     var body: some View {
