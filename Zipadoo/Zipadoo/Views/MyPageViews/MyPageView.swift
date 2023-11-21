@@ -9,10 +9,16 @@ import SwiftUI
 import WidgetKit
 
 struct MyPageView: View {
+    // 지난 약속을 위한 프로퍼티 래퍼
     @EnvironmentObject private var promiseViewModel: PromiseViewModel
+    /// 감자 충전 뷰 Bool값
+    @State private var isShownFullScreenCover = false
+    /// 프로그래스바 높이
+    @State private var progressBarValue: Double = 0
+    // MARK: - 유저 프로퍼티
     /// 현재 로그인된 유저(옵셔널)
     let currentUser: User? = AuthStore.shared.currentUser
-    /// 유저가 있으면 유저프로필 String저장
+    /// 유저가 있으면 유저프로필 String 저장
     var userImageString: String {
         if let user = currentUser {
             user.profileImageString
@@ -21,24 +27,25 @@ struct MyPageView: View {
             "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
         }
     }
-    @State var isShownFullScreenCover = false
-    @State private var progressBarValue: Double = 0
-    // 지각 깊이 데이터 프로퍼티
+    // MARK: - 지각 깊이 데이터 프로퍼티
     // 지각률에 따라 메시지 다르게 보여주기
+    /// 지각 수
     let tradyCount = AuthStore.shared.currentUser?.tradyCount ?? 0
+    /// 약속 수
     let promiseCount = AuthStore.shared.currentUser?.promiseCount ?? 0
+    /// 지각률
     var tradyPercent: Int {
         if promiseCount == 0 {
             return 0
-        } else {
-            return tradyCount/promiseCount*100
         }
+        return tradyCount/promiseCount * 100
+
     }
-    //    @State private var tradyPercent: Double = 0
+    /// 약속 지킨 횟수
     var promisePercent: Int {
         return 100 - tradyPercent
     }
-    
+    /// 두더지 이미지
     var dooAction: String {
         if let moleImageString = currentUser?.moleImageString {
             switch moleImageString {
@@ -58,7 +65,7 @@ struct MyPageView: View {
             return "doo1_1"
         }
     }
-    
+    /// 유저 칭호 설명
     var tradyMessage: String {
         if promiseCount == 0 {
             return "약속을 잘 지켜보아요."
@@ -77,7 +84,7 @@ struct MyPageView: View {
             }
         }
     }
-    
+    /// 약속 지킨 횟수에 따른 유저 칭호
     var tradyTitle: String {
         if promiseCount == 0 {
             return "뉴비약속러"
@@ -96,7 +103,7 @@ struct MyPageView: View {
             }
         }
     }
-    
+    /// 유저의 지각 깊이
     var crustDepth: String {
         if promiseCount == 0 {
             return "0km--지표"
@@ -115,7 +122,7 @@ struct MyPageView: View {
             }
         }
     }
-    
+    /// 유저의 지각 깊이에 따른 배경 이미지
     var crustBackgroundImage: String {
         if promiseCount == 0 {
             return "crust2"
@@ -137,83 +144,57 @@ struct MyPageView: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    
-                    // MARK: - 프로필 사진, 이름, 감자
+                    // MARK: - 유저정보
                     VStack(spacing: 5) {
                         HStack {
-                            // 프로필 이미지
-                            
+                            // MARK: - 프로필 이미지
                             ProfileImageView(imageString: currentUser?.profileImageString ?? userImageString, size: .regular)
                                 .overlay(
                                     Circle()
-                                        .stroke(Color.secondary, lineWidth: 1)
+                                        .stroke(Color.gray, lineWidth: 3)
+                                    // .fill(.secondary) // 사진을 흐리게하는 코드이므로 우선 주석처리
                                 )
-                            
-                            Group {  // 칭호, 이름, 위치
-                                VStack(alignment: .leading) {
-                                    // 닉네임, 지각 깊이(위치)
-                                    VStack {
-                                        HStack {
-                                            VStack {
-                                                HStack {
-                                                    Text(tradyTitle) // 칭호
-                                                        .font(.subheadline)
-                                                        .foregroundStyle(.secondary)
-                                                    Spacer()
-                                                }
-                                                HStack {
-                                                    Text("\(currentUser?.nickName ?? "안나옴") 님")
-                                                        .font(.title3)
-                                                        .fontWeight(.semibold)
-                                                    Spacer()
-                                                }
-                                            }
-                                            Spacer()
-                                            
-                                        }
-                                        .padding(.bottom, 10)
-                                        
-                                        HStack {
-                                            
-                                            Spacer()
-                                        }
-                                        
-                                    }
-                                    
-                                }
-                                .padding(.leading, 10)
+                                .padding(.trailing, 10)
+                            // MARK: - 닉네임, 지각 깊이(위치)
+                            VStack(alignment: .leading) {
+                                Spacer()
+                                Text(tradyTitle)
+                                    .font(.subheadline)
+                                    .foregroundStyle(.secondary)
                                 
+                                Text("\(currentUser?.nickName ?? "안나옴") 님")
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                
+                                Spacer()
                             }
+                            .padding(.bottom, 16)
+                            
+                            Spacer()
                         }
-                        .padding(.bottom, 30)
+                        .padding(.bottom, 15)
                         
-                        // 감자 코인
-                        
-                        .padding(.bottom, 10)
-                        
+                        // MARK: - 감자 , 캐시
                         Group {
                             HStack {
-                                NavigationLink {
-                                    MyPotatoView()
-                                } label: {
-                                    Image("potato")
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fill)
-                                        .frame(width: 23, height: 20)
-                                    
-                                    Text("감자")
-                                        .foregroundColor(.secondary)
-                                        .frame(width: 30, height: 20)
-                                    
-                                    Spacer()
-                                    
-                                }
+                                Image("potato")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 23, height: 20)
+                                
+                                Text("감자")
+                                    .foregroundColor(.secondary)
+                                
+                                Spacer()
+                                
                                 Text("\(currentUser?.potato ?? 0)")
                                     .fontWeight(.semibold)
                                 
+                                Text("감자")
                             }
+                            .padding(.bottom, 5)
                             
                             HStack {
                                 Text("₩")
@@ -227,44 +208,51 @@ struct MyPageView: View {
                                 
                                 Text("캐시")
                                     .foregroundColor(.secondary)
-                                    .frame(width: 30, height: 20)
                                 
                                 Spacer()
-                                Text("30,000")
+                                
+                                Text("0")
                                     .fontWeight(.semibold)
+                                
+                                Text("원")
                                 
                             }
                         }
-                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                            TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
-                        }) // 감자코인
                         .font(.headline)
                         
+                        // MARK: - 감자 이용내열, 충전버튼
                         Divider()
                             .padding(.vertical, 15)
+                        
                         HStack {
-                            
                             NavigationLink {
                                 MyPotatoView()
                             } label: {
                                 HStack {
-                                    Text("감자 이용내역 >")
+                                    Text("감자 이용내역")
+                                    Image(systemName: "chevron.right")
                                         .fontWeight(.light)
-                                    Spacer()
-                                    Image(systemName: "creditcard")
-                                    Text("충전")
-                                        .fontWeight(.semibold)
                                 }
-                                .foregroundColor(.primary)
-                                .font(.headline)
-                                
                             }
+                            Spacer()
                             
+                            Button {
+                                isShownFullScreenCover = true
+                            } label: {
+                                Image(systemName: "creditcard")
+                                Text("충전")
+                                    .fontWeight(.semibold)
+                            }
                         }
-                        .padding(.bottom, 15)
+                        .foregroundColor(.primary)
+                        .font(.headline)
+                        // MARK: - TossPay 뷰
+                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+                            TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
+                        }) // 감자코인
                         
                     }
-                    .padding()
+                    .padding(20)
                     .overlay(
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
@@ -275,59 +263,60 @@ struct MyPageView: View {
                         
                     )
                     
-                    // MARK: - 지각깊이
-                    
+                    // MARK: - 지각 깊이
                     VStack(alignment: .leading) {
+                        Text("지각 깊이")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                        
                         HStack(alignment: .center) {
-                            Text("지각 깊이")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                            Spacer()
                             Text(crustDepth)
+                            Spacer()
+                            Text("  \(tradyMessage)")
                         }
-                        Text("  \(tradyMessage)")
-                            .foregroundStyle(.gray)
-                            .padding(.top, 1)
-                        ZStack {
+                        .foregroundStyle(.secondary)
+                        .padding(.top, 1)
+                        
+                        VStack {
                             Image(crustBackgroundImage)
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .clipShape(RoundedRectangle(cornerRadius: 5).size(width: 330, height: 230))
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 5).size(width: 330, height: 230)
+                                    RoundedRectangle(cornerRadius: 10)
                                         .stroke(Color.white, lineWidth: 5))
                         }
-                        
-                    }
-                    .padding()
-                    .overlay(alignment: .trailing) {
-                        // 약속 데이터
-                        HStack {
-                            VStack {
-                                Text("지각률 \(tradyPercent)%")
-                                    .font(.headline)
-                                    .fontWeight(.semibold)
-                                    .foregroundColor(.red)
-                                Text("지각횟수 \(tradyCount)회")
-                                    .font(.subheadline)
-                                    .foregroundColor(.black)
+                        .overlay(alignment: .topTrailing) {
+                            // MARK: - 약속 데이터 vytl
+                            HStack {
+                                VStack {
+                                    Text("지각률 \(tradyPercent)%")
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.red)
+                                    
+                                    Text("지각횟수 \(tradyCount)회")
+                                        .font(.subheadline)
+                                        .foregroundColor(.black)
+                                    
+                                }
                             }
+                            .padding(3)
+                            .background(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .shadow(radius: 1.2)
+                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 15))
                         }
-                        .padding(3)
-                        .background(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .shadow(radius: 1.2)
-                        .offset(x: -25, y: -40)
+                        // MARK: - 두더지 이미지
+                        .overlay(alignment: .leading) {
+                            Image(dooAction)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 100)
+                                .padding(.leading, 20)
+                        }
                     }
-                    .overlay(alignment: .leading) {
-                        // 두더지 이미지
-                        Image(dooAction)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 100)
-                            .offset(x: 33, y: 25)
-                    }
-                    
+                    .padding(20)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .foregroundColor(.primary)
@@ -335,9 +324,7 @@ struct MyPageView: View {
                             .shadow(color: .primary, radius: 10, x: 5, y: 5)
                         
                     )
-                    .padding(.top, 15)
-                    // test
-                    //                    Slider(value: $tradyPercent, in: 0...100)
+                    .padding(.vertical, 15)
                     
                     // MARK: - 지난 약속
                     VStack {
@@ -347,19 +334,19 @@ struct MyPageView: View {
                         } label: {
                             HStack {
                                 Text("지난 약속")
+                                    
                                 Spacer()
+                                
                                 Image(systemName: "chevron.right")
                                 
                             }
                             .font(.title3)
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
-                            .padding(.top)
-                            .padding(.bottom)
                         }
-                        
+
                     }
-                    .padding()
+                    .padding(20)
                     .overlay(
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
@@ -369,9 +356,10 @@ struct MyPageView: View {
                         }
                         
                     )
+                    /*
                     .padding(.vertical, 15)
                     
-                    // MARK: - 획득 배지
+                    // MARK: - 획득 배지(추후 업데이트 하기)
                     VStack {
                         HStack {
                             Text("획득 배지")
@@ -403,10 +391,10 @@ struct MyPageView: View {
                         }
                         
                     )
-                    
+                    */
                 }
                 .padding()
-                
+                // MARK: - 설정 버튼
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         NavigationLink {
@@ -416,10 +404,22 @@ struct MyPageView: View {
                                 .foregroundColor(.primary)
                         }
                     }
-                } // ScrollView
+                    // MARK: - 지파두 마크
+                    ToolbarItem(placement: .topBarLeading) {
+                        Image("zipadooMark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 20)
+                    }
+                } // toolbar
+            } // ScrollView
+            .onAppear {
+                Task {
+                    try await AuthStore.shared.loadUserData()
+                }
             }
-        }
-    }
+        } // NavigationStack
+    } // body
 }
 
 #Preview {
@@ -427,33 +427,38 @@ struct MyPageView: View {
         .environmentObject(PromiseViewModel())
 }
 
-struct MyPageProgressBar: View {
-    @Binding var progress: Double
-    
-    var body: some View {
-        VStack {
-            ZStack(alignment: .leading) {
-                Rectangle()
-                    .frame(height: 30)
-                    .cornerRadius(5)
-                    .foregroundStyle(.zipadoo.opacity(0.3))
-                
-                ZStack {
-                    Rectangle()
-                        .frame(width: CGFloat(progress) * 330, height: 30)
-                        .cornerRadius(5)
-                        .foregroundColor(.zipadoo)
-                    
-                    VStack {
-                        Image("dothez")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30)
-                        //                            .rotationEffect(Angle(degrees: 90))
-                            .shadow(radius: 10, x: 1, y: 1)
-                    }
-                }
-            }
-        }
-    }
-}
+// MARK: - 지각 퍼센테이지 (구현이 제대로 안되고 사용하지 않아서 주석처리)
+//struct MyPageProgressBar: View {
+//    @Binding var progress: Double
+//    
+//    var body: some View {
+//        VStack {
+//            ZStack(alignment: .leading) {
+//                Rectangle()
+//                    .frame(height: 30)
+//                    .cornerRadius(5)
+//                    .foregroundStyle(.zipadoo.opacity(0.3))
+//                
+//                ZStack {
+//                    Rectangle()
+//                        .frame(width: CGFloat(progress) * 330, height: 30)
+//                        .cornerRadius(5)
+//                        .foregroundColor(.zipadoo)
+//                    
+//                    VStack {
+//                        Image("dothez")
+//                            .resizable()
+//                            .aspectRatio(contentMode: .fit)
+//                            .frame(width: 30)
+//                        //                            .rotationEffect(Angle(degrees: 90))
+//                            .shadow(radius: 10, x: 1, y: 1)
+//                    }
+//                }
+//            }
+//        }
+//    }
+//}
+
+//#Preview {
+//    MyPageProgressBar(progress: .constant(1.19))
+//}

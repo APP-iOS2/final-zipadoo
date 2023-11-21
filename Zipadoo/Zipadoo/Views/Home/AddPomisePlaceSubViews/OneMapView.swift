@@ -10,7 +10,9 @@ import MapKit
 
 /// 장소검색 옵션(직접설정, 장소검색)을 하나의 맵뷰를 통해 동작하는 맵뷰
 struct OneMapView: View {
+    
     @Environment(\.dismiss) private var dismiss
+    
     @ObservedObject var promiseViewModel: PromiseViewModel
     /// 연관된 값들을 한 공간에 이름을 지어 모아둔 공간, mapControls를 사용하기 위해 호출함
     @Namespace var mapScope
@@ -36,9 +38,9 @@ struct OneMapView: View {
     /// 클릭한 장소에 대한 위치 값
     @State private var selectedPlacePosition: CLLocationCoordinate2D?
     /// 약속장소 위도
-    @State private var coordXXX: Double = CLLocationManager().location?.coordinate.latitude ?? 37.5665
+    @Binding var coordXXX: Double
     /// 약속장소 경도
-    @State private var coordYYY: Double = CLLocationManager().location?.coordinate.longitude ?? 126.9780
+    @Binding var coordYYY: Double
     /// 화면을 클릭해서 장소를 선택한 값
     @State private var selectedPlace: Bool = false
     /// 장소검색 이후 장소를 선택한 값
@@ -47,8 +49,6 @@ struct OneMapView: View {
     @State private var addLocationButton: Bool = false
     
     @Binding var sheetTitle: String
-    
-//    @Binding var promiseLocation: PromiseLocation
     
     /// 클릭한 장소에 대한 위치 값을 약속장소로 지정하기 위해 사용하는 클래스
     var addLocationStore: AddLocationStore = AddLocationStore()
@@ -174,6 +174,6 @@ struct OneMapView: View {
     }
 }
 
-#Preview {
-    OneMapView(promiseViewModel: PromiseViewModel(), destination: .constant(""), address: .constant(""), sheetTitle: .constant(""))
-}
+//#Preview {
+//    OneMapView(promiseViewModel: PromiseViewModel(), destination: .constant(""), address: .constant(""), sheetTitle: .constant(""))
+//}

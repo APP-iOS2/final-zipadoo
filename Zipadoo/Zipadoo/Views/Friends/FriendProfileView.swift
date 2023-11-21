@@ -11,6 +11,9 @@ import WidgetKit
 // 친구 프로필
 struct FriendProfileView: View {
     
+    @State private var isShownFullScreenCover = false
+    @State private var progressBarValue: Double = 0
+    
     var user: User
     /// 현재 로그인된 유저(옵셔널)
     let currentUser: User? = AuthStore.shared.currentUser
@@ -24,121 +27,48 @@ struct FriendProfileView: View {
         }
     }
     
-    let dummyKm: Int = 1000
-    @State var isShownFullScreenCover = false
-    @State private var progressBarValue: Double = 0
-    
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading) {
-                HStack {
+            VStack {
+                VStack(alignment: .center) {
                     // 프로필 이미지
-                    ProfileImageView(imageString: user.profileImageString, size: .small)
-                    Text("\(user.nickName ?? "???") 님")
-                            .font(.title2)
-                            .bold()
-                    
-                    .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                        TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
-                    })
-                }
+                    ProfileImageView(imageString: user.profileImageString, size: .large)
+                    Text("\(user.nickName ) 님")
+                        .font(.title2)
+                        .bold()
+                } // VStack
+                .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+                    TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
+                })
                 .padding(.bottom)
                 
-                Divider()
-                
-                HStack {
-                    Text("지각 깊이")
-                        .font(.headline)
-                    Spacer()
-                    Text("지하 \(currentUser?.crustDepth ?? 100)km")
-                }
-                .padding(.top)
-                
-                VStack {
-                    ZStack(alignment: .leading) {
-                        Rectangle()
-                            .frame(height: 30)
-                            .cornerRadius(5)
-                            .foregroundStyle(.brown.opacity(0.3))
-                        
-                        ZStack {
-                            Rectangle()
-                                .frame(width: CGFloat() * UIScreen.main.bounds.width, height: 25)
-                                .cornerRadius(5)
-                                .foregroundColor(.brown)
-                            
-                            Text("지각횟수 \(user.crustDepth)회")
-                                .padding(.leading, 5)
-                                .bold()
-                        }
-                    }
-                }
-                //                    .onAppear {
-                //                        withAnimation(.linear(duration: 3)) {
-                //                            progressBarValue = 0.8
-                //                        }
-                //                    }
-                
-                HStack {
-                    Text("약속을 잘 지켜보아요~")
-                        .font(.footnote)
-                        .lineLimit(1)
-                    Spacer()
-                    // 계산 필요
-                    Text("지각률 0%")
-                        .foregroundColor(.red)
-                }
-                Divider()
-                
-                Text("받은 매너 평가")
-                    .font(.headline)
-                    .padding(.top)
-                    .padding(.bottom)
-                
                 Group {
+                    HStack {
+                        Text("지각 깊이")
+                        
+                        Spacer()
+                        Text("지하 \(user.crustDepth)km")
+                    }
+                    .padding(.vertical)
                     
                     HStack {
-                        Image(systemName: "person.2")
-                            .frame(width: 15)
-                        Text("4")
-                            .frame(width: 15)
-                        Text("약속 진짜 안지켜요")
-                            .padding(10)
-                            .background(.brown.opacity(0.3))
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        Text("지각횟수")
+                        
+                        Spacer()
+                        Text("\(user.crustDepth)회")
                     }
-                    
-                    HStack {
-                        Image(systemName: "person.2")
-                            .frame(width: 15)
-                        Text("3")
-                            .frame(width: 15)
-                        Text("진짜 지각만해서 지각에 묻어버리고 싶어요")
-                            .padding(10)
-                            .background(.brown.opacity(0.3))
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    }
-                    
-                    HStack {
-                        Image(systemName: "person.2")
-                            .frame(width: 15)
-                        Text("12")
-                            .frame(width: 15)
-                        Text("한 20분 정도 늦어요")
-                            .padding(10)
-                            .background(.brown.opacity(0.3))
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    }
-                }
-                .font(.footnote)
+                } // Group
+                .font(.headline)
+                .fontWeight(.semibold)
+                
                 Spacer()
-            }
+            } // VStack
             .padding()
             .navigationTitle("프로필")
             .navigationBarTitleDisplayMode(.inline)
-        }
-    }
-}
+        } // NavigationStack
+    } // body
+} // struct
 
 #Preview {
     FriendProfileView(user: .sampleData)

@@ -10,10 +10,9 @@ import SwiftUI
 struct LoginByEmailPWView: View {
     
     @ObservedObject var emailLoginStore: EmailLoginStore
-    
-    // 비밀번호 보이기
+    /// 비밀번호 보이기
     @State private var isPasswordVisible = false
-    // 패스워드 일치 체크
+    /// 패스워드 일치 체크
     @State private var isPasswordCorrect = false
     /// 비밀번호 확인 안내문구
     @State private var adminMessage: String = ""
@@ -22,14 +21,11 @@ struct LoginByEmailPWView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Spacer()
-                .frame(width: 50, height: 50)
+            spacerView(50)
             
             // MARK: - 비밀번호 입력 안내 문구
             Text("비밀번호를 입력해 주세요.")
-                .foregroundColor(.primary)
-                .font(.title2)
-                .fontWeight(.semibold)
+                .modifier(LoginTextStyle())
                 .padding(.bottom, 10)
             
             // MARK: - 비밀번호 입력 칸
@@ -37,23 +33,11 @@ struct LoginByEmailPWView: View {
                 // 비밀번호 숨겼을 경우 ***표시
                 if isPasswordVisible == false {
                     // 비밀번호 미표시 시
-                    SecureField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
-                        .foregroundColor(Color.primary)
-                        .opacity(0.9)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .autocapitalization(.none)
-                        .frame(height: 35)
+                    loginTextFieldView($emailLoginStore.password, "비밀번호", isvisible: false)
                     
                 } else {
                     // 비밀번호 표시 시
-                    TextField("비밀번호", text: $emailLoginStore.password, prompt: Text("비밀번호").foregroundColor(.secondary.opacity(0.7)))
-                        .foregroundColor(Color.primary)
-                        .opacity(0.9)
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .autocapitalization(.none)
-                        .frame(height: 35)
+                    loginTextFieldView($emailLoginStore.password, "비밀번호", isvisible: true)
                 }
                 
                 // MARK: - 비밀번호 숨기기,보이기 토글 버튼
@@ -67,22 +51,14 @@ struct LoginByEmailPWView: View {
                 }
                 
                 // MARK: - 입력한 비밀번호 지우기 버튼
-                Button {
-                    emailLoginStore.password = ""
-                } label: {
-                    Image(systemName: "x.circle.fill")
-                }
-                .foregroundColor(Color.primary.opacity(0.4))
+                eraseButtonView($emailLoginStore.password)
             } // HStack
             
-            Rectangle().frame(height: 1)
-                .foregroundStyle(Color.secondary)
-                .padding(.bottom, 5)
+            underLine()
             
             // MARK: - 비밀번호 확인 안내문구
             Text(adminMessage)
-                .font(.subheadline)
-                .foregroundStyle(Color.primary.opacity(0.7))
+                .modifier(LoginMessageStyle(color: .primary))
             
             Spacer()
         } // VStack
@@ -107,7 +83,7 @@ struct LoginByEmailPWView: View {
             }
         }
         .fullScreenCover(isPresented: $loginResult, content: {
-            ContentView()
+            ContentView(selectedTab: .constant(0))
         })
     } // body
 } // struct

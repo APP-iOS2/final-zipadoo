@@ -15,6 +15,8 @@ import SwiftUI
 // import KakaoSDKUser
 
 class AppDelegate: NSObject, UIApplicationDelegate {
+    lazy var locationStore = LocationStore()
+    @StateObject var gpsStore = GPSStore()
     let gcmMessageIDKey = "gcm.message_id"
     
     // 파이어베이스 초기화
@@ -56,7 +58,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct ZipadooApp: App {
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject var alertStore: AlertStore = AlertStore()
+    @StateObject private var widgetStore = WidgetStore()
+    @StateObject private var promiseViewModel = PromiseViewModel()
+    @StateObject private var friendsStore = FriendsStore()
     /*
     init() {
         // Kakao SDK 초기화
@@ -66,13 +72,33 @@ struct ZipadooApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @State private var showMainView = false
+    @State private var selectedTab = 0
     
     var body: some Scene {
         WindowGroup {
             ZStack {
                 if showMainView {
-                    ContentView()
+                    ContentView(selectedTab: $selectedTab)
                         .environmentObject(alertStore)
+                        .environmentObject(promiseViewModel)
+                        .environmentObject(widgetStore)
+                        .environmentObject(friendsStore)
+                        .onChange(of: scenePhase) { newScenePhase in
+                            switch newScenePhase {
+                            case .active:
+                                Task {
+                                    if let promiseId = widgetStore.widgetPromiseID {
+                                        do {
+                                            try await widgetStore.fetchPromise(promiseId: promiseId)
+                                        } catch {
+                                            print("Failed to fetch the Promise with ID \(promiseId)")
+                                        }
+                                    }
+                                }
+                            @unknown default:
+                                break
+                            }
+                        }
                 } else {
                     LaunchScreen()
                         .onAppear {
@@ -83,6 +109,13 @@ struct ZipadooApp: App {
                             }
                         }
                 }
+            }
+            .onOpenURL { url in
+                guard url.scheme == "zipadoo" else { return }
+                let components = URLComponents(url: url, resolvingAgainstBaseURL: true)
+                let promiseID = components?.queryItems?.first(where: { $0.name == "promiseID" })?.value
+                widgetStore.widgetPromiseID = promiseID
+                selectedTab = 0
             }
 //                .onOpenURL(perform: { url in
 //                    if AuthApi.isKakaoTalkLoginUrl(url) {
@@ -127,6 +160,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         print(userInfo)
         
         completionHandler([[.banner, .list, .sound]])
+        
+        // 30분전에 유저 출발위치 및 myLocation 초기화
+//        locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, departureLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+        locationStore.updateDeparture(newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+        print("30분전 초기화위치 값은 : \(String(describing: gpsStore.lastSeenLocation?.coordinate))")
     }
     
     // 푸시메세지를 받았을 때 유저의 액션
@@ -151,5 +189,11 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         Messaging.messaging().appDidReceiveMessage(userInfo)
         
         completionHandler(UIBackgroundFetchResult.newData)
+        
+        // 30분전에 유저 출발위치 및 myLocation 초기화
+//        locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, departureLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+        locationStore.updateDeparture(newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+        print("30분전 초기화위치 값은 : \(String(describing: gpsStore.lastSeenLocation?.coordinate))")
+        
     }
 }

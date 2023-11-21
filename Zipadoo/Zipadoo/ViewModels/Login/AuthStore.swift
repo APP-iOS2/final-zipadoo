@@ -48,6 +48,8 @@ final class AuthStore: ObservableObject {
         do {
             // 회원가입 후 사용자의 userSession에 저장
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
+          
+            //self.userSession = result.user
             
             // 이미지의 경로를 저장할 변수를 초기화
             var profileImageString: String = "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"

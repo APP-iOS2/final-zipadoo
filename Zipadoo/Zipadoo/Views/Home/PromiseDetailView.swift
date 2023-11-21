@@ -7,60 +7,93 @@
 
 import SwiftUI
 import UIKit
+import MapKit
 
-enum SharingStatus: String {
-    case preparing = "위치 공유 준비중"
-    case sharing = "위치 공유중"
-}
-
+// MARK: - 약속 디테일뷰
 struct PromiseDetailView: View {
-    // MARK: - Property Wrappers
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
-    @ObservedObject var promiseViewModel: PromiseViewModel = PromiseViewModel()
+    @ObservedObject var locationStore: LocationStore = LocationStore()
     @StateObject var loginUser: UserStore = UserStore()
+    @EnvironmentObject var promiseViewModel: PromiseViewModel
+    @EnvironmentObject var widgetStore: WidgetStore
     
     @Environment(\.dismiss) private var dismiss
+    /// 현재 시간
     @State private var currentDate: Double = 0.0
+    /// 남은 시간
     @State private var remainingTime: Double = 0.0
+    /// 약속수정뷰 시트 Bool값
     @State private var isShowingEditSheet: Bool = false
+    /// 약속공유 시트 Bool값
     @State private var isShowingShareSheet: Bool = false
+    /// 약속삭제 시트 Bool값
     @State private var isShowingDeleteAlert: Bool = false
-    @State var promise: Promise
+    /// 뒤로가기 Bool값
+    @State private var isNavigateBackToHome: Bool = false
+    
+    @State var promise: Promise // 약속 데이터 받는 변수
+    
+    @State private var particantsArray: [User] = []
     let activeColor: UIColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
     let disabledColor: UIColor = #colorLiteral(red: 0.7725487947, green: 0.772549212, blue: 0.7811570764, alpha: 1)
-    
-    // MARK: - Properties
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    // 약속시간 30분 전 활성화
+    // 약속시간 30분 전 활성화 시킬 때 상태바
     var destinagionStatus: SharingStatus {
         remainingTime > 60 * 30 ? .preparing : .sharing
     }
     var statusColor: Color {
         destinagionStatus == .preparing ? Color(disabledColor) : Color(activeColor)
     }
+    // 맵뷰 카메라 세팅
+    @State private var region: MapCameraPosition = .automatic
+    // 도착 위치 버튼 bool값
+    @State private var moveDestination: Bool = false
     
-    // MARK: - body
+    @State private var offsets = (middle: CGFloat.zero, bottom: CGFloat.zero)
+    @State private var offset: CGFloat = .zero
+    @State private var lastOffset: CGFloat = .zero
+    // MARK: - PromiseDetailView body
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading) {
-                    titleView
-                    
-                    destinationView
-                    
-                    dateView
-                    
-                    remainingTimeView
-                    
-                    memberStatusView
+            ZStack {
+                VStack {
+                    destinationMapView
+                        .ignoresSafeArea()
+                    VStack {
+                        RoundedRectangle(cornerRadius: 20.0)
+                            .colorInvert()
+                            .shadow(radius: 5.0)
+                            .overlay {
+                                ScrollView {
+                                    VStack(alignment: .leading) {
+                                        titleView
+                                            .padding(.top, 10)
+                                        
+                                        destinationView
+                                            .padding(.bottom, -5)
+                                        
+                                        dateView
+                                        
+                                        remainingTimeView
+                                        
+                                        participantsView
+                                            .padding(.bottom)
+                                        
+                                        Spacer()
+                                    }
+                                    .padding(.horizontal)
+                                }
+                            }
+                    }
+                    .padding(.init(top: -50, leading: 0, bottom: -30, trailing: 0))
                 }
             }
-            .padding(.horizontal, 15)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    zipadooToolbarView
-                }
+        }
+        // MARK: - 더보기 버튼(삭제, 수정, 약속나가기)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                moreButtonView
             }
         }
         .alert(isPresented: $isShowingDeleteAlert) {
@@ -71,7 +104,6 @@ struct PromiseDetailView: View {
                     Task {
                         do {
                             try await promiseViewModel.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
-                            
                             dismiss()
                         } catch {
                             print("실패")
@@ -85,12 +117,17 @@ struct PromiseDetailView: View {
         .onAppear {
             currentDate = Date().timeIntervalSince1970
             formatRemainingTime()
+            widgetStore.widgetPromiseID = nil
+            widgetStore.widgetPromise = nil
+            widgetStore.isShowingDetailForWidget = false
         }
         .onReceive(timer, perform: { _ in
             currentDate = Date().timeIntervalSince1970
-            formatRemainingTime()
         })
         .onAppear {
+            if isNavigateBackToHome {
+                dismiss()
+            }
             Task {
                 try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
             }
@@ -100,24 +137,8 @@ struct PromiseDetailView: View {
                 try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
             }
         }
-        //        .navigationDestination(isPresented: $isShowingEditSheet) {
-        //            PromiseEditView(promise: .constant(promise))
-        //        }
-//        .onAppear {
-//            Task {
-//                try await promiseViewModel.fetchData()
-//            }
-//        }
-//        .refreshable {
-//            Task {
-//                try await promiseViewModel.fetchData()
-//            }
-//        }
-//        .navigationDestination(isPresented: $isShowingEditSheet) {
-//            PromiseEditView(promise: .constant(promise))
-//        }
         .sheet(isPresented: $isShowingEditSheet,
-               content: { PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
+               content: { PromiseEditView(promise: .constant(promise), navigationBackToHome: $isNavigateBackToHome)
         })
         .sheet(
             isPresented: $isShowingShareSheet,
@@ -127,7 +148,7 @@ struct PromiseDetailView: View {
     }
     
     // MARK: - some Views
-    private var zipadooToolbarView: some View {
+    private var moreButtonView: some View {
         HStack {
             Button {
                 isShowingShareSheet = true
@@ -137,11 +158,8 @@ struct PromiseDetailView: View {
             
             Menu {
                 if loginUser.currentUser?.id == promise.makingUserID {
-//                    Button {
-//                        isShowingEditSheet.toggle()
-//                    } 
                     NavigationLink {
-                        PromiseEditView(promise: .constant(promise), selectedFriends: $promiseViewModel.selectedFriends)
+                        PromiseEditView(promise: .constant(promise), navigationBackToHome: $isNavigateBackToHome)
                     } label: {
                         Text("수정")
                     }
@@ -155,7 +173,7 @@ struct PromiseDetailView: View {
                                 // 해당 ID 배열에서 제거
                                 let locationIndex = index + 1
                                 promise.participantIdArray.remove(at: index)
-                                promise.locationIdArray.remove(at: locationIndex)
+                                promise.locationIdArray.remove(at: locationIndex) // 약속 나가기 오류발견!
                             }
                             
                             Task {
@@ -181,107 +199,85 @@ struct PromiseDetailView: View {
         .foregroundColor(.secondary)
     }
     
-//    private var titleView: some View {
-//        Text(promise.promiseTitle)
-//            .font(.title2).bold()
-//            .padding(.bottom, 1)
-//    }
-//    
-//    private var dateView: some View {
-//        Text(("일시 : \(calculateDate(date: promise.promiseDate))"))
-//            .padding(.vertical, 3)
-//    }
-//    
-//    private var destinationView: some View {
-//        Text("장소 : \(promise.destination)")
-//    }
-//    
-//    private var remainingTimeView: some View {
-//        Text(formatRemainingTime())
-//            .foregroundStyle(.white)
-//            .font(.title).bold()
-//            .frame(maxWidth: .infinity)
-//            .padding(.vertical, 15)
-//            .background(statusColor)
-//            .clipShape(RoundedRectangle(cornerRadius: 28))
-//            .padding(.vertical, 12)
-//            .opacity(0.8)
-//    }
-    
-    private var memberStatusView: some View {
+    private var participantsView: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("친구 위치 현황")
+                Text("모이는 두더지 친구들")
                     .font(.title3).bold()
                 
                 Spacer()
-                
-                if destinagionStatus == .sharing {
-                    Button {
-                        // TODO: 지도 상세뷰로 navigation
-                    } label: {
-                        HStack {
-                            Text("지도로 보기")
-                            Image(systemName: "chevron.right")
-                        }
-                    }
+            }
+            HStack {
+                Image(systemName: "info.circle")
+                Text("약속시간 30분 전부터 위치가 공유됩니다.")
+            }
+            .foregroundColor(.secondary)
+            .font(.caption)
+            .padding(.bottom)
+            
+            // MARK: - 약속 친구 리스트 테스트
+            LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
+                ForEach(particantsArray.filter {
+                    $0.id != AuthStore.shared.currentUser?.id ?? ""
+                }) { friend in
+                        ParticipantInfoView(user: friend)
                 }
             }
-            
-            if destinagionStatus != .sharing {
-                HStack {
-                    Image(systemName: "info.circle")
-                    Text("약속시간 30분 전부터 위치가 공유됩니다.")
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(.primary)
+                    .opacity(0.05)
+                    .shadow(color: .primary, radius: 10, x: 5, y: 5)
+            )
+        }
+        .padding(.vertical)
+        .onAppear {
+            Task {
+                particantsArray = []
+                for id in promise.participantIdArray {
+                    let user = try await UserStore.fetchUser(userId: id)
+                    particantsArray.append(user ?? User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "", friendsIdArray: [], friendsIdRequestArray: [], moleImageString: ""))
                 }
-                .foregroundColor(.secondary)
-                .font(.caption)
             }
-            
-            FriendsLocationStatusView(promise: promise)
         }
     }
     
-    // MARK: Custom Methods
-    //    private func calculateRemainingTime() {
-    //        let promiseDate = postPromise.promiseDate
-    //        remainingTime = promiseDate - currentDate
-    //    }
-    
+    // MARK: - 시간 변환 함수
     private func calculateDate(date: Double) -> String {
         let date = Date(timeIntervalSince1970: date)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy년 MM월 dd일 | a hh:mm"
         return dateFormatter.string(from: date)
     }
-    
+    // MARK: - 약속 시간까지의 남은 time 단위 변환 함수
     private func formatRemainingTime() -> String {
         let promiseDate = promise.promiseDate
         remainingTime = promiseDate - currentDate
         switch remainingTime {
-        case 1..<60:
+        case 1..<60: // 초
             let second = Int(remainingTime) % 60
             return String(format: "약속까지 %02d초 전", second)
-        case 60..<1800:
+        case 60..<1800: // 분 + 초
             let minute = Int(remainingTime) / 60
             let second = Int(remainingTime) % 60
             return String(format: "약속까지 %02d분 %02d초 전", minute, second)
-        case 1800..<3600:
+        case 1800..<3600: // 분
             let minute = Int(remainingTime) / 60
             return "약속까지 \(minute)분 전"
-        case 3600..<86400:
+        case 3600..<86400: // 시간 + 분
             let hours = remainingTime / (60 * 60)
             let minute = Int(remainingTime) % (60 * 60) / 60
             var message = "약속까지 \(Int(hours))시간 "
             message += minute == 0 ? "전" : " \(minute)분 전"
             return message
-        case 86400...:
+        case 86400...: // 일
             let days = calculateRemainingDate(current: currentDate, promise: promiseDate)
             return "약속까지 \(days)일 전"
-        default:
+        default: // 약속 시간일 때
             return "약속 시간이 됐어요!"
         }
     }
-    
+    // MARK: - 약속 시간까지의 남은 day 단위 변환 함수
     private func calculateRemainingDate(current: Double, promise: Double) -> Int {
         let calendar = Calendar.current
         
@@ -300,24 +296,67 @@ struct PromiseDetailView: View {
         return -1
     }
 }
-// ArriveResult뷰에서 재사용 위해 extension으로 분리
+// MARK: - PromiseDetailView extension (ArriveResult뷰에서 재사용 위해 extension으로 분리)
 extension PromiseDetailView {
-    
-    var titleView: some View {
-        Text(promise.promiseTitle)
-            .font(.title2).bold()
-            .padding(.bottom, 1)
+    var destinationMapView: some View {
+        Map(position: $region, bounds: MapCameraBounds(minimumDistance: 800), interactionModes: .all) {
+            Annotation(promise.destination, coordinate: CLLocationCoordinate2D(latitude: promise.latitude, longitude: promise.longitude)) {
+                AnnotationMarker()
+                    .padding(.bottom, -5)
+            }
+        }
+        .overlay(alignment: .topTrailing) {
+            Button {
+                withAnimation(.easeIn(duration: 1)) {
+                    region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 400, longitudinalMeters: 400))
+                }
+                moveDestination = true
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                    moveDestination = false
+                }
+                // 맵 화면을 약속 위치로 움직여주는 버튼 기능
+            } label: {
+                if moveDestination {
+                    Image(systemName: "flag.fill")
+                        .foregroundColor(.blue)
+                        .frame(width: 45, height: 45)
+                        .background(.white)
+                        .clipShape(RoundedRectangle(cornerRadius: 9))
+                        .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
+                        .shadow(color: .gray.opacity(0.3), radius: 5)
+                } else {
+                    withAnimation(.linear(duration: 1)) {
+                        Image(systemName: "flag")
+                            .foregroundColor(.blue)
+                            .frame(width: 45, height: 45)
+                            .background(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 9))
+                            .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
+                            .shadow(color: .gray.opacity(0.3), radius: 5)
+                    }
+                }
+            }
+        }
     }
-    
+
+    // 약속 제목
+    var titleView: some View {
+        VStack {
+            Text(promise.promiseTitle)
+                .font(.title).bold()
+                .padding(.vertical)
+        }
+    }
+    // 약속 장소
+    var destinationView: some View {
+        Text("장소 : \(promise.destination)")
+    }
+    // 약속 날짜
     var dateView: some View {
         Text(("일시 : \(calculateDate(date: promise.promiseDate))"))
             .padding(.vertical, 3)
     }
-    
-    var destinationView: some View {
-        Text("장소 : \(promise.destination)")
-    }
-    
+    // 약속까지 남은 시간
     var remainingTimeView: some View {
         Text(formatRemainingTime())
             .foregroundStyle(.white)
@@ -331,19 +370,20 @@ extension PromiseDetailView {
     }
 }
 
-#Preview {
-    PromiseDetailView(promise:
-                        Promise(
-                            id: "",
-                            makingUserID: "3",
-                            promiseTitle: "지각파는 두더지 모각코",
-                            promiseDate: 1697101051.302136,
-                            destination: "서울특별시 종로구 종로3길 17",
-                            address: "",
-                            latitude: 0.0,
-                            longitude: 0.0,
-                            participantIdArray: ["3", "4", "5"],
-                            checkDoublePromise: false,
-                            locationIdArray: ["35", "34", "89"],
-                            penalty: 0))
-}
+// MARK: - 프리뷰 크래시로 인해 프리뷰코드 주석처리
+//  #Preview {
+//    PromiseDetailView(promise:
+//                        Promise(
+//                            id: "",
+//                            makingUserID: "3",
+//                            promiseTitle: "지각파는 두더지 모각코",
+//                            promiseDate: 1697101051.302136,
+//                            destination: "서울특별시 종로구 종로3길 17",
+//                            address: "",
+//                            latitude: 0.0,
+//                            longitude: 0.0,
+//                            participantIdArray: ["3", "4", "5"],
+//                            checkDoublePromise: false,
+//                            locationIdArray: ["35", "34", "89"],
+//                            penalty: 0))
+// }
