@@ -31,8 +31,85 @@ extension View {
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape( RoundedCorner(radius: radius, corners: corners) )
     }
+    
+    /// 로그인뷰 상단 빈 공간
+    func spacerView(_ height: CGFloat) -> some View {
+        Spacer()
+            .frame(height: height)
+    }
+    
+    /// TextField 언더라인 뷰
+    func underLine() -> some View {
+        Rectangle().frame(height: 1)
+            .foregroundStyle(Color.secondary)
+            .padding(.bottom, 5)
+    }
+    
+    /// 로그인뷰 TextField 뷰
+    func loginTextFieldView(_ text: Binding<String>, _ hint: String, isvisible: Bool) -> some View {
+        VStack {
+            // 보이는 TextField라면
+            if isvisible == true {
+                TextField(hint, text: text, prompt: Text(hint)
+                    .foregroundColor(.secondary.opacity(0.7)))
+            } else {
+                SecureField(hint, text: text, prompt: Text(hint)
+                    .foregroundColor(.secondary.opacity(0.7)))
+            }
+        }
+        .font(.title3)
+        .fontWeight(.semibold)
+        .autocapitalization(.none) // 소문자로 시작
+        .frame(height: 35)
+    }
+    
+    /// TextFiled 내용 지우는 버튼
+    func eraseButtonView(_ text: Binding<String>) -> some View {
+        Button {
+            text.wrappedValue = ""
+        } label: {
+            Image(systemName: "x.circle.fill")
+        }
+        .foregroundColor(Color.primary.opacity(0.4))
+    }
 }
 
+/// 회원가입 유효성 검사함수 포함
+extension LoginEmailCheckView {
+    /// 이메일 유효한 형식인지 확인
+    func isCorrectEmail(email: String) -> Bool {
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+
+        return emailPredicate.evaluate(with: email)
+    }
+
+    /// 닉네임 유효한 형식 확인
+    func isCorrectNickname(nickname: String) -> Bool {
+        let nicknameRegex = "[a-zA-Z0-9가-힣]{2,6}"
+        let nicknamePredicate = NSPredicate(format: "SELF MATCHES %@", nicknameRegex)
+        
+        return nicknamePredicate.evaluate(with: nickname)
+    }
+
+    /// 전화번호 유효한 형식 확인
+    func isCorrectPhoneNumber(phonenumber: String) -> Bool {
+        let passwordRegex = "01([0-9])([0-9]{3,4})([0-9]{4})$"
+        let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
+
+        return passwordPredicate.evaluate(with: phonenumber)
+    }
+
+    /// 비밀번호 유효한 형식 확인
+    func isCorrectPassword(password: String) -> Bool {
+    //        let passwordRegex = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{6,16}$"
+        let passwordRegex = ".{6,15}$" // 6 ~ 15 자리
+        let passwordPredicate = NSPredicate(format: "SELF MATCHES %@", passwordRegex)
+
+        return passwordPredicate.evaluate(with: password)
+    }
+
+}
 /// 참여자들의 도착상태 enum
 extension ArriveResultView {
     enum Result {
