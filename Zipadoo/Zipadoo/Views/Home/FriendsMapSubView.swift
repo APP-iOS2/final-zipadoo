@@ -59,7 +59,7 @@ struct FriendsMapSubView: View {
                             region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                         } label: {
                             InfoView(name: annotation.nickname,
-                                     imageString: annotation.sampleImageString,
+                                     imageString: annotation.moleImageString,
                                      destinationLatitude: destinationCoordinate.latitude,
                                      destinationLongitude: destinationCoordinate.longitude,
                                      currentLatitude: annotation.location.currentLatitude,

@@ -22,6 +22,8 @@ final class FriendsStore: ObservableObject {
     var friendsIdRequestArray: [String] = []
     
     @Published var alertMessage: String = ""
+    @Published var isLoadingFriends: Bool = true
+    @Published var isLoadingRequest: Bool = true
     
     let dbRef = Firestore.firestore().collection("Users")
     
@@ -52,6 +54,7 @@ final class FriendsStore: ObservableObject {
             // 메인 스레드에서 UI 업데이트를 수행합니다.
             DispatchQueue.main.async {
                 self.friendsFetchArray = tempArray
+                self.isLoadingFriends = false
             }
             
         } catch {
@@ -85,6 +88,7 @@ final class FriendsStore: ObservableObject {
             // 메인 스레드에서 UI 업데이트를 수행합니다.
             DispatchQueue.main.async {
                 self.requestFetchArray = tempArray
+                self.isLoadingRequest = false
             }
             
         } catch {
@@ -111,6 +115,7 @@ final class FriendsStore: ObservableObject {
             let querySnapshot = try await snapshot.getDocuments()
             if querySnapshot.isEmpty {
                 print("해당 닉네임 가진 친구 없음")
+                alertMessage = "해당 닉네임을 가진 사용자가 없습니다"
                 completion(false) // 중복된 닉네임이 없을 경우 false를 반환
             } else {
                 // 닉네임이 있으면 조건 따진 후 addRequest 함수 실행

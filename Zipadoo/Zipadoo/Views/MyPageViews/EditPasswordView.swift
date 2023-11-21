@@ -9,34 +9,37 @@ import SwiftUI
 
 /// 비밀번호 변경 뷰
 struct EditPasswordView: View {
-    @ObservedObject var viewModel = EditProfileViewModel()
+    @ObservedObject var userStore = UserStore()
     
     @Environment (\.dismiss) private var dismiss
+    
+    @State private var newpassword: String = ""
+    @State private var newpasswordCheck: String = ""
     
     /// 알람노출
     @State private var isEditAlert: Bool = false
     
     /// 비밀번호확인이 다르다면 true
     private var isPasswordDifferent: Bool {
-        viewModel.newpassword != viewModel.newpasswordCheck
+        newpassword != newpasswordCheck
     }
     /// 비어있는 TextField가 있을 때 true
     private var isValid: Bool {
-        isCorrectPassword(password: viewModel.newpassword)
+        isCorrectPassword(password: newpassword)
     }
     
     var body: some View {
         VStack(alignment: .leading) {
-            secureTextFieldCell("새로운 비밀번호", text: $viewModel.newpassword)
+            secureTextFieldCell("새로운 비밀번호", text: $newpassword)
                 .padding(.bottom)
             
-            secureTextFieldCell("비밀번호 확인", text: $viewModel.newpasswordCheck)
+            secureTextFieldCell("비밀번호 확인", text: $newpasswordCheck)
             // 비밀번호 확인 밑 문구
-            if isPasswordDifferent && !viewModel.newpasswordCheck.isEmpty {
+            if isPasswordDifferent && !newpasswordCheck.isEmpty {
                 Text("비밀번호가 일치하지 않습니다")
                     .foregroundStyle(.red)
                     .font(.footnote)
-            } else if !viewModel.newpasswordCheck.isEmpty {
+            } else if !newpasswordCheck.isEmpty {
                 Text("비밀번호가 일치합니다")
                     .foregroundStyle(.green)
                     .font(.footnote)
@@ -65,7 +68,7 @@ struct EditPasswordView: View {
                     isEditAlert = false
                     dismiss()
                     Task {
-                        try await viewModel.updatePassword()
+                        try await userStore.updatePassword(newValue: newpassword)
                     }
                 })
             )

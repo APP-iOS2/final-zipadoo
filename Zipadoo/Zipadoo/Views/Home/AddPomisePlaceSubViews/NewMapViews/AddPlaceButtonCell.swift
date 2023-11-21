@@ -21,7 +21,6 @@ struct AddPlaceButtonCell: View {
     @Binding var address: String
     @Binding var coordXXX: Double
     @Binding var coordYYY: Double
-//    @Binding var promiseLocation: PromiseLocation
     
     var body: some View {
         if isClickedPlace == true {
@@ -64,16 +63,16 @@ struct AddPlaceButtonCell: View {
                                 
                                 // 클릭한 장소에 대해 선택하기 버튼을 클릭하면 해당 장소에 대한 값들을 promiseLocation에 입력시킴
                                 Button {
-                                    promiseViewModel.destination = destination
-                                    promiseViewModel.address = address
-                                    promiseViewModel.coordXXX = coordXXX
-                                    promiseViewModel.coordYYY = coordYYY
+                                    destination = destination
+                                    address = address
+                                    coordXXX = coordXXX
+                                    coordYYY = coordYYY
                                     /*addLocationStore.setLocation(destination: destination, address: address, latitude: coordXXX, longitude: coordYYY)*/
                                     addLocationButton = true
-                                    print("확정 장소: \(promiseViewModel.destination)")
-                                    print("확정 주소: \(promiseViewModel.address)")
-                                    print("확정 위도: \(promiseViewModel.coordXXX)")
-                                    print("확정 경도: \(promiseViewModel.coordYYY)")
+                                    print("확정 장소: \(destination)")
+                                    print("확정 주소: \(address)")
+                                    print("확정 위도: \(coordXXX)")
+                                    print("확정 경도: \(coordYYY)")
                                     dismiss()
                                 } label: {
                                     Text("장소 선택하기")
@@ -87,10 +86,10 @@ struct AddPlaceButtonCell: View {
                     }
             }
             // AddPlaceButtonCell이 보여지지 않을 시, 위치값들을 초기화 시킴
-            .onDisappear {
-                coordXXX = 0.0
-                coordYYY = 0.0
-            }
+//            .onDisappear {
+//                coordXXX = 0.0
+//                coordYYY = 0.0
+//            }
         }
     }
 }

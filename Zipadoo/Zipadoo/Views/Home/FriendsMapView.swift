@@ -80,7 +80,7 @@ struct FriendsMapView: View {
                              .frame(width: 25, height: 25) // 크기 조절
                              .aspectRatio(contentMode: .fill)
                              }*/
-                            Image(annotation.sampleImageString)
+                            Image(annotation.moleImageString)
                                 .resizable()
                                 .frame(width: 25, height: 25) // 크기 조절
                                 .aspectRatio(contentMode: .fill)
@@ -234,8 +234,6 @@ struct FriendsMapView: View {
             }
         }
         .task { // 초기화 코드
-            // sample profile 이미지 변경
-            locationStore.shuffleSampleProfileImage()
             // myLocation 초기화
             locationStore.myLocation = Location(participantId: AuthStore.shared.currentUser?.id ?? "", departureLatitude: 0, departureLongitude: 0, currentLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, currentLongitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
             // 패치해주는 코드
