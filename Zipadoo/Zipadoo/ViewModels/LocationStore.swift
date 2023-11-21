@@ -5,21 +5,25 @@
 //  Created by 아라 on 2023/09/22.
 //
 
-import Foundation
+import FirebaseCore
 import FirebaseFirestore
 import FirebaseFirestoreSwift
-import FirebaseCore
+import Foundation
 
+/// Location마다의 참여자정보와 Location정보를 한꺼번에 저장하기 위한 임의의 구조체
 struct LocationAndParticipant: Identifiable {
     var id = UUID().uuidString
+    /// Location객체
     var location: Location
     var nickname: String
     var imageString: String
+    /// 랜덤 두더지 이미지
     var moleImageString: String
     /// 유저 두더지 드릴 이미지
     var moleDrillImageString: String {
         return "\(moleImageString)_1"
     }
+    /// 더미데이터
     static let dummyData1: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy1", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.48047306060714, currentLongitude: 126.95138412144169), nickname: "더미1", imageString: "", moleImageString: "doo1")
     static let dummyData2: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy2", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.48516705133686, currentLongitude: 127.01723145026864), nickname: "더미2", imageString: "", moleImageString: "doo2")
     static let dummyData3: LocationAndParticipant = LocationAndParticipant(location: Location(participantId: "dummy3", departureLatitude: 0, departureLongitude: 0, currentLatitude: 37.441054579994564, currentLongitude: 127.00673485084162), nickname: "더미3", imageString: "", moleImageString: "doo3")
@@ -32,20 +36,20 @@ struct LocationAndParticipant: Identifiable {
 }
 
 class LocationStore: ObservableObject {
-//    let gpsStore: GPSStore = GPSStore()
-    /// 나의 Location 저장
+    /// 사용자 Location객체
     @Published var myLocation: Location = Location(participantId: "", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
-    /// 참여자들의 Location 저장
+    /// 참여자들의 Location
     @Published var locationDatas: [Location] = []
     /// 참여자들의 Location과 닉네임을 저장
     @Published var locationParticipantDatas: [LocationAndParticipant] = []
     
     @Published var locationParticipantDatasDummy: [LocationAndParticipant] = [LocationAndParticipant.dummyData2, LocationAndParticipant.dummyData3, LocationAndParticipant.dummyData4, LocationAndParticipant.dummyData5, LocationAndParticipant.dummyData6, LocationAndParticipant.dummyData7, LocationAndParticipant.dummyData8, LocationAndParticipant.dummyData9]
-    
+    /// 사용자의 id
     var myid: String = AuthStore.shared.currentUser?.id ?? ""
-    
+    /*
+    /// 사용자의 LocationId
     var myLocationId: String = ""
-    
+    */
     let dbRef = Firestore.firestore()
     
 //    init() {
@@ -55,7 +59,7 @@ class LocationStore: ObservableObject {
     init() {
         myLocationFetch()
     }
-    
+    ///
     func myLocationFetch() {
         // UserDefaults에서 데이터 가져오기
         do {
@@ -81,34 +85,36 @@ class LocationStore: ObservableObject {
         }
     }
     
-    /// locationIdArray로 Location배열 패치
+    /// Promise.locationIdArray로 Location정보가져오기
     @MainActor
     func fetchData(locationIdArray: [String]) async throws {
         if let myid = AuthStore.shared.currentUser?.id {
             do {
-                //               locationDatas.removeAll()
-                //               locationParticipantDatas.removeAll()
-                
                 var temp: [Location] = []
                 var locationParticipantTemp: [LocationAndParticipant] = []
                 
                 for locationId in locationIdArray {
                     let snapshot = try await dbRef.collection("Location").document(locationId).getDocument()
                     let locationData = try snapshot.data(as: Location.self)
+                    /// locationData로 가져온 참여자의 User객체
+                    let userData = try await UserStore.fetchUser(userId: locationData.participantId)
+                    /*
                     // 닉네임 가져오기
                     let nickname = try await fetchUserNickname(participantId: locationData.participantId)
                     // 이미지 가져오기
                     let imageString = try await fetchUserImageString(participantId: locationData.participantId)
                     // 이미지 가져오기
                     let moleImageString = try await fetchUserMoleImageString(participantId: locationData.participantId)
-                    // myLocation에 자기 데이터 저장
+                     */
+                    // 사용자의 Locationd일때
                     if locationData.participantId == myid {
-                        myLocationId = locationData.id
-                        myLocation.id = myLocationId
+//                        myLocationId = locationData.id
+//                        myLocation.id = myLocationId
+                        myLocation.id = locationData.id
                     }
-                    // LocationAndNickname으로도 나 포함하여 다 저장
-                    locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: nickname, imageString: imageString, moleImageString: moleImageString))
-                    // locatioonDatas는 나 포함하여 다 저장
+                    // 자기자신을 포함하여 저장
+                    locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: userData?.nickName ?? " - ", imageString: userData?.profileImageString ?? " - ", moleImageString: userData?.moleImageString ?? " - "))
+
                     temp.append(locationData)
                 }
                 
@@ -116,9 +122,7 @@ class LocationStore: ObservableObject {
                     self.locationDatas = temp
                     self.locationParticipantDatas = locationParticipantTemp
                 }
-                
-                print(self.locationDatas)
-                
+//                print(self.locationDatas)
             } catch {
                 print("fetch locationData failed")
             }
@@ -126,16 +130,19 @@ class LocationStore: ObservableObject {
             print("LocationStore에서 유저 id 못가져옴")
         }
     }
+    
+    /// 도착했을 때 순위계산
     func calculateRank() -> Int {
         var count: Int = 0
         for locationData in locationDatas {
-            if locationData.arriveTime != 0 {
+            // 얖에 이미 도착한 사람이 있으면 count 1증가
+            if locationData.arriveTime > 0 {
                 count += 1
             }
         }
-        return count
+        return count+1
     }
-    
+    /* 삭제예정
     /// locationData의 participantId로 유저의 닉네임만 가져오기
     func fetchUserNickname(participantId: String) async throws -> String {
         var nickname = " - "
@@ -171,7 +178,8 @@ class LocationStore: ObservableObject {
         }
         return moleImageString
     }
-    
+    */
+    /// Promise 저장시 Location저장
     static func addLocationData(location: Location) {
         do {
             try Firestore.firestore().collection("Location").document(location.id)
