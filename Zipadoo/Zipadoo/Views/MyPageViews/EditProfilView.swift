@@ -7,20 +7,19 @@
 
 import SwiftUI
 
-// 이메일로 가입되어 있는 사람만 정보 수정 뷰 뜰 것
+// 이메일로 가입되어 있는 사용자만 회원 정보 수정 뷰를 표시
 struct EditProfileView: View {
     // 유효성검사위해 뷰 선언
     private let loginEmailCheckView = LoginEmailCheckView()
     //@ObservedObject var viewModel = EditProfileViewModel()
+
     @ObservedObject var userStore: UserStore = UserStore()
     @Environment (\.dismiss) private var dismiss
     
     @State private var nickname: String = ""
     @State private var phoneNumber: String = ""
     @State private var selectedImage: UIImage?
-    /// 알람노출
     @State private var isEditAlert: Bool = false
-    /// 이미지피커 노출
     @State private var isShowingImagePicker = false
     @State private var nickNameMessage = ""
     @State private var numberMessage = ""
@@ -35,10 +34,8 @@ struct EditProfileView: View {
     }
     
     var body: some View {
-        
         ScrollView {
             VStack {
-                // 이미지 피커
                 Button {
                     isShowingImagePicker.toggle()
                 } label: {
@@ -53,27 +50,20 @@ struct EditProfileView: View {
                     } else {
                         ProfileImageView(imageString: userStore.getUserProfileImage(), size: .medium)
                     }
-                    
                 }
                 .sheet(isPresented: $isShowingImagePicker) {
                     ImagePicker(selectedImage: $selectedImage)
                         .ignoresSafeArea(.all)
-                    
                 }
                 .frame(width: UIScreen.main.bounds.size.width, height: 200)
                 .background(.gray)
                 
-                // TextField
                 VStack(alignment: .leading) {
                     textFieldCell("새로운 닉네임", text: $nickname)
                         .padding(.bottom)
                         .onChange(of: nickname) { newValue in
                             let filtered = newValue.filter { $0.isLetter || $0.isNumber }
-                            if filtered != newValue {
-                                nickNameMessage = "특수문자는 입력할 수 없습니다."
-                            } else {
-                                nickNameMessage = ""
-                            }
+                            nickNameMessage = filtered != newValue ? "특수문자는 입력할 수 없습니다." : ""
                         }
                     
                     Text(nickNameMessage)
@@ -81,17 +71,12 @@ struct EditProfileView: View {
                         .font(.caption)
                         .padding(.top, -15)
                         .padding(.bottom, 5)
-                        
                     
                     textFieldCell("새로운 연락처", text: $phoneNumber)
                         .padding(.bottom)
                         .onChange(of: phoneNumber) { newValue in
                             let filtered = newValue.filter { $0.isNumber }
-                            if filtered != newValue {
-                                numberMessage = "숫자만 입력해주세요"
-                            } else {
-                                numberMessage = ""
-                            }
+                            numberMessage = filtered != newValue ? "숫자만 입력해주세요" : ""
                         }
                     
                     Text(numberMessage)
@@ -99,12 +84,8 @@ struct EditProfileView: View {
                         .font(.caption)
                         .padding(.top, -15)
                         .padding(.bottom, 5)
-                    
                 }
                 .padding()
-                
-                Spacer()
-                
             }
             .navigationTitle("회원정보 수정")
             .navigationBarTitleDisplayMode(.inline)
@@ -124,7 +105,6 @@ struct EditProfileView: View {
                 Alert(
                     title: Text(""),
                     message: Text("회원정보가 수정됩니다"),
-                    
                     primaryButton: .default(Text("취소"), action: {
                         isEditAlert = false
                     }),
@@ -132,7 +112,7 @@ struct EditProfileView: View {
                         isEditAlert = false
                         dismiss()
                         Task {
-                            try await userStore.updateUserData(image: selectedImage ,nick: nickname ,phone: phoneNumber)
+                            try await userStore.updateUserData(image: selectedImage, nick: nickname, phone: phoneNumber)
                         }
                     })
                 )
@@ -142,15 +122,13 @@ struct EditProfileView: View {
     
     private func textFieldCell(_ title: String, text: Binding<String>) -> some View {
         VStack(alignment: .leading) {
-            
             Text(title)
-            
             TextField("", text: text)
                 .textFieldStyle(.roundedBorder)
         }
     }
 }
-    
+
 #Preview {
     NavigationStack {
         EditProfileView()

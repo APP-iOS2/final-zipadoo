@@ -29,6 +29,7 @@
 		3F5B9A202AD6BACE00CDD52D /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B9A1F2AD6BACE00CDD52D /* FriendProfileView.swift */; };
 		3F6D17942B039919007C8998 /* ProgressSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6D17932B039919007C8998 /* ProgressSubView.swift */; };
 		3F6D17962B0399F4007C8998 /* PromiseTitleAndTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6D17952B0399F4007C8998 /* PromiseTitleAndTimeView.swift */; };
+		3F9777D12B08DC4600011442 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F9777D02B08DC4600011442 /* GoogleService-Info.plist */; };
 		3FF033052ADD30C800FF13A5 /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF033042ADD30C800FF13A5 /* AppInfoView.swift */; };
 		3FF033092ADD318300FF13A5 /* DeveloperProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF033082ADD318300FF13A5 /* DeveloperProfileView.swift */; };
 		8B3E66D22AE267E6003EE83E /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3E66D12AE267E6003EE83E /* LottieView.swift */; };
@@ -181,6 +182,7 @@
 		3F5B9A1F2AD6BACE00CDD52D /* FriendProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		3F6D17932B039919007C8998 /* ProgressSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSubView.swift; sourceTree = "<group>"; };
 		3F6D17952B0399F4007C8998 /* PromiseTitleAndTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTitleAndTimeView.swift; sourceTree = "<group>"; };
+		3F9777D02B08DC4600011442 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3FF033042ADD30C800FF13A5 /* AppInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		3FF033082ADD318300FF13A5 /* DeveloperProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperProfileView.swift; sourceTree = "<group>"; };
 		8B3E66D12AE267E6003EE83E /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
