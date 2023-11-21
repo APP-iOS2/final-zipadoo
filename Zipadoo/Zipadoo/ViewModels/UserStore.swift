@@ -13,44 +13,15 @@ import FirebaseFirestore
 import SwiftUI
 
 final class UserStore: ObservableObject {
-    
-    @Published var userFetchArray: [User] = []
-    
+    /// 유저의 현재 정보를 확인하기 위한 변수
     @Published var currentUser: User?
-    
-    @Published var participantImageArray: [String] = []
-        
+    /// 파이어 베이스 User 데이터베이스
     let dbRef = Firestore.firestore().collection("Users")
+    /// 기본 이미지
     let defaultImageString = "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
     init() {
         Task { try await loginUser() }
 
-    }
-    
-    /// 모든 유저 정보 가져오기 -> 성공
-    func fetchAllUsers() {
-        
-        userFetchArray.removeAll()
-        
-        dbRef.getDocuments { (snapshot, error) in
-            // 스냅샷이 없다면 return
-            guard let snapshot = snapshot else {
-                print("Error fetching data: \(error?.localizedDescription ?? "fetchUserDateError")")
-                return
-            }
-            
-            var savedArray: [User] = []
-            
-            for document in snapshot.documents {
-                if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []) {
-                    if let user = try? JSONDecoder().decode(User.self, from: jsonData) {
-                        savedArray.append(user)
-                    }
-                }
-            }
-            
-            self.userFetchArray = savedArray
-        }
     }
     
     /// 특정 유저정보 가져오기 -> 성공
@@ -62,24 +33,20 @@ final class UserStore: ObservableObject {
         
         return try snapshot.data(as: User.self)
     }
+    
     /// 홈메인뷰 프로필이미지 가져오기 위한 함수
     @MainActor
     func fetchImageString(participantIdArray: [String]) async throws -> [String] {
-//        participantImageArray.removeAll()
         var tempArray: [String] = []
-//        let dbRef = Firestore.firestore().collection("Users")
         for id in participantIdArray {
             let snapshot = try await dbRef.document(id).getDocument()
             let string = try snapshot.data(as: User.self).profileImageString 
             tempArray.append(string)
             
         }
-//        DispatchQueue.main.async {
-//            self.participantImageArray = tempArray
-//            print(self.participantImageArray)
-//        }
         return tempArray
     }
+    
     /// 로그인한 유저 정보 가져오기
     @MainActor
     func loginUser() async throws {
@@ -91,6 +58,7 @@ final class UserStore: ObservableObject {
         self.currentUser = user
     }
     
+    /// 유저 정보 업데이트(회원정보 수정에 사용)
     @MainActor
     func updateUserData(image: UIImage?, nick: String, phone: String) async throws {
         var data = [String: Any]()
@@ -99,18 +67,14 @@ final class UserStore: ObservableObject {
         if let uiImage = image {
             let imageString = try? await ProfileImageUploader.uploadImage(image: uiImage)
             data["profileImageString"] = imageString ?? defaultImageString
-            // 현재 사용자의 정보 변경
-            //AuthStore.shared.currentUser?.profileImageString = imageString ?? defaultImageString
         }
-        
+        // 닉네임이 바뀌었다면
         if currentUser?.nickName != nick {
             data["nickName"] = nick
-            //AuthStore.shared.currentUser?.nickName = nick
         }
-        
+        // 전화번호가 바뀌었다면
         if currentUser?.phoneNumber != phone {
             data["phoneNumber"] = phone
-            //AuthStore.shared.currentUser?.phoneNumber = phone
         }
         
         // 바뀐 사항이 하나라도 있다면 파이어베이스에 업데이트
@@ -124,6 +88,7 @@ final class UserStore: ObservableObject {
         }
     }
     
+    /// 비밀번호 변경 함수
     @MainActor
     func updatePassword(newValue newpassword: String) async throws {
         do {
@@ -132,29 +97,9 @@ final class UserStore: ObservableObject {
             print("비밀번호 변경 실패")
         }
     }
-    
+    /// 유저 이미지 업데이트
     func getUserProfileImage() -> String {
         guard let urlString = currentUser?.profileImageString else { return "" }
         return urlString
     }
-    
-    
-    /*
-     /// 유저데이터 파베에 추가 함수 ->  AuthStore에 있음
-    func addUserData() async throws {
-        do {
-            // 스포리지에 저장한 사진 주소String
-            guard let imageUrlString = try await ProfileImageUploader.uploadImage(image: UIImage(imageLiteralResourceName: "images")) else { return }
-            
-            let user = User(name: "되라구!@", nickName: "hey", phoneNumber: "13", potato: 4, profileImageString: imageUrlString, crustDepth: 2, tardyCount: 5)
-            try dbRef.document(user.id).setData(from: user)
-            fetchAllUsers()
-            
-        } catch {
-            print("User 등록 실패")
-        }
-    }
-     */
-
-    /// 업데이트는 따로 만들어서 마이페이지쪽 ViewModel에서 구현
 }

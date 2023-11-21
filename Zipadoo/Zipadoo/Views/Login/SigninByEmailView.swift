@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct SigninByEmailView: View {
-    
+    private let loginEmailCheckView = LoginEmailCheckView()
     @ObservedObject var emailLoginStore: EmailLoginStore
-    
-    // 비밀번호 보이기
+    /// 비밀번호 보이기
     @State private var isPasswordVisible = false
     /// 형식 유효메세지
     @State private var validMessage = " "
@@ -28,11 +27,11 @@ struct SigninByEmailView: View {
     
     /// 모든 형식이 유효한지
     private var isValid: Bool {
-        isCorrectNickname(nickname: emailLoginStore.nickName) && isCorrectPhoneNumber(phonenumber: emailLoginStore.phoneNumber) && isCorrectPassword(password: emailLoginStore.password)
+        loginEmailCheckView.isCorrectNickname(nickname: emailLoginStore.nickName) && loginEmailCheckView.isCorrectPhoneNumber(phonenumber: emailLoginStore.phoneNumber) && loginEmailCheckView.isCorrectPassword(password: emailLoginStore.password)
     }
     
     /// 유효성 검사
-    func checkValid() {
+    private func checkValid() {
         
         // 파베 중복확인 : 중복시 true
         Task {
@@ -52,7 +51,7 @@ struct SigninByEmailView: View {
                         nicknameMessageColor = .red
                         nicknameOverlapMessage = "이미 존재하는 닉네임입니다"
                         isPresentedMessage = true
-                    } else if isCorrectNickname(nickname: emailLoginStore.nickName) {
+                    } else if loginEmailCheckView.isCorrectNickname(nickname: emailLoginStore.nickName) {
                         nicknameMessageColor = .green
                         nicknameOverlapMessage = "사용가능한 닉네임입니다"
                         isPresentedMessage = true
@@ -74,118 +73,66 @@ struct SigninByEmailView: View {
         ZStack {
             VStack(alignment: .leading) {
                 
-                Spacer()
-                    .frame(height: 50)
+                spacerView(50)
                 
                 // MARK: - 입력 안내 메세지
                 Text("계정이 없습니다. \n가입할 이름과 휴대폰 번호를 입력해 주세요.")
-                    .foregroundColor(.primary)
-                    .font(.title2)
-                    .fontWeight(.semibold)
-                
+                    .modifier(LoginTextStyle())
+                // 유효성 메세지
                 Text("\(validMessage)")
-                    .font(.subheadline)
-                    .foregroundStyle(.red.opacity(0.7))
+                    .modifier(LoginMessageStyle(color: .red))
                 
-                // MARK: - 이름 입력
+                // MARK: - 닉네임 입력
                 Group {
                     HStack {
-                        TextField("닉네임", text: $emailLoginStore.nickName)
-                            .opacity(0.9)
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .autocapitalization(.none)
-                            .frame(height: 35)
+                        loginTextFieldView($emailLoginStore.nickName, "닉네임", isvisible: true)
                         
                         // 입력한 내용 지우기 버튼
-                        Button {
-                            emailLoginStore.nickName = ""
-                        } label: {
-                            Image(systemName: "x.circle.fill")
-                        }
-                        .foregroundColor(Color.primary.opacity(0.4))
+                        eraseButtonView($emailLoginStore.nickName)
                     } // HStack
                     
-                    Rectangle()
-                        .frame(height: 1)
-                        .foregroundStyle(Color.secondary)
-                        .padding(.bottom, 5)
+                    underLine()
                     
                     Text("2~6자로 입력해주세요. 프로필 수정에서 변경 가능합니다.")
-                        .font(.subheadline)
-                        .foregroundStyle(Color.primary.opacity(0.7))
+                        .modifier(LoginMessageStyle(color: .primary))
                     
                     if isPresentedMessage {
                         Text(nicknameOverlapMessage)
-                            .font(.subheadline)
-                            .foregroundStyle(nicknameMessageColor.opacity(0.7))
+                            .modifier(LoginMessageStyle(color: nicknameMessageColor))
                     }
-                } // 이름 입력 Group
+                }
+                spacerView(20)
                 
                 // MARK: - 휴대폰 번호 입력
-                // 휴대폰 번호 입력 칸
-                Spacer()
-                    .frame(height: 20) // 공간용
-                
                 Group {
                     HStack {
-                        TextField("휴대폰 번호", text: $emailLoginStore.phoneNumber)
-                            .opacity(0.9)
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .autocapitalization(.none)
-                            .frame(height: 35)
-                            .keyboardType(.numberPad)
+                        loginTextFieldView($emailLoginStore.phoneNumber, "휴대폰 번호", isvisible: true)
                         
-                        // 입력한 내용 지우기 버튼
-                        Button {
-                            emailLoginStore.phoneNumber = ""
-                        } label: {
-                            Image(systemName: "x.circle.fill")
-                        }
-                        .foregroundColor(Color.primary.opacity(0.4))
+                        eraseButtonView($emailLoginStore.phoneNumber)
                     } // HStack
                     
-                    // 텍스트필드 줄
-                    Rectangle().frame(height: 1)
-                        .foregroundStyle(Color.secondary)
-                        .padding(.bottom, 5)
+                    underLine()
                     
                     Text("-를 제외하고 입력해주세요")
-                        .font(.subheadline)
-                        .foregroundStyle(Color.primary.opacity(0.7))
-                } // 휴대폰 입력 Group
-                
-                Spacer()
-                    .frame(height: 20)
+                        .modifier(LoginMessageStyle(color: .primary))
+
+                }
+                spacerView(20)
+
                 // MARK: - 비밀번호 입력
                 Group {
                     HStack {
-                        SecureField("비밀번호", text: $emailLoginStore.password)
-                            .opacity(0.9)
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .autocapitalization(.none)
-                            .frame(height: 35)
+                        loginTextFieldView($emailLoginStore.password, "비밀번호", isvisible: false)
                         
                         // 입력한 내용 지우기 버튼
-                        Button {
-                            emailLoginStore.password = ""
-                        } label: {
-                            Image(systemName: "x.circle.fill")
-                        }
-                        .foregroundColor(Color.primary.opacity(0.4))
+                        eraseButtonView($emailLoginStore.password)
                     }
-                    
-                    Rectangle().frame(height: 1)
-                        .foregroundStyle(Color.secondary)
-                        .padding(.bottom, 5)
+                    underLine()
                     
                     // 하단 안내 문구
                     HStack {
                         Text("6자리 이상 입력해주세요.")
-                            .font(.subheadline)
-                            .foregroundStyle(Color.primary.opacity(0.7))
+                            .modifier(LoginMessageStyle(color: .primary))
                     }
                     
                     Spacer()
@@ -201,7 +148,6 @@ struct SigninByEmailView: View {
                     } label: {
                         Text("다음")
                             .fontWeight(.semibold)
-                            .padding(.trailing, 5)
                             .font(.headline)
                     }
                 }
