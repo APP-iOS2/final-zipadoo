@@ -18,7 +18,9 @@ final class FriendsStore: ObservableObject {
     /// 로그인된 사용자
     var currentUser: User? = AuthStore.shared.currentUser
     
+    /// 로그인된 사용자의 친구 ID값
     var friendsIdArray: [String] = []
+    /// 로그인된 사용자의 친구요청 목록
     var friendsIdRequestArray: [String] = []
     
     @Published var alertMessage: String = ""
@@ -35,28 +37,31 @@ final class FriendsStore: ObservableObject {
             guard let userId = currentUser?.id else {
                 return
             }
-            let user = try await UserStore.fetchUser(userId: userId)
-            friendsIdArray = user?.friendsIdArray ?? []
             
-            // 중복 친구 ID를 제거합니다.
+            if let user = try await UserStore.fetchUser(userId: userId) {
+                friendsIdArray = user.friendsIdArray
+            }
+            
+            // 친구 ID 중복 값 제거
             let uniqueFriendsIdArray = Array(Set(friendsIdArray))
             
             // 친구 id로 친구정보 가져오기
-            var tempArray: [User] = []
+            var tempFriendsIDArray: [User] = []
             
             for id in uniqueFriendsIdArray {
+                
                 let friend: User? = try await UserStore.fetchUser(userId: id)
+                
                 if let friend {
-                    tempArray.append(friend)
+                    tempFriendsIDArray.append(friend)
                 }
             }
             
             // 메인 스레드에서 UI 업데이트를 수행합니다.
             DispatchQueue.main.async {
-                self.friendsFetchArray = tempArray
+                self.friendsFetchArray = tempFriendsIDArray
                 self.isLoadingFriends = false
             }
-            
         } catch {
             print("fetch 실패")
         }
@@ -70,27 +75,28 @@ final class FriendsStore: ObservableObject {
             guard let userId = currentUser?.id else {
                 return
             }
-            let user = try await UserStore.fetchUser(userId: userId)
-            friendsIdRequestArray = user?.friendsIdRequestArray ?? []
+            
+            if let user = try await UserStore.fetchUser(userId: userId) {
+                friendsIdRequestArray = user.friendsIdRequestArray
+            }
             
             // 요청목록 가져오기
-            var tempArray: [User] = []
+            var tempFriendRequestArray: [User] = []
             
             for id in friendsIdRequestArray {
                 
                 let friend: User? = try await UserStore.fetchUser(userId: id)
                 
                 if let friend {
-                    tempArray.append(friend)
+                    tempFriendRequestArray.append(friend)
                 }
             }
             
             // 메인 스레드에서 UI 업데이트를 수행합니다.
             DispatchQueue.main.async {
-                self.requestFetchArray = tempArray
+                self.requestFetchArray = tempFriendRequestArray
                 self.isLoadingRequest = false
             }
-            
         } catch {
             print("fetchUser실패")
         }
@@ -139,7 +145,6 @@ final class FriendsStore: ObservableObject {
                     print("이미 친구")
                     alertMessage = "이미 친구입니다"
                     completion(false)
-                    
                 } else if opponent.friendsIdRequestArray.contains(userId) {
                     // 이미 요청한 경우
                     print("이미 요청")
@@ -156,7 +161,6 @@ final class FriendsStore: ObservableObject {
                     try await addRequest(friendId: friendId)
                     completion(true)
                 }
-                
             }
         } catch {
             return
