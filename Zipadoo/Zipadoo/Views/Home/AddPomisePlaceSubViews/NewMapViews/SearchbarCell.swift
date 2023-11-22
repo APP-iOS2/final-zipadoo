@@ -114,7 +114,7 @@ struct SearchBarCell: View {
                                         HStack {
                                             Text(result.place_name)
                                                 .font(.headline)
-                                                .foregroundColor(.black)
+                                                .foregroundColor(.primary)
                                             Text(result.category_group_name)
                                                 .font(.caption).bold()
                                                 .foregroundColor(.blue)
@@ -125,7 +125,7 @@ struct SearchBarCell: View {
                                         HStack {
                                             Text(result.road_address_name)
                                                 .font(.subheadline)
-                                                .foregroundColor(.black)
+                                                .foregroundColor(.primary)
                                             Spacer()
                                         }
                                     }
@@ -141,7 +141,7 @@ struct SearchBarCell: View {
                                             .scaledToFit()
                                             .frame(width: 30)
                                     }
-                                    .tint(.yellow)
+                                    .tint(.mocha)
                                     .fullScreenCover(item: $placeURL) { url in
                                         PlaceInfoWebView(urlString: url)
                                     }

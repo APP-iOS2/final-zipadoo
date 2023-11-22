@@ -84,6 +84,7 @@ struct PromiseDetailView: View {
                                     }
                                     .padding(.horizontal)
                                 }
+                                .scrollIndicators(.hidden)
                             }
                     }
                     .padding(.init(top: -50, leading: 0, bottom: -30, trailing: 0))
@@ -202,7 +203,7 @@ struct PromiseDetailView: View {
     private var participantsView: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("모이는 두더지 친구들")
+                Text("모이는 두더지")
                     .font(.title3).bold()
                 
                 Spacer()
