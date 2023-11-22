@@ -195,10 +195,6 @@ final class FriendsStore: ObservableObject {
             let updateOpponentData = ["friendsIdArray": opponent.friendsIdArray + [userId]]
             try await dbRef.document(opponent.id).updateData(updateOpponentData)
             
-            // 다시 친구목록 업데이트
-            //            currentUser?.friendsIdArray = newIdArray
-            //            friendsIdArray = currentUser?.friendsIdArray ?? []
-            
             try await fetchFriends()
             try await fetchFriendsRequest()
             
@@ -230,10 +226,6 @@ final class FriendsStore: ObservableObject {
             let updateOpponentData = ["friendsIdArray": opponent.friendsIdArray.filter { $0 !=  userId}]
             try await dbRef.document(opponent.id).updateData(updateOpponentData)
             
-            // friendsIdArray 업데이트
-            //            currentUser?.friendsIdArray = newIdArray
-            //            friendsIdArray = currentUser?.friendsIdArray ?? []
-            
             try await fetchFriends()
             
         } catch {
@@ -243,7 +235,6 @@ final class FriendsStore: ObservableObject {
     
     /// 친구에게 친구요청
     func addRequest(friendId: String) async throws {
-        
         do {
             // 친구의 friendIdrequestArray가져오기
             let opponent = try await UserStore.fetchUser(userId: friendId)
@@ -261,12 +252,6 @@ final class FriendsStore: ObservableObject {
             
             try await dbRef.document(friendId).updateData(updateData)
             
-            // 다시 요청목록 업데이트
-            //            currentUser?.friendsIdRequestArray = newIdRequestArray
-            //            friendsIdRequestArray = currentUser?.friendsIdRequestArray ?? []
-            // 다시 패치
-            //            try await self.fetchFriendsRequest()
-            
         } catch {
             print("파이어베이스 업데이트 실패")
         }
@@ -274,7 +259,6 @@ final class FriendsStore: ObservableObject {
     
     /// 친구요청 거절
     func removeRequest(friendId: String) async throws {
-        
         do {
             try await fetchFriendsRequest()
             
