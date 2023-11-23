@@ -19,7 +19,7 @@ struct SettingView: View {
             // MARK: - 정보 수정
             Section {
                 NavigationLink {
-                    EditProfileView()
+                    EditProfileView(emailLoginStore: EmailLoginStore())
                 } label: {
                     Text("회원정보 수정")
                 }
