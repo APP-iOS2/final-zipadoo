@@ -198,6 +198,7 @@ struct PromiseDetailProgressBarView: View {
                     }
                 }
             }
+            .padding(.vertical)
         }
         .task {
             promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
