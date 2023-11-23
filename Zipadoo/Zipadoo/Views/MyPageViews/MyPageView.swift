@@ -20,12 +20,7 @@ struct MyPageView: View {
     let currentUser: User? = AuthStore.shared.currentUser
     /// 유저가 있으면 유저프로필 String 저장
     var userImageString: String {
-        if let user = currentUser {
-            user.profileImageString
-        } else {
-            // 스토리지에 저장된 기본 이미지
-            "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
-        }
+        return currentUser?.profileImageString ?? "defaultProfile"
     }
     // MARK: - 지각 깊이 데이터 프로퍼티
     // 지각률에 따라 메시지 다르게 보여주기
