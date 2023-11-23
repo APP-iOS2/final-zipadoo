@@ -21,9 +21,8 @@ struct FriendsView: View {
     @State private var tabIndex = 0
     /// 친구 추가뷰 시트
     @State private var isShowingFriendsRegistrationView = false
-  
+    
     var body: some View {
-        
         NavigationStack {
             VStack {
                 // MARK: - 변경 SlidingTab
@@ -31,16 +30,18 @@ struct FriendsView: View {
                                 ["친구 목록", "요청 목록"], animation: .easeInOut,
                                activeAccentColor: .zipadoo, inactiveAccentColor: .zipadoo, selectionBarColor: .
                                zipadoo)
+                
                 Spacer()
+                
                 if tabIndex == 0 {
                     friendListView
                 } else if tabIndex == 1 {
                     friendRequestView
                 }
+                
                 Spacer()
-            }
+            } // VStack
             .fontWeight(.semibold)
-            //            .pickerStyle(SegmentedPickerStyle())
             .navigationTitle("친구 관리")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -48,14 +49,13 @@ struct FriendsView: View {
                     Button {
                         isShowingFriendsRegistrationView = true
                     } label: {
-                        Image(systemName:"person.crop.circle.fill.badge.plus")
+                        Image(systemName: "person.crop.circle.fill.badge.plus")
                     }
                     .foregroundColor(.primary)
                     .sheet(isPresented: $isShowingFriendsRegistrationView) {
                         FriendsRegistrationView(friendsStore: friendsStore)
                             .presentationDetents([.fraction(0.2)])
                             .presentationDragIndicator(.hidden)
-      
                     }
                 }
                 // MARK: - 지파두 마크
@@ -65,7 +65,6 @@ struct FriendsView: View {
                         .scaledToFit()
                         .frame(height: 20)
                 }
-                
             }
             .alert(isPresented: $isDeleteAlert) {
                 Alert(
@@ -87,8 +86,8 @@ struct FriendsView: View {
                     try await friendsStore.fetchFriendsRequest()
                 }
             }
-        }
-    }
+        } // NavigationStack
+    } // body
     
     // MARK: - 친구 목록 뷰
     private var friendListView: some View {
@@ -97,11 +96,6 @@ struct FriendsView: View {
             if friendsStore.isLoadingFriends == false {
                 if friendsStore.friendsFetchArray.isEmpty {
                     VStack {
-                        //텍스트만 나오도록 제거
-//                        Image(systemName: "person.fill.xmark")
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 40, height: 40)
                         Group {
                             Text("아직 친구가 없어요")
                             Text("친구를 추가해 보세요!")
@@ -109,7 +103,6 @@ struct FriendsView: View {
                         .font(.title3)
                     }
                     .foregroundColor(.secondary)
-                    
                 } else {
                     List {
                         ForEach(friendsStore.friendsFetchArray) { friend in
@@ -129,17 +122,14 @@ struct FriendsView: View {
                                         Text(friend.nickName)
                                             .fontWeight(.semibold)
                                             .font(.headline)
-                                        //                                            Text(FriendProfileView.user.crustDepth)
-                                        // Text(friend.tardyTitle)
+                                        
                                         Text("뉴비약속러")
                                             .foregroundStyle(Color.secondary)
                                             .font(.caption)
                                     }
                                     Spacer()
-                                    
                                 } // Hstack
-                                
-                            } // Foreach
+                            } // ZStack
                             .swipeActions {
                                 Button {
                                     selectedFriendId = friend.id
@@ -147,22 +137,19 @@ struct FriendsView: View {
                                     Task {
                                         try await friendsStore.fetchFriends()
                                     }
-                                }label: {
-                                    //                                        Image(systemName: "trash.fill")
+                                } label: {
                                     Text("삭제")
                                         .fontWeight(.semibold)
                                 }
                                 .tint(.red)
                             } // swipe
-
-                        } // Zstack
+                        } // ForEach
                     } // List
                     .listStyle(.plain)
                     .padding(.top, -17)
-                    
                 }
             }
-        }
+        } // VStack
         .onAppear {
             Task {
                 try await friendsStore.fetchFriends()
@@ -173,7 +160,7 @@ struct FriendsView: View {
                 try await friendsStore.fetchFriends()
             }
         }
-    }
+    } // friendListView
     
     // MARK: - 요청목록 뷰
     private var friendRequestView: some View {
@@ -184,7 +171,6 @@ struct FriendsView: View {
                     Text("받은 친구 요청이 없어요!")
                         .font(.title3)
                         .foregroundStyle(.secondary)
-                    
                 } else {
                     List {
                         ForEach(friendsStore.requestFetchArray) { friend in
@@ -199,16 +185,13 @@ struct FriendsView: View {
                                             Text(friend.nickName)
                                                 .fontWeight(.semibold)
                                                 .font(.headline)
-                                            //                                            Text(FriendProfileView.user.crustDepth)
-                                            // Text(friend.tardyTitle)
+                                            
                                             Text("뉴비약속러")
                                                 .foregroundStyle(Color.secondary)
                                                 .font(.caption)
                                         }
-                                        
                                     }
                                 })
-                                
                                 HStack {
                                     Spacer()
                                     
@@ -239,16 +222,15 @@ struct FriendsView: View {
                                                 try await friendsStore.removeRequest(friendId: selectedFriendId)
                                             }
                                         }
-                                }
-                            }
-                            
-                        }
-                    }
+                                } // HStack
+                            } // ZStack
+                        } // ForEach
+                    } // List
                     .listStyle(.plain)
                     .padding(.top, -17)
                 }
             }
-        }
+        } // VStack
         .onAppear {
             Task {
                 try await friendsStore.fetchFriendsRequest()
@@ -259,8 +241,8 @@ struct FriendsView: View {
                 try await friendsStore.fetchFriendsRequest()
             }
         }
-    }
-}
+    } // friendRequestView
+} // struct
 
 #Preview {
     NavigationStack {
