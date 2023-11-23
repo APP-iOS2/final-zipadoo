@@ -15,32 +15,33 @@ struct PromiseDetailProgressBarView: View {
     // 관찰 대상 객체로 사용되는 위치 정보 스토어
     @ObservedObject var locationStore: LocationStore
     
-    // 친구 현황 시트 표시 여부를 결정하는 바인딩 변수
+    /// 친구 현황 시트 표시 여부를 결정하는 바인딩 변수
     @Binding var isShowingFriendSheet: Bool
     
-    // 맵 뷰의 카메라 위치를 조절하는 바인딩 변수
+    /// 맵 뷰의 카메라 위치를 조절하는 바인딩 변수
     @Binding var region: MapCameraPosition
     
-    // 목적지 좌표
+    /// 목적지 좌표
     let destinationCoordinate: CLLocationCoordinate2D
     
-    // 현재 약속 정보
+    /// 현재 약속 정보
     var promise: Promise
     
-    // 약속 진행 상황을 감지하여 UI 갱신하는 바인딩 변수
+    /// 약속 진행 상황을 감지하여 UI 갱신하는 바인딩 변수
     @Binding var progressTrigger: Bool
     
-    // 약속 현황 시트의 높이를 제어하기 위한 바인딩 변수
+    /// 약속 현황 시트의 높이를 제어하기 위한 바인딩 변수
     @Binding var detents: PresentationDetent
     
-    // 1초마다 갱신되는 타이머
+    /// 1초마다 갱신되는 타이머
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    // 약속 종료 여부를 감지하는 상태 변수
+    /// 약속 종료 여부를 감지하는 상태 변수
     @State private var promiseFinishCheck: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
+            /*
             HStack {
                 Text("두더지 친구들 현황")
                     .font(.title3)
@@ -150,6 +151,54 @@ struct PromiseDetailProgressBarView: View {
                     }
                 }
             }
+            */
+            
+            // 두더지ProgressBar 주석 -> 남은거리만 보여주기
+            HStack {
+                Text("남은 거리")
+                    .bold()
+                            
+                Spacer()
+            }
+            .padding([.top, .leading, .trailing])
+            
+            Divider()
+            
+            // MARK: - 약속 친구 리스트 테스트
+            LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
+                ForEach(locationStore.locationParticipantDatas) { friend in
+                    // 남은 거리
+                    let distance = calculateDistanceInMeters(x1: friend.location.currentLatitude, y1: friend.location.currentLongitude, x2: promise.latitude, y2: promise.longitude)
+                    
+                    // 이미지 클릭시 현재 위치로 이동
+                    Button {
+                        region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                        isShowingFriendSheet = false
+                    } label: {
+                        VStack {
+
+                            Image(friend.moleImageString)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 65)
+                            
+                            Text(friend.nickname)
+                                .fontWeight(.medium)
+                            
+                            // 지각 도착 메시지 분기문 처리
+                            if promiseFinishCheck { // 약속시간이 지났을 때
+                                Text(friend.location.rank > 0 ? "지각!" : "\(formatDistance(distance))")
+                            } else { // 약속시간 아직 안 지났을 때
+                                Text(friend.location.rank > 0 ? "도착!" : "\(formatDistance(distance))")
+                            }
+                        }
+                        .foregroundColor(.primary)
+                        .padding(.bottom)
+                        .font(.footnote)
+                    }
+                }
+            }
+            .padding(.vertical)
         }
         .task {
             promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
@@ -158,14 +207,11 @@ struct PromiseDetailProgressBarView: View {
         .onReceive(timer) { _ in
             promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
         }
-        .padding(.leading)
-        .padding(.trailing)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
                 .foregroundColor(.primary)
                 .opacity(0.05)
                 .shadow(color: .primary, radius: 10, x: 5, y: 5)
-            
         )
     }
 }
