@@ -57,10 +57,10 @@ struct ArrivalMessagingView: View {
             // 늦게 왔을 때
             timeDiff = abs(timeDiff)
             switch timeDiff {
-            case 60..<3600 :
+            case 60..<3600:
                 let minute = timeDiff / 60
                 return "보다 \(Int(minute))분 "
-            case 3600..<86400 :
+            case 3600..<86400:
                 let hours = timeDiff / (60 * 60)
                 let minute = Int(timeDiff) % (60 * 60) / 60
                 var message = "보다 \(Int(hours))시간 "
@@ -72,11 +72,11 @@ struct ArrivalMessagingView: View {
         } else {
             // 일찍 왔을 때(30분이 최대)
             switch abs(timeDiff) {
-            case 1..<3600 :
+            case 1..<3600:
                 let minute = timeDiff / 60
                 return "보다 \(Int(minute) + 1)분 "
 
-            default :
+            default:
                 return ""
             }
         }
