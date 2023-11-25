@@ -55,13 +55,14 @@ struct PromiseDetailMapView: View {
             VStack {
                 Map(position: $region, selection: $mapSelection) {
                     
-                    // 현재 위치 표시
+                    // 자신의 현재 위치 표시
                     UserAnnotation(anchor: .center)
                     
-                    // 도착 위치 표시
+                    // 도착지 위치 표시
                     Annotation("약속 위치", coordinate: promise.coordinate, anchor: .bottom) {
+                        // 누르면 다시 가운데으로 세팅
                         Button(action: {
-                            region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                            region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                         }, label: {
                             Image(systemName: "mappin")
                                 .font(.title)
@@ -79,6 +80,7 @@ struct PromiseDetailMapView: View {
                         $0.location.participantId != AuthStore.shared.currentUser?.id ?? ""
                     }) { annotation in
                         Annotation(annotation.nickname, coordinate: annotation.location.currentCoordinate, anchor: .center) {
+                            // 누르면 다시 가운데으로 세팅
                             Button {
                                 region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                             } label: {
@@ -105,11 +107,10 @@ struct PromiseDetailMapView: View {
                     MapPitchToggle()
                     MapUserLocationButton()
                 }
-                
-                // 맵뷰 탭바
+                // 맵뷰 좌측상단 도착지,Route버튼
                 .overlay(alignment: .topLeading) {
                     VStack(alignment: .leading) {
-                        // 약속 위치로 이동하는 버튼
+                        // 약속 도착지로 이동하는 버튼
                         Button {
                             withAnimation(.easeIn(duration: 1)) {
                                 region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))

@@ -38,9 +38,9 @@ struct LocationAndParticipant: Identifiable {
 class LocationStore: ObservableObject {
     /// 사용자 Location객체
     @Published var myLocation: Location = Location(participantId: "", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
-    /// 참여자들의 Location
+    /// 자신을 포함한 참여자들의 Location 저장
     @Published var locationDatas: [Location] = []
-    /// 참여자들의 Location과 참여자정보를 저장
+    /// 자신을 포함한 참여자들의 Location 저장(0번째 인덱스가 나의 정보)
     @Published var locationParticipantDatas: [LocationAndParticipant] = []
     
     @Published var locationParticipantDatasDummy: [LocationAndParticipant] = [LocationAndParticipant.dummyData2, LocationAndParticipant.dummyData3, LocationAndParticipant.dummyData4, LocationAndParticipant.dummyData5, LocationAndParticipant.dummyData6, LocationAndParticipant.dummyData7, LocationAndParticipant.dummyData8, LocationAndParticipant.dummyData9]
@@ -91,6 +91,8 @@ class LocationStore: ObservableObject {
             do {
                 var locationTemp: [Location] = []
                 var locationParticipantTemp: [LocationAndParticipant] = []
+                /// 사용자 LocationAndParticipant 객체
+                var myLocationAndParticipant: [LocationAndParticipant] = [LocationAndParticipant(location: Location(participantId: "", departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0), nickname: "", imageString: "", moleImageString: "")]
                 
                 for locationId in locationIdArray {
                     let snapshot = try await dbRef.document(locationId).getDocument()
@@ -101,15 +103,18 @@ class LocationStore: ObservableObject {
                     // 사용자의 Locationd일때
                     if locationData.participantId == myid {
                         myLocation.id = locationData.id
+                        myLocationAndParticipant = [LocationAndParticipant(location: locationData, nickname: userData?.nickName ?? " - ", imageString: userData?.profileImageString ?? " - ", moleImageString: userData?.moleImageString ?? " - ")]
+                    } else {
+                        // 먼저 자기자신 제외하고 저장 후 이후 나의 정보와 합치기
+                        locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: userData?.nickName ?? " - ", imageString: userData?.profileImageString ?? " - ", moleImageString: userData?.moleImageString ?? " - "))
                     }
                     // 자기자신을 포함하여 저장
-                    locationParticipantTemp.append(LocationAndParticipant(location: locationData, nickname: userData?.nickName ?? " - ", imageString: userData?.profileImageString ?? " - ", moleImageString: userData?.moleImageString ?? " - "))
                     locationTemp.append(locationData)
                 }
                 
                 DispatchQueue.main.async {
                     self.locationDatas = locationTemp
-                    self.locationParticipantDatas = locationParticipantTemp
+                    self.locationParticipantDatas = myLocationAndParticipant + locationParticipantTemp
                 }
             } catch {
                 print("fetch locationData failed")
@@ -157,11 +162,9 @@ class LocationStore: ObservableObject {
     /// 도착했을 때 순위계산
     func calculateRank() -> Int {
         var count: Int = 0
-        for locationData in locationDatas {
+        for locationData in locationDatas where locationData.arriveTime > 0 {
             // 얖에 이미 도착한 사람이 있으면 count 1증가
-            if locationData.arriveTime > 0 {
                 count += 1
-            }
         }
         return count+1
     }

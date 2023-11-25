@@ -164,13 +164,12 @@ struct PromiseDetailProgressBarView: View {
             
             Divider()
             
-            // MARK: - 약속 친구 리스트 테스트
             LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
-                ForEach(locationStore.locationParticipantDatas.filter {$0.location.participantId != AuthStore.shared.currentUser?.id}) { friend in
-                    // 이미지 클릭시 현재 위치로 이동
+                ForEach(locationStore.locationParticipantDatas) { friend in
+                    // 이미지 클릭시 해당 참여자의 현재 위치로 이동
                     Button {
-                        region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
-                        isShowingFriendSheet = false
+                        region = .region(MKCoordinateRegion(center: friend.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                        isShowingFriendSheet = false // 시트 내려가기
                     } label: {
                         VStack {
 
@@ -179,7 +178,7 @@ struct PromiseDetailProgressBarView: View {
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 65)
                             
-                            Text(friend.nickname)
+                            Text(friend.location.participantId == AuthStore.shared.currentUser?.id ? "나" : friend.nickname)
                                 .fontWeight(.medium)
                             
                             // 현재위치 정보가 있으면
@@ -217,7 +216,8 @@ struct PromiseDetailProgressBarView: View {
                 .opacity(0.05)
                 .shadow(color: .primary, radius: 10, x: 5, y: 5)
         )
-    }
+    } // body
+
 }
 
 struct PromiseDetailProgressBarView_Previews: PreviewProvider {
