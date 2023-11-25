@@ -155,7 +155,7 @@ struct PromiseDetailProgressBarView: View {
             
             // 두더지ProgressBar 주석 -> 남은거리만 보여주기
             HStack {
-                Text("남은 거리")
+                Text("두더지 친구들의 남은 거리")
                     .bold()
                             
                 Spacer()
@@ -166,10 +166,7 @@ struct PromiseDetailProgressBarView: View {
             
             // MARK: - 약속 친구 리스트 테스트
             LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
-                ForEach(locationStore.locationParticipantDatas) { friend in
-                    // 남은 거리
-                    let distance = calculateDistanceInMeters(x1: friend.location.currentLatitude, y1: friend.location.currentLongitude, x2: promise.latitude, y2: promise.longitude)
-                    
+                ForEach(locationStore.locationParticipantDatas.filter {$0.location.participantId != AuthStore.shared.currentUser?.id}) { friend in
                     // 이미지 클릭시 현재 위치로 이동
                     Button {
                         region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
@@ -185,11 +182,18 @@ struct PromiseDetailProgressBarView: View {
                             Text(friend.nickname)
                                 .fontWeight(.medium)
                             
-                            // 지각 도착 메시지 분기문 처리
-                            if promiseFinishCheck { // 약속시간이 지났을 때
-                                Text(friend.location.rank > 0 ? "지각!" : "\(formatDistance(distance))")
-                            } else { // 약속시간 아직 안 지났을 때
-                                Text(friend.location.rank > 0 ? "도착!" : "\(formatDistance(distance))")
+                            // 현재위치 정보가 있으면
+                            if friend.location.currentLatitude > 0 && friend.location.currentLongitude > 0 {
+ 
+                                if friend.location.rank > 0 {
+                                    Text(promiseFinishCheck ? "지각" : "도착")
+                                } else {
+                                    // 남은 거리
+                                    let distance = calculateDistanceInMeters(x1: friend.location.currentLatitude, y1: friend.location.currentLongitude, x2: promise.latitude, y2: promise.longitude)
+                                    Text("\(formatDistance(distance))")
+                                }
+                            } else {
+                                Text("정보없음")
                             }
                         }
                         .foregroundColor(.primary)
