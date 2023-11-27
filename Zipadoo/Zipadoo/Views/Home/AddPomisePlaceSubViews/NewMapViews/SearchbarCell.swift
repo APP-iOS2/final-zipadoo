@@ -44,6 +44,7 @@ struct SearchBarCell: View {
                 // 장소(키워드) 입력창
                 TextField(textFieldText, text: $searchText)
                     .textFieldStyle(.roundedBorder)
+                    .autocorrectionDisabled()
                 // Search 버튼
                 Button {
                     if searchText != "" { // searchText가 빈 값이 아닐 경우 searching값을 true로 지정

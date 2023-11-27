@@ -44,6 +44,10 @@ struct PromiseEditView: View {
     @State private var isShowingPenalty: Bool = false
     /// 참여친구 수정 시트
     @State private var isShowingFriendsSheet: Bool = false
+    /// 수정사항 저장 시트
+    @State private var isShowingSaveAlert: Bool = false
+    /// 수정 취소 시트
+    @State private var isShowingCancelAlert: Bool = false
 
     /// 지각비 선택
     private let availableValues = [0, 100, 200, 300, 400, 500, 1000, 1500, 2000, 2500, 3000, 3500, 4000, 4500, 5000]
@@ -128,12 +132,10 @@ struct PromiseEditView: View {
         } // navigationStack
         .navigationBarItems(
             leading: Button("취소") {
-                dismiss()
+                isShowingCancelAlert = true
             },
             trailing: Button("저장") {
-                updatePromise() // 데이터 수정함수 호출
-                dismiss()
-                navigationBackToHome = true // 홈메인뷰 이동
+                isShowingSaveAlert = true
             }
         )
         // MARK: - 수정 시트 뷰
@@ -169,6 +171,29 @@ struct PromiseEditView: View {
         }
         .sheet(isPresented: $isShowingFriendsSheet) {
             FriendsListView(isShowingSheet: $isShowingFriendsSheet, selectedFriends: $editSelectedFriends)
+        }
+        .alert(isPresented: $isShowingSaveAlert) {
+            Alert(
+                title: Text("약속을 수정합니다."),
+                primaryButton: .destructive(Text("취소"), action: {
+//                    dismiss()
+                }),
+                secondaryButton: .default(Text("확인"), action: {
+                    updatePromise() // 데이터 수정함수 호출
+                    dismiss()
+                    navigationBackToHome = true // 홈메인뷰 이동
+                })
+            )
+        }
+        .alert(isPresented: $isShowingCancelAlert) {
+            Alert(
+                title: Text("수정을 취소합니다."),
+                primaryButton: .destructive(Text("취소"), action: {
+                }),
+                secondaryButton: .default(Text("확인"), action: {
+                    dismiss()
+                })
+            )
         }
         // MARK: - onAppear
         .onAppear {
@@ -219,6 +244,7 @@ struct PromiseEditView: View {
                 case .promiseTitle:
                     TextField("약속 이름을 수정해주세요", text: $editedPromiseTitle)
                         .fontWeight(.semibold)
+                        .autocorrectionDisabled()
                         .onChange(of: editedPromiseTitle) {
                             if editedPromiseTitle.count > 15 { editedPromiseTitle = String(editedPromiseTitle.prefix(15)) }
                         }

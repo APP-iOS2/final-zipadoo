@@ -11,7 +11,7 @@ import SwiftUI
 struct EditProfileView: View {
     // 유효성검사위해 뷰 선언
     private let loginEmailCheckView = LoginEmailCheckView()
-    //@ObservedObject var viewModel = EditProfileViewModel()
+    // @ObservedObject var viewModel = EditProfileViewModel()
 
     @ObservedObject var userStore: UserStore = UserStore()
     @Environment (\.dismiss) private var dismiss
@@ -125,6 +125,7 @@ struct EditProfileView: View {
             Text(title)
             TextField("", text: text)
                 .textFieldStyle(.roundedBorder)
+                .autocorrectionDisabled()
         }
     }
 }

@@ -63,7 +63,7 @@ struct PromiseDetailView: View {
                     VStack {
                         RoundedRectangle(cornerRadius: 20.0)
                             .colorInvert()
-                            .shadow(radius: 5.0)
+                            .shadow(radius: 10.0)
                             .overlay {
                                 ScrollView {
                                     VStack(alignment: .leading) {
@@ -133,11 +133,11 @@ struct PromiseDetailView: View {
                 try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
             }
         }
-        .refreshable {
-            Task {
-                try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
-            }
-        }
+//        .refreshable {
+//            Task {
+//                try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
+//            }
+//        }
         .sheet(isPresented: $isShowingEditSheet,
                content: { PromiseEditView(promise: .constant(promise), navigationBackToHome: $isNavigateBackToHome)
         })

@@ -40,6 +40,7 @@ struct OneAddLocation: View {
                                     .textFieldStyle(.roundedBorder)
                                     .padding(.horizontal)
                                     .frame(height: 30)
+                                    .autocorrectionDisabled()
                             // MARK: - 화면을 클릭해서 장소를 선택한 값이 false라면 "약속 장소를 선택해 주세요" 텍스트를 표시함
                             } else {
                                 Text("약속 장소를 클릭해 주세요")
