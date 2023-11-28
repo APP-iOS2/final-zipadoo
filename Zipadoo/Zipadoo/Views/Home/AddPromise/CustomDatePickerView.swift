@@ -46,6 +46,35 @@ struct CustomDatePicker: View {
     } // body
 } // struct
 
-//#Preview {
-//    CustomDatePicker()
-//}
+struct EditDatePickerView: View {
+    @Binding var date: Date
+    @Binding var showPicker: Bool
+    @Binding var promise: Promise
+    
+    /// 최소 설정 시간
+    let minLimitTime = Calendar.current.date(byAdding: .minute, value: 30, to: Date()) ?? Date()
+    
+    var body: some View {
+        ZStack {
+            DatePicker("현재시간으로 부터 30분 뒤부터 선택 가능", selection: $date, in: minLimitTime..., displayedComponents: [.date, .hourAndMinute])
+                .datePickerStyle(.graphical)
+                .labelsHidden()
+                .onAppear {
+                    date = Date(timeIntervalSince1970: promise.promiseDate)
+                }
+            
+            // 닫는 버튼
+            Button {
+                withAnimation {
+                    showPicker.toggle()
+                }
+            } label: {
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundColor(.primary)
+            }
+            .padding(10)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+        }
+        .opacity(showPicker ? 1 : 0)
+    }
+}

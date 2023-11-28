@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SlidingTabView
 
 struct FriendsView: View {
     
@@ -25,11 +24,13 @@ struct FriendsView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                // MARK: - 변경 SlidingTab
-                SlidingTabView(selection: $tabIndex, tabs:
-                                ["친구 목록", "요청 목록"], animation: .easeInOut,
-                               activeAccentColor: .zipadoo, inactiveAccentColor: .zipadoo, selectionBarColor: .
-                               zipadoo)
+                SlidingTabView(
+                    selection: $tabIndex,
+                    tabs: ["친구 목록", "요청 목록"],
+                    activeAccentColor: .zipadoo,
+                    inactiveAccentColor: .zipadoo,
+                    selectionBarColor: .zipadoo
+                )
                 
                 Spacer()
                 

@@ -140,7 +140,7 @@ struct PromiseEditView: View {
         )
         // MARK: - 수정 시트 뷰
         .sheet(isPresented: $isShowingDatePicker) {
-            CustomDatePicker(promiseViewModel: promiseViewModel, date: $editedPromiseDate, showPicker: $isShowingDatePicker)
+            EditDatePickerView(date: $editedPromiseDate, showPicker: $isShowingDatePicker, promise: $promise)
                 .presentationDetents([.fraction(0.7)])
         }
         .sheet(isPresented: $isShowingEditMapSheet) { // coordXXX, coordYYY
