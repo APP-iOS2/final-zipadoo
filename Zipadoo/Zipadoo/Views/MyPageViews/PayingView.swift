@@ -4,7 +4,7 @@
 //
 //  Created by 이재승 on 2023/09/21.
 //
-
+/*
 import SwiftUI
 
 struct PayingView: View {
@@ -39,3 +39,4 @@ struct PayingView: View {
         PayingView()
     }
 }
+*/
