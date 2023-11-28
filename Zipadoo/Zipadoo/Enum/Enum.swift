@@ -7,11 +7,6 @@
 
 import Foundation
 
-/// 로그인 TextField 타입
-enum LoginTextFieldType {
-    case textfield
-    case secure
-}
 /// 도착 타입 열거형
 enum ArrivalType: String {
     case early = "일찍"

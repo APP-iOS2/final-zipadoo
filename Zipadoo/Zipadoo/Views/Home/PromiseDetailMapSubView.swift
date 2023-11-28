@@ -15,22 +15,22 @@ struct PromiseDetailMapSubView: View {
     // 위치 정보 관리를 위한 ObservedObject
     @ObservedObject var locationStore: LocationStore
     
-    // 맵뷰의 카메라 위치를 제어하는 Binding
+    /// 맵뷰의 카메라 위치를 제어하는 Binding
     @Binding var region: MapCameraPosition
     
-    // 목적지 좌표
+    /// 목적지 좌표
     let destinationCoordinate: CLLocationCoordinate2D
     
-    // 약속 정보
+    /// 약속 정보
     var promise: Promise
     
-    // 친구 현황 시트를 보여주는 Binding
+    /// 친구 현황 시트를 보여주는 Binding
     @Binding var isShowingFriendSheet: Bool
     
-    // 프로그레스 바 갱신을 제어하는 State 변수
+    /// 프로그레스 바 갱신을 제어하는 State 변수
     @State private var progressTrigger: Bool = false
     
-    // 현재 표시되는 높이를 제어하는 Binding
+    /// 현재 표시되는 높이를 제어하는 Binding
     @Binding var detents: PresentationDetent
     
     var body: some View {
@@ -43,17 +43,7 @@ struct PromiseDetailMapSubView: View {
                 PromiseDetailProgressBarView(locationStore: locationStore, isShowingFriendSheet: $isShowingFriendSheet, region: $region, destinationCoordinate: destinationCoordinate, promise: promise, progressTrigger: $progressTrigger, detents: $detents)
             }
             .scrollIndicators(.hidden)
-        }
-        .toolbar(content: {
-            // 상단 툴바에 닫기 버튼 추가
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    isShowingFriendSheet = false
-                } label: {
-                    Image(systemName: "x.square")
-                }
-            }
-        })
+        } // VStack
         .padding()
         .onDisappear {
             // 뷰가 사라질 때 프로그레스 바 갱신 및 높이 초기화
