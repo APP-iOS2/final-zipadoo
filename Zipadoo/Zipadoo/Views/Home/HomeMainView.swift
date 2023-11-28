@@ -97,7 +97,7 @@ struct HomeMainView: View {
                         NavigationLink {
                             PromiseDetailView(promise: promise.fetchPromiseData[index])
                         } label: {
-                            PromiseListCell(promise: promise.fetchPromiseData[index], color: .color4, isTracking: false)
+                            PromiseListCell(promise: promise.fetchPromiseData[index], color: .mochaInvert, isTracking: false)
                             .overlay {
                                 Rectangle()
                                     .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )

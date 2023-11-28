@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import WidgetKit
 
 struct MyPageView: View {
     // 지난 약속을 위한 프로퍼티 래퍼
@@ -171,80 +170,80 @@ struct MyPageView: View {
                         }
                         .padding(.bottom, 15)
                         
-                        // MARK: - 감자 , 캐시
-                        Group {
-                            HStack {
-                                Image("potato")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 23, height: 20)
-                                
-                                Text("감자")
-                                    .foregroundColor(.secondary)
-                                
-                                Spacer()
-                                
-                                Text("\(currentUser?.potato ?? 0)")
-                                    .fontWeight(.semibold)
-                                
-                                Text("감자")
-                            }
-                            .padding(.bottom, 5)
-                            
-                            HStack {
-                                Text("₩")
-                                    .fontWeight(.regular)
-                                    .padding(3)
-                                    .overlay {
-                                        Circle()
-                                            .stroke(Color.primary, lineWidth: 1)
-                                    }
-                                    .frame(width: 23, height: 20)
-                                
-                                Text("캐시")
-                                    .foregroundColor(.secondary)
-                                
-                                Spacer()
-                                
-                                Text("0")
-                                    .fontWeight(.semibold)
-                                
-                                Text("원")
-                                
-                            }
-                        }
-                        .font(.headline)
+                        // MARK: - 감자, 캐시 (추후 업데이트 하기)
+//                        Group {
+//                            HStack {
+//                                Image("potato")
+//                                    .resizable()
+//                                    .aspectRatio(contentMode: .fill)
+//                                    .frame(width: 23, height: 20)
+//                                
+//                                Text("감자")
+//                                    .foregroundColor(.secondary)
+//                                
+//                                Spacer()
+//                                
+//                                Text("\(currentUser?.potato ?? 0)")
+//                                    .fontWeight(.semibold)
+//                                
+//                                Text("감자")
+//                            }
+//                            .padding(.bottom, 5)
+//                            
+//                            HStack {
+//                                Text("₩")
+//                                    .fontWeight(.regular)
+//                                    .padding(3)
+//                                    .overlay {
+//                                        Circle()
+//                                            .stroke(Color.primary, lineWidth: 1)
+//                                    }
+//                                    .frame(width: 23, height: 20)
+//                                
+//                                Text("캐시")
+//                                    .foregroundColor(.secondary)
+//                                
+//                                Spacer()
+//                                
+//                                Text("0")
+//                                    .fontWeight(.semibold)
+//                                
+//                                Text("원")
+//                                
+//                            }
+//                        }
+//                        .font(.headline)
                         
                         // MARK: - 감자 이용내열, 충전버튼
-                        Divider()
-                            .padding(.vertical, 15)
+//                        Divider()
+//                            .padding(.vertical, 15)
                         
-                        HStack {
-                            NavigationLink {
-                                MyPotatoView()
-                            } label: {
-                                HStack {
-                                    Text("감자 이용내역")
-                                    Image(systemName: "chevron.right")
-                                        .fontWeight(.light)
-                                }
-                            }
-                            Spacer()
-                            
-                            Button {
-                                isShownFullScreenCover = true
-                            } label: {
-                                Image(systemName: "creditcard")
-                                Text("충전")
-                                    .fontWeight(.semibold)
-                            }
-                        }
-                        .foregroundColor(.primary)
-                        .font(.headline)
+//                        HStack {
+//                            NavigationLink {
+//                                MyPotatoView()
+//                            } label: {
+//                                HStack {
+//                                    Text("감자 이용내역")
+//                                    Image(systemName: "chevron.right")
+//                                        .fontWeight(.light)
+//                                }
+//                            }
+//                            Spacer()
+//                            
+//                            Button {
+//                                isShownFullScreenCover = true
+//                            } label: {
+//                                Image(systemName: "creditcard")
+//                                Text("충전")
+//                                    .fontWeight(.semibold)
+//                            }
+//                        }
+//                        .foregroundColor(.primary)
+//                        .font(.headline)
                         // MARK: - TossPay 뷰
-                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                            TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
-                        }) // 감자코인
+//                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+//                            TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
+//                        }) // 감자코인
                         
                     }
                     .padding(20)
@@ -257,69 +256,70 @@ struct MyPageView: View {
                         }
                         
                     )
+                    .padding(.bottom)
                     
-                    // MARK: - 지각 깊이
-                    VStack(alignment: .leading) {
-                        Text("지각 깊이")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                        
-                        HStack(alignment: .center) {
-                            Text(crustDepth)
-                            Spacer()
-                            Text("  \(tradyMessage)")
-                        }
-                        .foregroundStyle(.secondary)
-                        .padding(.top, 1)
-                        
-                        VStack {
-                            Image(crustBackgroundImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.white, lineWidth: 5))
-                        }
-                        .overlay(alignment: .topTrailing) {
-                            // MARK: - 약속 데이터 vytl
-                            HStack {
-                                VStack {
-                                    Text("지각률 \(tradyPercent)%")
-                                        .font(.headline)
-                                        .fontWeight(.semibold)
-                                        .foregroundColor(.red)
-                                    
-                                    Text("지각횟수 \(tradyCount)회")
-                                        .font(.subheadline)
-                                        .foregroundColor(.black)
-                                    
-                                }
-                            }
-                            .padding(3)
-                            .background(.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .shadow(radius: 1.2)
-                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 15))
-                        }
-                        // MARK: - 두더지 이미지
-                        .overlay(alignment: .leading) {
-                            Image(dooAction)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 100)
-                                .padding(.leading, 20)
-                        }
-                    }
-                    .padding(20)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .foregroundColor(.primary)
-                            .opacity(0.05)
-                            .shadow(color: .primary, radius: 10, x: 5, y: 5)
-                        
-                    )
-                    .padding(.vertical, 15)
+                    // MARK: - 지각 깊이 (추후 업데이트 하기)
+//                    VStack(alignment: .leading) {
+//                        Text("지각 깊이")
+//                            .font(.title3)
+//                            .fontWeight(.semibold)
+//                        
+//                        HStack(alignment: .center) {
+//                            Text(crustDepth)
+//                            Spacer()
+//                            Text("  \(tradyMessage)")
+//                        }
+//                        .foregroundStyle(.secondary)
+//                        .padding(.top, 1)
+//                        
+//                        VStack {
+//                            Image(crustBackgroundImage)
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fill)
+//                                .clipShape(RoundedRectangle(cornerRadius: 10))
+//                                .overlay(
+//                                    RoundedRectangle(cornerRadius: 10)
+//                                        .stroke(Color.white, lineWidth: 5))
+//                        }
+//                        .overlay(alignment: .topTrailing) {
+//                            // MARK: - 약속 데이터 vytl
+//                            HStack {
+//                                VStack {
+//                                    Text("지각률 \(tradyPercent)%")
+//                                        .font(.headline)
+//                                        .fontWeight(.semibold)
+//                                        .foregroundColor(.red)
+//                                    
+//                                    Text("지각횟수 \(tradyCount)회")
+//                                        .font(.subheadline)
+//                                        .foregroundColor(.black)
+//                                    
+//                                }
+//                            }
+//                            .padding(3)
+//                            .background(.white)
+//                            .clipShape(RoundedRectangle(cornerRadius: 10))
+//                            .shadow(radius: 1.2)
+//                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 15))
+//                        }
+//                        // MARK: - 두더지 이미지
+//                        .overlay(alignment: .leading) {
+//                            Image(dooAction)
+//                                .resizable()
+//                                .aspectRatio(contentMode: .fit)
+//                                .frame(width: 100)
+//                                .padding(.leading, 20)
+//                        }
+//                    }
+//                    .padding(20)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 10)
+//                            .foregroundColor(.primary)
+//                            .opacity(0.05)
+//                            .shadow(color: .primary, radius: 10, x: 5, y: 5)
+//                        
+//                    )
+//                    .padding(.vertical, 15)
                     
                     // MARK: - 지난 약속
                     VStack {
@@ -354,7 +354,7 @@ struct MyPageView: View {
                     /*
                     .padding(.vertical, 15)
                     
-                    // MARK: - 획득 배지(추후 업데이트 하기)
+                    // MARK: - 획득 배지 (추후 업데이트 하기)
                     VStack {
                         HStack {
                             Text("획득 배지")

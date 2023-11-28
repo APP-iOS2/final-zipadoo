@@ -27,7 +27,7 @@ struct EditProfileView: View {
     @State private var nicknameMessageColor: Color = .black
     /// 조건에 맞으면 true, 다음페이지로 넘어가기
     @State private var readyToNavigate: Bool = false
-    
+   
     @ObservedObject var userStore: UserStore = UserStore()
     @Environment (\.dismiss) private var dismiss
     
@@ -164,6 +164,7 @@ struct EditProfileView: View {
             Text(title)
             TextField("", text: text)
                 .textFieldStyle(.roundedBorder)
+                .autocorrectionDisabled()
         }
     }
     

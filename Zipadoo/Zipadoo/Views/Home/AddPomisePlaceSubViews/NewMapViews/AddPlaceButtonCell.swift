@@ -26,7 +26,7 @@ struct AddPlaceButtonCell: View {
         if isClickedPlace == true {
             ZStack {
                 RoundedRectangle(cornerRadius: 10)
-                    .foregroundStyle(.white)
+                    .foregroundStyle(.primaryInvert)
                     .frame(width: 350, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
                     .shadow(radius: 15)
                     .overlay {
@@ -56,6 +56,7 @@ struct AddPlaceButtonCell: View {
                                 
                                 Text(destination)
                                     .font(.title3)
+                                    .foregroundStyle(.primary)
                                     .padding(.top)
                                     .padding(.horizontal)
                                 
