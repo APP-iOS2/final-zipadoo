@@ -198,13 +198,16 @@ struct PromiseDetailMapView: View {
             // 5초마다 반복, onAppear가 있어야 전역에서 사라지지 않고 실행됨
             let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
                 print("나는 맵에서 만들어짐! ! 5초 지남")
-                if locationStore.myLocation.arriveTime == 0 { // 아직 도착하지 않았으면
-                    // 한번만 실행되고 그 뒤에는 실행되면 안됨, 그런데 5초 루프문에 넣어야지 백그라운드에서 실행가능
+                
+                if locationStore.myLocation.arriveTime == 0 {
+                    // 도착하지 않았을 때만 도착확인
                     isArrived = didYouArrive(currentCoordinate:
                                                 CLLocation( latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0,
                                                             longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0),
                                              arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effectiveDistance: arrivalCheckRadius)
                     
+                    // 도착했다면 파베에 업데이트 및 locationStore.myLocation정보갱신
+                    // 도착하지 않았다면 위치 업데이트
                     if isArrived == true {
                         locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
                         let rank = locationStore.calculateRank()
@@ -212,8 +215,8 @@ struct PromiseDetailMapView: View {
                         // 도착 알림 실행
                         alertStore.arrivalMsgAlert = ArrivalMsgModel(name: AuthStore.shared.currentUser?.nickName ?? "이름없음", profileImgString: AuthStore.shared.currentUser?.profileImageString ?? "doo1", rank: rank, arrivarDifference: promise.promiseDate - locationStore.myLocation.arriveTime, potato: 0)
                         alertStore.isPresentedArrival.toggle()
+                        
                     } else {
-                        // 위치 업데이트
                         locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
                     }
                 }
