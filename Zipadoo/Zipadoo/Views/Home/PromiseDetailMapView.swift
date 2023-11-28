@@ -14,8 +14,7 @@ struct PromiseDetailMapView: View {
     // 위치 및 GPS 정보 저장용 객체
     @StateObject private var locationStore = LocationStore()
     @StateObject private var gpsStore = GPSStore()
-    
-    /// 맵뷰 카메라 세팅
+    @EnvironmentObject var alertStore: AlertStore    /// 맵뷰 카메라 세팅
     @State private var region: MapCameraPosition = .userLocation(fallback: .automatic)
     
     /// 현황 뷰 띄우기
@@ -195,6 +194,53 @@ struct PromiseDetailMapView: View {
                 print("파이어베이스 에러")
             }
         }
+        .onAppear {
+            // 5초마다 반복, onAppear가 있어야 전역에서 사라지지 않고 실행됨
+            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
+                print("나는 맵에서 만들어짐! ! 5초 지남")
+                if locationStore.myLocation.arriveTime == 0 { // 아직 도착하지 않았으면
+                    // 한번만 실행되고 그 뒤에는 실행되면 안됨, 그런데 5초 루프문에 넣어야지 백그라운드에서 실행가능
+                    isArrived = didYouArrive(currentCoordinate:
+                                                CLLocation( latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0,
+                                                            longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0),
+                                             arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effectiveDistance: arrivalCheckRadius)
+                    
+                    if isArrived == true {
+                        locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
+                        let rank = locationStore.calculateRank()
+                        locationStore.updateArriveTime(locationId: locationStore.myLocation.id, arriveTime: locationStore.myLocation.arriveTime, rank: rank)
+                        // 도착 알림 실행
+                        alertStore.arrivalMsgAlert = ArrivalMsgModel(name: AuthStore.shared.currentUser?.nickName ?? "이름없음", profileImgString: AuthStore.shared.currentUser?.profileImageString ?? "doo1", rank: rank, arrivarDifference: promise.promiseDate - locationStore.myLocation.arriveTime, potato: 0)
+                        alertStore.isPresentedArrival.toggle()
+                    } else {
+                        // 위치 업데이트
+                        locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+                    }
+                }
+            }
+            RunLoop.current.add(timer, forMode: .default)
+            
+            print("promise 데이터 확인 : \(promise)")
+            locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+            Task {
+                do {
+                    try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
+                } catch {
+                    print("파이어베이스 에러")
+                }
+            }
+        }
+        .onReceive(timer, perform: { _ in
+            print("5초 지남")
+            // 유저들 위치 패치
+            Task {
+                do {
+                    try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
+                } catch {
+                    print("파이어베이스 에러")
+                }
+            }
+        })
         .onChange(of: isShowingRoute) {
             // 길 안내 토글 상태 변화 감지
             if isShowingRoute {
@@ -257,4 +303,3 @@ struct PromiseDetailMapView: View {
     PromiseDetailMapView(promise: Promise(id: "", makingUserID: "", promiseTitle: "사당역 모여라", promiseDate: 1697694660, destination: "", address: "", latitude: 37.47694972793077, longitude: 126.98195644152227, participantIdArray: [], checkDoublePromise: false, locationIdArray: [], penalty: 10))
         .environmentObject(AlertStore())
 }
-
