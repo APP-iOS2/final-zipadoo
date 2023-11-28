@@ -78,18 +78,21 @@ struct PromiseDetailMapView: View {
                     ForEach(locationStore.locationParticipantDatas.filter {
                         $0.location.participantId != AuthStore.shared.currentUser?.id ?? ""
                     }) { annotation in
-                        Annotation(annotation.nickname, coordinate: annotation.location.currentCoordinate, anchor: .center) {
-                            // 누르면 다시 가운데으로 세팅
-                            Button {
-                                region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
-                            } label: {
-                                Image(annotation.moleImageString)
-                                    .resizable()
-                                    .frame(width: 25, height: 25) // 크기 조절
-                                    .aspectRatio(contentMode: .fill)
-                                    .overlay(
-                                        Circle().stroke(Color.white, lineWidth: 2))
-                                    .shadow(radius: 10)
+                        // 위치정보가 있는 참여자들의 annotation만 지도에 띄우기
+                        if annotation.location.currentLatitude > 0 && annotation.location.currentLongitude > 0 {
+                            Annotation(annotation.nickname, coordinate: annotation.location.currentCoordinate, anchor: .center) {
+                                // 누르면 다시 가운데으로 세팅
+                                Button {
+                                    region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                                } label: {
+                                    Image(annotation.moleImageString)
+                                        .resizable()
+                                        .frame(width: 25, height: 25) // 크기 조절
+                                        .aspectRatio(contentMode: .fill)
+                                        .overlay(
+                                            Circle().stroke(Color.white, lineWidth: 2))
+                                        .shadow(radius: 10)
+                                }
                             }
                         }
                     }

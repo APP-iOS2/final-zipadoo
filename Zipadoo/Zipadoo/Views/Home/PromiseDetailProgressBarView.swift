@@ -198,7 +198,7 @@ struct PromiseDetailProgressBarView: View {
                         .foregroundColor(.primary)
                         .padding(.bottom)
                         .font(.footnote)
-                    }
+                    }.disabled(friend.location.currentLatitude == 0 && friend.location.currentLongitude == 0) // 위치정보가 없으면 버튼 활성화
                 }
             }
             .padding(.vertical)
