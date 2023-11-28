@@ -9,10 +9,6 @@ import MessageUI
 import SwiftUI
 
 struct SettingView: View {
-    /// 알림설정 토글
-    @State private var isOnAlarm: Bool = true
-    /// 위치공개 토글
-    @State private var isOnGPS: Bool = true
     /// 로그아웃 알람창
     @State private var isLogoutAlert: Bool = false
     /// 앱버전 문구(Project -> General -> Version에서 확인)
@@ -20,16 +16,10 @@ struct SettingView: View {
     
     var body: some View {
         Form {
-            // 삭제?
-            Section {
-                Toggle("알림 설정", isOn: $isOnAlarm)
-                Toggle("위치 공개", isOn: $isOnGPS)
-            }
-            
             // MARK: - 정보 수정
             Section {
                 NavigationLink {
-                    EditProfileView()
+                    EditProfileView(emailLoginStore: EmailLoginStore())
                 } label: {
                     Text("회원정보 수정")
                 }
