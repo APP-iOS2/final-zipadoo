@@ -186,6 +186,7 @@ struct PromiseDetailProgressBarView: View {
  
                                 if friend.location.rank > 0 {
                                     Text(promiseFinishCheck ? "지각" : "도착")
+                                        .foregroundColor(promiseFinishCheck ? .red : .green)
                                 } else {
                                     // 남은 거리
                                     let distance = calculateDistanceInMeters(x1: friend.location.currentLatitude, y1: friend.location.currentLongitude, x2: promise.latitude, y2: promise.longitude)
