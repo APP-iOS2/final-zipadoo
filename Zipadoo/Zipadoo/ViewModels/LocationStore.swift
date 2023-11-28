@@ -103,6 +103,7 @@ class LocationStore: ObservableObject {
                     // 사용자의 Locationd일때
                     if locationData.participantId == myid {
                         myLocation.id = locationData.id
+                        myLocation = locationData
                         myLocationAndParticipant = [LocationAndParticipant(location: locationData, nickname: userData?.nickName ?? " - ", imageString: userData?.profileImageString ?? " - ", moleImageString: userData?.moleImageString ?? " - ")]
                     } else {
                         // 먼저 자기자신 제외하고 저장 후 이후 나의 정보와 합치기

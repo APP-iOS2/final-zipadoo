@@ -198,8 +198,9 @@ struct PromiseDetailMapView: View {
             }
         }
         .onAppear {
+            
             // 5초마다 반복, onAppear가 있어야 전역에서 사라지지 않고 실행됨
-            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { _ in
+            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: locationStore.myLocation.arriveTime == 0 ) { _ in
                 print("나는 맵에서 만들어짐! ! 5초 지남")
                 
                 if locationStore.myLocation.arriveTime == 0 {
@@ -225,16 +226,6 @@ struct PromiseDetailMapView: View {
                 }
             }
             RunLoop.current.add(timer, forMode: .default)
-            
-            print("promise 데이터 확인 : \(promise)")
-            locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
-            Task {
-                do {
-                    try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
-                } catch {
-                    print("파이어베이스 에러")
-                }
-            }
         }
         .onReceive(timer, perform: { _ in
             print("5초 지남")
