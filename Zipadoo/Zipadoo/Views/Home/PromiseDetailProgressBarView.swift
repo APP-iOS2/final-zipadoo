@@ -193,7 +193,7 @@ struct PromiseDetailProgressBarView: View {
                                     Text("\(formatDistance(distance))")
                                 }
                             } else {
-                                Text("정보없음")
+                                Text("")
                             }
                         }
                         .foregroundColor(.primary)
