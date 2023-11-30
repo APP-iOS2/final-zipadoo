@@ -11,10 +11,12 @@ import CoreLocation
 
 // MARK: - 친구와 자신의 현황을 표시하는 맵 뷰
 struct PromiseDetailMapView: View {
+    @Environment(\.dismiss) private var dismiss
     // 위치 및 GPS 정보 저장용 객체
     @StateObject private var locationStore = LocationStore()
     @StateObject private var gpsStore = GPSStore()
-    @EnvironmentObject var alertStore: AlertStore    /// 맵뷰 카메라 세팅
+    @EnvironmentObject var alertStore: AlertStore   
+    /// 맵뷰 카메라 세팅
     @State private var region: MapCameraPosition = .userLocation(fallback: .automatic)
     
     /// 현황 뷰 띄우기
@@ -48,6 +50,8 @@ struct PromiseDetailMapView: View {
     
     /// 프레젠테이션 디텐트 설정
     @State private var detents: PresentationDetent = .medium
+    
+    @State var timeType: TimeType = .early
     
     var body: some View {
         NavigationStack {
@@ -198,34 +202,59 @@ struct PromiseDetailMapView: View {
             }
         }
         .onAppear {
+            let promiseDate = Date(timeIntervalSince1970: promise.promiseDate)
+            // 약속시간에서 3시간 후 시간
+            let afterThreeHourTime = Calendar.current.date(byAdding: .hour, value: 3, to: promiseDate) ?? promiseDate
             
-            // 5초마다 반복, onAppear가 있어야 전역에서 사라지지 않고 실행됨
-            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: locationStore.myLocation.arriveTime == 0 ) { _ in
-                print("나는 맵에서 만들어짐! ! 5초 지남")
+            // 1초마다는 시간 계산(추적종료시 timer종료, 약속수와 지각수 계산해야함)
+            // 5초마다 위치업데이트, onAppear가 있어야 전역에서 사라지지 않고 실행됨
+            var updateTimer = 0
+            
+            var timer: Timer?
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: locationStore.myLocation.arriveTime == 0 || timeType == .endTracking) { _ in
+                print("나는 맵에서 만들어짐! ! 1초 지남")
                 
-                if locationStore.myLocation.arriveTime == 0 {
-                    // 도착하지 않았을 때만 도착확인
-                    isArrived = didYouArrive(currentCoordinate:
-                                                CLLocation( latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0,
-                                                            longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0),
-                                             arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effectiveDistance: arrivalCheckRadius)
+                // 추적 종료된 약속인지 계산 -> 추적이 종료되면 지각횟수와 약속수 갱신 & 타이머 종료 & 뷰에서 나가는 알람
+                timeType = classifyTime(promiseDate: promiseDate, afterThreeHourTime: afterThreeHourTime)
+                // 추적이 종료됐다면 timer반복문 탈출
+                if timeType == .endTracking {
+                    print("endTracking")
+                    // 타이머 종료
+                    timer?.invalidate()
+                    timer = nil
+                    // 지각횟수, 약속수 갱신
                     
-                    // 도착했다면 파베에 업데이트 및 locationStore.myLocation정보갱신
-                    // 도착하지 않았다면 위치 업데이트
-                    if isArrived == true {
-                        locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
-                        let rank = locationStore.calculateRank()
-                        locationStore.updateArriveTime(locationId: locationStore.myLocation.id, arriveTime: locationStore.myLocation.arriveTime, rank: rank)
-                        // 도착 알림 실행
-                        alertStore.arrivalMsgAlert = ArrivalMsgModel(name: AuthStore.shared.currentUser?.nickName ?? "이름없음", profileImgString: AuthStore.shared.currentUser?.profileImageString ?? "doo1", rank: rank, arrivarDifference: promise.promiseDate - locationStore.myLocation.arriveTime, potato: 0)
-                        alertStore.isPresentedArrival.toggle()
+                    // 뷰탈출
+                    dismiss()
+                } else {
+                    updateTimer += 1
+                    if updateTimer % 5 == 0 && locationStore.myLocation.arriveTime == 0 {
+                        updateTimer = 0 // 다시 초기화
                         
-                    } else {
-                        locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+                        print("나는 맵에서 만들어짐! ! 5초 지남")
+                        // 도착하지 않았을 때만 도착확인
+                        isArrived = didYouArrive(currentCoordinate:
+                                                    CLLocation( latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0,
+                                                                longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0),
+                                                 arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effectiveDistance: arrivalCheckRadius)
+                        
+                        // 도착했다면 파베에 업데이트 및 locationStore.myLocation정보갱신
+                        // 도착하지 않았다면 위치 업데이트
+                        if isArrived == true {
+                            locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
+                            let rank = locationStore.calculateRank()
+                            locationStore.updateArriveTime(locationId: locationStore.myLocation.id, arriveTime: locationStore.myLocation.arriveTime, rank: rank)
+                            // 도착 알림 실행
+                            alertStore.arrivalMsgAlert = ArrivalMsgModel(name: AuthStore.shared.currentUser?.nickName ?? "이름없음", profileImgString: AuthStore.shared.currentUser?.profileImageString ?? "doo1", rank: rank, arrivarDifference: promise.promiseDate - locationStore.myLocation.arriveTime, potato: 0)
+                            alertStore.isPresentedArrival.toggle()
+                            
+                        } else {
+                            locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+                        }
                     }
                 }
             }
-            RunLoop.current.add(timer, forMode: .default)
+            RunLoop.current.add(timer ?? Timer(), forMode: .default)
         }
         .onReceive(timer, perform: { _ in
             print("5초 지남")

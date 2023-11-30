@@ -64,6 +64,7 @@ struct PromiseTitleAndTimeView: View {
         }
         .onReceive(timer) { _ in
             // 1초마다 남은 시간 갱신
+            print("remainingTime계속 진행중")
             RemainingTime = calculateTimeRemaining(targetTime: promise.promiseDate)
         }
     }
