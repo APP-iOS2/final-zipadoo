@@ -21,6 +21,7 @@ class PromiseViewModel: ObservableObject {
     @Published var fetchTrackingPromiseData: [Promise] = []
     /// 지난 약속 저장
     @Published var fetchPastPromiseData: [Promise] = []
+    
     // 저장될 변수
     @Published var id: String = ""
     @Published var promiseTitle: String = ""
@@ -29,6 +30,7 @@ class PromiseViewModel: ObservableObject {
     @Published var address = "" // 약속장소 주소
     @Published var coordXXX = 0.0 // 약속장소 위도
     @Published var coordYYY = 0.0 // 약속장소 경도
+    
     /// 장소에 대한 정보 값
     @Published var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
     /// 지각비 변수 및 상수 값
@@ -36,6 +38,18 @@ class PromiseViewModel: ObservableObject {
     
     /// 약속에 참여할 친구배열
     @Published var selectedFriends: [User] = []
+    
+    /// 페이지네이션 - 지난약속 아래 페이지 수(올림)
+    var pastPromisePage: Int {
+        var result = Int(ceil(Double(fetchPastPromiseData.count) / Double(10)))
+        // 페이지가 5보다 크다면 5페이지까지
+        if result > 5 {
+            result = 5
+        }
+        return result
+    }
+    /// 선택된 페이지네이션 숫자
+    @Published var selectedPage: Int = 1 // 디폴트 1
     
     private let dbRef = Firestore.firestore().collection("Promise")
     
@@ -177,6 +191,44 @@ class PromiseViewModel: ObservableObject {
     }
     
     // MARK: - 약속 수정 함수
+    func updatePromise(promise: Promise, editSelectedFriends: [User], editedPromiseTitle: String, editedPromiseDate: Date, editedDestination: String, editedAddress: String, destinationLatitude: Double, destinationLongitude: Double) {
+        /// 수정된 참여자 LocationIdArray다시 지정
+        var locationIdArray: [String] = []
+        
+        let promiseRef = dbRef.document(promise.id)
+        
+        let IdArray = [AuthStore.shared.currentUser?.id ?? " - no id - "] + editSelectedFriends.map { $0.id }
+        
+        for id in IdArray {
+            let friendLocation = Location(participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
+            
+            locationIdArray.append(friendLocation.id)
+            
+            LocationStore.addLocationData(location: friendLocation)
+        }
+        
+        let updatedData: [String: Any] = [
+            "promiseTitle": editedPromiseTitle,
+            "promiseDate": editedPromiseDate.timeIntervalSince1970,
+            "destination": editedDestination,
+            "address": editedAddress,
+            "latitude": destinationLatitude,
+            "longitude": destinationLongitude,
+            "participantIdArray": [AuthStore.shared.currentUser?.id ?? " - no id - "] + editSelectedFriends.map { $0.id },
+            "penalty": penalty,
+            "locationIdArray": locationIdArray
+        ]
+        
+        promiseRef.updateData(updatedData) { error in
+            if let error = error {
+                print("약속 수정 실패: \(error)")
+            } else {
+                print("약속이 성공적으로 수정되었습니다.")
+            }
+        }
+    }
+    
+    // MARK: - 약속 닫기
     // 나가기 버튼 구현을 위해 기존 함수 주석처리
     func exitPromise(_ promise: Promise, locationId: String) async throws {
         
