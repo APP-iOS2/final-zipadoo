@@ -35,10 +35,10 @@ struct PromiseDetailProgressBarView: View {
     
     /// 1초마다 갱신되는 타이머
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    
+    /*
     /// 약속 종료 여부를 감지하는 상태 변수
     @State private var promiseFinishCheck: Bool = false
-    
+    */
     var body: some View {
         VStack(alignment: .leading) {
             /*
@@ -183,10 +183,10 @@ struct PromiseDetailProgressBarView: View {
                             
                             // 현재위치 정보가 있으면
                             if friend.location.currentLatitude > 0 && friend.location.currentLongitude > 0 {
- 
+                                // 도착했으면
                                 if friend.location.rank > 0 {
-                                    Text(promiseFinishCheck ? "지각" : "도착")
-                                        .foregroundColor(promiseFinishCheck ? .red : .green)
+                                    Text(promiseFinishCheck(promiseDate: promise.promiseDate, arriveTime: locationStore.myLocation.arriveTime) ? "지각" : "도착")
+                                        .foregroundColor(promiseFinishCheck(promiseDate: promise.promiseDate, arriveTime: locationStore.myLocation.arriveTime) ? .red : .green)
                                 } else {
                                     // 남은 거리
                                     let distance = calculateDistanceInMeters(x1: friend.location.currentLatitude, y1: friend.location.currentLongitude, x2: promise.latitude, y2: promise.longitude)
@@ -205,11 +205,16 @@ struct PromiseDetailProgressBarView: View {
             .padding(.vertical)
         }
         .task {
+            /*
             promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
+             */
         }
         /// 매 초마다 약속이 종료되었는지 여부를 확인
         .onReceive(timer) { _ in
+            print("매초마다 약속이 종료되었는지 여부 확인")
+            /*
             promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
+             */
         }
         .overlay(
             RoundedRectangle(cornerRadius: 10)
@@ -218,7 +223,18 @@ struct PromiseDetailProgressBarView: View {
                 .shadow(color: .primary, radius: 10, x: 5, y: 5)
         )
     } // body
-
+    
+    /// 지각인지 아닌지 판단
+    func promiseFinishCheck(promiseDate: Double, arriveTime: Double) -> Bool {
+        let timeDiff = promiseDate - arriveTime
+        if timeDiff <= 0 && timeDiff > -60 {
+            return false
+        } else if timeDiff < 0 {
+            return true
+        } else {
+            return false
+        }
+    }
 }
 
 struct PromiseDetailProgressBarView_Previews: PreviewProvider {

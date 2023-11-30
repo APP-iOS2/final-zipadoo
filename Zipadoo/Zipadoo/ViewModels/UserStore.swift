@@ -102,4 +102,32 @@ final class UserStore: ObservableObject {
         guard let urlString = currentUser?.profileImageString else { return "" }
         return urlString
     }
+    
+    /// 유저 지각횟수, 약속 수 계산
+    static func updatePromiseTradyCount(promiseDate: Double, arriveTime: Double) async throws {
+        do {
+            print("updateTradyFunc")
+            var data = [String: Any]()
+            let userData = try await UserStore.fetchUser(userId: AuthStore.shared.currentUser?.id ?? "no id")
+            let timeDiff = promiseDate - arriveTime
+            var updateTradyCount = 0
+            if timeDiff <= 0 && timeDiff > -60 {
+                updateTradyCount = userData?.tradyCount ?? 0
+            } else if timeDiff < 0 {
+                updateTradyCount = (userData?.tradyCount ?? 0) + 1
+            } else {
+                updateTradyCount = userData?.tradyCount ?? 0
+            }
+            let updatePromiseCount = (userData?.promiseCount ?? 0) + 1
+            data["tardyCount"] = updateTradyCount
+            data["promiseCount"] = updatePromiseCount
+            
+            try await Firestore.firestore().collection("Users").document(AuthStore.shared.currentUser?.id ?? "no id").updateData(data)
+            
+            AuthStore.shared.currentUser?.tradyCount = updateTradyCount
+            AuthStore.shared.currentUser?.promiseCount = updatePromiseCount
+        } catch {
+            print("유저 지각횟수, 약속 수 업데이트 실패")
+        }
+    }
 }

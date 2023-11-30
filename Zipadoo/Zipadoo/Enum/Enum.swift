@@ -16,8 +16,7 @@ enum ArrivalType: String {
 
 /// 현재시간 기준으로 아직 지각이 아닌 시간대/ 지각인 시간대/ 3시간이 지나 약속추적이 종료됐는지
 enum TimeType {
-    case early
-    case late
+    case traking
     case endTracking
 }
 

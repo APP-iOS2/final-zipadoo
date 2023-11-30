@@ -74,15 +74,13 @@ extension View {
         .foregroundColor(Color.primary.opacity(0.4))
     }
     
-    /// 현재시간 기준으로 아직 지각이 아닌 시간대/ 지각인 시간대/ 3시간이 지나 약속추적이 종료됐는지 경우 판단
+    /// 현재시간 기준으로 추적중인지 추적중이 아닌지 판단
     func classifyTime(promiseDate: Date, afterThreeHourTime: Date) -> TimeType {
         // 현재 시간을 가져오기
         let currentTime = Date()
 
-        if Calendar.current.dateComponents([.second], from: currentTime, to: promiseDate).second ?? 0 > 0 {
-            return .early // 아직 지각 아닌 시간대
-        } else if Calendar.current.dateComponents([.second], from: currentTime, to: afterThreeHourTime).second ?? 0 > 0 {
-            return .late
+        if Calendar.current.dateComponents([.second], from: currentTime, to: afterThreeHourTime).second ?? 0 > 0 {
+            return .traking // 아직 지각 아닌 시간대
         } else {
             return .endTracking
         }

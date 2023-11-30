@@ -50,8 +50,8 @@ struct PromiseDetailMapView: View {
     
     /// 프레젠테이션 디텐트 설정
     @State private var detents: PresentationDetent = .medium
-    
-    @State var timeType: TimeType = .early
+    /// 추적중인지 추적중이 아닌지
+    @State var timeType: TimeType = .traking
     
     var body: some View {
         NavigationStack {
@@ -222,8 +222,15 @@ struct PromiseDetailMapView: View {
                     // 타이머 종료
                     timer?.invalidate()
                     timer = nil
-                    // 지각횟수, 약속수 갱신
-                    
+                    Task {
+                        // 지각횟수, 약속수 갱신
+                        do {
+                            print("updateTrady")
+                            try await UserStore.updatePromiseTradyCount(promiseDate: promise.promiseDate, arriveTime: locationStore.myLocation.arriveTime)
+                        } catch {
+                            print("updatePromiseTradyCount실패")
+                        }
+                    }
                     // 뷰탈출
                     dismiss()
                 } else {
