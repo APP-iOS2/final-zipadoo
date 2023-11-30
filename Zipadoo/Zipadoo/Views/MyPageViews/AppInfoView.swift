@@ -13,38 +13,37 @@ struct AppInfoView: View {
     
     var body: some View {
         VStack {
+            Spacer()
             // MARK: - 버전정보
-            HStack {
+            
+            VStack {
                 Image(.zipadoo)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 80, height: 80)
+                    .frame(width: 150, height: 150)
                     .cornerRadius(7)
                 
-                VStack(alignment: .leading, spacing: 5) {
+                VStack(alignment: .center, spacing: 5) {
                     Text("Zipadoo")
-                        .font(.title3)
+                        .font(.title2)
                         .bold()
                     
-                        Text("현재 \(appVersion)")
-                            .foregroundColor(.secondary)
+                    Text("현재 \(appVersion)")
+                        .foregroundColor(.secondary)
                 }
-                
-                Spacer()
-                
-                Button {
-                    // App Store이동 (이후 리팩토링)
-                    /*
-                     https://velog.io/@beomsoo0/App-Version-%EB%B9%84%EA%B5%90-%ED%9B%84-%EC%95%B1%EC%8A%A4%ED%86%A0%EC%96%B4-%EC%9D%B4%EB%8F%99-Alert-%EB%9D%84%EC%9A%B0%EA%B8%B0
-                     참고
-                     */
-                } label: {
-                    Text("업데이트")
-                }
-                .buttonStyle(.automatic)
+//                Button {
+//                    // App Store이동 (이후 리팩토링)
+//                    /*
+//                     https://velog.io/@beomsoo0/App-Version-%EB%B9%84%EA%B5%90-%ED%9B%84-%EC%95%B1%EC%8A%A4%ED%86%A0%EC%96%B4-%EC%9D%B4%EB%8F%99-Alert-%EB%9D%84%EC%9A%B0%EA%B8%B0
+//                     참고
+//                     */
+//                } label: {
+//                    Text("업데이트")
+//                }
+//                .buttonStyle(.automatic)
                 
             } // HStack
-            .padding(.bottom, 8)
+            .padding(.bottom, 130)
             
             // MARK: - 오픈소스 라이센스
             Button {
@@ -64,6 +63,26 @@ struct AppInfoView: View {
                 .padding(6)
             }
             .buttonStyle(.bordered)
+            .frame(width: 280)
+            .tint(.sand)
+            .padding(.bottom, 10)
+            
+            NavigationLink {
+                DeveloperProfileView()
+            } label: {
+                HStack {
+                    Text("개발자")
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.footnote)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.secondary)
+                }
+                .padding(6)
+            }
+            .buttonStyle(.bordered)
+            .frame(width: 280)
             .tint(.sand)
 
             Spacer()
