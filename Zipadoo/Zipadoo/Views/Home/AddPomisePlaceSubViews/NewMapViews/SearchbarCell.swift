@@ -44,6 +44,7 @@ struct SearchBarCell: View {
                 // 장소(키워드) 입력창
                 TextField(textFieldText, text: $searchText)
                     .textFieldStyle(.roundedBorder)
+                    .autocorrectionDisabled()
                 // Search 버튼
                 Button {
                     if searchText != "" { // searchText가 빈 값이 아닐 경우 searching값을 true로 지정
@@ -114,7 +115,7 @@ struct SearchBarCell: View {
                                         HStack {
                                             Text(result.place_name)
                                                 .font(.headline)
-                                                .foregroundColor(.black)
+                                                .foregroundColor(.primary)
                                             Text(result.category_group_name)
                                                 .font(.caption).bold()
                                                 .foregroundColor(.blue)
@@ -125,7 +126,7 @@ struct SearchBarCell: View {
                                         HStack {
                                             Text(result.road_address_name)
                                                 .font(.subheadline)
-                                                .foregroundColor(.black)
+                                                .foregroundColor(.primary)
                                             Spacer()
                                         }
                                     }
@@ -141,7 +142,7 @@ struct SearchBarCell: View {
                                             .scaledToFit()
                                             .frame(width: 30)
                                     }
-                                    .tint(.yellow)
+                                    .tint(.mocha)
                                     .fullScreenCover(item: $placeURL) { url in
                                         PlaceInfoWebView(urlString: url)
                                     }

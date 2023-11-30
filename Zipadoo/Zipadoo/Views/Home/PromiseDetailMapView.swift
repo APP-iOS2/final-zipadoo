@@ -14,8 +14,7 @@ struct PromiseDetailMapView: View {
     // 위치 및 GPS 정보 저장용 객체
     @StateObject private var locationStore = LocationStore()
     @StateObject private var gpsStore = GPSStore()
-    
-    /// 맵뷰 카메라 세팅
+    @EnvironmentObject var alertStore: AlertStore    /// 맵뷰 카메라 세팅
     @State private var region: MapCameraPosition = .userLocation(fallback: .automatic)
     
     /// 현황 뷰 띄우기
@@ -55,13 +54,14 @@ struct PromiseDetailMapView: View {
             VStack {
                 Map(position: $region, selection: $mapSelection) {
                     
-                    // 현재 위치 표시
+                    // 자신의 현재 위치 표시
                     UserAnnotation(anchor: .center)
                     
-                    // 도착 위치 표시
+                    // 도착지 위치 표시
                     Annotation("약속 위치", coordinate: promise.coordinate, anchor: .bottom) {
+                        // 누르면 다시 가운데으로 세팅
                         Button(action: {
-                            region = .region(MKCoordinateRegion(center: locationStore.myLocation.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                            region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
                         }, label: {
                             Image(systemName: "mappin")
                                 .font(.title)
@@ -78,17 +78,21 @@ struct PromiseDetailMapView: View {
                     ForEach(locationStore.locationParticipantDatas.filter {
                         $0.location.participantId != AuthStore.shared.currentUser?.id ?? ""
                     }) { annotation in
-                        Annotation(annotation.nickname, coordinate: annotation.location.currentCoordinate, anchor: .center) {
-                            Button {
-                                region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
-                            } label: {
-                                Image(annotation.moleImageString)
-                                    .resizable()
-                                    .frame(width: 25, height: 25) // 크기 조절
-                                    .aspectRatio(contentMode: .fill)
-                                    .overlay(
-                                        Circle().stroke(Color.white, lineWidth: 2))
-                                    .shadow(radius: 10)
+                        // 위치정보가 있는 참여자들의 annotation만 지도에 띄우기
+                        if annotation.location.currentLatitude > 0 && annotation.location.currentLongitude > 0 {
+                            Annotation(annotation.nickname, coordinate: annotation.location.currentCoordinate, anchor: .center) {
+                                // 누르면 다시 가운데으로 세팅
+                                Button {
+                                    region = .region(MKCoordinateRegion(center: annotation.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                                } label: {
+                                    Image(annotation.moleImageString)
+                                        .resizable()
+                                        .frame(width: 25, height: 25) // 크기 조절
+                                        .aspectRatio(contentMode: .fill)
+                                        .overlay(
+                                            Circle().stroke(Color.white, lineWidth: 2))
+                                        .shadow(radius: 10)
+                                }
                             }
                         }
                     }
@@ -105,11 +109,10 @@ struct PromiseDetailMapView: View {
                     MapPitchToggle()
                     MapUserLocationButton()
                 }
-                
-                // 맵뷰 탭바
+                // 맵뷰 좌측상단 도착지,Route버튼
                 .overlay(alignment: .topLeading) {
                     VStack(alignment: .leading) {
-                        // 약속 위치로 이동하는 버튼
+                        // 약속 도착지로 이동하는 버튼
                         Button {
                             withAnimation(.easeIn(duration: 1)) {
                                 region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
@@ -124,7 +127,7 @@ struct PromiseDetailMapView: View {
                                 Image(systemName: "flag.fill")
                                     .foregroundColor(.blue)
                                     .frame(width: 45, height: 45)
-                                    .background(.white)
+                                    .background(.primaryInvert2)
                                     .clipShape(RoundedRectangle(cornerRadius: 9))
                                     .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
                                     .shadow(color: .gray.opacity(0.3), radius: 5)
@@ -133,7 +136,7 @@ struct PromiseDetailMapView: View {
                                     Image(systemName: "flag")
                                         .foregroundColor(.blue)
                                         .frame(width: 45, height: 45)
-                                        .background(.white)
+                                        .background(.primaryInvert2)
                                         .clipShape(RoundedRectangle(cornerRadius: 9))
                                         .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
                                         .shadow(color: .gray.opacity(0.3), radius: 5)
@@ -150,7 +153,7 @@ struct PromiseDetailMapView: View {
                                 .bold()
                                 .foregroundColor(isShowingRoute ? .white : .blue)
                                 .frame(width: 45, height: 45)
-                                .background(isShowingRoute ? .blue.opacity(0.8) : .white)
+                                .background(isShowingRoute ? .blue : .primaryInvert2)
                                 .clipShape(RoundedRectangle(cornerRadius: 9))
                                 .padding(EdgeInsets(top: 1, leading: 5, bottom: 0, trailing: 5))
                                 .shadow(color: .gray.opacity(0.3), radius: 5)
@@ -194,6 +197,47 @@ struct PromiseDetailMapView: View {
                 print("파이어베이스 에러")
             }
         }
+        .onAppear {
+            
+            // 5초마다 반복, onAppear가 있어야 전역에서 사라지지 않고 실행됨
+            let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: locationStore.myLocation.arriveTime == 0 ) { _ in
+                print("나는 맵에서 만들어짐! ! 5초 지남")
+                
+                if locationStore.myLocation.arriveTime == 0 {
+                    // 도착하지 않았을 때만 도착확인
+                    isArrived = didYouArrive(currentCoordinate:
+                                                CLLocation( latitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0,
+                                                            longitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0),
+                                             arrivalCoordinate: CLLocation(latitude: promise.latitude, longitude: promise.longitude), effectiveDistance: arrivalCheckRadius)
+                    
+                    // 도착했다면 파베에 업데이트 및 locationStore.myLocation정보갱신
+                    // 도착하지 않았다면 위치 업데이트
+                    if isArrived == true {
+                        locationStore.myLocation.arriveTime = Date().timeIntervalSince1970
+                        let rank = locationStore.calculateRank()
+                        locationStore.updateArriveTime(locationId: locationStore.myLocation.id, arriveTime: locationStore.myLocation.arriveTime, rank: rank)
+                        // 도착 알림 실행
+                        alertStore.arrivalMsgAlert = ArrivalMsgModel(name: AuthStore.shared.currentUser?.nickName ?? "이름없음", profileImgString: AuthStore.shared.currentUser?.profileImageString ?? "doo1", rank: rank, arrivarDifference: promise.promiseDate - locationStore.myLocation.arriveTime, potato: 0)
+                        alertStore.isPresentedArrival.toggle()
+                        
+                    } else {
+                        locationStore.updateCurrentLocation(locationId: locationStore.myLocation.id, newLatitude: gpsStore.lastSeenLocation?.coordinate.latitude ?? 0, newLongtitude: gpsStore.lastSeenLocation?.coordinate.longitude ?? 0)
+                    }
+                }
+            }
+            RunLoop.current.add(timer, forMode: .default)
+        }
+        .onReceive(timer, perform: { _ in
+            print("5초 지남")
+            // 유저들 위치 패치
+            Task {
+                do {
+                    try await locationStore.fetchData(locationIdArray: promise.locationIdArray)
+                } catch {
+                    print("파이어베이스 에러")
+                }
+            }
+        })
         .onChange(of: isShowingRoute) {
             // 길 안내 토글 상태 변화 감지
             if isShowingRoute {
@@ -256,4 +300,3 @@ struct PromiseDetailMapView: View {
     PromiseDetailMapView(promise: Promise(id: "", makingUserID: "", promiseTitle: "사당역 모여라", promiseDate: 1697694660, destination: "", address: "", latitude: 37.47694972793077, longitude: 126.98195644152227, participantIdArray: [], checkDoublePromise: false, locationIdArray: [], penalty: 10))
         .environmentObject(AlertStore())
 }
-

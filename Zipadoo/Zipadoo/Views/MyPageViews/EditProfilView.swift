@@ -11,8 +11,23 @@ import SwiftUI
 struct EditProfileView: View {
     // 유효성검사위해 뷰 선언
     private let loginEmailCheckView = LoginEmailCheckView()
-    //@ObservedObject var viewModel = EditProfileViewModel()
-
+    private let signinByEmailView = SigninByEmailView(emailLoginStore: EmailLoginStore())
+    @ObservedObject var emailLoginStore: EmailLoginStore
+    /// 비밀번호 보이기
+    @State private var isPasswordVisible = false
+    /// 형식 유효메세지
+    @State private var validMessage = " "
+    /// 닉네임 중복여부
+    @State private var isOverlapNickname = false
+    /// 닉네임 중복 유효메세지 노출유무
+    @State private var isPresentedMessage = false
+    /// 닉네임 중복 유효메세지
+    @State private var nicknameOverlapMessage = ""
+    /// 닉네임 중복 유효 메세지 글자색
+    @State private var nicknameMessageColor: Color = .black
+    /// 조건에 맞으면 true, 다음페이지로 넘어가기
+    @State private var readyToNavigate: Bool = false
+   
     @ObservedObject var userStore: UserStore = UserStore()
     @Environment (\.dismiss) private var dismiss
     
@@ -29,8 +44,8 @@ struct EditProfileView: View {
         nickname.isEmpty || phoneNumber.isEmpty
     }
     
-    private var isVaild: Bool {
-        loginEmailCheckView.isCorrectNickname(nickname: nickname) && loginEmailCheckView.isCorrectPhoneNumber(phonenumber: phoneNumber)
+    private var isValid: Bool {
+        loginEmailCheckView.isCorrectNickname(nickname: emailLoginStore.nickName) && loginEmailCheckView.isCorrectPhoneNumber(phonenumber: emailLoginStore.phoneNumber)
     }
     
     var body: some View {
@@ -59,31 +74,52 @@ struct EditProfileView: View {
                 .background(.gray)
                 
                 VStack(alignment: .leading) {
-                    textFieldCell("새로운 닉네임", text: $nickname)
-                        .padding(.bottom)
-                        .onChange(of: nickname) { newValue in
+                    Group {
+                        HStack {
+                            loginTextFieldView($emailLoginStore.nickName, nickname, isvisible: true)
+                            
+                            // 입력한 내용 지우기 버튼
+                            eraseButtonView($emailLoginStore.nickName)
+                        }
+                        .onChange(of: emailLoginStore.nickName) { newValue in
                             let filtered = newValue.filter { $0.isLetter || $0.isNumber }
                             nickNameMessage = filtered != newValue ? "특수문자는 입력할 수 없습니다." : ""
                         }
+                        underLine()
+                        
+                        VStack(alignment: .leading) {
+                            Text(nickNameMessage)
+                                .foregroundColor(.red)
+                                .font(.subheadline)
+                                .opacity(0.7)
+                            
+                            if isPresentedMessage {
+                                Text(nicknameOverlapMessage)
+                                    .modifier(LoginMessageStyle(color: nicknameMessageColor))
+                            }
+                        }
+                    }
+                    .padding(.top, 20)
                     
-                    Text(nickNameMessage)
-                        .foregroundColor(.red)
-                        .font(.caption)
-                        .padding(.top, -15)
-                        .padding(.bottom, 5)
-                    
-                    textFieldCell("새로운 연락처", text: $phoneNumber)
-                        .padding(.bottom)
-                        .onChange(of: phoneNumber) { newValue in
+                    Group {
+                        HStack {
+                            loginTextFieldView($emailLoginStore.phoneNumber, phoneNumber, isvisible: true)
+                            
+                            // 입력한 내용 지우기 버튼
+                            eraseButtonView($emailLoginStore.phoneNumber)
+                        }
+                        .onChange(of: emailLoginStore.phoneNumber) { newValue in
                             let filtered = newValue.filter { $0.isNumber }
                             numberMessage = filtered != newValue ? "숫자만 입력해주세요" : ""
                         }
-                    
-                    Text(numberMessage)
-                        .foregroundColor(.red)
-                        .font(.caption)
-                        .padding(.top, -15)
-                        .padding(.bottom, 5)
+                        underLine()
+                        
+                        Text(numberMessage)
+                            .foregroundColor(.red)
+                            .font(.subheadline)
+                            .opacity(0.7)
+                    }
+                    .padding(.top, 20)
                 }
                 .padding()
             }
@@ -95,10 +131,13 @@ struct EditProfileView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button(action: { isEditAlert.toggle() }, label: {
+                    Button {
+                        checkValid()
+                        //                        isEditAlert.toggle()
+                    } label: {
                         Text("수정")
-                    })
-                    .disabled(isFieldEmpty || !isVaild) // 필드가 하나라도 비어있으면 비활성화
+                    }
+                    .disabled(isFieldEmpty || !isValid) // 필드가 하나라도 비어있으면 비활성화
                 }
             }
             .alert(isPresented: $isEditAlert) {
@@ -112,7 +151,7 @@ struct EditProfileView: View {
                         isEditAlert = false
                         dismiss()
                         Task {
-                            try await userStore.updateUserData(image: selectedImage, nick: nickname, phone: phoneNumber)
+                            try await userStore.updateUserData(image: selectedImage, nick: emailLoginStore.nickName, phone: emailLoginStore.phoneNumber)
                         }
                     })
                 )
@@ -125,12 +164,52 @@ struct EditProfileView: View {
             Text(title)
             TextField("", text: text)
                 .textFieldStyle(.roundedBorder)
+                .autocorrectionDisabled()
+        }
+    }
+    
+    private func checkValid() {
+        // 파베 중복확인 : 중복시 true
+        Task {
+            emailLoginStore.nicknameCheck { overlap in
+                isOverlapNickname = overlap
+                
+                if isValid && !isOverlapNickname {
+                    // 닉네임중복X,형식에 모두 알맞게 썼다면 다음으로 넘어가기
+                    readyToNavigate.toggle()
+                    validMessage = " "
+                    nicknameMessageColor = .green
+                    nicknameOverlapMessage = "사용가능한 닉네임입니다"
+                    isPresentedMessage = true
+                    isEditAlert.toggle()
+                } else {
+                    if isOverlapNickname {
+                        // 닉네임 중복이라면
+                        nicknameMessageColor = .red
+                        nicknameOverlapMessage = "이미 존재하는 닉네임입니다"
+                        isPresentedMessage = true
+                    } else if loginEmailCheckView.isCorrectNickname(nickname: emailLoginStore.nickName) {
+                        nicknameMessageColor = .green
+                        nicknameOverlapMessage = "사용가능한 닉네임입니다"
+                        isPresentedMessage = true
+                        isEditAlert.toggle()
+                    } else {
+                        nicknameOverlapMessage = ""
+                        isPresentedMessage = false
+                    }
+                    if !isValid {
+                        validMessage = "형식에 맞게 다시 입력해주세요"
+                    } else {
+                        validMessage = " "
+                    }
+                }
+            }
         }
     }
 }
 
 #Preview {
     NavigationStack {
-        EditProfileView()
+        EditProfileView(emailLoginStore: EmailLoginStore())
     }
 }

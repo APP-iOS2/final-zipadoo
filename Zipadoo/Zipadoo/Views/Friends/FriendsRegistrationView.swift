@@ -23,6 +23,7 @@ struct FriendsRegistrationView: View {
                 HStack {
                     TextField("친구의 닉네임을 입력해주세요.", text: $nickNameTextField)
                         .padding(10)
+                        .autocorrectionDisabled()
                     
                     Button {
                         nickNameTextField = ""

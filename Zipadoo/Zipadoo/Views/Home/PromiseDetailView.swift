@@ -63,7 +63,7 @@ struct PromiseDetailView: View {
                     VStack {
                         RoundedRectangle(cornerRadius: 20.0)
                             .colorInvert()
-                            .shadow(radius: 5.0)
+                            .shadow(radius: 10.0)
                             .overlay {
                                 ScrollView {
                                     VStack(alignment: .leading) {
@@ -84,6 +84,7 @@ struct PromiseDetailView: View {
                                     }
                                     .padding(.horizontal)
                                 }
+                                .scrollIndicators(.hidden)
                             }
                     }
                     .padding(.init(top: -50, leading: 0, bottom: -30, trailing: 0))
@@ -132,11 +133,11 @@ struct PromiseDetailView: View {
                 try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
             }
         }
-        .refreshable {
-            Task {
-                try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
-            }
-        }
+//        .refreshable {
+//            Task {
+//                try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
+//            }
+//        }
         .sheet(isPresented: $isShowingEditSheet,
                content: { PromiseEditView(promise: .constant(promise), navigationBackToHome: $isNavigateBackToHome)
         })
@@ -202,7 +203,7 @@ struct PromiseDetailView: View {
     private var participantsView: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("모이는 두더지 친구들")
+                Text("모이는 두더지")
                     .font(.title3).bold()
                 
                 Spacer()

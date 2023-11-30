@@ -25,7 +25,7 @@ struct ProfileImageView: View {
                     .frame(width: size.dimension, height: size.dimension)
                     .clipShape(Circle())
             } else {
-                Image(systemName: "person.circle")
+                Image(.defaultProfile)
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: size.dimension, height: size.dimension)

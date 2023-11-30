@@ -15,32 +15,33 @@ struct PromiseDetailProgressBarView: View {
     // 관찰 대상 객체로 사용되는 위치 정보 스토어
     @ObservedObject var locationStore: LocationStore
     
-    // 친구 현황 시트 표시 여부를 결정하는 바인딩 변수
+    /// 친구 현황 시트 표시 여부를 결정하는 바인딩 변수
     @Binding var isShowingFriendSheet: Bool
     
-    // 맵 뷰의 카메라 위치를 조절하는 바인딩 변수
+    /// 맵 뷰의 카메라 위치를 조절하는 바인딩 변수
     @Binding var region: MapCameraPosition
     
-    // 목적지 좌표
+    /// 목적지 좌표
     let destinationCoordinate: CLLocationCoordinate2D
     
-    // 현재 약속 정보
+    /// 현재 약속 정보
     var promise: Promise
     
-    // 약속 진행 상황을 감지하여 UI 갱신하는 바인딩 변수
+    /// 약속 진행 상황을 감지하여 UI 갱신하는 바인딩 변수
     @Binding var progressTrigger: Bool
     
-    // 약속 현황 시트의 높이를 제어하기 위한 바인딩 변수
+    /// 약속 현황 시트의 높이를 제어하기 위한 바인딩 변수
     @Binding var detents: PresentationDetent
     
-    // 1초마다 갱신되는 타이머
+    /// 1초마다 갱신되는 타이머
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    // 약속 종료 여부를 감지하는 상태 변수
+    /// 약속 종료 여부를 감지하는 상태 변수
     @State private var promiseFinishCheck: Bool = false
     
     var body: some View {
         VStack(alignment: .leading) {
+            /*
             HStack {
                 Text("두더지 친구들 현황")
                     .font(.title3)
@@ -150,6 +151,58 @@ struct PromiseDetailProgressBarView: View {
                     }
                 }
             }
+            */
+            
+            // 두더지ProgressBar 주석 -> 남은거리만 보여주기
+            HStack {
+                Text("두더지 친구들의 남은 거리")
+                    .bold()
+                            
+                Spacer()
+            }
+            .padding([.top, .leading, .trailing])
+            
+            Divider()
+            
+            LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3)) {
+                ForEach(locationStore.locationParticipantDatas) { friend in
+                    // 이미지 클릭시 해당 참여자의 현재 위치로 이동
+                    Button {
+                        region = .region(MKCoordinateRegion(center: friend.location.currentCoordinate, latitudinalMeters: 1000, longitudinalMeters: 1000))
+                        isShowingFriendSheet = false // 시트 내려가기
+                    } label: {
+                        VStack {
+
+                            Image(friend.moleImageString)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 65)
+                            
+                            Text(friend.location.participantId == AuthStore.shared.currentUser?.id ? "나" : friend.nickname)
+                                .fontWeight(.medium)
+                            
+                            // 현재위치 정보가 있으면
+                            if friend.location.currentLatitude > 0 && friend.location.currentLongitude > 0 {
+ 
+                                if friend.location.rank > 0 {
+                                    Text(promiseFinishCheck ? "지각" : "도착")
+                                        .foregroundColor(promiseFinishCheck ? .red : .green)
+                                } else {
+                                    // 남은 거리
+                                    let distance = calculateDistanceInMeters(x1: friend.location.currentLatitude, y1: friend.location.currentLongitude, x2: promise.latitude, y2: promise.longitude)
+                                    Text("\(formatDistance(distance))")
+                                }
+                            } else {
+                                Text("정보없음")
+                            }
+                        }
+                        .foregroundColor(.primary)
+                        .padding(.bottom)
+                        .font(.footnote)
+                    }.disabled(friend.location.currentLatitude == 0 && friend.location.currentLongitude == 0) // 위치정보가 없으면 버튼 활성화
+                }
+            }
+            .padding(.vertical)
         }
         .task {
             promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
@@ -158,16 +211,14 @@ struct PromiseDetailProgressBarView: View {
         .onReceive(timer) { _ in
             promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
         }
-        .padding(.leading)
-        .padding(.trailing)
         .overlay(
             RoundedRectangle(cornerRadius: 10)
                 .foregroundColor(.primary)
                 .opacity(0.05)
                 .shadow(color: .primary, radius: 10, x: 5, y: 5)
-            
         )
-    }
+    } // body
+
 }
 
 struct PromiseDetailProgressBarView_Previews: PreviewProvider {
