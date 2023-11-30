@@ -20,7 +20,6 @@ struct PromiseEditView: View {
     @Binding var navigationBackToHome: Bool
 
     @ObservedObject private var promiseViewModel: PromiseViewModel = PromiseViewModel()
-    @StateObject private var authUser: AuthStore = AuthStore()
     @StateObject var friendsStore: FriendsStore = FriendsStore()
     @StateObject var userStore: UserStore = UserStore()
     
@@ -135,7 +134,9 @@ struct PromiseEditView: View {
                 isShowingCancelAlert = true
             },
             trailing: Button("저장") {
-                isShowingSaveAlert = true
+                promiseViewModel.updatePromise(promise: promise, editSelectedFriends: editSelectedFriends, editedPromiseTitle: editedPromiseTitle, editedPromiseDate: editedPromiseDate, editedDestination: editedDestination, editedAddress: editedAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude)
+                dismiss()
+                navigationBackToHome = true // 홈메인뷰 이동
             }
         )
         // MARK: - 수정 시트 뷰
@@ -302,48 +303,6 @@ struct PromiseEditView: View {
         case .promiseDestination: return editedDestination
         case .promisePenalty: return "\(penalty)원"
         default: return ""
-        }
-    }
-    
-    // MARK: - 약속 수정 함수
-    func updatePromise() {
-        
-        /// 수정된 참여자 LocationIdArray다시 지정
-        var locationIdArray: [String] = []
-        
-        let dbRef = Firestore.firestore().collection("Promise")
-        
-        let promiseRef = dbRef.document(promise.id)
-        
-        let IdArray = [AuthStore.shared.currentUser?.id ?? " - no id - "] + editSelectedFriends.map { $0.id }
-        
-        for id in IdArray {
-            let friendLocation = Location(participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
-            
-            locationIdArray.append(friendLocation.id)
-            
-            LocationStore.addLocationData(location: friendLocation)
-        }
-        
-        let updatedData: [String: Any] = [
-            "promiseTitle": editedPromiseTitle,
-            "promiseDate": editedPromiseDate.timeIntervalSince1970,
-            "destination": editedDestination,
-            "address": editedAddress,
-            "latitude": destinationLatitude,
-            "longitude": destinationLongitude,
-            "participantIdArray": [AuthStore.shared.currentUser?.id ?? " - no id - "] + editSelectedFriends.map { $0.id },
-            "penalty": penalty,
-            "locationIdArray": locationIdArray
-        ]
-        
-        promiseRef.updateData(updatedData) { error in
-            if let error = error {
-                print("약속 수정 실패: \(error)")
-            } else {
-                print("약속이 성공적으로 수정되었습니다.")
-                dismiss()
-            }
         }
     }
 }

@@ -12,7 +12,7 @@ import FirebaseCore
 import WidgetKit
 
 class PromiseViewModel: ObservableObject {
-
+    
     @Published var isLoading: Bool = true
     
     /// 예정인 약속 저장
@@ -21,6 +21,7 @@ class PromiseViewModel: ObservableObject {
     @Published var fetchTrackingPromiseData: [Promise] = []
     /// 지난 약속 저장
     @Published var fetchPastPromiseData: [Promise] = []
+    
     // 저장될 변수
     @Published var id: String = ""
     @Published var promiseTitle: String = ""
@@ -29,11 +30,12 @@ class PromiseViewModel: ObservableObject {
     @Published var address = "" // 약속장소 주소
     @Published var coordXXX = 0.0 // 약속장소 위도
     @Published var coordYYY = 0.0 // 약속장소 경도
+    
     /// 장소에 대한 정보 값
     @Published var promiseLocation: PromiseLocation = PromiseLocation(id: "123", destination: "", address: "", latitude: 37.5665, longitude: 126.9780)
     /// 지각비 변수 및 상수 값
     @Published var penalty: Int = 0
-
+    
     /// 약속에 참여할 친구배열
     @Published var selectedFriends: [User] = []
     
@@ -54,62 +56,11 @@ class PromiseViewModel: ObservableObject {
     
     private let dbRef = Firestore.firestore().collection("Promise")
     
-//    init() {
-//        promiseViewModel = []
-//    }
-    
     // MARK: - 약속 패치 함수
-    /// 약속 패치 함수
-    //    func fetchPromise() async throws {
-    //        self.promiseViewModel.removeAll()
-    //
-    //        /*
-    //         participantIdArray에 ID 값과 같은 사람들만 가져온다.
-    //         guard let userID =
-    //         */
-    //
-    //        do {
-    //            let snapshot = try await dbRef.getDocuments()
-    //
-    //            for document in snapshot.documents {
-    //                let data = document.data()
-    //                print("Document data: \(data)")
-    //
-    //                // Firebase document 맵핑
-    //                let id = data["id"] as? String ?? ""
-    //                let makingUserID = data["makingUserID"] as? String ?? ""
-    //                let promiseTitle = data["promiseTitle"] as? String ?? ""
-    //                let promiseDate = data["promiseDate"] as? Double ?? 0.0
-    //                let destination = data["destination"] as? String ?? ""
-    //                let participantIdArray = data["participantIdArray"] as? [String] ?? []
-    //                let checkDoublePromise = data["checkDoublePromise"] as? Bool ?? false
-    //                let locationIdArray = data["locationIdArray"] as? [String] ?? []
-    //
-    //                let promise = Promise(
-    //                    id: id,
-    //                    makingUserID: makingUserID,
-    //                    promiseTitle: promiseTitle,
-    //                    promiseDate: promiseDate,
-    //                    destination: destination,
-    //                    participantIdArray: participantIdArray,
-    //                    checkDoublePromise: checkDoublePromise,
-    //                    locationIdArray: locationIdArray
-    //                )
-    //
-    //                // promiseViewModel에 추가
-    //                self.promiseViewModel.append(promise)
-    //
-    //            }
-    //        } catch {
-    //            print("Error getting documents: \(error)")
-    //        }
-    //    }
-    
     @MainActor
     func fetchData(userId: String) async throws {
         do {
             let snapshot = try await dbRef.getDocuments()
-
             var tempPromiseArray: [Promise] = []
             var tempPromiseTracking: [Promise] = []
             var tempPastPromise: [Promise] = []
@@ -175,11 +126,24 @@ class PromiseViewModel: ObservableObject {
                     let promiseComponent = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: promiseDate)
                     let todayComponent = Calendar.current.dateComponents([.year, .month,.day,.hour,.minute], from: now)
                     
-                    // DateComponent는 비교 연산자 사용불가
-                    // Date 타입으로 변환
-                    guard let date1 = Calendar.current.date(from: promiseComponent),
-                          let date2 = Calendar.current.date(from: todayComponent) else {
-                        return
+                    for promise in entryPromise {
+                        let promiseDate = Date(timeIntervalSince1970: promise.promiseDate - 30 * 60)
+                        let now = Date()
+                        
+                        // 약속 30분 전 시간과 현재 시간에서 초단위는 제외
+                        let promiseComponent = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: promiseDate)
+                        let todayComponent = Calendar.current.dateComponents([.year, .month,.day,.hour,.minute], from: now)
+                        
+                        // DateComponent는 비교 연산자 사용불가
+                        guard let date1 = Calendar.current.date(from: promiseComponent),
+                              let date2 = Calendar.current.date(from: todayComponent) else {
+                            return
+                        }
+                        
+                        // 약속 30분 전 시간이 현재 시간보다 이후인 약속들만 알림 등록
+                        if date1 >= date2 {
+                            self.addSharingNotification(imminent: promise)
+                        }
                     }
                     
                     // 약속 30분 전 시간이 현재 시간보다 이후인 약속들만 알림 등록
@@ -193,79 +157,31 @@ class PromiseViewModel: ObservableObject {
             print("fetchPromiseData failed")
         }
     }
-    /*
-     do {
-         // 로그인한 유저 id 못 받아오면 return
-         guard let loginUserID = AuthStore.shared.currentUser?.id else {
-             return
-         }
-         let snapshot = try await dbRef.getDocuments()
-
-         var temp: [Promise] = []
-         
-         for document in snapshot.documents {
-             if let jsonData = try? JSONSerialization.data(withJSONObject: document.data(), options: []),
-                let promise = try? JSONDecoder().decode(Promise.self, from: jsonData) {
-                 
-                 // 내가 만든 또는 참여하는 약속만 배열에 넣기
-                 if loginUserID == promise.makingUserID || promise.participantIdArray.contains(loginUserID) {
-                     temp.append(promise)
-                 }
-             }
-         }
-         self.fetchPromiseData = temp
-
-     } catch {
-         print("fetchPromiseData failed")
-     }
-     */
-    
     // PromiseId로 Promise객체 가져오기
     func fetchPromise(promiseId: String) async throws -> Promise {
         let snapshot = try await Firestore.firestore().collection("Promise").document(promiseId).getDocument()
         
         let promise = try snapshot.data(as: Promise.self)
         return promise
-
     }
     
     // MARK: - 약속 추가 함수
-    /// 약속 추가 함수
-    //    func addPromise(_ promise: Promise) {
-    //        let newData: [String: Any] = [
-    //            "id": "\(promise.id)",
-    //            "makingUserID": "\(promise.makingUserID)",
-    //            "promiseTitle": "\(promise.promiseTitle)",
-    //            "promiseDate": "\(promise.promiseDate)",
-    //            "destination": "\(promise.destination)",
-    //            "participantIdArray": "\(promise.participantIdArray)"
-    //        ]
-    //
-    //        dbRef.addDocument(data: newData) { error in
-    //            if let error = error {
-    //                print("Error adding document: \(error)")
-    //            } else {
-    //                print("Document successfully added")
-    //            }
-    //        }
-    //    }
-    
     @MainActor
     func addPromiseData(promise: Promise) async throws {
         // Promise객체 생성
         var promise = Promise(
-           id: UUID().uuidString,
-           makingUserID: AuthStore.shared.currentUser?.id ?? "not ID",
-           promiseTitle: promise.promiseTitle,
-           promiseDate: promise.promiseDate, // 날짜 및 시간을 TimeInterval로 변환
-           destination: promise.destination,
-           address: promise.address,
-           latitude: promise.latitude,
-           longitude: promise.longitude,
-           participantIdArray: promise.participantIdArray,
-           checkDoublePromise: false, // 원하는 값으로 설정
-           locationIdArray: [],
-           penalty: promise.penalty)
+            id: UUID().uuidString,
+            makingUserID: AuthStore.shared.currentUser?.id ?? "not ID",
+            promiseTitle: promise.promiseTitle,
+            promiseDate: promise.promiseDate, // 날짜 및 시간을 TimeInterval로 변환
+            destination: promise.destination,
+            address: promise.address,
+            latitude: promise.latitude,
+            longitude: promise.longitude,
+            participantIdArray: promise.participantIdArray,
+            checkDoublePromise: false, // 원하는 값으로 설정
+            locationIdArray: [],
+            penalty: promise.penalty)
         
         do {
             // 친구도 동일하게 저장
@@ -289,32 +205,45 @@ class PromiseViewModel: ObservableObject {
         }
     }
     
-    // 아래 형식으로 변경
-    //    func addLocationData(location: Location) {
-    //        do {
-    //            try dbRef.collection("Location").document(location.id)
-    //                .setData(from: location)
-    //        } catch {
-    //            print("location 등록 실패")
-    //        }
-    //    }
-    
     // MARK: - 약속 수정 함수
-    /// 약속 수정 함수
-//    func editPromise(_ promise: Promise) {
-//        let updatedData: [String: Any] = [
-//            "participantIdArray": "\(promise.participantIdArray)"
-//        ]
-//        
-//        dbRef.document(promise.id).updateData(updatedData) { error in
-//            if let error = error {
-//                print("Error updating document: \(error)")
-//            } else {
-//                print("Document successfully updated")
-//            }
-//        }
-//    }
+    func updatePromise(promise: Promise, editSelectedFriends: [User], editedPromiseTitle: String, editedPromiseDate: Date, editedDestination: String, editedAddress: String, destinationLatitude: Double, destinationLongitude: Double) {
+        /// 수정된 참여자 LocationIdArray다시 지정
+        var locationIdArray: [String] = []
+        
+        let promiseRef = dbRef.document(promise.id)
+        
+        let IdArray = [AuthStore.shared.currentUser?.id ?? " - no id - "] + editSelectedFriends.map { $0.id }
+        
+        for id in IdArray {
+            let friendLocation = Location(participantId: id, departureLatitude: 0, departureLongitude: 0, currentLatitude: 0, currentLongitude: 0, arriveTime: 0)
+            
+            locationIdArray.append(friendLocation.id)
+            
+            LocationStore.addLocationData(location: friendLocation)
+        }
+        
+        let updatedData: [String: Any] = [
+            "promiseTitle": editedPromiseTitle,
+            "promiseDate": editedPromiseDate.timeIntervalSince1970,
+            "destination": editedDestination,
+            "address": editedAddress,
+            "latitude": destinationLatitude,
+            "longitude": destinationLongitude,
+            "participantIdArray": [AuthStore.shared.currentUser?.id ?? " - no id - "] + editSelectedFriends.map { $0.id },
+            "penalty": penalty,
+            "locationIdArray": locationIdArray
+        ]
+        
+        promiseRef.updateData(updatedData) { error in
+            if let error = error {
+                print("약속 수정 실패: \(error)")
+            } else {
+                print("약속이 성공적으로 수정되었습니다.")
+            }
+        }
+    }
     
+    // MARK: - 약속 닫기
     // 나가기 버튼 구현을 위해 기존 함수 주석처리
     func exitPromise(_ promise: Promise, locationId: String) async throws {
         
@@ -336,17 +265,6 @@ class PromiseViewModel: ObservableObject {
     }
     
     // MARK: - 약속 삭제 함수
-    /// 약속 삭제 함수
-    //    func deletePromise(_ promise: Promise) {
-    //        dbRef.document(promise.id).delete { error in
-    //            if let error = error {
-    //                print("Error deleting document: \(error)")
-    //            } else {
-    //                print("Document successfully deleted")
-    //            }
-    //        }
-    //    }
-    
     func deletePromiseData(promiseId: String, locationIdArray: [String]) async throws {
         
         // 연결된 Location 먼저 삭제
@@ -391,16 +309,12 @@ class PromiseViewModel: ObservableObject {
             let requestIdentifier = "LocationSharing - \(imminent.id)"
             
             // 등록
-            let request = UNNotificationRequest(identifier:requestIdentifier,
-                                                content :content,
-                                                trigger :trigger)
-            
+            let request = UNNotificationRequest(identifier:requestIdentifier, content :content, trigger :trigger)
             notificationCenter.add(request) { (error) in
                 if error != nil {
                     print("Error \(requestIdentifier)")
                 }
             }
-            
         } else {
          */
             // 아니면 약속시간 30분 전에 알림 띄워주기
@@ -413,25 +327,16 @@ class PromiseViewModel: ObservableObject {
             let requestIdentifier="LocationSharing - \(imminent.id)"
             
             // 등록
-            let request=UNNotificationRequest(identifier:requestIdentifier,
-                                              content :content,
-                                              trigger :trigger)
-            
+            let request=UNNotificationRequest(identifier:requestIdentifier, content :content, trigger :trigger)
             notificationCenter.add(request){(error) in
                 if error != nil{
                     print("Error \(requestIdentifier)")
                 }
             }
-//        }
-        // 현재 등록된 알림 확인하는 코드
-//        notificationCenter.getPendingNotificationRequests { (requests) in
-//            for request in requests {
-//                print("약속 : \(request.identifier) will be delivered at \(request.trigger)")
-//            }
-//        }
+        }
     }
-
-    func addTodayPromisesToUserDefaults(promises: [Promise]) {
+    
+    func addTodayPromisesToUserDefaults() {
         var calendar = Calendar.current
         calendar.timeZone = NSTimeZone.local
         let encoder = JSONEncoder()
@@ -458,7 +363,6 @@ class PromiseViewModel: ObservableObject {
             WidgetCenter.shared.reloadTimelines(ofKind: "ZipadooWidget")
         } catch {
             print("Failed to encode Promise:", error)
-            
         }
     }
 }

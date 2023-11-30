@@ -76,6 +76,7 @@
 		C076BDA82AD938D6005AE81D /* AlertStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA72AD938D6005AE81D /* AlertStore.swift */; };
 		C08716882AE25C99005914C5 /* WidgetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08716872AE25C99005914C5 /* WidgetStore.swift */; };
 		FA103F1E2AE2164F00BE56CA /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA103F1D2AE2164F00BE56CA /* Enum.swift */; };
+		FA1070A92B17799B0026AC25 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA1070A82B17799B0026AC25 /* GoogleService-Info.plist */; };
 		FA24740B2ACD4BDB00D4C821 /* FriendsLocationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */; };
 		FA24740D2ACD4BDB00D4C821 /* SearchInKakaoLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E82ACD4BDB00D4C821 /* SearchInKakaoLocal.swift */; };
 		FA24740E2ACD4BDB00D4C821 /* AddPlaceOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473EA2ACD4BDB00D4C821 /* AddPlaceOptionCell.swift */; };
@@ -227,6 +228,7 @@
 		C076BDA72AD938D6005AE81D /* AlertStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStore.swift; sourceTree = "<group>"; };
 		C08716872AE25C99005914C5 /* WidgetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStore.swift; sourceTree = "<group>"; };
 		FA103F1D2AE2164F00BE56CA /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
+		FA1070A82B17799B0026AC25 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationListView.swift; sourceTree = "<group>"; };
 		FA2473E82ACD4BDB00D4C821 /* SearchInKakaoLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchInKakaoLocal.swift; sourceTree = "<group>"; };
 		FA2473EA2ACD4BDB00D4C821 /* AddPlaceOptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceOptionCell.swift; sourceTree = "<group>"; };
@@ -824,6 +826,7 @@
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				8B93D2FE2B063793006385FF /* Settings.bundle in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
+				FA1070A92B17799B0026AC25 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1173,7 +1176,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Zipadoo/Preview Content\"";
-				DEVELOPMENT_TEAM = KQR52SK4D7;
+				DEVELOPMENT_TEAM = 3TGR3P459K;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1209,7 +1212,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Zipadoo/Preview Content\"";
-				DEVELOPMENT_TEAM = KQR52SK4D7;
+				DEVELOPMENT_TEAM = 3TGR3P459K;
 				ENABLE_ON_DEMAND_RESOURCES = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
