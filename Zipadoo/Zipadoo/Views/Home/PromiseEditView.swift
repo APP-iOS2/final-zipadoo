@@ -134,9 +134,7 @@ struct PromiseEditView: View {
                 isShowingCancelAlert = true
             },
             trailing: Button("저장") {
-                promiseViewModel.updatePromise(promise: promise, editSelectedFriends: editSelectedFriends, editedPromiseTitle: editedPromiseTitle, editedPromiseDate: editedPromiseDate, editedDestination: editedDestination, editedAddress: editedAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude)
-                dismiss()
-                navigationBackToHome = true // 홈메인뷰 이동
+                isShowingSaveAlert = true
             }
         )
         // MARK: - 수정 시트 뷰
@@ -180,7 +178,7 @@ struct PromiseEditView: View {
 //                    dismiss()
                 }),
                 secondaryButton: .default(Text("확인"), action: {
-                    updatePromise() // 데이터 수정함수 호출
+                    promiseViewModel.updatePromise(promise: promise, editSelectedFriends: editSelectedFriends, editedPromiseTitle: editedPromiseTitle, editedPromiseDate: editedPromiseDate, editedDestination: editedDestination, editedAddress: editedAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude)
                     dismiss()
                     navigationBackToHome = true // 홈메인뷰 이동
                 })
