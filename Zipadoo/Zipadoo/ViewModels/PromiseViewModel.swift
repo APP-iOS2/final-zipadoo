@@ -246,7 +246,6 @@ class PromiseViewModel: ObservableObject {
     // MARK: - 약속 닫기
     // 나가기 버튼 구현을 위해 기존 함수 주석처리
     func exitPromise(_ promise: Promise, locationId: String) async throws {
-        
         do {
             let firestore = Firestore.firestore()
             let promiseRef = firestore.collection("Promise").document(promise.id)
@@ -255,10 +254,11 @@ class PromiseViewModel: ObservableObject {
                 "participantIdArray": promise.participantIdArray,
                 "locationIdArray": promise.locationIdArray
             ]
-            
             try await LocationStore.deleteLocationData(locationId: locationId)
-            
             try await promiseRef.updateData(updateData)
+            // 약속 나가기 후 약속데이터 다시 패치하기
+            try await self.fetchData(userId: AuthStore.shared.currentUser?.id ?? "not ID")
+            
         } catch {
             print("약속 업데이트 실패: \(error)")
         }

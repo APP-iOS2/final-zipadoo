@@ -14,6 +14,12 @@ enum ArrivalType: String {
     case onTime = "에 딱 맞춰"
 }
 
+/// 현재시간 기준으로 아직 지각이 아닌 시간대/ 지각인 시간대/ 3시간이 지나 약속추적이 종료됐는지
+enum TimeType {
+    case traking
+    case endTracking
+}
+
 /// 프로필 이미지 사이즈 열거형
 enum ProfileImageSize {
     case xSmall

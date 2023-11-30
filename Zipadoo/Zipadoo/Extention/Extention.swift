@@ -6,9 +6,10 @@
 //
 
 // View extension을 위해 import
-import SwiftUI
 import CoreLocation
+import Foundation
 import MapKit
+import SwiftUI
 
 // View의 Extension
 extension View {
@@ -72,6 +73,19 @@ extension View {
         }
         .foregroundColor(Color.primary.opacity(0.4))
     }
+    
+    /// 현재시간 기준으로 추적중인지 추적중이 아닌지 판단
+    func classifyTime(promiseDate: Date, afterThreeHourTime: Date) -> TimeType {
+        // 현재 시간을 가져오기
+        let currentTime = Date()
+
+        if Calendar.current.dateComponents([.second], from: currentTime, to: afterThreeHourTime).second ?? 0 > 0 {
+            return .traking // 아직 지각 아닌 시간대
+        } else {
+            return .endTracking
+        }
+    }
+     
 }
 
 /// 회원가입 유효성 검사함수 포함
@@ -180,7 +194,7 @@ extension PromiseDetailProgressBarView {
         }
     }
     
-    /// 약속 종료 여부를 확인하는 함수
+    /// 약속시간 도달여부를 확인하는 함수
     func calculateTimeRemaining(targetTime: Double) -> Bool {
         // 현재 시간을 가져오기
         let currentTime = Date().timeIntervalSince1970

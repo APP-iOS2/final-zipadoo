@@ -168,18 +168,20 @@ struct PromiseDetailView: View {
                     Button {
                         if let userId = loginUser.currentUser?.id {
                             // 현재 로그인한 사용자 아이디 가져오기
-                            
                             if let index = promise.participantIdArray.firstIndex(of: userId) {
+                                let deleteLocationId: String = promise.locationIdArray[index]
                                 // 배열에서 ID 위치 확인
                                 // 해당 ID 배열에서 제거
-                                let locationIndex = index + 1
                                 promise.participantIdArray.remove(at: index)
-                                promise.locationIdArray.remove(at: locationIndex) // 약속 나가기 오류발견!
+                                promise.locationIdArray.remove(at: index)
+                                
+                                Task {
+                                    try await promiseViewModel.exitPromise(promise, locationId: userId)
+                                    // Location지우기
+                                    try await LocationStore.deleteLocationData(locationId: deleteLocationId)
+                                }
                             }
-                            
-                            Task {
-                                try await promiseViewModel.exitPromise(promise, locationId: userId)
-                            }
+                            dismiss()
                         }
                     } label: {
                         Text("약속나가기")
