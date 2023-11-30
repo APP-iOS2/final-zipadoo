@@ -78,7 +78,7 @@ class PromiseViewModel: ObservableObject {
                         let afterPromise = Calendar.current.date(byAdding: .hour, value: 3, to: promiseDate) ?? promiseDate // 3시간 뒤
                         /// 약속시간에서 30분 전
                         let beforePromise = Calendar.current.date(byAdding: .minute, value: -30, to: promiseDate) ?? promiseDate
-
+                        
                         if Calendar.current.dateComponents([.second], from: currentDate, to: beforePromise).second ?? 0 > 0 {
                             // 추적시간 아직 안됐을때
                             tempPromiseArray.append(promise)
@@ -109,7 +109,7 @@ class PromiseViewModel: ObservableObject {
                 if tempPastPromise.count > 50 {
                     for i in 0 ..< 50 {
                         self.fetchPastPromiseData.append(tempPastPromise[i])
-//                            print("\(i)")
+                        //                            print("\(i)")
                     }
                 } else {
                     self.fetchPastPromiseData = tempPastPromise
@@ -126,14 +126,6 @@ class PromiseViewModel: ObservableObject {
                     let promiseComponent = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: promiseDate)
                     let todayComponent = Calendar.current.dateComponents([.year, .month,.day,.hour,.minute], from: now)
                     
-                    for promise in entryPromise {
-                        let promiseDate = Date(timeIntervalSince1970: promise.promiseDate - 30 * 60)
-                        let now = Date()
-                        
-                        // 약속 30분 전 시간과 현재 시간에서 초단위는 제외
-                        let promiseComponent = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: promiseDate)
-                        let todayComponent = Calendar.current.dateComponents([.year, .month,.day,.hour,.minute], from: now)
-                        
                         // DateComponent는 비교 연산자 사용불가
                         guard let date1 = Calendar.current.date(from: promiseComponent),
                               let date2 = Calendar.current.date(from: todayComponent) else {
@@ -144,14 +136,8 @@ class PromiseViewModel: ObservableObject {
                         if date1 >= date2 {
                             self.addSharingNotification(imminent: promise)
                         }
-                    }
-                    
-                    // 약속 30분 전 시간이 현재 시간보다 이후인 약속들만 알림 등록
-                    if date1 >= date2 {
-                        self.addSharingNotification(imminent: promise)
-                    }
+                    self.isLoading = false
                 }
-                self.isLoading = false
             }
         } catch {
             print("fetchPromiseData failed")
@@ -301,42 +287,41 @@ class PromiseViewModel: ObservableObject {
         content.title = "\(imminent.title) 30분 전입니다"
         content.body = "친구들의 위치 현황을 확인해보세요!"
         /*
-        // 현재 시간이 예약 시간 이후면 1초 후 바로 띄워주기 -> 필요없는 것 같아서 주석처리
-        if Calendar.current.date(from: todayComponent) == localTriggerDate {
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-            
-            // Notification에 등록할 identifier 설정
-            let requestIdentifier = "LocationSharing - \(imminent.id)"
-            
-            // 등록
-            let request = UNNotificationRequest(identifier:requestIdentifier, content :content, trigger :trigger)
-            notificationCenter.add(request) { (error) in
-                if error != nil {
-                    print("Error \(requestIdentifier)")
-                }
-            }
-        } else {
+         // 현재 시간이 예약 시간 이후면 1초 후 바로 띄워주기 -> 필요없는 것 같아서 주석처리
+         if Calendar.current.date(from: todayComponent) == localTriggerDate {
+         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+         
+         // Notification에 등록할 identifier 설정
+         let requestIdentifier = "LocationSharing - \(imminent.id)"
+         
+         // 등록
+         let request = UNNotificationRequest(identifier:requestIdentifier, content :content, trigger :trigger)
+         notificationCenter.add(request) { (error) in
+         if error != nil {
+         print("Error \(requestIdentifier)")
+         }
+         }
+         } else {
          */
-            // 아니면 약속시간 30분 전에 알림 띄워주기
-            var dateComponents = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute], from :localTriggerDate)
-            dateComponents.second=0
-            
-            let trigger=UNCalendarNotificationTrigger(dateMatching:dateComponents,repeats:false)
-            
-            // Notification에 등록할 identifier 설정
-            let requestIdentifier="LocationSharing - \(imminent.id)"
-            
-            // 등록
-            let request=UNNotificationRequest(identifier:requestIdentifier, content :content, trigger :trigger)
-            notificationCenter.add(request){(error) in
-                if error != nil{
-                    print("Error \(requestIdentifier)")
-                }
+        // 아니면 약속시간 30분 전에 알림 띄워주기
+        var dateComponents = Calendar.current.dateComponents([.year,.month,.day,.hour,.minute], from :localTriggerDate)
+        dateComponents.second=0
+        
+        let trigger=UNCalendarNotificationTrigger(dateMatching:dateComponents,repeats:false)
+        
+        // Notification에 등록할 identifier 설정
+        let requestIdentifier="LocationSharing - \(imminent.id)"
+        
+        // 등록
+        let request=UNNotificationRequest(identifier:requestIdentifier, content :content, trigger :trigger)
+        notificationCenter.add(request){(error) in
+            if error != nil{
+                print("Error \(requestIdentifier)")
             }
         }
     }
     
-    func addTodayPromisesToUserDefaults() {
+    func addTodayPromisesToUserDefaults(promises: [Promise]) {
         var calendar = Calendar.current
         calendar.timeZone = NSTimeZone.local
         let encoder = JSONEncoder()
