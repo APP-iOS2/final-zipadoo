@@ -35,10 +35,7 @@ struct PromiseDetailProgressBarView: View {
     
     /// 1초마다 갱신되는 타이머
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
-    /*
-    /// 약속 종료 여부를 감지하는 상태 변수
-    @State private var promiseFinishCheck: Bool = false
-    */
+
     var body: some View {
         VStack(alignment: .leading) {
             /*
