@@ -6,14 +6,21 @@
 //
 
 import SwiftUI
+import MessageUI
 
 struct MyPageView: View {
     // 지난 약속을 위한 프로퍼티 래퍼
     @EnvironmentObject private var promiseViewModel: PromiseViewModel
     /// 감자 충전 뷰 Bool값
     @State private var isShownFullScreenCover = false
+    /// 로그아웃 알럿 버튼
+    @State private var isLogoutAlert: Bool = false
     /// 프로그래스바 높이
     @State private var progressBarValue: Double = 0
+    /// 문의하기(오픈카톡)
+    @State private var isOpenChatSheet: Bool = false
+    /// 문의하기(메일)
+    @State private var isOpenMailSheet: Bool = false
     // MARK: - 유저 프로퍼티
     /// 현재 로그인된 유저(옵셔널)
     let currentUser: User? = AuthStore.shared.currentUser
@@ -21,6 +28,7 @@ struct MyPageView: View {
     var userImageString: String {
         return currentUser?.profileImageString ?? "defaultProfile"
     }
+    private let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "버전 정보를 불러올 수 없습니다"
     // MARK: - 지각 깊이 데이터 프로퍼티
     // 지각률에 따라 메시지 다르게 보여주기
     /// 지각 수
@@ -165,85 +173,216 @@ struct MyPageView: View {
                                 Spacer()
                             }
                             .padding(.bottom, 16)
+                            .padding(.leading, 5)
                             
                             Spacer()
+                            
+                            Button {
+                                isLogoutAlert.toggle()
+                            } label: {
+                                
+                                ZStack(alignment: .center) {
+                                    Image(systemName: "circle")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 40)
+                                        .fontWeight(.light)
+                                    
+                                    Image(systemName: "rectangle.portrait.and.arrow.forward")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 25)
+                                        .fontWeight(.medium)
+                                        .padding(.leading, 7.3)
+                                }
+                                .foregroundStyle(.blackprimary)
+                            }
+                            .alert(isPresented: $isLogoutAlert) {
+                                Alert(
+                                    title: Text(""),
+                                    message: Text("로그아웃됩니다"),
+                                    primaryButton: .default(Text("취소"), action: {
+                                        isLogoutAlert = false
+                                    }),
+                                    secondaryButton: .destructive(Text("로그아웃"), action: {
+                                        isLogoutAlert = false
+                                        Task {
+                                            try await AuthStore.shared.logOut()
+                                        }
+                                    })
+                                )
+                            }
                         }
-                        .padding(.bottom, 15)
+                        //                        .padding(.bottom, 15)
                         
                         // MARK: - 감자, 캐시 (추후 업데이트 하기)
-//                        Group {
-//                            HStack {
-//                                Image("potato")
-//                                    .resizable()
-//                                    .aspectRatio(contentMode: .fill)
-//                                    .frame(width: 23, height: 20)
-//                                
-//                                Text("감자")
-//                                    .foregroundColor(.secondary)
-//                                
-//                                Spacer()
-//                                
-//                                Text("\(currentUser?.potato ?? 0)")
-//                                    .fontWeight(.semibold)
-//                                
-//                                Text("감자")
-//                            }
-//                            .padding(.bottom, 5)
-//                            
-//                            HStack {
-//                                Text("₩")
-//                                    .fontWeight(.regular)
-//                                    .padding(3)
-//                                    .overlay {
-//                                        Circle()
-//                                            .stroke(Color.primary, lineWidth: 1)
-//                                    }
-//                                    .frame(width: 23, height: 20)
-//                                
-//                                Text("캐시")
-//                                    .foregroundColor(.secondary)
-//                                
-//                                Spacer()
-//                                
-//                                Text("0")
-//                                    .fontWeight(.semibold)
-//                                
-//                                Text("원")
-//                                
-//                            }
-//                        }
-//                        .font(.headline)
+                        //                        Group {
+                        //                            HStack {
+                        //                                Image("potato")
+                        //                                    .resizable()
+                        //                                    .aspectRatio(contentMode: .fill)
+                        //                                    .frame(width: 23, height: 20)
+                        //
+                        //                                Text("감자")
+                        //                                    .foregroundColor(.secondary)
+                        //
+                        //                                Spacer()
+                        //
+                        //                                Text("\(currentUser?.potato ?? 0)")
+                        //                                    .fontWeight(.semibold)
+                        //
+                        //                                Text("감자")
+                        //                            }
+                        //                            .padding(.bottom, 5)
+                        //
+                        //                            HStack {
+                        //                                Text("₩")
+                        //                                    .fontWeight(.regular)
+                        //                                    .padding(3)
+                        //                                    .overlay {
+                        //                                        Circle()
+                        //                                            .stroke(Color.primary, lineWidth: 1)
+                        //                                    }
+                        //                                    .frame(width: 23, height: 20)
+                        //
+                        //                                Text("캐시")
+                        //                                    .foregroundColor(.secondary)
+                        //
+                        //                                Spacer()
+                        //
+                        //                                Text("0")
+                        //                                    .fontWeight(.semibold)
+                        //
+                        //                                Text("원")
+                        //
+                        //                            }
+                        //                        }
+                        //                        .font(.headline)
                         
                         // MARK: - 감자 이용내열, 충전버튼
-//                        Divider()
-//                            .padding(.vertical, 15)
+                        //                        Divider()
+                        //                            .padding(.vertical, 15)
                         
-//                        HStack {
-//                            NavigationLink {
-//                                MyPotatoView()
-//                            } label: {
-//                                HStack {
-//                                    Text("감자 이용내역")
-//                                    Image(systemName: "chevron.right")
-//                                        .fontWeight(.light)
-//                                }
-//                            }
-//                            Spacer()
-//                            
-//                            Button {
-//                                isShownFullScreenCover = true
-//                            } label: {
-//                                Image(systemName: "creditcard")
-//                                Text("충전")
-//                                    .fontWeight(.semibold)
-//                            }
-//                        }
-//                        .foregroundColor(.primary)
-//                        .font(.headline)
+                        //                        HStack {
+                        //                            NavigationLink {
+                        //                                MyPotatoView()
+                        //                            } label: {
+                        //                                HStack {
+                        //                                    Text("감자 이용내역")
+                        //                                    Image(systemName: "chevron.right")
+                        //                                        .fontWeight(.light)
+                        //                                }
+                        //                            }
+                        //                            Spacer()
+                        //
+                        //                            Button {
+                        //                                isShownFullScreenCover = true
+                        //                            } label: {
+                        //                                Image(systemName: "creditcard")
+                        //                                Text("충전")
+                        //                                    .fontWeight(.semibold)
+                        //                            }
+                        //                        }
+                        //                        .foregroundColor(.primary)
+                        //                        .font(.headline)
                         // MARK: - TossPay 뷰
-//                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-//                            TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
-//                        }) // 감자코인
+                        //                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+                        //                            TossPayView(isShownFullScreenCover: $isShownFullScreenCover)
+                        //                        }) // 감자코인
+                        
+                    }
+                    .padding(20)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundColor(.mocha)
+                            .frame(height: 150)
+                            .opacity(0.1)
+                            .shadow(color: .primary, radius: 10, x: 5, y: 5)
+                    )
+                    .padding(.vertical, 20)
+                    .padding(.bottom, 30)
+                    
+                    // MARK: - 지각 깊이 (추후 업데이트 하기)
+                    //                    VStack(alignment: .leading) {
+                    //                        Text("지각 깊이")
+                    //                            .font(.title3)
+                    //                            .fontWeight(.semibold)
+                    //
+                    //                        HStack(alignment: .center) {
+                    //                            Text(crustDepth)
+                    //                            Spacer()
+                    //                            Text("  \(tradyMessage)")
+                    //                        }
+                    //                        .foregroundStyle(.secondary)
+                    //                        .padding(.top, 1)
+                    //
+                    //                        VStack {
+                    //                            Image(crustBackgroundImage)
+                    //                                .resizable()
+                    //                                .aspectRatio(contentMode: .fill)
+                    //                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                    //                                .overlay(
+                    //                                    RoundedRectangle(cornerRadius: 10)
+                    //                                        .stroke(Color.white, lineWidth: 5))
+                    //                        }
+                    //                        .overlay(alignment: .topTrailing) {
+                    //                            // MARK: - 약속 데이터 vytl
+                    //                            HStack {
+                    //                                VStack {
+                    //                                    Text("지각률 \(tradyPercent)%")
+                    //                                        .font(.headline)
+                    //                                        .fontWeight(.semibold)
+                    //                                        .foregroundColor(.red)
+                    //
+                    //                                    Text("지각횟수 \(tradyCount)회")
+                    //                                        .font(.subheadline)
+                    //                                        .foregroundColor(.black)
+                    //
+                    //                                }
+                    //                            }
+                    //                            .padding(3)
+                    //                            .background(.white)
+                    //                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                    //                            .shadow(radius: 1.2)
+                    //                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 15))
+                    //                        }
+                    //                        // MARK: - 두더지 이미지
+                    //                        .overlay(alignment: .leading) {
+                    //                            Image(dooAction)
+                    //                                .resizable()
+                    //                                .aspectRatio(contentMode: .fit)
+                    //                                .frame(width: 100)
+                    //                                .padding(.leading, 20)
+                    //                        }
+                    //                    }
+                    //                    .padding(20)
+                    //                    .overlay(
+                    //                        RoundedRectangle(cornerRadius: 10)
+                    //                            .foregroundColor(.primary)
+                    //                            .opacity(0.05)
+                    //                            .shadow(color: .primary, radius: 10, x: 5, y: 5)
+                    //
+                    //                    )
+                    //                    .padding(.vertical, 15)
+                    
+                    // MARK: - 지난 약속
+                    VStack {
+                        NavigationLink {
+                            PastPromiseView()
+                                .environmentObject(promiseViewModel)
+                        } label: {
+                            HStack {
+                                Text("지난 약속")
+                                
+                                Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                                
+                            }
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
+                        }
                         
                     }
                     .padding(20)
@@ -258,78 +397,14 @@ struct MyPageView: View {
                     )
                     .padding(.bottom)
                     
-                    // MARK: - 지각 깊이 (추후 업데이트 하기)
-//                    VStack(alignment: .leading) {
-//                        Text("지각 깊이")
-//                            .font(.title3)
-//                            .fontWeight(.semibold)
-//                        
-//                        HStack(alignment: .center) {
-//                            Text(crustDepth)
-//                            Spacer()
-//                            Text("  \(tradyMessage)")
-//                        }
-//                        .foregroundStyle(.secondary)
-//                        .padding(.top, 1)
-//                        
-//                        VStack {
-//                            Image(crustBackgroundImage)
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fill)
-//                                .clipShape(RoundedRectangle(cornerRadius: 10))
-//                                .overlay(
-//                                    RoundedRectangle(cornerRadius: 10)
-//                                        .stroke(Color.white, lineWidth: 5))
-//                        }
-//                        .overlay(alignment: .topTrailing) {
-//                            // MARK: - 약속 데이터 vytl
-//                            HStack {
-//                                VStack {
-//                                    Text("지각률 \(tradyPercent)%")
-//                                        .font(.headline)
-//                                        .fontWeight(.semibold)
-//                                        .foregroundColor(.red)
-//                                    
-//                                    Text("지각횟수 \(tradyCount)회")
-//                                        .font(.subheadline)
-//                                        .foregroundColor(.black)
-//                                    
-//                                }
-//                            }
-//                            .padding(3)
-//                            .background(.white)
-//                            .clipShape(RoundedRectangle(cornerRadius: 10))
-//                            .shadow(radius: 1.2)
-//                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 15))
-//                        }
-//                        // MARK: - 두더지 이미지
-//                        .overlay(alignment: .leading) {
-//                            Image(dooAction)
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .frame(width: 100)
-//                                .padding(.leading, 20)
-//                        }
-//                    }
-//                    .padding(20)
-//                    .overlay(
-//                        RoundedRectangle(cornerRadius: 10)
-//                            .foregroundColor(.primary)
-//                            .opacity(0.05)
-//                            .shadow(color: .primary, radius: 10, x: 5, y: 5)
-//                        
-//                    )
-//                    .padding(.vertical, 15)
-                    
-                    // MARK: - 지난 약속
+                    // MARK: - 회원정보 수정
                     VStack {
                         NavigationLink {
-                            PastPromiseView()
-                                .environmentObject(promiseViewModel)
+                            EditProfileView(emailLoginStore: EmailLoginStore())
                         } label: {
                             HStack {
-                                Text("지난 약속")
-                                    
+                                Text("회원정보 수정")
+                                
                                 Spacer()
                                 
                                 Image(systemName: "chevron.right")
@@ -339,7 +414,7 @@ struct MyPageView: View {
                             .fontWeight(.semibold)
                             .foregroundColor(.primary)
                         }
-
+                        
                     }
                     .padding(20)
                     .overlay(
@@ -351,32 +426,28 @@ struct MyPageView: View {
                         }
                         
                     )
-                    /*
-                    .padding(.vertical, 15)
+                    .padding(.bottom)
                     
-                    // MARK: - 획득 배지 (추후 업데이트 하기)
+                    // MARK: - 비밀번호 변경
                     VStack {
-                        HStack {
-                            Text("획득 배지")
-                                .font(.title3)
-                                .fontWeight(.semibold)
-                                .padding(.vertical)
-                            Spacer()
-                        }
-                        Group {
+                        NavigationLink {
+                            EditPasswordView()
+                        } label: {
                             HStack {
-                                Spacer()
-                                Image("badges")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: UIScreen.main.bounds.width * 0.8)
+                                Text("비밀번호 변경")
                                 
                                 Spacer()
+                                
+                                Image(systemName: "chevron.right")
+                                
                             }
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
                         }
-                        Spacer()
+                        
                     }
-                    .padding()
+                    .padding(20)
                     .overlay(
                         ZStack {
                             RoundedRectangle(cornerRadius: 10)
@@ -386,19 +457,129 @@ struct MyPageView: View {
                         }
                         
                     )
-                    */
+                    .padding(.bottom)
+                    
+                    // MARK: - 앱 정보
+                    VStack {
+                        NavigationLink {
+                            AppInfoView()
+                        } label: {
+                            HStack {
+                                
+                                Text("앱 정보")
+                                
+                                Spacer()
+                                
+                                Text("ver \(appVersion)")
+                                    .foregroundColor(.secondary)
+                                
+                                Image(systemName: "chevron.right")
+                                
+                            }
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.primary)
+                        }
+                        
+                    }
+                    .padding(20)
+                    .overlay(
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 10)
+                                .foregroundColor(.primary)
+                                .opacity(0.05)
+                                .shadow(color: .primary, radius: 10, x: 5, y: 5)
+                        }
+                        
+                    )
+                    .padding(.bottom, 25)
+                    /*
+                     .padding(.vertical, 15)
+                     
+                     // MARK: - 획득 배지 (추후 업데이트 하기)
+                     VStack {
+                     HStack {
+                     Text("획득 배지")
+                     .font(.title3)
+                     .fontWeight(.semibold)
+                     .padding(.vertical)
+                     Spacer()
+                     }
+                     Group {
+                     HStack {
+                     Spacer()
+                     Image("badges")
+                     .resizable()
+                     .aspectRatio(contentMode: .fit)
+                     .frame(width: UIScreen.main.bounds.width * 0.8)
+                     
+                     Spacer()
+                     }
+                     }
+                     Spacer()
+                     }
+                     .padding()
+                     .overlay(
+                     ZStack {
+                     RoundedRectangle(cornerRadius: 10)
+                     .foregroundColor(.primary)
+                     .opacity(0.05)
+                     .shadow(color: .primary, radius: 10, x: 5, y: 5)
+                     }
+                     
+                     )
+                     */
                 }
                 .padding()
-                // MARK: - 설정 버튼
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        NavigationLink {
-                            SettingView()
+                
+                VStack(alignment: .center, spacing: 10) {
+                    Text("고객센터 문의하기")
+                        .font(.system(size: 16)).bold()
+                        .foregroundStyle(.mocha)
+                    HStack {
+                        Button {
+                            isOpenChatSheet.toggle()
                         } label: {
-                            Image(systemName: "gearshape")
-                                .foregroundColor(.primary)
+                            Image(systemName: "message.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 40)
+                                .padding(.leading)
+                        }
+                        .padding(.trailing)
+                        .confirmationDialog("", isPresented: $isOpenChatSheet) {
+                            Button {
+                                let url = URL(string: "https://open.kakao.com/o/s2WMpYMf")!
+                                UIApplication.shared.open(url)
+                            } label: {
+                                Text("오픈카톡으로 문의하기")
+                            }
+                            Button("cancel", role: .cancel) { print("tap cancel") }
+                        }
+                        
+                        Button {
+                            isOpenMailSheet.toggle()
+                        } label: {
+                            Image(systemName: "envelope.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 40)
+                                .padding(.trailing)
+                        }
+                        .confirmationDialog("", isPresented: $isOpenMailSheet) {
+                            Button {
+                                // 메일앱이 깔려있으면 가능
+                                EmailController.shared.sendEmail(subject: "제목을 입력해주세요", body: "문의 내용을 입력해주세요", to: "someday0307@gmail.com")
+                            } label: {
+                                Text("이메일로 문의하기")
+                            }
+                            Button("cancel", role: .cancel) { print("tap cancel") }
                         }
                     }
+                    .foregroundStyle(.mocha)
+                    .opacity(0.5)
+                } // 문의하기
+                .toolbar {
                     // MARK: - 지파두 마크
                     ToolbarItem(placement: .topBarLeading) {
                         Image("zipadooMark")
@@ -416,6 +597,35 @@ struct MyPageView: View {
         } // NavigationStack
     } // body
 }
+
+/// 이메일로 문의하기
+class EmailController: NSObject, MFMailComposeViewControllerDelegate {
+    public static let shared = EmailController()
+    private override init() { }
+    
+    func sendEmail(subject: String, body: String, to: String) {
+        if !MFMailComposeViewController.canSendMail() {
+            print("메일 앱이 없어 보낼 수 없음")
+            return
+        }
+        let mailComposer = MFMailComposeViewController()
+        mailComposer.mailComposeDelegate = self
+        mailComposer.setToRecipients([to])
+        mailComposer.setSubject(subject)
+        mailComposer.setMessageBody(body, isHTML: false)
+        EmailController.getRootViewController()?.present(mailComposer, animated: true, completion: nil)
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        EmailController.getRootViewController()?.dismiss(animated: true, completion: nil)
+    }
+    
+    static func getRootViewController() -> UIViewController? {
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        return windowScene?.windows.first?.rootViewController
+    }
+}
+
 
 #Preview {
     MyPageView()
