@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		043B06D42B17068900722DD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0463CE3F2B0E268700125FC4 /* GoogleService-Info.plist */; };
+		043B06D42B17068900722DD2 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		047127952AD7BE4F00767E9C /* OneMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127942AD7BE4F00767E9C /* OneMapView.swift */; };
 		047127972AD7C7A800767E9C /* OneAddLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127962AD7C7A800767E9C /* OneAddLocation.swift */; };
 		04C7A85A2AC94889001B2AF8 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 04C7A8592AC94889001B2AF8 /* Alamofire */; };
@@ -822,7 +822,7 @@
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
 				8B93D2FE2B063793006385FF /* Settings.bundle in Resources */,
 				FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */,
-				043B06D42B17068900722DD2 /* GoogleService-Info.plist in Resources */,
+				043B06D42B17068900722DD2 /* (null) in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

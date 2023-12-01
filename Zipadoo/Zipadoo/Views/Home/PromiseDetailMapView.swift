@@ -211,7 +211,7 @@ struct PromiseDetailMapView: View {
             var updateTimer = 0
             
             var timer: Timer?
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: locationStore.myLocation.arriveTime == 0 || timeType == .endTracking) { _ in
+            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: locationStore.myLocation.arriveTime == 0) { _ in
                 print("나는 맵에서 만들어짐! ! 1초 지남")
                 
                 // 추적 종료된 약속인지 계산 -> 추적이 종료되면 지각횟수와 약속수 갱신 & 타이머 종료 & 뷰에서 나가는 알람
