@@ -204,18 +204,6 @@ struct PromiseDetailProgressBarView: View {
             }
             .padding(.vertical)
         }
-        .task {
-            /*
-            promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
-             */
-        }
-        /// 매 초마다 약속이 종료되었는지 여부를 확인
-        .onReceive(timer) { _ in
-            print("매초마다 약속이 종료되었는지 여부 확인")
-            /*
-            promiseFinishCheck = calculateTimeRemaining(targetTime: promise.promiseDate)
-             */
-        }
         .overlay(
             RoundedRectangle(cornerRadius: 10)
                 .foregroundColor(.primary)
