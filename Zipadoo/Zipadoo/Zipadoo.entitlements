@@ -10,7 +10,7 @@
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.education.techit.zipadoo.dev</string>
+		<string>group.project.zipadoo</string>
 	</array>
 </dict>
 </plist>
