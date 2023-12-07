@@ -9,8 +9,6 @@
 		<string>https://zipadoo.onelink.me</string>
 	</array>
 	<key>com.apple.security.application-groups</key>
-	<array>
-		<string>group.project.zipadoo</string>
-	</array>
+	<array/>
 </dict>
 </plist>
