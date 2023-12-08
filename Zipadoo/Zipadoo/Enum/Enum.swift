@@ -74,3 +74,7 @@ enum PromiseCellType {
         }
     }
 }
+
+enum AuthError: Error {
+    case userNotLoggedIn
+}

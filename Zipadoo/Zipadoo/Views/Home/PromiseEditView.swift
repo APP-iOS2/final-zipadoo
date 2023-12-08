@@ -244,6 +244,7 @@ struct PromiseEditView: View {
                     TextField("약속 이름을 수정해주세요", text: $editedPromiseTitle)
                         .fontWeight(.semibold)
                         .autocorrectionDisabled()
+                        .autocapitalization(.none)
                         .onChange(of: editedPromiseTitle) {
                             if editedPromiseTitle.count > 15 { editedPromiseTitle = String(editedPromiseTitle.prefix(15)) }
                         }

@@ -69,6 +69,7 @@ struct AddPromiseView: View {
                     
                     HStack {
                         TextField("약속 이름을 입력해주세요.", text: $promiseTitle)
+                            .autocapitalization(.none)
                             .fontWeight(.semibold)
                             .onChange(of: promiseTitle) {
                                 if promiseTitle.count > 15 {
