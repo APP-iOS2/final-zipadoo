@@ -59,7 +59,6 @@ extension View {
                     .foregroundColor(.secondary.opacity(0.7)))
             }
         }
-        .keyboardType(.numberPad)
         .font(.title3)
         .fontWeight(.semibold)
         .autocapitalization(.none) // 소문자로 시작

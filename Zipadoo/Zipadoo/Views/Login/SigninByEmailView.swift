@@ -107,6 +107,7 @@ struct SigninByEmailView: View {
                 Group {
                     HStack {
                         loginTextFieldView($emailLoginStore.phoneNumber, "휴대폰 번호", isvisible: true)
+                            .keyboardType(.numberPad)
                         
                         eraseButtonView($emailLoginStore.phoneNumber)
                     } // HStack
