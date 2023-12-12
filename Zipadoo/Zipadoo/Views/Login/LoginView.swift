@@ -76,17 +76,17 @@ struct LoginView: View {
                             .disabled(true)
                              */
                             // MARK: - 애플 로그인 버튼
-                            Button {
-                                print("apple login")
-                            } label: {
-                                // 다크모드 아니면 애플버튼 색 반전
-                                if colorScheme == .dark {
-                                    imageAndLoginButtonView("apple_login")
-                                } else {
-                                    imageAndLoginButtonView("apple_login")
-                                        .colorInvert()
-                                }
-                            }
+//                            Button {
+//                                print("apple login")
+//                            } label: {
+//                                // 다크모드 아니면 애플버튼 색 반전
+//                                if colorScheme == .dark {
+//                                    imageAndLoginButtonView("apple_login")
+//                                } else {
+//                                    imageAndLoginButtonView("apple_login")
+//                                        .colorInvert()
+//                                }
+//                            }
                              
                             // 두더지 몸통
                             Rectangle()

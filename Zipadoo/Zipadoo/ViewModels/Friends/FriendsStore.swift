@@ -49,11 +49,14 @@ final class FriendsStore: ObservableObject {
             var tempFriendsIDArray: [User] = []
             
             for id in uniqueFriendsIdArray {
-                
-                let friend: User? = try await UserStore.fetchUser(userId: id)
-                
-                if let friend {
-                    tempFriendsIDArray.append(friend)
+                do {
+                    if let friend = try await UserStore.fetchUser(userId: id) {
+                        tempFriendsIDArray.append(friend)
+                    } else {
+                        print("친구 정보를 찾을 수 없습니다: \(id)")
+                    }
+                } catch {
+                    print("친구 정보 가져오기 실패: \(error)")
                 }
             }
             
@@ -62,8 +65,18 @@ final class FriendsStore: ObservableObject {
                 self.friendsFetchArray = tempFriendsIDArray
                 self.isLoadingFriends = false
             }
+        } catch DecodingError.valueNotFound(let type, let context) {
+            print("Null value found for type \(type) at path \(context.codingPath)")
+            
+            // Null 값을 삭제하는 로직 추가
+            let updatedFriendsFetchArray = friendsFetchArray.filter { $0 != nil }
+            
+            // 업데이트된 friendsFetchArray를 사용하여 UI 업데이트
+            DispatchQueue.main.async {
+                self.friendsFetchArray = updatedFriendsFetchArray
+            }
         } catch {
-            print("fetch 실패")
+            print("fetch 실패: \(error)")
         }
     }
     

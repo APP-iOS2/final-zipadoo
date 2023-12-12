@@ -85,6 +85,41 @@ final class AuthStore: ObservableObject {
         }
     }
     
+    /// 사용자 데이터 삭제(계정 삭제)
+    @MainActor
+    func deleteAccount() async throws {
+        guard let currentUid = userSession?.uid else { return }
+        
+        // 해당 유저 파이어베이스 데이터베이스의 문서를 삭제
+        try await dbRef.document(currentUid).delete()
+        
+        
+        // 해당 유저의 유저이메일 콜렉션 삭제
+        let userEmailRef = Firestore.firestore().collection("User email")
+        let userDocuments = try await userEmailRef.whereField("userId", isEqualTo: currentUid).getDocuments()
+        
+        for document in userDocuments.documents {
+            try await document.reference.delete()
+        }
+        
+        // 해당 유저와 친구사이인 유저들의 친구목록 문서에서 해당유저 id 삭제
+        let friendsArray = try await dbRef.whereField("friendsIdArray", isEqualTo: currentUid).getDocuments()
+        
+        for document in friendsArray.documents {
+            try await document.reference.delete()
+        }
+        
+        
+        // authentication에 있는 해당유저의 이메일 삭제
+        try await Auth.auth().currentUser?.delete()
+        
+        // 섹션 초기화
+        self.userSession = nil
+        self.currentUser = nil
+        
+        print("회원 정보 삭제 성공")
+    }
+    
     /// 사용자 로그인 수행
     @MainActor
     func login(email: String, password: String) async throws -> Bool {

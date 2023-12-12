@@ -44,6 +44,7 @@ struct SearchBarCell: View {
                 // 장소(키워드) 입력창
                 TextField(textFieldText, text: $searchText)
                     .textFieldStyle(.roundedBorder)
+                    .autocapitalization(.none)
                     .autocorrectionDisabled()
                 // Search 버튼
                 Button {

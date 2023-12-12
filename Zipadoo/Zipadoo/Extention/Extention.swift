@@ -10,6 +10,7 @@ import CoreLocation
 import Foundation
 import MapKit
 import SwiftUI
+import FirebaseAuth
 
 // View의 Extension
 extension View {
@@ -244,3 +245,17 @@ extension PromiseTitleAndTimeView {
         }
     }
 }
+
+extension AuthStore {
+    @MainActor
+    func reauthenticate(email: String, password: String) async throws {
+        guard let user = Auth.auth().currentUser else {
+            // Handle the case where the user is not logged in
+            throw AuthError.userNotLoggedIn
+        }
+
+        let credential = EmailAuthProvider.credential(withEmail: email, password: password)
+        try await user.reauthenticate(with: credential)
+    }
+}
+
