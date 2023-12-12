@@ -103,7 +103,7 @@ final class UserStore: ObservableObject {
         return urlString
     }
     
-    /// 유저 지각횟수, 약속 수 계산
+    /// 유저 지각횟수, 약속 수 계산후 업데이트
     static func updatePromiseTradyCount(promiseDate: Double, arriveTime: Double) async throws {
         do {
             print("updateTradyFunc")
@@ -119,7 +119,7 @@ final class UserStore: ObservableObject {
                 updateTradyCount = userData?.tradyCount ?? 0
             }
             let updatePromiseCount = (userData?.promiseCount ?? 0) + 1
-            data["tardyCount"] = updateTradyCount
+            data["tradyCount"] = updateTradyCount
             data["promiseCount"] = updatePromiseCount
             
             try await Firestore.firestore().collection("Users").document(AuthStore.shared.currentUser?.id ?? "no id").updateData(data)

@@ -11,6 +11,8 @@ import MessageUI
 struct MyPageView: View {
     // 지난 약속을 위한 프로퍼티 래퍼
     @EnvironmentObject private var promiseViewModel: PromiseViewModel
+    
+    @ObservedObject private var userStore = UserStore()
     /// 감자 충전 뷰 Bool값
     @State private var isShownFullScreenCover = false
     /// 로그아웃 알럿 버튼
@@ -23,27 +25,21 @@ struct MyPageView: View {
     @State private var isOpenMailSheet: Bool = false
     // MARK: - 유저 프로퍼티
     /// 현재 로그인된 유저(옵셔널)
-    let currentUser: User? = AuthStore.shared.currentUser
+    @State var currentUser: User? = AuthStore.shared.currentUser
     /// 유저가 있으면 유저프로필 String 저장
     var userImageString: String {
         return currentUser?.profileImageString ?? "defaultProfile"
     }
     private let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "버전 정보를 불러올 수 없습니다"
     // MARK: - 지각 깊이 데이터 프로퍼티
-    // 지각률에 따라 메시지 다르게 보여주기
-    /// 지각 수
-    let tradyCount = AuthStore.shared.currentUser?.tradyCount ?? 0
-    /// 약속 수
-    let promiseCount = AuthStore.shared.currentUser?.promiseCount ?? 0
-    /// 지각률
+    /// 지각률 ( 소수점 셋째자리에서 반올림)
     var tradyPercent: Int {
-        if promiseCount == 0 {
+        if currentUser?.promiseCount == 0 {
             return 0
         }
-        return tradyCount/promiseCount * 100
-
+        return Int(Double(currentUser?.tradyCount ?? 0) / Double(currentUser?.promiseCount ?? 0) * 100)
     }
-    /// 약속 지킨 횟수
+    /// 약속 지킨 퍼센테이지
     var promisePercent: Int {
         return 100 - tradyPercent
     }
@@ -69,8 +65,8 @@ struct MyPageView: View {
     }
     /// 유저 칭호 설명
     var tradyMessage: String {
-        if promiseCount == 0 {
-            return "약속을 잘 지켜보아요."
+        if currentUser?.promiseCount == 0 {
+            return "뉴비!약속을 잘 지켜보아요."
         } else {
             switch promisePercent {
             case 0: return "약속이 뭔말인지 몰라요?"
@@ -88,7 +84,7 @@ struct MyPageView: View {
     }
     /// 약속 지킨 횟수에 따른 유저 칭호
     var tradyTitle: String {
-        if promiseCount == 0 {
+        if currentUser?.promiseCount == 0 {
             return "뉴비약속러"
         } else {
             switch promisePercent {
@@ -107,7 +103,7 @@ struct MyPageView: View {
     }
     /// 유저의 지각 깊이
     var crustDepth: String {
-        if promiseCount == 0 {
+        if currentUser?.promiseCount == 0 {
             return "0km--지표"
         } else {
             switch promisePercent {
@@ -126,7 +122,7 @@ struct MyPageView: View {
     }
     /// 유저의 지각 깊이에 따른 배경 이미지
     var crustBackgroundImage: String {
-        if promiseCount == 0 {
+        if currentUser?.promiseCount == 0 {
             return "crust2"
         } else {
             switch promisePercent {
@@ -300,70 +296,66 @@ struct MyPageView: View {
                             .shadow(color: .primary, radius: 10, x: 5, y: 5)
                     )
                     .padding(.vertical, 20)
-                    .padding(.bottom, 30)
+//                    .padding(.bottom, 30)
                     
                     // MARK: - 지각 깊이 (추후 업데이트 하기)
-                    //                    VStack(alignment: .leading) {
-                    //                        Text("지각 깊이")
-                    //                            .font(.title3)
-                    //                            .fontWeight(.semibold)
-                    //
-                    //                        HStack(alignment: .center) {
-                    //                            Text(crustDepth)
-                    //                            Spacer()
-                    //                            Text("  \(tradyMessage)")
-                    //                        }
-                    //                        .foregroundStyle(.secondary)
-                    //                        .padding(.top, 1)
-                    //
-                    //                        VStack {
-                    //                            Image(crustBackgroundImage)
-                    //                                .resizable()
-                    //                                .aspectRatio(contentMode: .fill)
-                    //                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                    //                                .overlay(
-                    //                                    RoundedRectangle(cornerRadius: 10)
-                    //                                        .stroke(Color.white, lineWidth: 5))
-                    //                        }
-                    //                        .overlay(alignment: .topTrailing) {
-                    //                            // MARK: - 약속 데이터 vytl
-                    //                            HStack {
-                    //                                VStack {
-                    //                                    Text("지각률 \(tradyPercent)%")
-                    //                                        .font(.headline)
-                    //                                        .fontWeight(.semibold)
-                    //                                        .foregroundColor(.red)
-                    //
-                    //                                    Text("지각횟수 \(tradyCount)회")
-                    //                                        .font(.subheadline)
-                    //                                        .foregroundColor(.black)
-                    //
-                    //                                }
-                    //                            }
-                    //                            .padding(3)
-                    //                            .background(.white)
-                    //                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                    //                            .shadow(radius: 1.2)
-                    //                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 15))
-                    //                        }
-                    //                        // MARK: - 두더지 이미지
-                    //                        .overlay(alignment: .leading) {
-                    //                            Image(dooAction)
-                    //                                .resizable()
-                    //                                .aspectRatio(contentMode: .fit)
-                    //                                .frame(width: 100)
-                    //                                .padding(.leading, 20)
-                    //                        }
-                    //                    }
-                    //                    .padding(20)
-                    //                    .overlay(
-                    //                        RoundedRectangle(cornerRadius: 10)
-                    //                            .foregroundColor(.primary)
-                    //                            .opacity(0.05)
-                    //                            .shadow(color: .primary, radius: 10, x: 5, y: 5)
-                    //
-                    //                    )
-                    //                    .padding(.vertical, 15)
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("지각 깊이")
+                                .font(.title3)
+                                .fontWeight(.semibold)
+                            Spacer()
+                            Text(tradyMessage)
+                                .foregroundStyle(.secondary)
+                        }
+                        
+                        VStack(alignment: .leading) {
+                            Image(crustBackgroundImage)
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .clipShape(RoundedRectangle(cornerRadius: 10))
+
+                            Text(crustDepth)
+                                .padding(.top, 1)
+                        }
+                        .overlay(alignment: .topTrailing) {
+                            // MARK: - 약속 데이터 vytl
+                            HStack {
+                                VStack {
+                                    Text("지각률 \(tradyPercent)%")
+                                        .font(.headline)
+                                        .fontWeight(.semibold)
+                                        .foregroundColor(.red)
+                                    
+                                    Text("지각횟수 \(currentUser?.tradyCount ?? 0)회")
+                                        .font(.subheadline)
+                                        .foregroundColor(.black)
+                                }
+                            }
+                            .padding(3)
+                            .background(.white)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .shadow(radius: 1.2)
+                            .padding(EdgeInsets(top: 15, leading: 0, bottom: 0, trailing: 15))
+                        }
+                        // MARK: - 두더지 이미지
+                        .overlay(alignment: .leading) {
+                            Image(dooAction)
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 100)
+                                .padding(.leading, 20)
+                        }
+                    }
+                    .padding(20)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .foregroundColor(.primary)
+                            .opacity(0.05)
+                            .shadow(color: .primary, radius: 10, x: 5, y: 5)
+                        
+                    )
+                    .padding(.vertical, 15)
                     
                     // MARK: - 지난 약속
                     VStack {
@@ -591,7 +583,8 @@ struct MyPageView: View {
             } // ScrollView
             .onAppear {
                 Task {
-                    try await AuthStore.shared.loadUserData()
+                    try await userStore.loginUser()
+                    self.currentUser = userStore.currentUser
                 }
             }
         } // NavigationStack
@@ -626,44 +619,44 @@ class EmailController: NSObject, MFMailComposeViewControllerDelegate {
     }
 }
 
-
 #Preview {
     MyPageView()
         .environmentObject(PromiseViewModel())
 }
-
+/*
 // MARK: - 지각 퍼센테이지 (구현이 제대로 안되고 사용하지 않아서 주석처리)
-//struct MyPageProgressBar: View {
-//    @Binding var progress: Double
-//    
-//    var body: some View {
-//        VStack {
-//            ZStack(alignment: .leading) {
-//                Rectangle()
-//                    .frame(height: 30)
-//                    .cornerRadius(5)
-//                    .foregroundStyle(.zipadoo.opacity(0.3))
-//                
-//                ZStack {
-//                    Rectangle()
-//                        .frame(width: CGFloat(progress) * 330, height: 30)
-//                        .cornerRadius(5)
-//                        .foregroundColor(.zipadoo)
-//                    
-//                    VStack {
-//                        Image("dothez")
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fit)
-//                            .frame(width: 30)
-//                        //                            .rotationEffect(Angle(degrees: 90))
-//                            .shadow(radius: 10, x: 1, y: 1)
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
+struct MyPageProgressBar: View {
+    @Binding var progress: Double
+    
+    var body: some View {
+        VStack {
+            ZStack(alignment: .leading) {
+                Rectangle()
+                    .frame(height: 30)
+                    .cornerRadius(5)
+                    .foregroundStyle(.zipadoo.opacity(0.3))
+                
+                ZStack {
+                    Rectangle()
+                        .frame(width: CGFloat(progress) * 330, height: 30)
+                        .cornerRadius(5)
+                        .foregroundColor(.zipadoo)
+                    
+                    VStack {
+                        Image("dothez")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 30)
+                        //                            .rotationEffect(Angle(degrees: 90))
+                            .shadow(radius: 10, x: 1, y: 1)
+                    }
+                }
+            }
+        }
+    }
+}
 
-//#Preview {
-//    MyPageProgressBar(progress: .constant(1.19))
-//}
+#Preview {
+    MyPageProgressBar(progress: .constant(1.19))
+}
+*/

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import MapKit
-
+/*
 /// PromiseDetailProgressBarView에서 사용
 struct ProgressSubView: View {
     let friends: LocationAndParticipant
@@ -74,3 +74,4 @@ struct ProgressSubView: View {
         }
     }
 }
+*/
