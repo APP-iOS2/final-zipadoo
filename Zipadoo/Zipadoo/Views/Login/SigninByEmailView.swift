@@ -27,7 +27,7 @@ struct SigninByEmailView: View {
     
     /// 모든 형식이 유효한지
     private var isValid: Bool {
-        loginEmailCheckView.isCorrectNickname(nickname: emailLoginStore.nickName) && loginEmailCheckView.isCorrectPhoneNumber(phonenumber: emailLoginStore.phoneNumber) && loginEmailCheckView.isCorrectPassword(password: emailLoginStore.password)
+        loginEmailCheckView.isCorrectNickname(nickname: emailLoginStore.nickName) &&  loginEmailCheckView.isCorrectPassword(password: emailLoginStore.password)
     }
     
     /// 유효성 검사
@@ -76,7 +76,7 @@ struct SigninByEmailView: View {
                 spacerView(50)
                 
                 // MARK: - 입력 안내 메세지
-                Text("계정이 없습니다. \n가입할 이름과 휴대폰 번호를 입력해 주세요.")
+                Text("계정이 없습니다. \n가입할 이름을 입력해 주세요.")
                     .modifier(LoginTextStyle())
                 // 유효성 메세지
                 Text("\(validMessage)")
@@ -103,22 +103,22 @@ struct SigninByEmailView: View {
                 }
                 spacerView(20)
                 
-                // MARK: - 휴대폰 번호 입력
-                Group {
-                    HStack {
-                        loginTextFieldView($emailLoginStore.phoneNumber, "휴대폰 번호", isvisible: true)
-                            .keyboardType(.numberPad)
-                        
-                        eraseButtonView($emailLoginStore.phoneNumber)
-                    } // HStack
-                    
-                    underLine()
-                    
-                    Text("-를 제외하고 입력해주세요")
-                        .modifier(LoginMessageStyle(color: .primary))
-
-                }
-                spacerView(20)
+//                // MARK: - 휴대폰 번호 입력
+//                Group {
+//                    HStack {
+//                        loginTextFieldView($emailLoginStore.phoneNumber, "휴대폰 번호", isvisible: true)
+//                            .keyboardType(.numberPad)
+//                        
+//                        eraseButtonView($emailLoginStore.phoneNumber)
+//                    } // HStack
+//                    
+//                    underLine()
+//                    
+//                    Text("-를 제외하고 입력해주세요")
+//                        .modifier(LoginMessageStyle(color: .primary))
+//
+//                }
+//                spacerView(20)
 
                 // MARK: - 비밀번호 입력
                 Group {

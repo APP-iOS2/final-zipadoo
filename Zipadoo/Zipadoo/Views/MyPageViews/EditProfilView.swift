@@ -48,7 +48,7 @@ struct EditProfileView: View {
     }
     
     private var isValid: Bool {
-        loginEmailCheckView.isCorrectNickname(nickname: emailLoginStore.nickName) && loginEmailCheckView.isCorrectPhoneNumber(phonenumber: emailLoginStore.phoneNumber)
+        loginEmailCheckView.isCorrectNickname(nickname: emailLoginStore.nickName)
     }
     
     var body: some View {
@@ -88,6 +88,11 @@ struct EditProfileView: View {
                         nickNameMessage = filtered != newValue ? "특수문자는 입력할 수 없습니다." : ""
                     }
                     underLine()
+                        .padding(.top, -15)
+                    Text("2글자 이상, 6글자 이하로 입력해주세요.")
+                        .foregroundColor(.gray)
+                        .padding(.top, -25)
+                    
                     
                     VStack(alignment: .leading) {
                         Text(nickNameMessage)
@@ -103,25 +108,25 @@ struct EditProfileView: View {
                 }
                 .padding(.top, 20)
                 
-                Group {
-                    HStack {
-                        loginTextFieldView($emailLoginStore.phoneNumber, phoneNumber, isvisible: true)
-                        
-                        // 입력한 내용 지우기 버튼
-                        eraseButtonView($emailLoginStore.phoneNumber)
-                    }
-                    .onChange(of: emailLoginStore.phoneNumber) { newValue in
-                        let filtered = newValue.filter { $0.isNumber }
-                        numberMessage = filtered != newValue ? "숫자만 입력해주세요" : ""
-                    }
-                    underLine()
-                    
-                    Text(numberMessage)
-                        .foregroundColor(.red)
-                        .font(.subheadline)
-                        .opacity(0.7)
-                }
-                .padding(.top, 20)
+//                Group {
+//                    HStack {
+//                        loginTextFieldView($emailLoginStore.phoneNumber, phoneNumber, isvisible: true)
+//                        
+//                        // 입력한 내용 지우기 버튼
+//                        eraseButtonView($emailLoginStore.phoneNumber)
+//                    }
+//                    .onChange(of: emailLoginStore.phoneNumber) { newValue in
+//                        let filtered = newValue.filter { $0.isNumber }
+//                        numberMessage = filtered != newValue ? "숫자만 입력해주세요" : ""
+//                    }
+//                    underLine()
+//                    
+//                    Text(numberMessage)
+//                        .foregroundColor(.red)
+//                        .font(.subheadline)
+//                        .opacity(0.7)
+//                }
+//                .padding(.top, 20)
             }
             .padding()
             
