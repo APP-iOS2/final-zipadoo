@@ -19,9 +19,9 @@ struct SearchBarCell: View {
     /// 검색버튼에 의한 리스트 도출 값
     @State var searching: Bool = false
     /// accuracy: 정렬기준
-    @State private var sort: String = "accuracy" // distance
-    /// 거리로 부터 5000m내의 검색결과 제공(잘 안되는것 같음)
-    @State private var radius: Int = 5000
+    @State private var sort: String = "accuracy" // distance / accuracy
+    /// 거리로 부터 20km내의 검색결과 제공(잘 안되는것 같음)
+    @State private var radius: Int = 20000
     /// 장소에 대한 URL 값 (카카오맵 기반)
     @State private var placeURL: String?
     /// 검색 결과 리스트의 i 버튼 클릭 값
@@ -112,26 +112,26 @@ struct SearchBarCell: View {
                         } label: {
                             VStack(alignment: .leading) {
                                 HStack {
-                                    VStack {
-                                        HStack {
-                                            Text(result.place_name)
-                                                .font(.headline)
-                                                .foregroundColor(.primary)
-                                            Text(result.category_group_name)
-                                                .font(.caption).bold()
-                                                .foregroundColor(.blue)
-                                            Spacer()
-                                        }
-                                        .padding(.bottom, 5)
-                                        
-                                        HStack {
-                                            Text(result.road_address_name)
+                                    VStack(alignment: .leading) {
+                                            HStack {
+                                                Text(result.place_name.count > 14 ? result.place_name.prefix(14) + "..." : result.place_name)
+                                                    .font(.headline)
+                                                  
+                                                Text(category(categoryName: result.category_name))
+                                                    .font(.caption).bold()
+                                                    .foregroundColor(.blue)
+                                                    .padding(.bottom, -3)
+                                                    .padding(.leading, -7)
+                                                
+                                                Spacer()
+                                            }
+                                            .foregroundColor(.primary)
+                                            
+                                            Text(result.road_address_name.isEmpty ? result.address_name : result.road_address_name)
                                                 .font(.subheadline)
-                                                .foregroundColor(.primary)
-                                            Spacer()
+                                            
                                         }
-                                    }
-                                    Spacer()
+//                                        .padding(.bottom, 5)
                                     
                                     /// ( i ) 버튼을 누르면 검색을 통해 얻은 url값으로 더 자세한 정보가 담긴 카카오맵 웹뷰 시트가 띄어짐
                                     Button {
@@ -153,9 +153,17 @@ struct SearchBarCell: View {
                     }
                 }
                 .listStyle(.plain)
-                .navigationBarBackButtonHidden(true)
+                .scrollIndicators(.hidden)
+                .padding(.bottom)
+                .cornerRadius(5, corners: .allCorners)
             }
         }
+    }
+    private func category(categoryName: String) -> String {
+        let firstI = categoryName.index(after: categoryName.lastIndex(of: ">") ?? categoryName.endIndex)
+        let lastI = categoryName.index(before: categoryName.endIndex)
+        
+        return String(categoryName[firstI...lastI])
     }
 }
 

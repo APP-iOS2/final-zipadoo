@@ -93,7 +93,9 @@ class SearchOfKakaoLocal: ObservableObject {
                                 }
                             }
                             
-                            lists.sort(by: { $0.distance < $1.distance })
+//                            if sort == "distance" {
+//                                lists.sort(by: { $0.distance < $1.distance })
+//                            }
                             
                             DispatchQueue.main.async {
                                 self.searchKakaoLocalDatas = lists

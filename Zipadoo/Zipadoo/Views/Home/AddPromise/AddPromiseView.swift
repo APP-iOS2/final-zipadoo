@@ -317,6 +317,7 @@ struct AddPromiseView: View {
         } // 날짜/시간 선택 sheet
         .sheet(isPresented: $isShowAddPlaceMapSheet) {
             OneMapView(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, sheetTitle: $sheetTitle)
+                .interactiveDismissDisabled()
         } // 약속장소 지도 sheet
         .sheet(isPresented: $isShowPenalty) {
             HStack {
