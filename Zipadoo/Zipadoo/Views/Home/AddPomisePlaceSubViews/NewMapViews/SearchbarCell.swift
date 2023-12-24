@@ -159,11 +159,15 @@ struct SearchBarCell: View {
             }
         }
     }
+    
     private func category(categoryName: String) -> String {
-        let firstI = categoryName.index(after: categoryName.lastIndex(of: ">") ?? categoryName.endIndex)
-        let lastI = categoryName.index(before: categoryName.endIndex)
-        
-        return String(categoryName[firstI...lastI])
+        if let greaterThanIndex = categoryName.lastIndex(of: ">") {
+            let firstI = categoryName.index(after: greaterThanIndex)
+            let lastI = categoryName.index(before: categoryName.endIndex)
+            return String(categoryName[firstI...lastI])
+        } else {
+            return categoryName
+        }
     }
 }
 
