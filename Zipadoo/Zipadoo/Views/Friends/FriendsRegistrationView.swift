@@ -58,7 +58,7 @@ struct FriendsRegistrationView: View {
                     .padding(.all, 10)
                     .background(Color.primary)
                     .cornerRadius(16)
-                    .foregroundColor(.white)
+                    .foregroundColor(.primaryInvert)
                     .font(Font.body.bold())
                 } // HStack
             } // HStack
