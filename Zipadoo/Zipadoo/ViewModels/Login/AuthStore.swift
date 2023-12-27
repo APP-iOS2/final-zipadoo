@@ -52,11 +52,11 @@ final class AuthStore: ObservableObject {
             //self.userSession = result.user
             
             // 이미지의 경로를 저장할 변수를 초기화
-            var profileImageString: String = "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
+            var profileImageString: String = ""
             
             // 회원가입 중에 이미지가 선택되었다면 저장하고 경로를 가져오기
             if let uiImage = profileImage {
-                profileImageString = try await ProfileImageUploader.uploadImage(image: uiImage) ?? "https://cdn.freebiesupply.com/images/large/2x/apple-logo-transparent.png"
+                profileImageString = try await ProfileImageUploader.uploadImage(image: uiImage) ?? ""
             }
             
             // 사용자 정보를 Firestore에 저장
@@ -93,7 +93,6 @@ final class AuthStore: ObservableObject {
         // 해당 유저 파이어베이스 데이터베이스의 문서를 삭제
         try await dbRef.document(currentUid).delete()
         
-        
         // 해당 유저의 유저이메일 콜렉션 삭제
         let userEmailRef = Firestore.firestore().collection("User email")
         let userDocuments = try await userEmailRef.whereField("userId", isEqualTo: currentUid).getDocuments()
@@ -108,7 +107,6 @@ final class AuthStore: ObservableObject {
         for document in friendsArray.documents {
             try await document.reference.delete()
         }
-        
         
         // authentication에 있는 해당유저의 이메일 삭제
         try await Auth.auth().currentUser?.delete()
