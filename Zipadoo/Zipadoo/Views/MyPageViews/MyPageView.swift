@@ -148,7 +148,7 @@ struct MyPageView: View {
                     VStack(spacing: 5) {
                         HStack {
                             // MARK: - 프로필 이미지
-                            ProfileImageView(imageString: currentUser?.profileImageString ?? userImageString, size: .regular)
+                            ProfileImageView(imageString: userImageString, size: .regular)
                                 .overlay(
                                     Circle()
                                         .stroke(Color.gray, lineWidth: 3)
