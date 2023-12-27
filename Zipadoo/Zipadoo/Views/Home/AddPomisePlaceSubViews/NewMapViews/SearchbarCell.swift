@@ -18,15 +18,14 @@ struct SearchBarCell: View {
     @State private var searchText: String = ""
     /// 검색버튼에 의한 리스트 도출 값
     @State var searching: Bool = false
-    /// accuracy: 정렬기준
-    @State private var sort: String = "accuracy" // distance
-    /// 거리로 부터 5000m내의 검색결과 제공(잘 안되는것 같음)
-    @State private var radius: Int = 5000
+    /// 거리로 부터 20km내의 검색결과 제공
+    @State private var radius: Int = 20000
     /// 장소에 대한 URL 값 (카카오맵 기반)
     @State private var placeURL: String?
     /// 검색 결과 리스트의 i 버튼 클릭 값
     @State private var clickedPlaceInfo: Bool = false
     @State private var textFieldText: String = "키워드를 입력하세요."
+//    @State private var myLocation: Bool = false
     
     var locationManager: LocationManager = LocationManager()
     @Binding var selectedPlace: Bool
@@ -53,10 +52,9 @@ struct SearchBarCell: View {
                         isClickedPlace = false
                         selectedPlace = false
                         // 카카오로컬 API를 활용하여 카카오로컬에 담긴 JSON파일과 통신하여 데이터를 불러옴
-                        searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: String(locationManager.location?.coordinate.latitude ?? 0.0), currentPoiY: String(locationManager.location?.coordinate.longitude ?? 0.0), radius: radius, sort: sort)
+                        searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: String(locationManager.location?.coordinate.latitude ?? 0.0), currentPoiY: String(locationManager.location?.coordinate.longitude ?? 0.0), radius: radius, sort: /*myLocation ? "distance" : */"accuracy")
                         print("현재 사용자 위도(장소검색): \(locationManager.location?.coordinate.latitude ?? 0.0)")
                         print("현재 사용자 경도(장소검색): \(locationManager.location?.coordinate.longitude ?? 0.0)")
-                        
                     } else { // searchText가 빈 값일 경우 해당 텍스트를 보여줌
                         textFieldText = "한 글자 이상 입력해주세요."
                     }
@@ -74,6 +72,34 @@ struct SearchBarCell: View {
             
             /// 검색버튼을 눌렀을 경우, searching값이 true가 되어 검색결과에 대한 리스트값 도출
             if searching == true {
+                HStack {
+                    Button {
+//                        myLocation = false
+                        searching = false
+                        searchText = ""
+                    } label: {
+                        Text("취소")
+                    }
+                    .tint(.red)
+                    .padding(.leading, 5)
+                    
+                    Spacer()
+                    
+//                    Text("내 주변")
+//                    Button {
+//                        myLocation.toggle()
+//                        searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: String(locationManager.location?.coordinate.latitude ?? 0.0), currentPoiY: String(locationManager.location?.coordinate.longitude ?? 0.0), radius: radius, sort: myLocation ? "distance" : "accuracy")
+//                    } label: {
+//                        Image(systemName: myLocation ? "checkmark.square.fill" : "checkmark.square")
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: 15, height: 15)
+//                    }
+//                    .tint(.mocha)
+//                    .padding(.trailing, 5)
+                }
+                .padding(.top, -10)
+                
                 List(searchOfKakaoLocal.searchKakaoLocalDatas, id: \.place_name) { result in
                     VStack {
                         Button {
@@ -108,30 +134,31 @@ struct SearchBarCell: View {
                             textFieldText = "키워드를 입력하세요."
                             selectedPlace = false
                             searching = false
+//                            myLocation = false
                             hideKeyboard()
                         } label: {
                             VStack(alignment: .leading) {
                                 HStack {
-                                    VStack {
+                                    VStack(alignment: .leading) {
                                         HStack {
-                                            Text(result.place_name)
+                                            Text(result.place_name.count > 14 || (result.place_name.count + category(categoryName: result.category_name).count > 23) || (result.place_name.count > 14 && category(categoryName: result.category_name).count > 10) ? result.place_name.prefix(13) + "..." : result.place_name)
                                                 .font(.headline)
-                                                .foregroundColor(.primary)
-                                            Text(result.category_group_name)
+                                            
+                                            Text(category(categoryName: result.category_name))
                                                 .font(.caption).bold()
                                                 .foregroundColor(.blue)
+                                                .padding(.bottom, -3)
+                                                .padding(.leading, -7)
+                                            
                                             Spacer()
                                         }
-                                        .padding(.bottom, 5)
+                                        .foregroundColor(.primary)
                                         
-                                        HStack {
-                                            Text(result.road_address_name)
-                                                .font(.subheadline)
-                                                .foregroundColor(.primary)
-                                            Spacer()
-                                        }
+                                        Text(result.road_address_name.isEmpty ? result.address_name : result.road_address_name)
+                                            .font(.subheadline)
+                                        
                                     }
-                                    Spacer()
+                                    //                                        .padding(.bottom, 5)
                                     
                                     /// ( i ) 버튼을 누르면 검색을 통해 얻은 url값으로 더 자세한 정보가 담긴 카카오맵 웹뷰 시트가 띄어짐
                                     Button {
@@ -144,6 +171,7 @@ struct SearchBarCell: View {
                                             .frame(width: 30)
                                     }
                                     .tint(.mocha)
+                                    .padding(.trailing, -7)
                                     .fullScreenCover(item: $placeURL) { url in
                                         PlaceInfoWebView(urlString: url)
                                     }
@@ -153,8 +181,21 @@ struct SearchBarCell: View {
                     }
                 }
                 .listStyle(.plain)
-                .navigationBarBackButtonHidden(true)
+                .scrollIndicators(.hidden)
+                .padding(.bottom)
+                .cornerRadius(5, corners: .bottomLeft)
+                .cornerRadius(5, corners: .bottomRight)
             }
+        }
+    }
+    /// 제일 마지막 부분의 카테고리를 표시하게 해주는 함수
+    private func category(categoryName: String) -> String {
+        if let greaterThanIndex = categoryName.lastIndex(of: ">") {
+            let firstI = categoryName.index(after: greaterThanIndex)
+            let lastI = categoryName.index(before: categoryName.endIndex)
+            return String(categoryName[firstI...lastI])
+        } else {
+            return categoryName
         }
     }
 }
