@@ -42,13 +42,14 @@ final class FriendsStore: ObservableObject {
                 friendsIdArray = user.friendsIdArray
             }
             
-            // 친구 ID 중복 값 제거
-            let uniqueFriendsIdArray = Array(Set(friendsIdArray))
+            /// 친구 순서를 유지하면서 고유하게 저장
+            let uniqueFriendsIdArray = NSOrderedSet(array: friendsIdArray)
             
             // 친구 id로 친구정보 가져오기
             var tempFriendsIDArray: [User] = []
             
-            for id in uniqueFriendsIdArray {
+            /// uniqueFriendsIdArray.array 정렬된 세트에서 요소 배열을 검색
+            for id in uniqueFriendsIdArray.array.compactMap({ $0 as? String }) {
                 do {
                     if let friend = try await UserStore.fetchUser(userId: id) {
                         tempFriendsIDArray.append(friend)
