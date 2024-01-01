@@ -54,11 +54,14 @@ struct FriendsRegistrationView: View {
                         }
                     } label: {
                         Text("친구 요청")
+                            .foregroundColor(.zipadoo)
+                            .colorInvert()
                     }
                     .padding(.all, 10)
-                    .background(Color.primary)
+                    .background(.zipadoo)
+                    
                     .cornerRadius(16)
-                    .foregroundColor(.primaryInvert)
+                
                     .font(Font.body.bold())
                 } // HStack
             } // HStack
