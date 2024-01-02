@@ -44,7 +44,7 @@ struct EditProfileView: View {
     
     /// 비어있는 TextField가 있을 때 true
     private var isFieldEmpty: Bool {
-        nickname.isEmpty || phoneNumber.isEmpty
+        nickname.isEmpty
     }
     
     private var isValid: Bool {
@@ -92,7 +92,6 @@ struct EditProfileView: View {
                     Text("2글자 이상, 6글자 이하로 입력해주세요.")
                         .foregroundColor(.gray)
                         .padding(.top, -25)
-                    
                     
                     VStack(alignment: .leading) {
                         Text(nickNameMessage)
@@ -145,17 +144,18 @@ struct EditProfileView: View {
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             nickname = userStore.currentUser?.nickName ?? ""
-            phoneNumber = userStore.currentUser?.phoneNumber ?? ""
+//            phoneNumber = userStore.currentUser?.phoneNumber ?? ""
         }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
-                    checkValid()
+//                    checkValid()
                     isEditAlert = true
+                    print("수정 버튼 누르기")
                 } label: {
                     Text("수정")
                 }
-                .disabled(isFieldEmpty || !isValid) // 필드가 하나라도 비어있으면 비활성화
+                .disabled(nickname.isEmpty || !isValid) // 필드가 하나라도 비어있으면 비활성화
             }
         }
         .alert(isPresented: $isEditAlert) {

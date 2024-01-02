@@ -27,7 +27,6 @@
 		1BF69BD82ABD16B800DE635D /* TossPayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF69BD72ABD16B800DE635D /* TossPayView.swift */; };
 		1BF69BDB2ABD16C500DE635D /* TossPayments in Frameworks */ = {isa = PBXBuildFile; productRef = 1BF69BDA2ABD16C500DE635D /* TossPayments */; };
 		3F13F0B92ABC277C00BCFC00 /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */; };
-		3F4C16AC2B39712E00F2D1DB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F4C16AB2B39712E00F2D1DB /* GoogleService-Info.plist */; };
 		3F5B9A202AD6BACE00CDD52D /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F5B9A1F2AD6BACE00CDD52D /* FriendProfileView.swift */; };
 		3F6C02912B0ED3FA00FCA74B /* SlidingTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6C02902B0ED3FA00FCA74B /* SlidingTabView.swift */; };
 		3F6D17942B039919007C8998 /* ProgressSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6D17932B039919007C8998 /* ProgressSubView.swift */; };
@@ -138,6 +137,7 @@
 		FAD5FE412ABBD3E800E05E6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */; };
 		FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */; };
 		FAD7EE562ABD54690042A55A /* PromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD7EE552ABD54690042A55A /* PromiseModel.swift */; };
+		FAFAA8512B443B1F003E40B7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FAFAA8502B443B1F003E40B7 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,7 +182,6 @@
 		1B6C11C22AD6825D00770D43 /* PromiseEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseEditView.swift; sourceTree = "<group>"; };
 		1BF69BD72ABD16B800DE635D /* TossPayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TossPayView.swift; sourceTree = "<group>"; };
 		3F13F0B82ABC277C00BCFC00 /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
-		3F4C16AB2B39712E00F2D1DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Desktop/Documentation/지파두/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3F5B9A1F2AD6BACE00CDD52D /* FriendProfileView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		3F6C02902B0ED3FA00FCA74B /* SlidingTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingTabView.swift; sourceTree = "<group>"; };
 		3F6D17932B039919007C8998 /* ProgressSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSubView.swift; sourceTree = "<group>"; };
@@ -285,6 +284,7 @@
 		FAD5FE402ABBD3E800E05E6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FAD5FE432ABBD3E800E05E6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		FAD7EE552ABD54690042A55A /* PromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseModel.swift; sourceTree = "<group>"; };
+		FAFAA8502B443B1F003E40B7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -628,7 +628,7 @@
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
-				3F4C16AB2B39712E00F2D1DB /* GoogleService-Info.plist */,
+				FAFAA8502B443B1F003E40B7 /* GoogleService-Info.plist */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
 				FA103F1C2AE2163900BE56CA /* Enum */,
@@ -822,6 +822,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
+				FAFAA8512B443B1F003E40B7 /* GoogleService-Info.plist in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
