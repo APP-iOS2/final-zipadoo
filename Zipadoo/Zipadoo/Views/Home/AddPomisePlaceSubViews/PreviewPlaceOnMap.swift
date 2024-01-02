@@ -12,7 +12,7 @@ import MapKit
 struct PreviewPlaceOnMap: View {
     /// 선택한 약속장소에 대한 카메라 포지션 값
     @State private var position: MapCameraPosition = MapCameraPosition.automatic
-    @ObservedObject var promiseViewModel: PromiseViewModel
+//    @ObservedObject var promiseViewModel: PromiseViewModel
     
     @Binding var destination: String
     @Binding var address: String

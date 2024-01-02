@@ -57,11 +57,15 @@ class SearchOfKakaoLocal: ObservableObject {
         
         func fetchData() {
             var lists: [KakaoLocalData] = []
-            var metaInfo = MetaInfo(total_count: 0, pageable_count: 0, is_end: false)
-            self.metaInfos = metaInfo
+//            let metaInfo = MetaInfo(total_count: 0, pageable_count: 0, is_end: false)
+            let distance = "https://dapi.kakao.com/v2/local/search/keyword.json?y=\(currentPoiY)&x=\(currentPoiX)&radius=\(String(radius))"
+            let accuracy = "https://dapi.kakao.com/v2/local/search/keyword.json?"
             
-            searchKakaoLocalDatas = lists //y=\(currentPoiX)&x=\(currentPoiX)&radius=\(radius)
-            AF.request("https://dapi.kakao.com/v2/local/search/keyword.json?", method: .get, parameters: parameters, headers: headers)
+//            self.metaInfos = metaInfo
+            
+            searchKakaoLocalDatas = lists
+            
+            AF.request(sort == "accuracy" ? accuracy : distance, method: .get, parameters: parameters, headers: headers)
                 .validate()
                 .responseJSON(completionHandler: { response in
                     switch response.result {

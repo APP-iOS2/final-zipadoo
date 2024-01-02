@@ -143,7 +143,7 @@ struct PromiseEditView: View {
                 .presentationDetents([.fraction(0.7)])
         }
         .sheet(isPresented: $isShowingEditMapSheet) { // coordXXX, coordYYY
-            OneMapView(promiseViewModel: promiseViewModel, destination: $editedDestination, address: $editedAddress, coordXXX: $destinationLatitude, coordYYY: $destinationLongitude, sheetTitle: $sheetTitle)
+            OneMapView(/*promiseViewModel: promiseViewModel,*/destination: $editedDestination, address: $editedAddress, coordXXX: $destinationLatitude, coordYYY: $destinationLongitude, sheetTitle: $sheetTitle)
         }
         .sheet(isPresented: $isShowingPenalty, content: {
             HStack {

@@ -12,11 +12,12 @@ import MapKit
 /// 장소 검색 이후 장소 등록을 위한 뷰모델
 struct AddPlaceButtonCell: View {
     @Environment(\.dismiss) private var dismiss /// 이전 뷰(AddPromiseView)로 돌아가는 함수
-    @ObservedObject var promiseViewModel: PromiseViewModel
+//    @ObservedObject var promiseViewModel: PromiseViewModel
     var addLocationStore: AddLocationStore = AddLocationStore()
     @Binding var isClickedPlace: Bool
     @Binding var placeOfText: String
     @Binding var addLocationButton: Bool
+    @Binding var isClickedDestination: String
     @Binding var destination: String
     @Binding var address: String
     @Binding var coordXXX: Double
@@ -37,7 +38,7 @@ struct AddPlaceButtonCell: View {
                                     // X 버튼을 클릭 시 해당 장소에 대한 데이터 값들이 초기화됨
                                     Button {
                                         isClickedPlace = false
-                                        destination = ""
+                                        isClickedDestination = ""
                                         address = ""
                                         placeOfText = ""
                                     } label: {
@@ -54,17 +55,17 @@ struct AddPlaceButtonCell: View {
                             VStack {
                                 Spacer()
                                 
-                                Text(destination)
+                                Text(isClickedDestination)
                                     .font(.title3)
                                     .foregroundStyle(.primary)
-                                    .padding(.top)
                                     .padding(.horizontal)
+                                    .padding(.top, 5)
                                 
                                 Spacer()
                                 
                                 // 클릭한 장소에 대해 선택하기 버튼을 클릭하면 해당 장소에 대한 값들을 promiseLocation에 입력시킴
                                 Button {
-                                    destination = destination
+                                    destination = isClickedDestination
                                     address = address
                                     coordXXX = coordXXX
                                     coordYYY = coordYYY
