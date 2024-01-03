@@ -54,7 +54,9 @@ struct SearchBarCell: View {
                 // Search 버튼
                 Button {
                     if searchText != "" { // searchText가 빈 값이 아닐 경우 searching값을 true로 지정
-                        searching = true
+                        withAnimation(nil) {
+                            searching = true
+                        }
                         isClickedPlace = false
                         selectedPlace = false
                         // 카카오로컬 API를 활용하여 카카오로컬에 담긴 JSON파일과 통신하여 데이터를 불러옴
