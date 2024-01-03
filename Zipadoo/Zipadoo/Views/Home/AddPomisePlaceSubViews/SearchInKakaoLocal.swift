@@ -57,11 +57,14 @@ class SearchOfKakaoLocal: ObservableObject {
         
         func fetchData() {
             var lists: [KakaoLocalData] = []
-            var metaInfo = MetaInfo(total_count: 0, pageable_count: 0, is_end: false)
-            self.metaInfos = metaInfo
+            let https = "https://dapi.kakao.com/v2/local/search/keyword.json?"
             
-            searchKakaoLocalDatas = lists //y=\(currentPoiX)&x=\(currentPoiX)&radius=\(radius)
-            AF.request("https://dapi.kakao.com/v2/local/search/keyword.json?", method: .get, parameters: parameters, headers: headers)
+//            let metaInfo = MetaInfo(total_count: 0, pageable_count: 0, is_end: false)
+//            self.metaInfos = metaInfo
+            
+            searchKakaoLocalDatas = lists
+            
+            AF.request(https, method: .get, parameters: parameters, headers: headers)
                 .validate()
                 .responseJSON(completionHandler: { response in
                     switch response.result {
@@ -89,7 +92,6 @@ class SearchOfKakaoLocal: ObservableObject {
 //                                    break
 //                                }
 //                            }
-                             
                             for item in documents {
                                 if let id = item["id"] as? String,
                                    let placeName = item["place_name"] as? String,
