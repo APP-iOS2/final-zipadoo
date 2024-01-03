@@ -30,7 +30,7 @@ struct EditProfileView: View {
     @State private var nicknameMessageColor: Color = .black
     /// 조건에 맞으면 true, 다음페이지로 넘어가기
     @State private var readyToNavigate: Bool = false
-   
+    
     @ObservedObject var userStore: UserStore = UserStore()
     @Environment (\.dismiss) private var dismiss
     
@@ -107,90 +107,90 @@ struct EditProfileView: View {
                 }
                 .padding(.top, 20)
                 
-//                Group {
-//                    HStack {
-//                        loginTextFieldView($emailLoginStore.phoneNumber, phoneNumber, isvisible: true)
-//                        
-//                        // 입력한 내용 지우기 버튼
-//                        eraseButtonView($emailLoginStore.phoneNumber)
-//                    }
-//                    .onChange(of: emailLoginStore.phoneNumber) { newValue in
-//                        let filtered = newValue.filter { $0.isNumber }
-//                        numberMessage = filtered != newValue ? "숫자만 입력해주세요" : ""
-//                    }
-//                    underLine()
-//                    
-//                    Text(numberMessage)
-//                        .foregroundColor(.red)
-//                        .font(.subheadline)
-//                        .opacity(0.7)
-//                }
-//                .padding(.top, 20)
+                //                Group {
+                //                    HStack {
+                //                        loginTextFieldView($emailLoginStore.phoneNumber, phoneNumber, isvisible: true)
+                //
+                //                        // 입력한 내용 지우기 버튼
+                //                        eraseButtonView($emailLoginStore.phoneNumber)
+                //                    }
+                //                    .onChange(of: emailLoginStore.phoneNumber) { newValue in
+                //                        let filtered = newValue.filter { $0.isNumber }
+                //                        numberMessage = filtered != newValue ? "숫자만 입력해주세요" : ""
+                //                    }
+                //                    underLine()
+                //
+                //                    Text(numberMessage)
+                //                        .foregroundColor(.red)
+                //                        .font(.subheadline)
+                //                        .opacity(0.7)
+                //                }
+                //                .padding(.top, 20)
             }
             .padding()
             
             Spacer()
             
             Button {
-                isDeleteUserDataAlert = true
+                isDeleteUserDataAlert.toggle()
             } label: {
                 Text("회원 탈퇴")
                     .underline()
             }
+            .alert(isPresented: $isDeleteUserDataAlert) {
+                Alert(
+                    title: Text("정말로 회원 탈퇴 하시겠습니까?"),
+                    message: Text("회원 정보가 즉시 삭제됩니다"),
+                    primaryButton: .default(Text("취소"), action: {
+                        isDeleteUserDataAlert = false
+                    }),
+                    secondaryButton: .destructive(Text("회원 탈퇴"), action: {
+                        Task {
+                            do {
+                                try await AuthStore.shared.deleteAccount()
+                            } catch {
+                                print("회원 탈퇴 실패: \(error.localizedDescription)")
+                            }
+                        }
+                    })
+                )
+            }
             .tint(.red)
             .padding(.bottom, 10)
-        }
-        .navigationTitle("회원정보 수정")
-        .navigationBarTitleDisplayMode(.inline)
-        .onAppear {
-            nickname = userStore.currentUser?.nickName ?? ""
-//            phoneNumber = userStore.currentUser?.phoneNumber ?? ""
-        }
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button {
-//                    checkValid()
-                    isEditAlert = true
-                    print("수정 버튼 누르기")
-                } label: {
-                    Text("수정")
-                }
-                .disabled(nickname.isEmpty || !isValid) // 필드가 하나라도 비어있으면 비활성화
+            
+            .navigationTitle("회원정보 수정")
+            .navigationBarTitleDisplayMode(.inline)
+            .onAppear {
+                nickname = userStore.currentUser?.nickName ?? ""
             }
-        }
-        .alert(isPresented: $isEditAlert) {
-            Alert(
-                title: Text(""),
-                message: Text("회원정보가 수정됩니다"),
-                primaryButton: .default(Text("취소"), action: {
-                    isEditAlert = false
-                }),
-                secondaryButton: .destructive(Text("수정"), action: {
-                    isEditAlert = false
-                    dismiss()
-                    Task {
-                        try await userStore.updateUserData(image: selectedImage, nick: emailLoginStore.nickName, phone: emailLoginStore.phoneNumber)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        isEditAlert.toggle()
+                        print("수정 버튼 누르기")
+                    } label: {
+                        Text("수정")
                     }
-                })
-            )
-        }
-        .alert(isPresented: $isDeleteUserDataAlert) {
-            Alert(
-                title: Text("정말로 회원 탈퇴 하시겠습니까?"),
-                message: Text("회원 정보가 즉시 삭제됩니다"),
-                primaryButton: .default(Text("취소"), action: {
-                    isDeleteUserDataAlert = false
-                }),
-                secondaryButton: .destructive(Text("회원 탈퇴"), action: {
-                    Task {
-                        do {
-                            try await AuthStore.shared.deleteAccount()
-                        } catch {
-                            print("회원 탈퇴 실패: \(error.localizedDescription)")
-                        }
+                    .alert(isPresented: $isEditAlert) {
+                        Alert(
+                            title: Text(""),
+                            message: Text("회원정보가 수정됩니다"),
+                            primaryButton: .default(Text("취소"), action: {
+                                isEditAlert = false
+                            }),
+                            secondaryButton: .destructive(Text("수정"), action: {
+                                isEditAlert = false
+                                dismiss()
+                                Task {
+                                    try await userStore.updateUserData(image: selectedImage, nick: emailLoginStore.nickName, phone: emailLoginStore.phoneNumber)
+                                }
+                            })
+                        )
                     }
-                })
-            )
+                    // 필드가 하나라도 비어있으면 비활성화
+                    .disabled(nickname.isEmpty || !isValid)
+                }
+            }
         }
     }
     
@@ -203,6 +203,7 @@ struct EditProfileView: View {
                 .autocorrectionDisabled()
         }
     }
+    
     private func checkValid() {
         // 파베 중복확인 : 중복시 true
         Task {
