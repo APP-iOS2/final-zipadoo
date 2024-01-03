@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0431CE1D2B4290B200D2E04D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0431CE1C2B4290B200D2E04D /* GoogleService-Info.plist */; };
 		043B06D42B17068900722DD2 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		047127952AD7BE4F00767E9C /* OneMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127942AD7BE4F00767E9C /* OneMapView.swift */; };
 		047127972AD7C7A800767E9C /* OneAddLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047127962AD7C7A800767E9C /* OneAddLocation.swift */; };
@@ -166,6 +167,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0431CE1C2B4290B200D2E04D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		047127942AD7BE4F00767E9C /* OneMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneMapView.swift; sourceTree = "<group>"; };
 		047127962AD7C7A800767E9C /* OneAddLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneAddLocation.swift; sourceTree = "<group>"; };
 		04DA5A792B04C5ED00C1EEBA /* ParticipantInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantInfoView.swift; sourceTree = "<group>"; };
@@ -787,11 +789,12 @@
 			};
 			buildConfigurationList = FAD5FE342ABBD3E700E05E6E /* Build configuration list for PBXProject "Zipadoo" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
+				ko,
 			);
 			mainGroup = FAD5FE302ABBD3E700E05E6E;
 			packageReferences = (

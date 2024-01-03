@@ -13,7 +13,7 @@ struct OneMapView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @ObservedObject var promiseViewModel: PromiseViewModel
+//    @ObservedObject var promiseViewModel: PromiseViewModel
     /// 연관된 값들을 한 공간에 이름을 지어 모아둔 공간, mapControls를 사용하기 위해 호출함
     @Namespace var mapScope
     /// 카카오 로컬 장소검색을 위한 클래스
@@ -30,7 +30,10 @@ struct OneMapView: View {
     @State private var pinLocation: CLLocationCoordinate2D? = nil
     /// 직접 클릭한 장소명에 대해 사용자가 입력할 수 있는 값
     @State private var placeOfText: String = ""
-
+    /// 약속장소명 뷰모델
+    @State private var isClickedDestination: String = ""
+    /// 내주변 활성화 Bool값
+    @State private var myLocation: Bool = false
     /// 약속장소 장소명 값
     @Binding var destination: String
     /// 약속장소 주소 값
@@ -112,16 +115,35 @@ struct OneMapView: View {
                     })
                 }
                 if isClickedPlace == true { // 화면을 클릭해서 장소를 선택한 값이 true일 경우, 해당 옵션의 장소선택 결정뷰를 띄워줌
-                    AddPlaceButtonCell(promiseViewModel: promiseViewModel, isClickedPlace: $isClickedPlace, placeOfText: $placeOfText, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
+                    AddPlaceButtonCell(isClickedPlace: $isClickedPlace, placeOfText: $placeOfText, addLocationButton: $addLocationButton, isClickedDestination: $isClickedDestination, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
 //                    AddPlaceButtonCell(isClickedPlace: $isClickedPlace, placeOfText: $placeOfText, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, promiseLocation: $promiseLocation)
                 } else if selectedPlace == true {// 화면을 클릭해서 장소를 선택한 값이 true일 경우, 해당 옵션의 장소선택 결정뷰를 띄워줌
-                    OneAddLocation(promiseViewModel: promiseViewModel, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, placeOfText: $placeOfText, selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace)
+                    OneAddLocation(destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, placeOfText: $placeOfText, selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace)
                 } else {
                     
                 }
             }
             .navigationTitle(sheetTitle)
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        myLocation = false
+                        dismiss()
+                        if isClickedPlace == true && addLocationButton == false {
+                            if destination.isEmpty {
+                                destination = ""
+                                address = ""
+                                coordXXX = 0.0
+                                coordYYY = 0.0
+                            }
+                        }
+                    } label: {
+                        Text("닫기")
+                            .foregroundStyle(.red)
+                    }
+                }
+            }
             // 기본적으로 키보드를 보여지지 않게 함
             .onTapGesture {
                 hideKeyboard()
@@ -130,7 +152,7 @@ struct OneMapView: View {
             .onMapCameraChange(frequency: .onEnd) {
                 // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
                 if isClickedPlace == true {
-                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 2500))
+                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 1200))
                 }
             }
             // 맵컨트롤 버튼들을 우츨 상단에 위치시킴
@@ -153,7 +175,7 @@ struct OneMapView: View {
             .safeAreaInset(edge: .bottom) {
                 HStack {
                     Spacer()
-                    SearchBarCell(promiseViewModel: promiseViewModel, selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, selectedPlacePosition: $selectedPlacePosition)
+                    SearchBarCell(/*promiseViewModel: promiseViewModel,*/isClickedDestination: $isClickedDestination, selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace, myLocation: $myLocation, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, selectedPlacePosition: $selectedPlacePosition)
                     Spacer()
                 }
                 .background(.ultraThinMaterial)
