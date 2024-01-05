@@ -8,6 +8,7 @@
 import FirebaseCore
 import FirebaseMessaging
 import SwiftUI
+import TipKit
 //import UserNotifications
 
 // import KakaoSDKAuth
@@ -98,6 +99,10 @@ struct ZipadooApp: App {
                             @unknown default:
                                 break
                             }
+                        }
+                        .task {
+                            try? Tips.configure([
+                                .datastoreLocation(.applicationDefault)])
                         }
                 } else {
                     LaunchScreen()

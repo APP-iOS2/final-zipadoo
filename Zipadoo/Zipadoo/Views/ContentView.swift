@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct ContentView: View {
-    
     @EnvironmentObject var alertStore: AlertStore
     @EnvironmentObject var widgetStore: WidgetStore
     @EnvironmentObject var promiseViewModel: PromiseViewModel
     @StateObject var friendsStore: FriendsStore = FriendsStore()
-    
     @StateObject var viewModel = ContentViewModel()
     @Binding var selectedTab: Int
     

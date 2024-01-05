@@ -18,6 +18,10 @@ struct LaunchScreen: View {
                     .scaledToFit()
                     .frame(width: geometry.size.width, height: geometry.size.height * 0.2)
                     .offset(y: geometry.size.height * 0.38)
+                
+                Image("zipadooMark")
+                    .frame(width: geometry.size.width, height: geometry.size.height * 0.55)
+                    .offset(y: geometry.size.height * 0.38)
             } // GeometryReader
         } // VStack
     } // body

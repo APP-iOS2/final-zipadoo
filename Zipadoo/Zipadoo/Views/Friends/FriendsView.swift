@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TipKit
 
 struct FriendsView: View {
     
@@ -21,6 +22,7 @@ struct FriendsView: View {
     /// 친구 추가뷰 시트
     @State private var isShowingFriendsRegistrationView = false
     
+    private let friendsTip = FriendsTip()
     var body: some View {
         NavigationStack {
             VStack {
@@ -49,9 +51,11 @@ struct FriendsView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         isShowingFriendsRegistrationView = true
+                        friendsTip.invalidate(reason: .actionPerformed)
                     } label: {
                         Image(systemName: "person.crop.circle.fill.badge.plus")
                     }
+                    .popoverTip(friendsTip)
                     .foregroundColor(.primary)
                     .sheet(isPresented: $isShowingFriendsRegistrationView) {
                         FriendsRegistrationView(friendsStore: friendsStore)

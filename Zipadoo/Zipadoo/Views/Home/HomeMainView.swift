@@ -8,6 +8,7 @@
 
 import SwiftUI
 import SlidingTabView
+import TipKit
 
 // MARK: - 홈 메인 뷰
 struct HomeMainView: View {
@@ -19,7 +20,7 @@ struct HomeMainView: View {
     
     /// 약속 카드 테두리 색 모션회전 데이터값
     @State private var rotation: CGFloat = 0.0
-
+    
     /// 선택한 카드 퍼뜨리기 애니메이션 Bool 데이터값
     @State private var isCardSpread: Bool = false
     
@@ -28,6 +29,8 @@ struct HomeMainView: View {
     // 기기별 화면크기 선언
     private let screenWidth = UIScreen.main.bounds.size.width
     private let screenHeight = UIScreen.main.bounds.size.height
+    
+    private let promiseTip = PromiseTip()
     
     // MARK: - HomeMainView body
     var body: some View {
@@ -54,72 +57,72 @@ struct HomeMainView: View {
                         .padding(.top, 100)
                         .padding(.horizontal, 20)
                     } else {
-                    // MARK: - 추적중 약속 리스트가 있을 때 보이도록 함
-                    if !promise.fetchTrackingPromiseData.isEmpty {
-                        HStack {
-                            Text("진행중인 약속")
-                                .foregroundColor(.primary)
-                                .fontWeight(.semibold)
-                                .font(.title2)
-                                .padding(.horizontal, 20)
-                            Spacer()
-                        }
-                        .padding(.top, 10)
-                        .padding(.bottom, -10)
-                    }
-                    // 추적중 약속 리스트
-                    ForEach(promise.fetchTrackingPromiseData) { promise in
-                        // 해당 약속에 대한 PromiseDetailMapView로 이동
-                        NavigationLink {
-                            PromiseDetailMapView(promise: promise)
-                                .environmentObject(self.promise)
-                        } label: {
-                            PromiseListCell(promise: promise, color: .mocha, isTracking: true)
-                        }
-                        .padding(.vertical, 15) // 리스트 패딩차이 조절용
-                    }
-                    
-                    // MARK: - 예정된 약속 리스트가 있을 때 보이도록 함
-                    if !promise.fetchPromiseData.isEmpty {
-                        HStack {
-                            Text("예정된 약속")
-                                .foregroundColor(.primary)
-                                .fontWeight(.semibold)
-                                .font(.title2)
-                                .padding(.horizontal, 20)
-                            Spacer()
-                        }
-                        .padding(.top, 10)
-                        .padding(.bottom, -10)
-                    }
-                    // 예정된 약속 리스트
-                    ForEach(promise.fetchPromiseData.indices, id: \.self) { index in // indices : 유효한 범위(0..<fetchPromiseData.last)
-                        NavigationLink {
-                            PromiseDetailView(promise: promise.fetchPromiseData[index])
-                        } label: {
-                            PromiseListCell(promise: promise.fetchPromiseData[index], color: .mochaInvert, isTracking: false)
-                            .overlay {
-                                Rectangle()
-                                    .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
-                                    .foregroundColor(.black.opacity(isCardSpread ? 0 : 0.001))
-                                    .onTapGesture {
-                                        withAnimation(.easeInOut(duration: 0.35)) {
-                                            // 카드 스프레드 애니메이션 동작
-                                            isCardSpread.toggle()
-                                        }
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-                                            withAnimation(.easeInOut(duration: 0.35)) {
-                                                // 카드 스프레드 애니메이션 끔
-                                                isCardSpread = false
-                                            }
-                                        }
-                                    }
+                        // MARK: - 추적중 약속 리스트가 있을 때 보이도록 함
+                        if !promise.fetchTrackingPromiseData.isEmpty {
+                            HStack {
+                                Text("진행중인 약속")
+                                    .foregroundColor(.primary)
+                                    .fontWeight(.semibold)
+                                    .font(.title2)
+                                    .padding(.horizontal, 20)
+                                Spacer()
                             }
-                            .offset(y: isCardSpread ? 0 : CGFloat(index) * -120)
-                            .padding()
+                            .padding(.top, 10)
+                            .padding(.bottom, -10)
+                        }
+                        // 추적중 약속 리스트
+                        ForEach(promise.fetchTrackingPromiseData) { promise in
+                            // 해당 약속에 대한 PromiseDetailMapView로 이동
+                            NavigationLink {
+                                PromiseDetailMapView(promise: promise)
+                                    .environmentObject(self.promise)
+                            } label: {
+                                PromiseListCell(promise: promise, color: .mocha, isTracking: true)
+                            }
+                            .padding(.vertical, 15) // 리스트 패딩차이 조절용
+                        }
+                        
+                        // MARK: - 예정된 약속 리스트가 있을 때 보이도록 함
+                        if !promise.fetchPromiseData.isEmpty {
+                            HStack {
+                                Text("예정된 약속")
+                                    .foregroundColor(.primary)
+                                    .fontWeight(.semibold)
+                                    .font(.title2)
+                                    .padding(.horizontal, 20)
+                                Spacer()
+                            }
+                            .padding(.top, 10)
+                            .padding(.bottom, -10)
+                        }
+                        // 예정된 약속 리스트
+                        ForEach(promise.fetchPromiseData.indices, id: \.self) { index in // indices : 유효한 범위(0..<fetchPromiseData.last)
+                            NavigationLink {
+                                PromiseDetailView(promise: promise.fetchPromiseData[index])
+                            } label: {
+                                PromiseListCell(promise: promise.fetchPromiseData[index], color: .mochaInvert, isTracking: false)
+                                    .overlay {
+                                        Rectangle()
+                                            .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
+                                            .foregroundColor(.black.opacity(isCardSpread ? 0 : 0.001))
+                                            .onTapGesture {
+                                                withAnimation(.easeInOut(duration: 0.35)) {
+                                                    // 카드 스프레드 애니메이션 동작
+                                                    isCardSpread.toggle()
+                                                }
+                                                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                                                    withAnimation(.easeInOut(duration: 0.35)) {
+                                                        // 카드 스프레드 애니메이션 끔
+                                                        isCardSpread = false
+                                                    }
+                                                }
+                                            }
+                                    }
+                                    .offset(y: isCardSpread ? 0 : CGFloat(index) * -120)
+                                    .padding()
+                            }
                         }
                     }
-                }
                 }
                 .background(Color.primaryInvert.ignoresSafeArea(.all)) // 배경색
                 .frame(maxWidth: .infinity, maxHeight: .infinity) // 스크롤을 최대한 바깥으로 하기 위함
@@ -152,19 +155,24 @@ struct HomeMainView: View {
                 .toolbar {
                     // MARK: - 약속 추가 버튼
                     ToolbarItem(placement: .topBarTrailing) {
-                        Image(systemName: "calendar.badge.plus")
-                            .foregroundColor(.primary)
-                            .fontWeight(.semibold)
-                            .onTapGesture {
-                                // 약속등록 버튼 바운스 실행
-//                                animate.toggle()
-                                // 풀스크린커버 실행
-                                isShownFullScreenCover.toggle()
-                            }
-                            // 약속 등록뷰 올라옴
-                            .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
-                                AddPromiseView(promiseViewModel: promise)
-                            })
+                        Button {
+                            promiseTip.invalidate(reason: .actionPerformed)
+                        } label: {
+                            Image(systemName: "calendar.badge.plus")
+                                .foregroundColor(.primary)
+                                .fontWeight(.semibold)
+                                .onTapGesture {
+                                    // 약속등록 버튼 바운스 실행
+                                    // animate.toggle()
+                                    // 풀스크린커버 실행
+                                    isShownFullScreenCover.toggle()
+                                }
+                        }
+                        .popoverTip(promiseTip)
+                        // 약속 등록뷰 올라옴
+                        .fullScreenCover(isPresented: $isShownFullScreenCover, content: {
+                            AddPromiseView(promiseViewModel: promise)
+                        })
                     }
                     // MARK: - 지파두 마크
                     ToolbarItem(placement: .topBarLeading) {
@@ -200,86 +208,86 @@ struct PromiseListCell: View {
     // MARK: - PromiseListCell body
     var body: some View {
         ZStack {
-           // 카드 배경색
-           RoundedRectangle(cornerRadius: 10, style: .continuous)
-               .frame(width: screenWidth * 0.9, height: screenHeight * 0.25)
-               .foregroundColor(.clear)
-               .background(color)
-               .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-
+            // 카드 배경색
+            RoundedRectangle(cornerRadius: 10, style: .continuous)
+                .frame(width: screenWidth * 0.9, height: screenHeight * 0.25)
+                .foregroundColor(.clear)
+                .background(color)
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            
             // MARK: - 약속 정보
-           VStack(alignment: .leading) {
-               // MARK: - 약속 제목, 맵 버튼
-               promiseHeader(promise: promise, isTracking: isTracking)
-                   .padding(.vertical, 10)
-               // MARK: - 장소, 시간, 참여자목록, 벌금
-               Group {
-                   // 장소, 시간
-                   Group {
-                       HStack {
-                           Image(systemName: "pin")
-                               .font(.footnote)
-                           Text("\(promise.destination)")
-                       }
-                       /// 저장된 promiseDate값을 Date 타입으로 변환
-                       let datePromise = Date(timeIntervalSince1970: promise.promiseDate)
-                       
-                       HStack {
-                           Image(systemName: "clock")
-                               .font(.footnote)
-                           Text("\(formatDate(date: datePromise))")
-                       }
-                       .padding(.bottom, 10)
-                   }
-                   .font(.callout)
-                   .fontWeight(.semibold)
-                   
-                   // 참여자 목록, 벌금
-                   if !isLoading {
-                       HStack(spacing: -12) {
-                           // 참여자 목록
-                           ForEach(participantImageArray, id: \.self) { imageString in
-                               ProfileImageView(imageString: imageString, size: .xSmall)
-                                   .padding(1)
-                                   .background(.primaryInvert, in: Circle())
-                           }
-                           
-                           Spacer()
-                           
-                           // 벌금
-                           Text("\(promise.penalty)원")
-                               .fontWeight(.semibold)
-                               .font(.title3)
-                               .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
-                       }
-                       .padding(.vertical, 15)
-                   }
-               }
-               .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
-               .fontWeight(.semibold)
-           }
-           .padding(.horizontal, 20)
-           .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
-       }
-       .overlay(
-           RoundedRectangle(cornerRadius: 10)
-               .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
-               .foregroundColor(.primary)
-               .opacity(isTracking ? 0: 0.05) // 0.1 다소 어두워서 0.05로 더 밝게처리
-               .shadow(color: .black, radius: 20, x: 1, y: 1)
-       )
+            VStack(alignment: .leading) {
+                // MARK: - 약속 제목, 맵 버튼
+                promiseHeader(promise: promise, isTracking: isTracking)
+                    .padding(.vertical, 10)
+                // MARK: - 장소, 시간, 참여자목록, 벌금
+                Group {
+                    // 장소, 시간
+                    Group {
+                        HStack {
+                            Image(systemName: "pin")
+                                .font(.footnote)
+                            Text("\(promise.destination)")
+                        }
+                        /// 저장된 promiseDate값을 Date 타입으로 변환
+                        let datePromise = Date(timeIntervalSince1970: promise.promiseDate)
+                        
+                        HStack {
+                            Image(systemName: "clock")
+                                .font(.footnote)
+                            Text("\(formatDate(date: datePromise))")
+                        }
+                        .padding(.bottom, 10)
+                    }
+                    .font(.callout)
+                    .fontWeight(.semibold)
+                    
+                    // 참여자 목록, 벌금
+                    if !isLoading {
+                        HStack(spacing: -12) {
+                            // 참여자 목록
+                            ForEach(participantImageArray, id: \.self) { imageString in
+                                ProfileImageView(imageString: imageString, size: .xSmall)
+                                    .padding(1)
+                                    .background(.primaryInvert, in: Circle())
+                            }
+                            
+                            Spacer()
+                            
+                            // 벌금
+                            Text("\(promise.penalty)원")
+                                .fontWeight(.semibold)
+                                .font(.title3)
+                                .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
+                        }
+                        .padding(.vertical, 15)
+                    }
+                }
+                .foregroundStyle(isTracking ? Color.primaryInvert : .mocha)
+                .fontWeight(.semibold)
+            }
+            .padding(.horizontal, 20)
+            .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
+        }
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .frame(width: screenWidth * 0.9, height: screenHeight * 0.25 )
+                .foregroundColor(.primary)
+                .opacity(isTracking ? 0: 0.05) // 0.1 다소 어두워서 0.05로 더 밝게처리
+                .shadow(color: .black, radius: 20, x: 1, y: 1)
+        )
         
         // 참여자의 ID를 통해 참여자 프로필사진 가져오기
-       .onAppear {
-           Task {
-               participantImageArray = []
-               for id in promise.participantIdArray {
-                   let imageString = try await UserStore.fetchUser(userId: id)?.profileImageString ?? "- no image -"
-                   participantImageArray.append(imageString)
-               }
-               isLoading = false
-           }
-       }
+        .onAppear {
+            Task {
+                participantImageArray = []
+                for id in promise.participantIdArray {
+                    let imageString = try await UserStore.fetchUser(userId: id)?.profileImageString ?? "- no image -"
+                    participantImageArray.append(imageString)
+                }
+                isLoading = false
+            }
+        }
     }
     
     // MARK: - some View(promiseHeader)
@@ -348,5 +356,5 @@ func formatDate(date: Date) -> String {
 
 // MARK: - 프리뷰 크래시로 인해 프리뷰코드 주석처리
 /* #Preview {
-    HomeMainView(user: User.sampleData)
-} */
+ HomeMainView(user: User.sampleData)
+ } */
