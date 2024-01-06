@@ -189,11 +189,13 @@ struct SearchBarCell: View {
                                             HStack {
                                                 VStack(alignment: .leading) {
                                                     HStack {
-                                                        Text(result.place_name.count >= 13 || (result.place_name.count + category(categoryName: result.category_name).count > 21) || (result.place_name.count >= 14 && category(categoryName: result.category_name).count >= 8) ? result.place_name.prefix(12) + "..." : result.place_name)
-                                                            .font(.system(size: 16)).bold()
+                                                        Text(result.place_name)
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
+                                                            .font(.system(size: 17)).bold()
                                                         
                                                         Text(category(categoryName: result.category_name))
-                                                            .font(.system(size: 9)).bold()
+                                                            .font(.system(size: 10)).bold()
                                                             .foregroundColor(.blue)
                                                             .padding(.bottom, -5)
                                                             .padding(.leading, -7)
