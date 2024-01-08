@@ -8,11 +8,13 @@
 import FirebaseCore
 import FirebaseMessaging
 import SwiftUI
-//import UserNotifications
+import UserNotifications
 
 // import KakaoSDKAuth
 // import KakaoSDKCommon
 // import KakaoSDKUser
+
+var token: String = "" // 코튼 일단 급한대루..
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     lazy var locationStore = LocationStore()
@@ -39,6 +41,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
     
+    // 백그라운드에서 푸시 알림 탭했을 때 실행
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
         Messaging.messaging().isAutoInitEnabled = true
@@ -70,7 +73,7 @@ struct ZipadooApp: App {
     }
      */
     
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate // 푸시알림위함
     @State private var showMainView = false
     @State private var selectedTab = 0
     
@@ -134,11 +137,15 @@ extension AppDelegate: MessagingDelegate {
         print("토큰을 받았다")
         // Store this token to firebase and retrieve when to send message to someone...
         let dataDict: [String: String] = ["token": fcmToken ?? ""]
-        
+        NotificationCenter.default.post(
+                name: Notification.Name("FCMToken"),
+                object: nil,
+                userInfo: dataDict
+              )
         // Store token in Firestore For Sending Notifications From Server in Future...
         
-        print(dataDict)
-     
+        print(dataDict) // fcmToken찍힘
+        token = dataDict["token"] ?? ""
     }
 }
 

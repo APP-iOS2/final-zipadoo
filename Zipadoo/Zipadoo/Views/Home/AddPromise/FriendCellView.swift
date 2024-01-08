@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// 더미 유저
-let dummyUser: User = User(id: "1", name: "gs", nickName: "닉네임", phoneNumber: "01", profileImageString: "22", friendsIdArray: ["12", "2"], friendsIdRequestArray: ["3"], moleImageString: "doo1")
+let dummyUser: User = User(id: "1", userPhoneToken: "", name: "gs", nickName: "닉네임", phoneNumber: "01", profileImageString: "22", friendsIdArray: ["12", "2"], friendsIdRequestArray: ["3"], moleImageString: "doo1")
 /// 참여자 닉네임, 프로필 나열
 struct FriendCellView: View {
     /// 참여자 User타입 배열

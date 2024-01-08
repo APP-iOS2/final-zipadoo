@@ -24,5 +24,5 @@ struct ParticipantInfoView: View {
 }
 
 #Preview {
-    ParticipantInfoView(user: User(id: "", name: "hello", nickName: "helloing", phoneNumber: "", profileImageString: "", friendsIdArray: [], friendsIdRequestArray: [], moleImageString: "doo1"))
+    ParticipantInfoView(user: User(id: "", userPhoneToken: "", name: "hello", nickName: "helloing", phoneNumber: "", profileImageString: "", friendsIdArray: [], friendsIdRequestArray: [], moleImageString: "doo1"))
 }

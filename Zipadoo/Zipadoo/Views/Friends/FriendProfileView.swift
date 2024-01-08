@@ -69,7 +69,7 @@ struct FriendProfileView: View {
         } // NavigationStack
     } // body
 } // struct
-
-#Preview {
-    FriendProfileView(user: .sampleData)
-}
+//
+//#Preview {
+//    FriendProfileView(user: .sampleData)
+//}

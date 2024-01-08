@@ -44,7 +44,7 @@ final class AuthStore: ObservableObject {
     
     /// 이메일로 회원가입
     @MainActor
-    func createUser(email: String, password: String, name: String, nickName: String, phoneNumber: String, profileImage: UIImage?, moleImageString: String) async throws {
+    func createUser(token: String, email: String, password: String, name: String, nickName: String, phoneNumber: String, profileImage: UIImage?, moleImageString: String) async throws {
         do {
             // 회원가입 후 사용자의 userSession에 저장
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
@@ -58,9 +58,9 @@ final class AuthStore: ObservableObject {
             if let uiImage = profileImage {
                 profileImageString = try await ProfileImageUploader.uploadImage(image: uiImage) ?? ""
             }
-            
+            print("AuthStore에서 출력한 \(token)")
             // 사용자 정보를 Firestore에 저장
-            try await addUserData(id: result.user.uid, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImageString: profileImageString, moleImageString: moleImageString)
+            try await addUserData(id: result.user.uid, token: token, name: name, nickName: nickName, phoneNumber: phoneNumber, profileImageString: profileImageString, moleImageString: moleImageString)
             
             // 이메일 중복 확인을 위해 별도로 저장하는 컬렉션
             let dbRef = Firestore.firestore().collection("User email")
@@ -75,9 +75,9 @@ final class AuthStore: ObservableObject {
     }
     
     /// 사용자 데이터 추가
-    func addUserData(id: String, name: String, nickName: String, phoneNumber: String, profileImageString: String, moleImageString: String) async throws {
+    func addUserData(id: String, token: String, name: String, nickName: String, phoneNumber: String, profileImageString: String, moleImageString: String) async throws {
         do {
-            let user = User(id: id, name: name, nickName: nickName, phoneNumber: phoneNumber, potato: 0, profileImageString: profileImageString, crustDepth: 0, tradyCount: 0, friendsIdArray: [], friendsIdRequestArray: [], moleImageString: moleImageString)
+            let user = User(id: id, userPhoneToken: token, name: name, nickName: nickName, phoneNumber: phoneNumber, potato: 0, profileImageString: profileImageString, crustDepth: 0, tradyCount: 0, friendsIdArray: [], friendsIdRequestArray: [], moleImageString: moleImageString)
             try dbRef.document(id).setData(from: user)
             print("사용자 등록 성공")
         } catch {

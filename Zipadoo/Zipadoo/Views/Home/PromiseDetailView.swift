@@ -239,7 +239,7 @@ struct PromiseDetailView: View {
                 particantsArray = []
                 for id in promise.participantIdArray {
                     let user = try await UserStore.fetchUser(userId: id)
-                    particantsArray.append(user ?? User(id: "", name: "", nickName: "", phoneNumber: "", profileImageString: "", friendsIdArray: [], friendsIdRequestArray: [], moleImageString: ""))
+                    particantsArray.append(user ?? User(id: "", userPhoneToken: "", name: "", nickName: "", phoneNumber: "", profileImageString: "", friendsIdArray: [], friendsIdRequestArray: [], moleImageString: ""))
                 }
             }
         }

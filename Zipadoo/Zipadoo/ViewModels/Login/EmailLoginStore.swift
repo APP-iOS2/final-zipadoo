@@ -32,6 +32,7 @@ final class EmailLoginStore: ObservableObject {
     /// 사용자 생성 메서드 - AuthStore를 통해 사용자 생성
     func createUser() async throws {
         try await AuthStore.shared.createUser(
+            token: token,
             email: email,
             password: password,
             name: name,
