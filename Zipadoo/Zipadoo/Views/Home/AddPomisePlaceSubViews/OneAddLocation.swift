@@ -10,7 +10,6 @@ import SwiftUI
 /// 직접 장소 설정 시 띄워지는 장소 선택뷰
 struct OneAddLocation: View {
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject var promiseViewModel: PromiseViewModel
     
     @Binding var destination: String
     @Binding var address: String
@@ -87,5 +86,5 @@ struct OneAddLocation: View {
 }
 
 #Preview {
-    OneAddLocation(promiseViewModel: PromiseViewModel(), destination: .constant(""), address: .constant(""), coordXXX: .constant(0.0), coordYYY: .constant(0.0), placeOfText: .constant("placeOfText"), selectedPlace: .constant(false), isClickedPlace: .constant(false))
+    OneAddLocation(destination: .constant(""), address: .constant(""), coordXXX: .constant(0.0), coordYYY: .constant(0.0), placeOfText: .constant("placeOfText"), selectedPlace: .constant(false), isClickedPlace: .constant(false))
 }
