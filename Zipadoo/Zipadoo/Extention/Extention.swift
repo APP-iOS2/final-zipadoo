@@ -86,7 +86,63 @@ extension View {
             return .endTracking
         }
     }
-     
+    /// custom bottom sheet
+    @ViewBuilder
+    func bottomSheet<Content: View>(
+        presentationDetents: Set<PresentationDetent>,
+        isPresented: Binding<Bool>,
+        dragIndicator: Visibility = .visible,
+        _ sheetCornerRadius: CGFloat?,
+        largestUndimmedIdentifier: UISheetPresentationController.Detent.Identifier = .large,
+        isTransparentBG: Bool = true,
+        interactiveDisabled: Bool = true,
+        @ViewBuilder content: @escaping () -> Content,
+        onDismiss: @escaping () -> ()
+    ) -> some View {
+        self
+            .sheet(isPresented: isPresented) {
+                onDismiss()
+            } content: {
+//                ZStack {
+//                    Rectangle()
+//                        .fill(Color.primary2)
+//                        .opacity(0.5)
+//                        .shadow(radius: 10)
+//                        .ignoresSafeArea()
+                    
+                    content()
+                        .presentationDetents(presentationDetents)
+                        .presentationDragIndicator(dragIndicator)
+                        .presentationCornerRadius(sheetCornerRadius)
+                        .interactiveDismissDisabled(interactiveDisabled)
+                        .presentationBackgroundInteraction(.enabled)
+                        .onAppear {
+                            guard let windows = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+                                return
+                            }
+                            
+                            if let controller = windows.windows.first?.rootViewController?.presentedViewController, let sheet = controller.presentationController as? UISheetPresentationController {
+                                
+                                if isTransparentBG {
+                                    controller.view.backgroundColor = .primary2
+                                }
+                                
+                                controller.presentingViewController?.view.tintAdjustmentMode = .normal
+                                
+                                sheet.largestUndimmedDetentIdentifier = largestUndimmedIdentifier
+                                sheet.preferredCornerRadius = sheetCornerRadius
+                                
+                                if isPresented.wrappedValue == false {
+                                    onDismiss()
+                                }
+                            } else {
+                                print("Controller Not Found")
+                            }
+                        }
+//                }
+            }
+    }
+
 }
 
 /// 회원가입 유효성 검사함수 포함

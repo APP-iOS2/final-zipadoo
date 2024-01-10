@@ -128,15 +128,47 @@ struct PromiseEditView: View {
             .navigationTitle("약속 수정")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden()
-        } // navigationStack
-        .navigationBarItems(
-            leading: Button("취소") {
-                isShowingCancelAlert = true
-            },
-            trailing: Button("저장") {
-                isShowingSaveAlert = true
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button {
+                        isShowingCancelAlert = true
+                    } label: {
+                        Text("취소")
+                    }
+                    .tint(.red)
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        isShowingSaveAlert = true
+                    } label: {
+                        Text("저장")
+                    }
+                    .alert(isPresented: $isShowingSaveAlert) {
+                        Alert(
+                            title: Text("약속을 수정합니다."),
+                            primaryButton: .destructive(Text("취소"), action: {
+            //                    dismiss()
+                            }),
+                            secondaryButton: .default(Text("확인"), action: {
+                                promiseViewModel.updatePromise(promise: promise, editSelectedFriends: editSelectedFriends, editedPromiseTitle: editedPromiseTitle, editedPromiseDate: editedPromiseDate, editedDestination: editedDestination, editedAddress: editedAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude)
+                                dismiss()
+                                navigationBackToHome = true // 홈메인뷰 이동
+                            })
+                        )
+                    }
+                }
             }
-        )
+        } // navigationStack
+        .alert(isPresented: $isShowingCancelAlert) {
+            Alert(
+                title: Text("수정을 취소합니다."),
+                primaryButton: .destructive(Text("취소"), action: {
+                }),
+                secondaryButton: .default(Text("확인"), action: {
+                    dismiss()
+                })
+            )
+        }
         // MARK: - 수정 시트 뷰
         .sheet(isPresented: $isShowingDatePicker) {
             EditDatePickerView(date: $editedPromiseDate, showPicker: $isShowingDatePicker, promise: $promise)
@@ -170,29 +202,6 @@ struct PromiseEditView: View {
         }
         .sheet(isPresented: $isShowingFriendsSheet) {
             FriendsListView(isShowingSheet: $isShowingFriendsSheet, selectedFriends: $editSelectedFriends)
-        }
-        .alert(isPresented: $isShowingSaveAlert) {
-            Alert(
-                title: Text("약속을 수정합니다."),
-                primaryButton: .destructive(Text("취소"), action: {
-//                    dismiss()
-                }),
-                secondaryButton: .default(Text("확인"), action: {
-                    promiseViewModel.updatePromise(promise: promise, editSelectedFriends: editSelectedFriends, editedPromiseTitle: editedPromiseTitle, editedPromiseDate: editedPromiseDate, editedDestination: editedDestination, editedAddress: editedAddress, destinationLatitude: destinationLatitude, destinationLongitude: destinationLongitude)
-                    dismiss()
-                    navigationBackToHome = true // 홈메인뷰 이동
-                })
-            )
-        }
-        .alert(isPresented: $isShowingCancelAlert) {
-            Alert(
-                title: Text("수정을 취소합니다."),
-                primaryButton: .destructive(Text("취소"), action: {
-                }),
-                secondaryButton: .default(Text("확인"), action: {
-                    dismiss()
-                })
-            )
         }
         // MARK: - onAppear
         .onAppear {

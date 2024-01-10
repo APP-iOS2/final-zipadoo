@@ -30,6 +30,8 @@ struct PromiseDetailView: View {
     @State private var isShowingDeleteAlert: Bool = false
     /// 뒤로가기 Bool값
     @State private var isNavigateBackToHome: Bool = false
+    /// BottomSheet Bool값
+    @State private var isShowingBottomSheet: Bool = true
     
     @State var promise: Promise // 약속 데이터 받는 변수
     
@@ -56,98 +58,123 @@ struct PromiseDetailView: View {
     // MARK: - PromiseDetailView body
     var body: some View {
         NavigationStack {
-            ZStack {
-                VStack {
+            GeometryReader { geometry in
+                ZStack {
                     destinationMapView
-                        .ignoresSafeArea()
-                    VStack {
-                        RoundedRectangle(cornerRadius: 20.0)
-                            .colorInvert()
-                            .shadow(radius: 10.0)
-                            .overlay {
-                                ScrollView {
-                                    VStack(alignment: .leading) {
-                                        titleView
-                                            .padding(.top, 10)
-                                        
-                                        destinationView
-                                            .padding(.bottom, -5)
-                                        
-                                        dateView
-                                        
-                                        remainingTimeView
-                                        
-                                        participantsView
-                                            .padding(.bottom)
-                                        
-                                        Spacer()
-                                    }
-                                    .padding(.horizontal)
+                        .padding(.bottom, 50)
+                        .overlay(alignment: .topTrailing) {
+                            Button {
+                                withAnimation(.easeIn(duration: 1)) {
+                                    region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 200, longitudinalMeters: 200))
                                 }
-                                .scrollIndicators(.hidden)
+                                moveDestination = true
+                                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                                    moveDestination = false
+                                }
+                                // 맵 화면을 약속 위치로 움직여주는 버튼 기능
+                            } label: {
+                                if moveDestination {
+                                    Image(systemName: "flag.fill")
+                                        .foregroundColor(.blue)
+                                        .frame(width: 45, height: 45)
+                                        .background(.primaryInvert2)
+                                        .clipShape(RoundedRectangle(cornerRadius: 9))
+                                        .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
+                                        .shadow(color: .gray.opacity(0.3), radius: 5)
+                                } else {
+                                    withAnimation(.linear(duration: 1)) {
+                                        Image(systemName: "flag")
+                                            .foregroundColor(.blue)
+                                            .frame(width: 45, height: 45)
+                                            .background(.primaryInvert2)
+                                            .clipShape(RoundedRectangle(cornerRadius: 9))
+                                            .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
+                                            .shadow(color: .gray.opacity(0.3), radius: 5)
+                                    }
+                                }
                             }
-                    }
-                    .padding(.init(top: -50, leading: 0, bottom: -30, trailing: 0))
+                        }
+                    Spacer()
+                        .bottomSheet(presentationDetents: [.height(geometry.size.height * 4.2 / 13), .height(geometry.size.height-120)], isPresented: $isShowingBottomSheet, 30) {
+                            ScrollView {
+                                VStack(alignment: .leading) {
+                                    titleView
+                                    
+                                    destinationView
+                                        .padding(.bottom, -5)
+                                    
+                                    dateView
+                                    
+                                    remainingTimeView
+                                    
+                                    participantsView
+                                        .padding(.bottom)
+                                }
+                                .padding(.horizontal)
+                            }
+                            .padding(.top)
+                            .scrollIndicators(.hidden)
+                            .alert(isPresented: $isShowingDeleteAlert) {
+                                Alert(
+                                    title: Text("약속 내역을 삭제합니다."),
+                                    message: Text("해당 작업은 복구되지 않습니다."),
+                                    primaryButton: .destructive(Text("삭제하기"), action: {
+                                        Task {
+                                            do {
+                                                try await promiseViewModel.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
+                                                dismiss()
+                                            } catch {
+                                                print("실패")
+                                            }
+                                        }
+                                    }),
+                                    secondaryButton: .default(Text("돌아가기"), action: {
+                                    })
+                                )
+                            }
+                            .sheet(
+                                isPresented: $isShowingShareSheet,
+                                onDismiss: { print("Dismiss") },
+                                content: { ActivityViewController(activityItems: ["https://zipadoo.onelink.me/QgIh/51ibebbu"]) }
+                            )
+                            .fullScreenCover(isPresented: $isShowingEditSheet,
+                                             content: { PromiseEditView(promise: .constant(promise), navigationBackToHome: $isNavigateBackToHome)
+                            })
+                        } onDismiss: {
+                            
+                        }
+                }
+            }
+            // MARK: - 더보기 버튼(삭제, 수정, 약속나가기)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    moreButtonView
+                }
+            }
+            .onAppear {
+                currentDate = Date().timeIntervalSince1970
+                formatRemainingTime()
+                widgetStore.widgetPromiseID = nil
+                widgetStore.widgetPromise = nil
+                widgetStore.isShowingDetailForWidget = false
+            }
+            .onReceive(timer, perform: { _ in
+                currentDate = Date().timeIntervalSince1970
+            })
+            .onAppear {
+                Task {
+                    try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
+                }
+            }
+            .onChange(of: isNavigateBackToHome) { newValue in
+                if newValue {
+                    dismiss()
+                } else {
+                    isShowingBottomSheet = false
                 }
             }
         }
-        // MARK: - 더보기 버튼(삭제, 수정, 약속나가기)
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                moreButtonView
-            }
-        }
-        .alert(isPresented: $isShowingDeleteAlert) {
-            Alert(
-                title: Text("약속 내역을 삭제합니다."),
-                message: Text("해당 작업은 복구되지 않습니다."),
-                primaryButton: .destructive(Text("삭제하기"), action: {
-                    Task {
-                        do {
-                            try await promiseViewModel.deletePromiseData(promiseId: promise.id, locationIdArray: promise.locationIdArray)
-                            dismiss()
-                        } catch {
-                            print("실패")
-                        }
-                    }
-                }),
-                secondaryButton: .default(Text("돌아가기"), action: {
-                })
-            )
-        }
-        .onAppear {
-            currentDate = Date().timeIntervalSince1970
-            formatRemainingTime()
-            widgetStore.widgetPromiseID = nil
-            widgetStore.widgetPromise = nil
-            widgetStore.isShowingDetailForWidget = false
-        }
-        .onReceive(timer, perform: { _ in
-            currentDate = Date().timeIntervalSince1970
-        })
-        .onAppear {
-            if isNavigateBackToHome {
-                dismiss()
-            }
-            Task {
-                try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
-            }
-        }
-//        .refreshable {
-//            Task {
-//                try await promiseViewModel.fetchData(userId: AuthStore.shared.currentUser?.id ?? "")
-//            }
-//        }
-        .sheet(isPresented: $isShowingEditSheet,
-               content: { PromiseEditView(promise: .constant(promise), navigationBackToHome: $isNavigateBackToHome)
-        })
-        .sheet(
-            isPresented: $isShowingShareSheet,
-            onDismiss: { print("Dismiss") },
-            content: { ActivityViewController(activityItems: ["https://zipadoo.onelink.me/QgIh/51ibebbu"]) }
-        )
     }
-    
     // MARK: - some Views
     private var moreButtonView: some View {
         HStack {
@@ -159,8 +186,8 @@ struct PromiseDetailView: View {
             
             Menu {
                 if loginUser.currentUser?.id == promise.makingUserID {
-                    NavigationLink {
-                        PromiseEditView(promise: .constant(promise), navigationBackToHome: $isNavigateBackToHome)
+                    Button {
+                        isShowingEditSheet = true
                     } label: {
                         Text("수정")
                     }
@@ -308,38 +335,7 @@ extension PromiseDetailView {
                     .padding(.bottom, -5)
             }
         }
-        .overlay(alignment: .topTrailing) {
-            Button {
-                withAnimation(.easeIn(duration: 1)) {
-                    region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 400, longitudinalMeters: 400))
-                }
-                moveDestination = true
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                    moveDestination = false
-                }
-                // 맵 화면을 약속 위치로 움직여주는 버튼 기능
-            } label: {
-                if moveDestination {
-                    Image(systemName: "flag.fill")
-                        .foregroundColor(.blue)
-                        .frame(width: 45, height: 45)
-                        .background(.white)
-                        .clipShape(RoundedRectangle(cornerRadius: 9))
-                        .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
-                        .shadow(color: .gray.opacity(0.3), radius: 5)
-                } else {
-                    withAnimation(.linear(duration: 1)) {
-                        Image(systemName: "flag")
-                            .foregroundColor(.blue)
-                            .frame(width: 45, height: 45)
-                            .background(.white)
-                            .clipShape(RoundedRectangle(cornerRadius: 9))
-                            .padding(EdgeInsets(top: 5, leading: 5, bottom: 0, trailing: 5))
-                            .shadow(color: .gray.opacity(0.3), radius: 5)
-                    }
-                }
-            }
-        }
+        .ignoresSafeArea()
     }
 
     // 약속 제목
