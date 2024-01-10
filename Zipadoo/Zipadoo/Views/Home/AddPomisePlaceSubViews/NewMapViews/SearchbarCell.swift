@@ -20,6 +20,7 @@ struct SearchBarCell: View {
     @State var searching: Bool = false
     /// 거리로 부터 5km내의 검색결과 제공
     @State private var radius: Int = 5000
+    @State private var viewPage: Int = 1
     /// 장소에 대한 URL 값 (카카오맵 기반)
     @State private var placeURL: String?
     /// 검색 결과 리스트의 i 버튼 클릭 값
@@ -28,7 +29,7 @@ struct SearchBarCell: View {
     /// 내주변과 관련된 텍스트 표시 애니메이션 Bool값
     @State private var isTextVisible = false
     var locationManager: LocationManager = LocationManager()
-    
+//    @State private var currentPageArr = [Int]()
     @Binding var isClickedDestination: String
     @Binding var selectedPlace: Bool
     @Binding var isClickedPlace: Bool
@@ -60,9 +61,7 @@ struct SearchBarCell: View {
                         isClickedPlace = false
                         selectedPlace = false
                         // 카카오로컬 API를 활용하여 카카오로컬에 담긴 JSON파일과 통신하여 데이터를 불러옴
-                        searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: myLocation ? String(locationManager.location?.coordinate.longitude ?? 0.0) : "0.0", currentPoiY: myLocation ? String(locationManager.location?.coordinate.latitude ?? 0.0) : "0.0", radius: myLocation ? radius : 0, sort: myLocation ? "distance" : "accuracy")
-                        print("현재 사용자 위도(장소검색): \(locationManager.location?.coordinate.latitude ?? 0.0)")
-                        print("현재 사용자 경도(장소검색): \(locationManager.location?.coordinate.longitude ?? 0.0)")
+                        searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: myLocation ? String(locationManager.location?.coordinate.longitude ?? 0.0) : "0.0", currentPoiY: myLocation ? String(locationManager.location?.coordinate.latitude ?? 0.0) : "0.0", radius: myLocation ? radius : 0, page: viewPage, sort: myLocation ? "distance" : "accuracy")
                     } else { // searchText가 빈 값일 경우 해당 텍스트를 보여줌
                         textFieldText = "한 글자 이상 입력해주세요."
                     }
@@ -123,7 +122,8 @@ struct SearchBarCell: View {
                             myLocation.toggle()
                         }
                         isTextVisible = true
-                        searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: myLocation ? String(locationManager.location?.coordinate.longitude ?? 0.0) : "0.0", currentPoiY: myLocation ? String(locationManager.location?.coordinate.latitude ?? 0.0) : "0.0", radius: myLocation ? radius : 0, sort: myLocation ? "distance" : "accuracy")
+//                        viewPage = 1
+                        searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: myLocation ? String(locationManager.location?.coordinate.longitude ?? 0.0) : "0.0", currentPoiY: myLocation ? String(locationManager.location?.coordinate.latitude ?? 0.0) : "0.0", radius: myLocation ? radius : 0, page: viewPage, sort: myLocation ? "distance" : "accuracy")
                     } label: {
                         Image(systemName: myLocation ? "checkmark.square.fill" : "square")
                             .resizable()
@@ -136,7 +136,7 @@ struct SearchBarCell: View {
                 .padding(.vertical, 3)
                 
                 if searchOfKakaoLocal.searchKakaoLocalDatas.isEmpty {
-                    ContentUnavailableView(myLocation ? "내 주변 가까운 장소가 없습니다." : "검색 결과가 없습니다.", systemImage: "magnifyingglass", description: Text("다른 키워드로 검색해보세요."))
+                    ContentUnavailableView(myLocation ? "내 주변 가까운 장소가 없습니다." : "검색 결과가 없습니다.", systemImage: "magnifyingglass", description: Text("다른 키워드로 검색해보세요. 또는 네트워크 연결을 확인해보세요."))
                         .padding(.bottom, 50)
                     
                     Spacer()
@@ -144,9 +144,9 @@ struct SearchBarCell: View {
                 } else {
                     ScrollView {
                         VStack(spacing: 0) {
-                                Divider()
-                                    .frame(width: .infinity)
-                                    .padding(.top, -1)
+                            Divider()
+                                .frame(width: .infinity)
+                                .padding(.top, -1)
                             
                             ForEach(searchOfKakaoLocal.searchKakaoLocalDatas, id: \.place_name) { result in
                                 VStack {
@@ -189,11 +189,13 @@ struct SearchBarCell: View {
                                             HStack {
                                                 VStack(alignment: .leading) {
                                                     HStack {
-                                                        Text(result.place_name.count >= 13 || (result.place_name.count + category(categoryName: result.category_name).count > 21) || (result.place_name.count >= 14 && category(categoryName: result.category_name).count >= 8) ? result.place_name.prefix(12) + "..." : result.place_name)
-                                                            .font(.system(size: 16)).bold()
+                                                        Text(result.place_name)
+                                                            .lineLimit(1)
+                                                            .truncationMode(.tail)
+                                                            .font(.system(size: 17)).bold()
                                                         
                                                         Text(category(categoryName: result.category_name))
-                                                            .font(.system(size: 9)).bold()
+                                                            .font(.system(size: 10)).bold()
                                                             .foregroundColor(.blue)
                                                             .padding(.bottom, -5)
                                                             .padding(.leading, -7)
@@ -249,7 +251,29 @@ struct SearchBarCell: View {
                     .padding(.bottom)
                 }
             }
+            
+//            ScrollView(.horizontal, content: {
+//                HStack {
+//                    ForEach(searchOfKakaoLocal.pageArr, id: \.self) { page in
+//                        Button {
+//                            viewPage = page
+//                        } label: {
+//                            Text("\(page)")
+//                        }
+//                    }
+//                }
+//            })
+//            .scrollIndicators(.hidden)
         }
+//        .onChange(of: searchOfKakaoLocal.pageArr, perform: { newValue in
+//            currentPageArr = newValue
+//            print(currentPageArr)
+//        })
+//        .onChange(of: viewPage) { newValue in
+//            print("viewPage: \(newValue)")
+//            print("currentPageArr[newValue]: \(currentPageArr[newValue-1])")
+//            searchOfKakaoLocal.searchKLPlace(keyword: searchText, currentPoiX: myLocation ? String(locationManager.location?.coordinate.longitude ?? 0.0) : "0.0", currentPoiY: myLocation ? String(locationManager.location?.coordinate.latitude ?? 0.0) : "0.0", radius: myLocation ? radius : 0, page: currentPageArr[newValue-1], sort: myLocation ? "distance" : "accuracy")
+//        }
     }
     /// 제일 마지막 부분의 카테고리를 표시하게 해주는 함수
     private func category(categoryName: String) -> String {
