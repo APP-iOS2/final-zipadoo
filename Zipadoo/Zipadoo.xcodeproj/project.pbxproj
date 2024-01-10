@@ -31,7 +31,6 @@
 		3F6C02912B0ED3FA00FCA74B /* SlidingTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6C02902B0ED3FA00FCA74B /* SlidingTabView.swift */; };
 		3F6D17942B039919007C8998 /* ProgressSubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6D17932B039919007C8998 /* ProgressSubView.swift */; };
 		3F6D17962B0399F4007C8998 /* PromiseTitleAndTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6D17952B0399F4007C8998 /* PromiseTitleAndTimeView.swift */; };
-		3F7AD87F2B46CFCE00700E0D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3F7AD87E2B46CFCE00700E0D /* GoogleService-Info.plist */; };
 		3F7AD8822B46D0ED00700E0D /* OnboardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7AD8812B46D0ED00700E0D /* OnboardingPageView.swift */; };
 		3F7AD8842B46D32100700E0D /* OnboardingPageTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7AD8832B46D32100700E0D /* OnboardingPageTabView.swift */; };
 		3F7AD8882B46D43A00700E0D /* OnboardingLastPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7AD8872B46D43A00700E0D /* OnboardingLastPageView.swift */; };
@@ -56,6 +55,7 @@
 		8BEA8B9D2ADB0C640083D488 /* PromiseTrackingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEA8B9C2ADB0C640083D488 /* PromiseTrackingView.swift */; };
 		8BF831C92AC1FFDD00EC22A1 /* EditProfilView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */; };
 		9A10ADFB2AD83D0900AF37A3 /* SlidingTabView in Frameworks */ = {isa = PBXBuildFile; productRef = 9A10ADFA2AD83D0900AF37A3 /* SlidingTabView */; };
+		9A2A42EF2B4EBE370080B671 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9A2A42EE2B4EBE370080B671 /* GoogleService-Info.plist */; };
 		9B8FE8272ACE377B00C1EEFC /* MyLocationAndInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */; };
 		C02790B82ACD297100BBDCCA /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02790B72ACD297100BBDCCA /* WidgetKit.framework */; };
 		C02790BA2ACD297100BBDCCA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C02790B92ACD297100BBDCCA /* SwiftUI.framework */; };
@@ -191,7 +191,6 @@
 		3F6C02902B0ED3FA00FCA74B /* SlidingTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlidingTabView.swift; sourceTree = "<group>"; };
 		3F6D17932B039919007C8998 /* ProgressSubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressSubView.swift; sourceTree = "<group>"; };
 		3F6D17952B0399F4007C8998 /* PromiseTitleAndTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTitleAndTimeView.swift; sourceTree = "<group>"; };
-		3F7AD87E2B46CFCE00700E0D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Desktop/Documentation/지파두/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3F7AD8812B46D0ED00700E0D /* OnboardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageView.swift; sourceTree = "<group>"; };
 		3F7AD8832B46D32100700E0D /* OnboardingPageTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageTabView.swift; sourceTree = "<group>"; };
 		3F7AD8872B46D43A00700E0D /* OnboardingLastPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingLastPageView.swift; sourceTree = "<group>"; };
@@ -214,6 +213,7 @@
 		8BDF9CCD2ABD1F7D00255857 /* FriendsRegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRegistrationView.swift; sourceTree = "<group>"; };
 		8BEA8B9C2ADB0C640083D488 /* PromiseTrackingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTrackingView.swift; sourceTree = "<group>"; };
 		8BF831C82AC1FFDD00EC22A1 /* EditProfilView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfilView.swift; sourceTree = "<group>"; };
+		9A2A42EE2B4EBE370080B671 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Desktop/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		9AB7E6452B2882CA0054D4B0 /* ZipadooWidgetExtensionDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZipadooWidgetExtensionDebug.entitlements; sourceTree = "<group>"; };
 		9AB7E6462B2885960054D4B0 /* ZipadooDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ZipadooDebug.entitlements; sourceTree = "<group>"; };
 		9B8FE8262ACE377B00C1EEFC /* MyLocationAndInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationAndInfoView.swift; sourceTree = "<group>"; };
@@ -646,9 +646,9 @@
 			children = (
 				9AB7E6462B2885960054D4B0 /* ZipadooDebug.entitlements */,
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
+				9A2A42EE2B4EBE370080B671 /* GoogleService-Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
-				3F7AD87E2B46CFCE00700E0D /* GoogleService-Info.plist */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
 				FA103F1C2AE2163900BE56CA /* Enum */,
@@ -845,7 +845,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
-				3F7AD87F2B46CFCE00700E0D /* GoogleService-Info.plist in Resources */,
+				9A2A42EF2B4EBE370080B671 /* GoogleService-Info.plist in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
@@ -1230,7 +1230,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = zip.team;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1272,7 +1272,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = zip.team;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
