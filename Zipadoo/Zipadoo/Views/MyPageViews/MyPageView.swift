@@ -33,14 +33,14 @@ struct MyPageView: View {
     private let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "버전 정보를 불러올 수 없습니다"
     // MARK: - 지각 깊이 데이터 프로퍼티
     /// 지각률 ( 소수점 셋째자리에서 반올림)
-    var tradyPercent: Int {
+    var tradyPercent: Double {
         if currentUser?.promiseCount == 0 {
             return 0
         }
-        return Int(Double(currentUser?.tradyCount ?? 0) / Double(currentUser?.promiseCount ?? 0) * 100)
+        return Double(currentUser?.tradyCount ?? 0) / Double(currentUser?.promiseCount ?? 0) * 100
     }
     /// 약속 지킨 퍼센테이지
-    var promisePercent: Int {
+    var promisePercent: Double {
         return 100 - tradyPercent
     }
     /// 두더지 이미지
