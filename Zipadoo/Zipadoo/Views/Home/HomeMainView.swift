@@ -208,7 +208,7 @@ struct PromiseListCell: View {
     // MARK: - PromiseListCell body
     var body: some View {
         ZStack {
-            // 카드 배경색
+            // 카드 배경색 1
             RoundedRectangle(cornerRadius: 10, style: .continuous)
                 .frame(width: screenWidth * 0.9, height: screenHeight * 0.25)
                 .foregroundColor(.clear)
