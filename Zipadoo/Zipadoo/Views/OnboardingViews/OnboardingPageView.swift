@@ -14,11 +14,11 @@ struct OnboardingPageView: View {
         GeometryReader { geometry in
             Image(imageName)
                 .resizable()
-                .aspectRatio(contentMode: .fill)
+                .aspectRatio(contentMode: .fit)
                 .frame(width: geometry.size.width, height: geometry.size.height)
                 .clipped()
         }
-        .edgesIgnoringSafeArea(.horizontal)
+        .edgesIgnoringSafeArea(.all)
     }
 }
 
