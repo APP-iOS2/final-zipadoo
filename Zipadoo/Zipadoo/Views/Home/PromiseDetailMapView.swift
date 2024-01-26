@@ -186,6 +186,9 @@ struct PromiseDetailMapView: View {
                     .presentationDetents([.medium, .large], selection: $detents)
                     .animation(.linear, value: 10)
             }
+            .onAppear {
+                CLLocationManager().requestAlwaysAuthorization()
+            }
         }
         .task {
             // 현재 위치 정보 갱신

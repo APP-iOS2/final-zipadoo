@@ -1220,7 +1220,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Zipadoo;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "정확한 위치 측정을 위해 위치 정보를 가져옵니다";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "정확한 위치 측정을 위해 위치 정보를 가져옵니다. 원활한 앱 사용을 위해 항상 허용을 추천합니다";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "허용한 위치 사용은 약속 참여자들의 정확한 위치 공유 및 지각 체크를 위해 사용됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자와 약속 참여자들의 정확한 위치 공유 및 지각 체크를 위해 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1262,7 +1262,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = Zipadoo;
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "정확한 위치 측정을 위해 위치 정보를 가져옵니다";
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "정확한 위치 측정을 위해 위치 정보를 가져옵니다. 원활한 앱 사용을 위해 항상 허용을 추천합니다";
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "허용한 위치 사용은 약속 참여자들의 정확한 위치 공유 및 지각 체크를 위해 사용됩니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자와 약속 참여자들의 정확한 위치 공유 및 지각 체크를 위해 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

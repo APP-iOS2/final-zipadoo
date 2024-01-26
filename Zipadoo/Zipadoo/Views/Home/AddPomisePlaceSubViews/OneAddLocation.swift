@@ -54,6 +54,9 @@ struct OneAddLocation: View {
                             Button {
                                 if placeOfText == "" {
                                     destination = address
+                                    if address.isEmpty {
+                                    destination = "네트워크 연결을 확인하세요"
+                                    }
                                 } else {
                                     destination = placeOfText
                                 }

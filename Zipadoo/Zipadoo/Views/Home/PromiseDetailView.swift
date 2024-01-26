@@ -11,6 +11,7 @@ import MapKit
 
 // MARK: - 약속 디테일뷰
 struct PromiseDetailView: View {
+    @Namespace var mapScope
     @ObservedObject private var promiseDetailStore = PromiseDetailStore()
     @ObservedObject var locationStore: LocationStore = LocationStore()
     @StateObject var loginUser: UserStore = UserStore()
@@ -63,6 +64,20 @@ struct PromiseDetailView: View {
                     destinationMapView
                         .padding(.bottom, 50)
                         .overlay(alignment: .topTrailing) {
+                            VStack {
+                                MapUserLocationButton(scope: mapScope) // 사용자의 현재 위치로 이동시키는 버튼
+                                    .mapControlVisibility(.visible)
+                                MapPitchToggle(scope: mapScope) // 지도의 차원을 정할 수 있는 버튼(2D, 3D)
+                                    .mapControlVisibility(.visible)
+                                MapCompass(scope: mapScope) // 나침반 버튼
+                                    .mapControlVisibility(.automatic)
+                            }
+                            .buttonBorderShape(.roundedRectangle)
+                            .padding(.trailing, 5)
+                            .padding(.top, 5)
+                        }
+                        .mapScope(mapScope)
+                        .overlay(alignment: .topLeading) {
                             Button {
                                 withAnimation(.easeIn(duration: 1)) {
                                     region = .region(MKCoordinateRegion(center: promise.coordinate, latitudinalMeters: 200, longitudinalMeters: 200))
@@ -329,11 +344,12 @@ struct PromiseDetailView: View {
 // MARK: - PromiseDetailView extension (ArriveResult뷰에서 재사용 위해 extension으로 분리)
 extension PromiseDetailView {
     var destinationMapView: some View {
-        Map(position: $region, bounds: MapCameraBounds(minimumDistance: 800), interactionModes: .all) {
+        Map(position: $region, bounds: MapCameraBounds(minimumDistance: 800), interactionModes: .all, scope: mapScope) {
             Annotation(promise.destination, coordinate: CLLocationCoordinate2D(latitude: promise.latitude, longitude: promise.longitude)) {
                 AnnotationMarker()
                     .padding(.bottom, -5)
             }
+            UserAnnotation()
         }
         .ignoresSafeArea()
     }
