@@ -135,7 +135,7 @@ struct ArrivalMessagingView: View {
                     .stroke(.brown.opacity(0.5))
                     .background(
                         RoundedRectangle(cornerRadius: 30)
-                            .fill(.white)
+                            .fill(Color(UIColor.systemBackground))
                     )
                 
             )
@@ -196,7 +196,6 @@ struct ArrivalMessagingView: View {
         //                }
         //            }
         //        }
-        
     }
     
     // MARK: - 도착정보
