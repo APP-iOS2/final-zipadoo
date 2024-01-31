@@ -45,9 +45,9 @@ struct OneMapView: View {
     /// 약속장소 경도
     @Binding var coordYYY: Double
     /// 화면을 클릭해서 장소를 선택한 값
-    @State private var selectedPlace: Bool = false
-    /// 장소검색 이후 장소를 선택한 값
     @State private var isClickedPlace: Bool = false
+    /// 장소검색 이후 장소를 선택한 값
+    @State private var selectedPlace: Bool = false
     /// 장소 검색을 사용한 후 장소 추가 버튼을 입력한 값
     @State private var addLocationButton: Bool = false
     
@@ -64,13 +64,13 @@ struct OneMapView: View {
                     Map(position: $cameraPosition, scope: mapScope) {
                         UserAnnotation()
                         // 장소검색 이후 장소를 선택한 값이 true일 경우 해당장소 위치에 해당장소의 장소명이 포함된 Annotation을 보여줌
-                        if isClickedPlace == true {
+                        if selectedPlace == true {
                             Annotation(destination, coordinate: CLLocationCoordinate2D(latitude: coordXXX, longitude: coordYYY)) {
                                 AnnotationCell()
                                     .offset(x: 0, y: -10)
                             }
                         } else { // 장소검색 이후 장소를 선택한 값이 false일 경우
-                            if selectedPlace == true { // 화면을 클릭해서 장소를 선택한 값이 true일 경우 해당 장소 위치에 해당장소의 주소가 포함된 Annotation을 보여줌
+                            if isClickedPlace == true { // 화면을 클릭해서 장소를 선택한 값이 true일 경우 해당 장소 위치에 해당장소의 주소가 포함된 Annotation을 보여줌
                                 if let pl = pinLocation {
                                     Annotation(address, coordinate: pl) {
                                         AnnotationCell()
@@ -90,8 +90,8 @@ struct OneMapView: View {
                     }
                     .onTapGesture(perform: { screenCoord in // 맵뷰 화면을 터치하였을 경우의 이벤트 - 화면을 터치하였을 때 MapReader를 통해 터치한 곳의 값과 맵뷰의 값을 변환시켜 위치 값을 알아냄
                         
-                        if isClickedPlace != true { // 우선 장소검색 이후 장소를 선택한 값이 false여야 되며
-                            selectedPlace = true // 화면을 클릭해서 장소를 선택한 값을 true로 지정
+                        if selectedPlace != true { // 우선 장소검색 이후 장소를 선택한 값이 false여야 되며
+                            isClickedPlace = true // 화면을 클릭해서 장소를 선택한 값을 true로 지정
                             pinLocation = reader.convert(screenCoord, from: .local)
                             coordXXX = pinLocation?.latitude ?? 36.5665
                             coordYYY = pinLocation?.longitude ?? 126.9880
@@ -114,11 +114,11 @@ struct OneMapView: View {
                         }
                     })
                 }
-                if isClickedPlace == true { // 화면을 클릭해서 장소를 선택한 값이 true일 경우, 해당 옵션의 장소선택 결정뷰를 띄워줌
-                    AddPlaceButtonCell(isClickedPlace: $isClickedPlace, placeOfText: $placeOfText, addLocationButton: $addLocationButton, isClickedDestination: $isClickedDestination, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
+                if selectedPlace == true { // 화면을 클릭해서 장소를 선택한 값이 true일 경우, 해당 옵션의 장소선택 결정뷰를 띄워줌
+                    AddPlaceButtonCell(isClickedPlace: $selectedPlace, placeOfText: $placeOfText, addLocationButton: $addLocationButton, isClickedDestination: $isClickedDestination, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
 //                    AddPlaceButtonCell(isClickedPlace: $isClickedPlace, placeOfText: $placeOfText, addLocationButton: $addLocationButton, destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, promiseLocation: $promiseLocation)
-                } else if selectedPlace == true {// 화면을 클릭해서 장소를 선택한 값이 true일 경우, 해당 옵션의 장소선택 결정뷰를 띄워줌
-                    OneAddLocation(destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, placeOfText: $placeOfText, selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace)
+                } else if isClickedPlace == true {// 화면을 클릭해서 장소를 선택한 값이 true일 경우, 해당 옵션의 장소선택 결정뷰를 띄워줌
+                    OneAddLocation(destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, placeOfText: $placeOfText, selectedPlace: $isClickedPlace, isClickedPlace: $selectedPlace)
                 } else {
                     
                 }
@@ -130,7 +130,7 @@ struct OneMapView: View {
                     Button {
                         myLocation = false
                         dismiss()
-                        if isClickedPlace == true && addLocationButton == false {
+                        if selectedPlace == true && addLocationButton == false {
                             if destination.isEmpty {
                                 destination = ""
                                 address = ""
@@ -149,12 +149,19 @@ struct OneMapView: View {
                 hideKeyboard()
             }
             // 맵뷰의 카메라가 바뀌어지게 해줌
-            .onMapCameraChange(frequency: .onEnd) {
-                // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
-                if isClickedPlace == true {
-                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 1200))
+//            .onMapCameraChange(frequency: .onEnd) {
+//                // transform() 함수 호출을 제거하고 selectedPlacePosition을 직접 갱신
+//                if isClickedPlace == true {
+//                    placePosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 1200))
+//                }
+//            }
+            .onChange(of: selectedPlace, { oldValue, newValue in
+                if newValue {
+                    withAnimation(.easeIn(duration: 0.3)) {
+                        cameraPosition = .camera(MapCamera(centerCoordinate: CLLocationCoordinate2D(latitude: selectedPlacePosition?.latitude ?? 37.5665, longitude: selectedPlacePosition?.longitude ?? 126.9780), distance: 1200))
+                    }
                 }
-            }
+            })
             // 맵컨트롤 버튼들을 우츨 상단에 위치시킴
             .overlay(alignment: .topTrailing) {
                 VStack {
@@ -163,7 +170,7 @@ struct OneMapView: View {
                     MapPitchToggle(scope: mapScope) // 지도의 차원을 정할 수 있는 버튼(2D, 3D)
                         .mapControlVisibility(.visible)
                     MapCompass(scope: mapScope) // 나침반 버튼
-                        .mapControlVisibility(.visible)
+                        .mapControlVisibility(.automatic)
                 }
                 .buttonBorderShape(.roundedRectangle)
                 .padding(.trailing, 5)
@@ -175,7 +182,7 @@ struct OneMapView: View {
             .safeAreaInset(edge: .bottom) {
                 HStack {
                     Spacer()
-                    SearchBarCell(/*promiseViewModel: promiseViewModel,*/isClickedDestination: $isClickedDestination, selectedPlace: $selectedPlace, isClickedPlace: $isClickedPlace, myLocation: $myLocation, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, selectedPlacePosition: $selectedPlacePosition)
+                    SearchBarCell(/*promiseViewModel: promiseViewModel,*/isClickedDestination: $isClickedDestination, selectedPlace: $isClickedPlace, isClickedPlace: $selectedPlace, myLocation: $myLocation, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, selectedPlacePosition: $selectedPlacePosition)
                     Spacer()
                 }
                 .background(.ultraThinMaterial)
@@ -190,8 +197,8 @@ struct OneMapView: View {
         }
         // 맵뷰가 사라졌을 때 해당 값들을 false로 지정함(나왔다가 다시 들어왔을 시 저장된 값들이 그대로 표시되지 않게 초기화 시키는 용도)
         .onDisappear {
-            isClickedPlace = false
             selectedPlace = false
+            isClickedPlace = false
         }
     }
 }

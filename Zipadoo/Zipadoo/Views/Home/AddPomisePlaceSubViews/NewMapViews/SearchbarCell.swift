@@ -136,7 +136,7 @@ struct SearchBarCell: View {
                 .padding(.vertical, 3)
                 
                 if searchOfKakaoLocal.searchKakaoLocalDatas.isEmpty {
-                    ContentUnavailableView(myLocation ? "내 주변 가까운 장소가 없습니다." : "검색 결과가 없습니다.", systemImage: "magnifyingglass", description: Text("다른 키워드로 검색해보세요. 또는 네트워크 연결을 확인해보세요."))
+                    ContentUnavailableView(myLocation ? "내 주변 가까운 장소가 없습니다." : "검색 결과가 없습니다.", systemImage: "magnifyingglass", description: Text("다른 키워드로 검색해보세요.\n또는 네트워크 연결을 확인해보세요."))
                         .padding(.bottom, 50)
                     
                     Spacer()

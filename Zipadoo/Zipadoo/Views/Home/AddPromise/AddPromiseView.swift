@@ -154,16 +154,10 @@ struct AddPromiseView: View {
                                         }
                                     }
                                     .sheet(isPresented: $isPreviewPlaceSheet) {
-                                        VStack {
-                                            RoundedRectangle(cornerRadius: 8)
-                                                .frame(width: 50, height: 5)
-                                                .foregroundStyle(Color.gray)
-                                                .padding(.top, 10)
-                                            
-                                            PreviewPlaceOnMap(/*promiseViewModel: promiseViewModel, */destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
-                                                .presentationDetents([.height(700)])
-                                                .padding(.top, 15)
-                                        }
+                                        PreviewPlaceOnMap(/*promiseViewModel: promiseViewModel, */destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY)
+                                            .presentationDetents([.height(700)])
+                                            .presentationDragIndicator(.visible)
+                                            .padding(.top, 20)
                                     }
                                 }
                                 Spacer()
@@ -317,7 +311,6 @@ struct AddPromiseView: View {
         } // 날짜/시간 선택 sheet
         .sheet(isPresented: $isShowAddPlaceMapSheet) {
             OneMapView(/*promiseViewModel: promiseViewModel, */destination: $destination, address: $address, coordXXX: $coordXXX, coordYYY: $coordYYY, sheetTitle: $sheetTitle)
-                .interactiveDismissDisabled()
         } // 약속장소 지도 sheet
         .sheet(isPresented: $isShowPenalty) {
             HStack {
