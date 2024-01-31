@@ -79,6 +79,7 @@
 		C076BDA52AD934C1005AE81D /* ArrivalMsgModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA42AD934C1005AE81D /* ArrivalMsgModel.swift */; };
 		C076BDA82AD938D6005AE81D /* AlertStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA72AD938D6005AE81D /* AlertStore.swift */; };
 		C08716882AE25C99005914C5 /* WidgetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08716872AE25C99005914C5 /* WidgetStore.swift */; };
+		FA009A3E2B6A0F6B006C2B79 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA009A3D2B6A0F6B006C2B79 /* GoogleService-Info.plist */; };
 		FA103F1E2AE2164F00BE56CA /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA103F1D2AE2164F00BE56CA /* Enum.swift */; };
 		FA24740B2ACD4BDB00D4C821 /* FriendsLocationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */; };
 		FA24740D2ACD4BDB00D4C821 /* SearchInKakaoLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E82ACD4BDB00D4C821 /* SearchInKakaoLocal.swift */; };
@@ -235,6 +236,7 @@
 		C076BDA42AD934C1005AE81D /* ArrivalMsgModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalMsgModel.swift; sourceTree = "<group>"; };
 		C076BDA72AD938D6005AE81D /* AlertStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStore.swift; sourceTree = "<group>"; };
 		C08716872AE25C99005914C5 /* WidgetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStore.swift; sourceTree = "<group>"; };
+		FA009A3D2B6A0F6B006C2B79 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA103F1D2AE2164F00BE56CA /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationListView.swift; sourceTree = "<group>"; };
 		FA2473E82ACD4BDB00D4C821 /* SearchInKakaoLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchInKakaoLocal.swift; sourceTree = "<group>"; };
@@ -645,6 +647,7 @@
 				9AB7E6462B2885960054D4B0 /* ZipadooDebug.entitlements */,
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
+				FA009A3D2B6A0F6B006C2B79 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -842,6 +845,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
+				FA009A3E2B6A0F6B006C2B79 /* GoogleService-Info.plist in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,
