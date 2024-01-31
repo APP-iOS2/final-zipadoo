@@ -15,7 +15,7 @@ struct PromiseDetailMapView: View {
     // 위치 및 GPS 정보 저장용 객체
     @StateObject private var locationStore = LocationStore()
     @StateObject private var gpsStore = GPSStore()
-    @EnvironmentObject var alertStore: AlertStore   
+    @EnvironmentObject var alertStore: AlertStore
     /// 맵뷰 카메라 세팅
     @State private var region: MapCameraPosition = .userLocation(fallback: .automatic)
     
@@ -46,7 +46,7 @@ struct PromiseDetailMapView: View {
     @State private var moveDestination: Bool = false
     
     /// 도착 위치를 확인할 반경
-    let arrivalCheckRadius: Double = 150
+    let arrivalCheckRadius: Double = 30
     
     /// 프레젠테이션 디텐트 설정
     @State private var detents: PresentationDetent = .medium
