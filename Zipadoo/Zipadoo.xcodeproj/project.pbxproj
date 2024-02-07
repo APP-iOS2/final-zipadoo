@@ -37,6 +37,7 @@
 		3F7B389D2B47F4E8000627DF /* Tip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7B389C2B47F4E8000627DF /* Tip.swift */; };
 		3FF033052ADD30C800FF13A5 /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF033042ADD30C800FF13A5 /* AppInfoView.swift */; };
 		3FF033092ADD318300FF13A5 /* DeveloperProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF033082ADD318300FF13A5 /* DeveloperProfileView.swift */; };
+		8B2A675B2B737AD80014F6E1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8B2A675A2B737AD80014F6E1 /* GoogleService-Info.plist */; };
 		8B3E66D22AE267E6003EE83E /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3E66D12AE267E6003EE83E /* LottieView.swift */; };
 		8B3E66D52AE26997003EE83E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8B3E66D42AE26997003EE83E /* Lottie */; };
 		8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */; };
@@ -79,7 +80,6 @@
 		C076BDA52AD934C1005AE81D /* ArrivalMsgModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA42AD934C1005AE81D /* ArrivalMsgModel.swift */; };
 		C076BDA82AD938D6005AE81D /* AlertStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C076BDA72AD938D6005AE81D /* AlertStore.swift */; };
 		C08716882AE25C99005914C5 /* WidgetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C08716872AE25C99005914C5 /* WidgetStore.swift */; };
-		FA009A3E2B6A0F6B006C2B79 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = FA009A3D2B6A0F6B006C2B79 /* GoogleService-Info.plist */; };
 		FA103F1E2AE2164F00BE56CA /* Enum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA103F1D2AE2164F00BE56CA /* Enum.swift */; };
 		FA24740B2ACD4BDB00D4C821 /* FriendsLocationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */; };
 		FA24740D2ACD4BDB00D4C821 /* SearchInKakaoLocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2473E82ACD4BDB00D4C821 /* SearchInKakaoLocal.swift */; };
@@ -197,6 +197,7 @@
 		3F7B389C2B47F4E8000627DF /* Tip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tip.swift; sourceTree = "<group>"; };
 		3FF033042ADD30C800FF13A5 /* AppInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		3FF033082ADD318300FF13A5 /* DeveloperProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperProfileView.swift; sourceTree = "<group>"; };
+		8B2A675A2B737AD80014F6E1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../.Trash/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8B3E66D12AE267E6003EE83E /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		8B56E9912ABBD9C3006CE010 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		8B85B7312ABCB0FB007A1120 /* Modifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modifier.swift; sourceTree = "<group>"; };
@@ -236,7 +237,6 @@
 		C076BDA42AD934C1005AE81D /* ArrivalMsgModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalMsgModel.swift; sourceTree = "<group>"; };
 		C076BDA72AD938D6005AE81D /* AlertStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertStore.swift; sourceTree = "<group>"; };
 		C08716872AE25C99005914C5 /* WidgetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetStore.swift; sourceTree = "<group>"; };
-		FA009A3D2B6A0F6B006C2B79 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		FA103F1D2AE2164F00BE56CA /* Enum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enum.swift; sourceTree = "<group>"; };
 		FA2473E52ACD4BDB00D4C821 /* FriendsLocationListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsLocationListView.swift; sourceTree = "<group>"; };
 		FA2473E82ACD4BDB00D4C821 /* SearchInKakaoLocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchInKakaoLocal.swift; sourceTree = "<group>"; };
@@ -644,10 +644,10 @@
 		FAD5FE3B2ABBD3E700E05E6E /* Zipadoo */ = {
 			isa = PBXGroup;
 			children = (
+				8B2A675A2B737AD80014F6E1 /* GoogleService-Info.plist */,
 				9AB7E6462B2885960054D4B0 /* ZipadooDebug.entitlements */,
 				C069D2B92AC141AC00A62E04 /* Info.plist */,
 				C069D2B82AC1167800A62E04 /* Zipadoo.entitlements */,
-				FA009A3D2B6A0F6B006C2B79 /* GoogleService-Info.plist */,
 				FAD5FE3C2ABBD3E700E05E6E /* ZipadooApp.swift */,
 				FAD5FE4D2ABBD43600E05E6E /* Extention */,
 				FAD5FE4F2ABBD47A00E05E6E /* Modifier */,
@@ -845,7 +845,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
-				FA009A3E2B6A0F6B006C2B79 /* GoogleService-Info.plist in Resources */,
+				8B2A675B2B737AD80014F6E1 /* GoogleService-Info.plist in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				8B56E9922ABBD9C3006CE010 /* .swiftlint.yml in Resources */,
 				FAD5FE442ABBD3E800E05E6E /* Preview Assets.xcassets in Resources */,

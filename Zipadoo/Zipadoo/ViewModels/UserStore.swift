@@ -28,10 +28,14 @@ final class UserStore: ObservableObject {
     static func fetchUser(userId: String) async throws -> User? {
         
         let dbRef = Firestore.firestore().collection("Users")
-        
-        let snapshot = try await dbRef.document(userId).getDocument()
-        
-        return try snapshot.data(as: User.self)
+        do {
+            let snapshot = try await dbRef.document(userId).getDocument()
+            print("UserStore.fetchUser성공")
+            return try snapshot.data(as: User.self)
+        } catch {
+            print(#function, "try await dbRef.document(userId).getDocument() 실패")
+            throw error
+        }
     }
     
     /// 홈메인뷰 프로필이미지 가져오기 위한 함수

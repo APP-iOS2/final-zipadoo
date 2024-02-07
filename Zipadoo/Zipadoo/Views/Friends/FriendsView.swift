@@ -22,10 +22,13 @@ struct FriendsView: View {
     /// 친구 추가뷰 시트
     @State private var isShowingFriendsRegistrationView = false
     
+    @State private var guideString = "아직 친구가 없어요\n친구를 추가해보세요"
+    
     private let friendsTip = FriendsTip()
     var body: some View {
         NavigationStack {
             VStack {
+                
                 SlidingTabView(
                     selection: $tabIndex,
                     tabs: ["친구 목록", "요청 목록"],
@@ -35,14 +38,15 @@ struct FriendsView: View {
                 )
                 
                 Spacer()
-                
+
                 if tabIndex == 0 {
                     friendListView
                 } else if tabIndex == 1 {
                     friendRequestView
                 }
-                
+            
                 Spacer()
+                
             } // VStack
             .fontWeight(.semibold)
             .navigationTitle("친구 관리")
@@ -86,24 +90,28 @@ struct FriendsView: View {
                     })
                 )
             }
-            .onAppear {
-                Task {
-                    try await friendsStore.fetchFriendsRequest()
-                }
-            }
+//            .onAppear {
+//                Task {
+//           
+//                    try await friendsStore.fetchFriendsRequest()
+//                }
+//            }
+                
         } // NavigationStack
     } // body
     
     // MARK: - 친구 목록 뷰
     private var friendListView: some View {
         VStack {
+            
             // 패치가 끝났다면
             if friendsStore.isLoadingFriends == false {
+                let _ = print("패치 성공!")
                 if friendsStore.friendsFetchArray.isEmpty {
                     VStack {
                         Group {
-                            Text("아직 친구가 없어요")
-                            Text("친구를 추가해 보세요!")
+                            Text(guideString)
+//                            Text("친구를 추가해 보세요!")
                         }
                         .font(.title3)
                     }
@@ -153,11 +161,22 @@ struct FriendsView: View {
                     .listStyle(.plain)
                     .padding(.top, -17)
                 }
+            } else {
+                let _ = print("패치완료되지 않았음")
             }
         } // VStack
         .onAppear {
             Task {
-                try await friendsStore.fetchFriends()
+                do {
+                    // 동기로 처리?
+                    try await friendsStore.fetchFriends()
+                    dump(friendsStore.friendsFetchArray)
+                    print("friendStor.fetchFriends 성공")
+                } catch {
+                    print("friendStor.fetchFriends실패", error)
+                    // 패치중간에 오류 났을 때
+                    guideString = "통신이 실패했습니다."
+                }
             }
         }
         .refreshable {
