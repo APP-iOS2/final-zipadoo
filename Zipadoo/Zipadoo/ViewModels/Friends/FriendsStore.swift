@@ -33,39 +33,59 @@ final class FriendsStore: ObservableObject {
     @MainActor
     func fetchFriends() async throws {
         do {
+            
+//            print("11111111")
             // 사용자id로 친구id배열가져오기
             guard let userId = currentUser?.id else {
+                print("currentUser.id is null")
                 return
             }
-            
+//            print("222222222222")
+//            print("3333333333")
             if let user = try await UserStore.fetchUser(userId: userId) {
+                print(#function, "UserStore.fetchUser가져오기 성공")
                 friendsIdArray = user.friendsIdArray
+//                print("4444444444")
+            } else {
+                print(#function, "UserStore.fetchUser의 결과가 nil")
             }
+
+//            
+//            if let user = try await UserStore.fetchUser(userId: userId) {
+//                print(#function, "user가져오기 성공")
+//                friendsIdArray = user.friendsIdArray
+//            }
+//            print("555555555")
             
             /// 친구 순서를 유지하면서 고유하게 저장
             let uniqueFriendsIdArray = NSOrderedSet(array: friendsIdArray)
             
             // 친구 id로 친구정보 가져오기
-            var tempFriendsIDArray: [User] = []
+            var tempFriendsArray: [User] = []
             
+//            print("666666666")
             /// uniqueFriendsIdArray.array 정렬된 세트에서 요소 배열을 검색
             for id in uniqueFriendsIdArray.array.compactMap({ $0 as? String }) {
                 do {
+//                    print("777777777")
                     if let friend = try await UserStore.fetchUser(userId: id) {
-                        tempFriendsIDArray.append(friend)
+                        tempFriendsArray.append(friend)
                     } else {
                         print("친구 정보를 찾을 수 없습니다: \(id)")
                     }
+//                    print("888888888")
                 } catch {
                     print("친구 정보 가져오기 실패: \(error)")
+                    throw error
                 }
             }
-            
+//            print("9999999999")
             // 메인 스레드에서 UI 업데이트를 수행합니다.
-            DispatchQueue.main.async {
-                self.friendsFetchArray = tempFriendsIDArray
+//            DispatchQueue.main.async {
+//                print("000000000000")
+                self.friendsFetchArray = tempFriendsArray
                 self.isLoadingFriends = false
-            }
+//            }
         } catch DecodingError.valueNotFound(let type, let context) {
             print("Null value found for type \(type) at path \(context.codingPath)")
             
@@ -75,6 +95,7 @@ final class FriendsStore: ObservableObject {
             // 업데이트된 friendsFetchArray를 사용하여 UI 업데이트
             DispatchQueue.main.async {
                 self.friendsFetchArray = updatedFriendsFetchArray
+                self.isLoadingFriends = false
             }
         } catch {
             print("fetch 실패: \(error)")
@@ -107,10 +128,10 @@ final class FriendsStore: ObservableObject {
             }
             
             // 메인 스레드에서 UI 업데이트를 수행합니다.
-            DispatchQueue.main.async {
+//            DispatchQueue.main.async {
                 self.requestFetchArray = tempFriendRequestArray
                 self.isLoadingRequest = false
-            }
+//            }
         } catch {
             print("fetchUser실패")
         }
